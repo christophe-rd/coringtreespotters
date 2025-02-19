@@ -1,7 +1,8 @@
 ### Time to visualize the numbers
 # 29 July 2019 - Cat
 
-#change by crd to see if it works
+#change by crd to see if it works in November 2024
+
 # Clear workspace
 rm(list=ls()) # remove everything currently held in the R memory
 options(stringsAsFactors=FALSE)
@@ -12,26 +13,43 @@ library(dplyr)
 library(tidyr)
 library(ggplot2)
 library(RColorBrewer)
-library(egg)
+
 library(viridis)
 
 # Set Working Directory
-# Set Working Directory
-if(length(grep("christophe", getwd()) > 0)) {
-} else if(length(grep("christophe", getwd())) > 0){
-  setwd("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/")
-} 
-b<-read.csv("input/individual_phenometrics_data.csv", header=TRUE)
+setwd("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/input/")
+list.files()
 
-
+b<-read.csv("individual_phenometrics_data.csv", header=TRUE)
+head(b)
+# read approved list of trees to core and remove non necessary columns
+dcore <- read.csv("2025ApprovedPlantListforcoring.csv")[1:5]
+head(dcore)
+# read csv that contains the two tree names and nicknames
+namemerge <- read.csv2("treeswithPhenodata.csv", header=TRUE, sep=",")
+nrow(namemerge)
+unique(namemerge$Genus_Species)
+# rename columns so they are more consistent
+colnames(dcore) <- c("availableToCore2025", "previouslyCored", "yearCored", "Plant_Nickname", "species")
+dcore <- subset(dcore, availableToCore2025 == "Y")
+# Split individual Id and QUAL
+dcore$plantNickname <- sub("\\*.*", "", dcore$Plant_Nickname)
+namemerge$plantNickname <- sub("\\*.*", "", namemerge$Plant_Nickname)
+# add nickname column since it's the one the arboretum uses
+b$plantNickname <- namemerge$Plant_Nickname[match(b$Individual_ID, namemerge$Individual_ID)]
+length(unique(b$plantNickname))
+head(b)
+# b$plantNickname <- sub("\\*.*", "", b$Plant_Nickname)
+# create vector for all the individuals we can core
+id2core<-as.character(dcore$plantNickname)
 ###### Breakdown of observations per species
 b$spp <- paste(b$Genus, b$Species)
-
 numobsperspp <- b %>% count(spp)
+head(numobsperspp)
 #colz <- colorRampPalette(brewer.pal(15, "Dark2"))(15)
 colz <- viridis_pal(option="D")(15)
 colourCount = length(unique(numobsperspp$spp))
-getPalette = colorRampPalette(brewer.pal(8, "Spectral"))
+getPalette = colorRampPalette(brewer.pal(8, "Dark2"))
 
 sppnum <- ggplot(numobsperspp, aes(x=spp, y=n, fill=spp)) + 
   geom_bar(stat="identity", position=position_dodge()) +
@@ -53,14 +71,13 @@ sppnum <- ggplot(numobsperspp, aes(x=spp, y=n, fill=spp)) +
                             "Tilia americana" = "American Linden",
                             "Vaccinium corymbosum" = "Highbush Blueberry",
                             "Viburnum nudum" = "Possumhaw")) +
-  theme_classic() + theme(legend.position="none", 
+  theme_classic() + 
+  theme(legend.position="none", 
                           plot.margin=unit(c(1,3,1,1), "lines"),
                           plot.title = element_text(face="bold")) +
   ylab("Number of observed phenophases") + xlab("") +
-  coord_flip(expand=c(0,0), clip="off") + 
-  geom_text(aes(label=n), hjust=-0.2, col=getPalette(colourCount))
+  geom_text(aes(label=n), hjust=0.4, vjust=-1, col=getPalette(colourCount))
 
-quartz()
 sppnum
 
 ### Now let's make a plot with time-series data
@@ -83,17 +100,31 @@ ggplot(cumulative, aes(x=Last_Yes_Year, y=cumulative_sum)) +
         plot.title=element_text(face="bold"),
         axis.text.x=element_text(color=colpal(6))) 
 
-# nb of observations per individuals
-nbobsperID <- b %>% count(Common_Name, Individual_ID)
-nbobsperID
-str(b)
-ggplot(nbobsperID, aes(x = n, y = factor(Individual_ID), fill = Common_Name)) +
+# nb of observations per individuals for treespotters data
+obsperind <- b[!duplicated(b$Individual_ID),]
+
+nbobsperID <- b %>% count(Common_Name, plantNickname)
+nrow(nbobsperID)
+nbobsperID <- nbobsperID[!is.na(nbobsperID$plantNickname),]
+# set color palet
+colourCount <- length(unique(nbobsperID$Common_Name))
+getPalette <- colorRampPalette(brewer.pal(8, "Paired"))
+
+ggplot(nbobsperID, aes(x = n, y = factor(plantNickname), fill = Common_Name)) +
   geom_bar(stat = "identity") +
   labs(x = "Count", y = "Individual ID") +
-  theme_minimal()
-dim(nbobsperID)
-dput(nbobsperID)
-str(b)
+  theme_classic() + 
+  theme(legend.position = "right", 
+        plot.margin = unit(c(1, 3, 1, 1), "lines"),
+        plot.title = element_text(face = "bold")) +
+  # geom_text(aes(label = n, colour = Common_Name), hjust = -0.7, vjust = 0) +
+  scale_colour_manual(values = getPalette(colourCount))
+
+# nb of observations per individuals for treespotters data AND allowed trees to core
+### Subset for trees we can core
+filtered_dcore <- b[b$Individual_ID %in% id2core, ]
+length(unique(b$Individual_ID))
+length(unique(filtered_dcore$Individual_ID))
 
 ### Pie Chart
 routes <- data.frame(route=c("Linden and North Woods", "Maple", "Shrub", "Birch", "Oak",
