@@ -120,10 +120,7 @@ ggplot(nbobsperID, aes(x = n, y = factor(Individual_ID), fill = factor(Last_Yes_
 
 vec <- c("sugar maple", "red maple")
 redandsugar <- nbobsperID[nbobsperID$Common_Name %in% vec, ]
-nrow(redandsugar)
 test <- redandsugar[!is.na(redandsugar$Last_Yes_Year),]
-nrow(test)
-nrow(redandsugar)
 
 # Define the color palette
 getPalette2 <- colorRampPalette(brewer.pal(3, "Dark2"))
@@ -135,7 +132,7 @@ test$Last_Yes_Year <- factor(test$Last_Yes_Year, levels = 2020:2015)  # Reverse 
 # Ensure Last_Yes_Year is an ordered factor with 2015 at the bottom and 2020 at the top
 redandsugar$Last_Yes_Year <- factor(redandsugar$Last_Yes_Year, levels = 2020:2015)  # Reverse order for stacking
 
-# Plot with filtered Individual_IDs for each species
+# Plot for sugar and red maples
 ggplot(redandsugar, aes(x = factor(Individual_ID), y = n, fill = Last_Yes_Year)) +
   geom_bar(stat = "identity", position = "stack") +
   facet_wrap(~ Common_Name, ncol = 3, scales = "free_x") +  # Use free_x to allow different x-axis scales
@@ -145,23 +142,22 @@ ggplot(redandsugar, aes(x = factor(Individual_ID), y = n, fill = Last_Yes_Year))
         plot.margin = unit(c(1, 3, 1, 1), "lines"),
         plot.title = element_text(face = "bold")) +
   scale_fill_manual(values = getPalette2(length(unique(redandsugar$Last_Yes_Year))))
-View(redmaple)
+
 # nb of observations per individuals for treespotters data AND allowed trees to core
 ### Subset for trees we can core
-filtered_dcore <- b[b$plantNickname %in% id2core, ]
-length(unique(b$Individual_ID))
-length(unique(filtered_dcore$Individual_ID))
 
-ggplot(nbobsperID, aes(x = n, y = factor(plantNickname), fill = Common_Name)) +
+filtered_dcore <- b[b$plantNickname %in% id2core, ]
+nbobsperID <- filtered_dcore %>% count(Common_Name, plantNickname, Last_Yes_Year)
+nbobsperID <- nbobsperID[!is.na(nbobsperID$plantNickname),]
+
+ggplot(nbobsperID, aes(x = n, y = reorder(plantNickname, n), fill = Common_Name)) +
   geom_bar(stat = "identity") +
   labs(x = "Count", y = "Individual ID") +
   theme_classic() + 
   theme(legend.position = "right", 
         plot.margin = unit(c(1, 3, 1, 1), "lines"),
         plot.title = element_text(face = "bold")) +
-  # geom_text(aes(label = n, colour = Common_Name), hjust = -0.7, vjust = 0) +
   scale_fill_manual(values = getPalette(colourCount))
-
 
 ### Now let's make a plot with time-series data
 # Observations per year
