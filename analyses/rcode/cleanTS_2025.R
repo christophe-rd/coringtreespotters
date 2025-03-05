@@ -197,7 +197,10 @@ ggplot(phenossm, aes(x=year, y=value, color=variable, group=id)) +
   facet_wrap( .~latbi)
 
 # go for 3 phenophases and facet wrap by species using a nice color pannel
-ggplot(phenoscleaner) +
+unique(phenoscleaner$species)
+grandifolia 
+phenoscleaner <- subset(phenoscleaner, species != "grandifolia")
+phenospp <- ggplot(phenoscleaner) +
   geom_point(aes(x = year, y = budburst, color = "Budburst")) + 
   geom_point(aes(x = year, y = leafout, color = "Leafout")) + 
   geom_point(aes(x = year, y = col.leaves, color = "Leaf Colouring")) + 
@@ -215,7 +218,7 @@ ggplot(phenoscleaner) +
   theme_minimal() +
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) + # Rotate x-axis labels
   facet_wrap(~Common_Name)
-
+ggsave("figures/phenospp.pdf", phenospp)
 # subset for acer rubrum as it's currently absent of the list of trees to core
 acru <- subset(phenoscleaner, species == "rubrum")
 # Create the plot
