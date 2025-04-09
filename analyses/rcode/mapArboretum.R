@@ -16,7 +16,7 @@ options(stringsAsFactors=FALSE)
 # set wd
 setwd("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/")
 # read the list of trees I downloaded from the arboretum's website
-d <- read.csv("output/cleanedStatusIntensity.csv", header=TRUE)
+d <- read.csv("output/cleanTS.csv", header=TRUE)
 nrow(d)
 # the count per individual
 nbobsperID <- d %>% count(plantNickname)
@@ -55,12 +55,12 @@ tree_map <- leaflet(dnodup) %>%
   addTiles() %>%  
   addProviderTiles(providers$Esri.WorldImagery, group = "Satellite") %>%  
   addCircleMarkers(
-    lng = ~Garden.Longitude, 
-    lat = ~Garden.Latitude, 
+    lng = ~long, 
+    lat = ~lat, 
     popup = ~paste("Species:", Common_Name, "<br>Nickname:", plantNickname),
-    radius = sqrt(nbobsperID$n) / 10,  # Scale radius by sqrt(n)
+    radius = 5,#sqrt(nbobsperID$n) / 10,  # Scale radius by sqrt(n)
     color = ~unname(spp_colors[Common_Name]),  # Convert named list to values
-    fillOpacity = 1
+    fillOpacity = 5
   ) %>%
   # Add a special symbol at the given coordinates
   addAwesomeMarkers(
