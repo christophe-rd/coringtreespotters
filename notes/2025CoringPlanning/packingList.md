@@ -7,7 +7,7 @@
 - Load tree GPS coordinates in GPS
 
 #### Packing list
-- Stapler
+- Stapler.
 - Staples
 - Gloves
 - Brown bags
@@ -21,6 +21,8 @@
 - Gloves
 - Good GPS
 - 2 compasses
+- Rite in the rain notebook
+
 
 ### To buy
 - Paper straws
