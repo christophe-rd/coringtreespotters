@@ -99,9 +99,10 @@ bb <- d %>%
     id = Individual_ID,
     genus = Genus,
     species = Species,
+    symbol = USDA_PLANTS_Symbol,
     plantNickname = plantNickname
   )
-
+bb$latbi <- paste(bb$genus, bb$species, sep="_")
 #clean common name column
 bb$Common_Name[which(bb$Common_Name == "yellow birch")] <- "Yellow Birch"
 bb$Common_Name[which(bb$Common_Name == "river birch")] <- "River Birch"
@@ -116,7 +117,7 @@ bb$Common_Name[which(bb$Common_Name == "shagbark hickory")] <- "Shagbark Hickory
 bb$Common_Name[which(bb$Common_Name == "northern red oak")] <- "Northern Red Oak"
 bb$Common_Name[which(bb$Common_Name == "red maple")] <- "Red Maple"
 
-bb.pheno<-dplyr::select(bb, genus, species, Common_Name, phase, elev, year, doy, numYs, id, plantNickname)
+bb.pheno<-dplyr::select(bb, genus, species, latbi, symbol, Common_Name, phase, elev, year, doy, numYs, id, plantNickname)
 # clean phenophase names
 bb.pheno$phase<-ifelse(bb.pheno$phase=="Breaking leaf buds", "budburst", bb.pheno$phase)
 bb.pheno$phase<-ifelse(bb.pheno$phase=="Leaves", "leafout", bb.pheno$phase)
@@ -151,14 +152,14 @@ if(FALSE){ #Detected with new cleaning checks!! 3 July 2019 by Cat
 }
 
 #### Now start building a small data frame with phenophase info then add in climandpheno, chilling and photo
-colstokeep<-c("genus", "species", "Common_Name", "id", "plantNickname", "year", "phase", "elev", "doy")
+colstokeep<-c("genus", "species", "latbi", "symbol", "Common_Name", "id", "plantNickname", "year", "phase", "elev", "doy")
 phenos<-subset(doy_pheno, select=colstokeep)
 
 phenos<-phenos[!duplicated(phenos),]
 
 phenos<-phenos%>%tidyr::spread(phase, doy)
 
-phenos <- subset(phenos, select=c("genus", "species", "Common_Name", "id", "plantNickname", "year", "elev", "budburst", "flowers", "fruits", "leafout", "coloredLeaves", "leafDrop"))
+phenos <- subset(phenos, select=c("genus", "species", "latbi", "symbol", "Common_Name", "id", "plantNickname", "year", "elev", "budburst", "flowers", "fruits", "leafout", "coloredLeaves", "leafDrop"))
 
 ### And now last observation for when to start calculating chilling
 phenos$last.obs<-ave(phenos$leafDrop, phenos$plantNickname, phenos$year, FUN=last)
