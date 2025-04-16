@@ -19,10 +19,12 @@
 - Bee wax
 - Towel
 - Gloves
+- Microfiber towel
+- 
 - Good GPS
 - 2 compasses
 - Rite in the rain notebook
-
+-
 
 ### To buy
 - Paper straws
