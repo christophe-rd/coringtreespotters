@@ -7,7 +7,11 @@
 - Load tree GPS coordinates in GPS
 
 #### Packing list
+<<<<<<< HEAD
 - Stapler.
+=======
+- Stapler
+>>>>>>> fd4fc856699d80f367dc327b8341a8254f463e48
 - Staples
 - Gloves
 - Brown bags
@@ -19,12 +23,17 @@
 - Bee wax
 - Towel
 - Gloves
+<<<<<<< HEAD
 - Microfiber towel
 - 
 - Good GPS
 - 2 compasses
 - Rite in the rain notebook
 -dsa
+=======
+- Good GPS
+- 2 compasses
+>>>>>>> fd4fc856699d80f367dc327b8341a8254f463e48
 
 ### To buy
 - Paper straws
