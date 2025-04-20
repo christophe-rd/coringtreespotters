@@ -7,33 +7,19 @@
 - Load tree GPS coordinates in GPS
 
 #### Packing list
-<<<<<<< HEAD
-- Stapler.
-=======
-- Stapler
->>>>>>> fd4fc856699d80f367dc327b8341a8254f463e48
-- Staples
-- Gloves
-- Brown bags
-- Metal boxes
-- At least 150 straws
-- Tape
+- Stapler ok
+- Staples ok
+ziplocs
+- Gloves ok
+- **Brown bags**
+- Metal boxes ok
+- At least 200 straws ok
+- Tape x2 ok
 - Increment borer
-- Alcohol
-- Bee wax
-- Towel
-- Gloves
-<<<<<<< HEAD
+- Alcohol ok
+- **Bee wax**
 - Microfiber towel
-- 
-- Good GPS
-- 2 compasses
-- Rite in the rain notebook
--dsa
-=======
-- Good GPS
-- 2 compasses
->>>>>>> fd4fc856699d80f367dc327b8341a8254f463e48
-
-### To buy
-- Paper straws
+- Good GPS is ok
+- 2 compasses ok
+- Rite in the rain notebook ok
+- toothpicks
