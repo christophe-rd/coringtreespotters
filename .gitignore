@@ -3,3 +3,6 @@
 *.tif
 *.jpeg
 *.jpg
+*.aux
+*.log
+*.gz
