@@ -43,7 +43,7 @@ treesdf <- subset(indPheno, !(Common_Name %in% trees))
 
 # Remove tree number from the plant nickname column
 treesdf$plantNickname <- sub(", Tree \\d+", "", treesdf$Plant_Nickname)
-
+unique(treesdf$plantNickname) 
 ### === === === === === === === ###
 # Clean approved list for coring #
 ### === === === === === === === ###
@@ -56,7 +56,11 @@ d <- d[(d$Multiple_FirstY>=1 | d$Multiple_Observers>0),] ## This selects data wh
 d <- d[(d$NumYs_in_Series>=3),] ## This selects data again where the same phenophase was seen 3 times in a row
 d <- d[(d$NumDays_Since_Prior_No>=0 & d$NumDays_Since_Prior_No<=14),] ## And this limits to data where a no is followed by a yes, so that it is a new observation/new phenophase but has been detected within a reasonable timeframe
 str(d)
-
+d$latbi <- paste(d$Genus, d$Species, sep=" ")
+smallforsheet <- d[, c("plantNickname", "latbi")]
+# remove duplicates
+smallforsheet <- smallforsheet[!duplicated(smallforsheet),]
+write.csv(smallforsheet, file="output/tempForFieldSheet.csv", row.names=FALSE)
 ### === === === === === === === === ===###
 # Clean Arboretum tree coordinates file #
 ### === === === === === === === === ===###
@@ -108,7 +112,7 @@ bb$latbi <- paste(bb$genus, bb$species, sep="_")
     plantNickname = plantNickname
   )
 
->>>>>>> fd4fc856699d80f367dc327b8341a8254f463e48
+
 #clean common name column
 bb$Common_Name[which(bb$Common_Name == "yellow birch")] <- "Yellow Birch"
 bb$Common_Name[which(bb$Common_Name == "river birch")] <- "River Birch"
