@@ -1,735 +1,366 @@
-<<<<<<< HEAD
-"plantNickname","genus","species","latbi","symbol","Common_Name","id","year","elev","budburst","flowers","fruits","leafout","coloredLeaves","leafDrop","last.obs","gdd.start","lat","long","AccessionDate","habitat","gardenLocation","DBH"
-"11253*A","Quercus","rubra","Quercus_rubra","QURU","Northern Red Oak",86286,2017,30,119,NA,236,124,270,267,267,46,42.30002036,-71.12432118,"01-13-1917","","25-SE",69.5
-"11253*A","Quercus","rubra","Quercus_rubra","QURU","Northern Red Oak",86286,2018,30,122,128,NA,125,282,282,282,46,42.30002036,-71.12432118,"01-13-1917","","25-SE",69.5
-"11253*A","Quercus","rubra","Quercus_rubra","QURU","Northern Red Oak",86286,2019,30,110,126,190,128,260,268,268,46,42.30002036,-71.12432118,"01-13-1917","","25-SE",69.5
-"11253*A","Quercus","rubra","Quercus_rubra","QURU","Northern Red Oak",86286,2016,30,127,NA,NA,282,282,282,282,46,42.30002036,-71.12432118,"01-13-1917","","25-SE",69.5
-"1196-84*A","Acer","rubrum","Acer_rubrum","ACRU","Red Maple",166763,2019,13,103,97,115,115,269,269,269,46,42.30388171,-71.12019927,"10-15-1984","","11-NE",27.3
-"1196-84*A","Acer","rubrum","Acer_rubrum","ACRU","Red Maple",166763,2020,13,119,75,120,124,220,257,257,46,42.30388171,-71.12019927,"10-15-1984","","11-NE",27.3
-"1196-84*A","Acer","rubrum","Acer_rubrum","ACRU","Red Maple",166763,2021,13,101,86,104,114,NA,NA,NA,46,42.30388171,-71.12019927,"10-15-1984","","11-NE",27.3
-"1196-84*A","Acer","rubrum","Acer_rubrum","ACRU","Red Maple",166763,2022,13,105,77,105,125,NA,NA,NA,46,42.30388171,-71.12019927,"10-15-1984","","11-NE",27.3
-"1196-84*A","Acer","rubrum","Acer_rubrum","ACRU","Red Maple",166763,2024,13,107,NA,117,121,NA,NA,NA,46,42.30388171,-71.12019927,"10-15-1984","","11-NE",27.3
-"1196-84*A","Acer","rubrum","Acer_rubrum","ACRU","Red Maple",166763,2023,13,NA,83,NA,NA,NA,NA,NA,46,42.30388171,-71.12019927,"10-15-1984","","11-NE",27.3
-"1196-84*A","Acer","rubrum","Acer_rubrum","ACRU","Red Maple",166763,2018,13,NA,NA,NA,NA,272,NA,272,46,42.30388171,-71.12019927,"10-15-1984","","11-NE",27.3
-"1199*D","Betula","nigra","Betula_nigra","BENI","River Birch",86258,2016,36,114,124,NA,132,281,281,281,46,42.30215088,-71.12401559,"07-17-1877","","13-SE",68
-"1199*D","Betula","nigra","Betula_nigra","BENI","River Birch",86258,2017,36,100,112,149,118,235,241,241,46,42.30215088,-71.12401559,"07-17-1877","","13-SE",68
-"1199*D","Betula","nigra","Betula_nigra","BENI","River Birch",86258,2018,36,125,122,154,125,294,294,294,46,42.30215088,-71.12401559,"07-17-1877","","13-SE",68
-"1199*D","Betula","nigra","Betula_nigra","BENI","River Birch",86258,2019,36,112,111,155,126,264,249,249,46,42.30215088,-71.12401559,"07-17-1877","","13-SE",68
-"1199*D","Betula","nigra","Betula_nigra","BENI","River Birch",86258,2020,36,126,85,160,128,271,271,271,46,42.30215088,-71.12401559,"07-17-1877","","13-SE",68
-"1199*D","Betula","nigra","Betula_nigra","BENI","River Birch",86258,2015,36,NA,NA,NA,NA,282,282,282,46,42.30215088,-71.12401559,"07-17-1877","","13-SE",68
-"1199*J","Betula","nigra","Betula_nigra","BENI","River Birch",86261,2016,36,114,124,NA,130,279,289,289,46,42.30252077,-71.12397574,"07-17-1877","","13-NE",89.1
-"1199*J","Betula","nigra","Betula_nigra","BENI","River Birch",86261,2017,36,100,118,149,118,250,247,247,46,42.30252077,-71.12397574,"07-17-1877","","13-NE",89.1
-"1199*J","Betula","nigra","Betula_nigra","BENI","River Birch",86261,2018,36,122,122,154,122,272,272,272,46,42.30252077,-71.12397574,"07-17-1877","","13-NE",89.1
-"1199*J","Betula","nigra","Betula_nigra","BENI","River Birch",86261,2019,36,111,111,NA,126,237,251,251,46,42.30252077,-71.12397574,"07-17-1877","","13-NE",89.1
-"1199*J","Betula","nigra","Betula_nigra","BENI","River Birch",86261,2020,36,126,120,160,128,258,271,271,46,42.30252077,-71.12397574,"07-17-1877","","13-NE",89.1
-"1199*J","Betula","nigra","Betula_nigra","BENI","River Birch",86261,2015,36,NA,150,NA,NA,250,270,270,46,42.30252077,-71.12397574,"07-17-1877","","13-NE",89.1
-"1251-79*A","Betula","nigra","Betula_nigra","BENI","River Birch",86259,2016,36,111,111,161,127,210,260,260,46,42.30223154,-71.12410601,"12-20-1979","Along south bank of Castor River","13-SE",78
-"1251-79*A","Betula","nigra","Betula_nigra","BENI","River Birch",86259,2017,36,100,112,139,108,202,202,202,46,42.30223154,-71.12410601,"12-20-1979","Along south bank of Castor River","13-SE",78
-"1251-79*A","Betula","nigra","Betula_nigra","BENI","River Birch",86259,2018,36,118,122,151,125,243,243,243,46,42.30223154,-71.12410601,"12-20-1979","Along south bank of Castor River","13-SE",78
-"1251-79*A","Betula","nigra","Betula_nigra","BENI","River Birch",86259,2019,36,107,114,150,122,214,214,214,46,42.30223154,-71.12410601,"12-20-1979","Along south bank of Castor River","13-SE",78
-"1251-79*A","Betula","nigra","Betula_nigra","BENI","River Birch",86259,2020,36,126,120,160,128,197,197,197,46,42.30223154,-71.12410601,"12-20-1979","Along south bank of Castor River","13-SE",78
-"1251-79*A","Betula","nigra","Betula_nigra","BENI","River Birch",86259,2024,36,110,111,NA,124,NA,NA,NA,46,42.30223154,-71.12410601,"12-20-1979","Along south bank of Castor River","13-SE",78
-"1251-79*A","Betula","nigra","Betula_nigra","BENI","River Birch",86259,2015,36,NA,150,NA,NA,218,270,270,46,42.30223154,-71.12410601,"12-20-1979","Along south bank of Castor River","13-SE",78
-"1251-79*A","Betula","nigra","Betula_nigra","BENI","River Birch",86259,2022,36,NA,105,NA,NA,NA,NA,NA,46,42.30223154,-71.12410601,"12-20-1979","Along south bank of Castor River","13-SE",78
-"1251-79*B","Betula","nigra","Betula_nigra","BENI","River Birch",86260,2016,36,111,114,147,125,246,260,260,46,42.30228781,-71.12445659,"12-20-1979","Along south bank of Castor River","13-SE",70.8
-"1251-79*B","Betula","nigra","Betula_nigra","BENI","River Birch",86260,2017,36,101,109,136,117,209,230,230,46,42.30228781,-71.12445659,"12-20-1979","Along south bank of Castor River","13-SE",70.8
-"1251-79*B","Betula","nigra","Betula_nigra","BENI","River Birch",86260,2018,36,118,122,138,122,250,257,257,46,42.30228781,-71.12445659,"12-20-1979","Along south bank of Castor River","13-SE",70.8
-"1251-79*B","Betula","nigra","Betula_nigra","BENI","River Birch",86260,2019,36,107,107,152,122,230,230,230,46,42.30228781,-71.12445659,"12-20-1979","Along south bank of Castor River","13-SE",70.8
-"1251-79*B","Betula","nigra","Betula_nigra","BENI","River Birch",86260,2020,36,126,120,147,133,197,197,197,46,42.30228781,-71.12445659,"12-20-1979","Along south bank of Castor River","13-SE",70.8
-"1251-79*B","Betula","nigra","Betula_nigra","BENI","River Birch",86260,2021,36,114,114,134,122,261,261,261,46,42.30228781,-71.12445659,"12-20-1979","Along south bank of Castor River","13-SE",70.8
-"1251-79*B","Betula","nigra","Betula_nigra","BENI","River Birch",86260,2022,36,103,103,147,125,238,215,215,46,42.30228781,-71.12445659,"12-20-1979","Along south bank of Castor River","13-SE",70.8
-"1251-79*B","Betula","nigra","Betula_nigra","BENI","River Birch",86260,2023,36,104,101,139,108,231,235,235,46,42.30228781,-71.12445659,"12-20-1979","Along south bank of Castor River","13-SE",70.8
-"1251-79*B","Betula","nigra","Betula_nigra","BENI","River Birch",86260,2024,36,121,104,NA,121,257,257,257,46,42.30228781,-71.12445659,"12-20-1979","Along south bank of Castor River","13-SE",70.8
-"1251-79*B","Betula","nigra","Betula_nigra","BENI","River Birch",86260,2015,36,142,150,NA,313,218,240,240,46,42.30228781,-71.12445659,"12-20-1979","Along south bank of Castor River","13-SE",70.8
-"1251-79*E","Betula","nigra","Betula_nigra","BENI","River Birch",87754,2016,36,112,124,162,130,281,284,284,46,42.3022236,-71.12398789,"12-20-1979","Along south bank of Castor River","13-SE",70
-"1251-79*E","Betula","nigra","Betula_nigra","BENI","River Birch",87754,2017,36,101,125,149,118,230,241,241,46,42.3022236,-71.12398789,"12-20-1979","Along south bank of Castor River","13-SE",70
-"1251-79*E","Betula","nigra","Betula_nigra","BENI","River Birch",87754,2018,36,122,125,154,125,251,256,256,46,42.3022236,-71.12398789,"12-20-1979","Along south bank of Castor River","13-SE",70
-"1251-79*E","Betula","nigra","Betula_nigra","BENI","River Birch",87754,2019,36,110,112,157,126,237,239,239,46,42.3022236,-71.12398789,"12-20-1979","Along south bank of Castor River","13-SE",70
-"1251-79*E","Betula","nigra","Betula_nigra","BENI","River Birch",87754,2020,36,126,120,160,126,226,271,271,46,42.3022236,-71.12398789,"12-20-1979","Along south bank of Castor River","13-SE",70
-"1251-79*E","Betula","nigra","Betula_nigra","BENI","River Birch",87754,2015,36,NA,150,NA,NA,218,240,240,46,42.3022236,-71.12398789,"12-20-1979","Along south bank of Castor River","13-SE",70
-"12565*C","Acer","saccharum","Acer_saccharum","ACSA3","Sugar Maple",92208,2016,13,121,118,NA,130,286,NA,286,46,42.30346585,-71.12008242,"10-15-1883","","11-SE",97.6
-"12565*C","Acer","saccharum","Acer_saccharum","ACSA3","Sugar Maple",92208,2017,13,101,108,127,113,288,NA,288,46,42.30346585,-71.12008242,"10-15-1883","","11-SE",97.6
-"12565*C","Acer","saccharum","Acer_saccharum","ACSA3","Sugar Maple",92208,2019,13,109,NA,NA,120,276,269,269,46,42.30346585,-71.12008242,"10-15-1883","","11-SE",97.6
-"12565*C","Acer","saccharum","Acer_saccharum","ACSA3","Sugar Maple",92208,2020,13,121,NA,NA,124,278,290,290,46,42.30346585,-71.12008242,"10-15-1883","","11-SE",97.6
-"12565*C","Acer","saccharum","Acer_saccharum","ACSA3","Sugar Maple",92208,2015,13,NA,NA,NA,NA,280,280,280,46,42.30346585,-71.12008242,"10-15-1883","","11-SE",97.6
-"12565*C","Acer","saccharum","Acer_saccharum","ACSA3","Sugar Maple",92208,2018,13,NA,NA,NA,132,272,276,276,46,42.30346585,-71.12008242,"10-15-1883","","11-SE",97.6
-"12651*C","Aesculus","flava","Aesculus_flava","AEFL","Yellow Buckeye",85751,2016,13,105,110,156,108,274,282,282,46,42.30355576,-71.1212595,"07-01-1906","","11-NW",35.3
-"12651*C","Aesculus","flava","Aesculus_flava","AEFL","Yellow Buckeye",85751,2017,13,108,119,NA,108,NA,NA,NA,46,42.30355576,-71.1212595,"07-01-1906","","11-NW",35.3
-"12651*C","Aesculus","flava","Aesculus_flava","AEFL","Yellow Buckeye",85751,2018,13,117,117,151,122,199,NA,199,46,42.30355576,-71.1212595,"07-01-1906","","11-NW",35.3
-"12651*C","Aesculus","flava","Aesculus_flava","AEFL","Yellow Buckeye",85751,2019,13,NA,111,237,111,163,243,243,46,42.30355576,-71.1212595,"07-01-1906","","11-NW",35.3
-"12651*C","Aesculus","flava","Aesculus_flava","AEFL","Yellow Buckeye",85751,2020,13,101,108,147,112,197,206,206,46,42.30355576,-71.1212595,"07-01-1906","","11-NW",35.3
-"12651*C","Aesculus","flava","Aesculus_flava","AEFL","Yellow Buckeye",85751,2021,13,NA,73,NA,100,NA,NA,NA,46,42.30355576,-71.1212595,"07-01-1906","","11-NW",35.3
-"12651*C","Aesculus","flava","Aesculus_flava","AEFL","Yellow Buckeye",85751,2015,13,NA,NA,NA,165,NA,NA,NA,46,42.30355576,-71.1212595,"07-01-1906","","11-NW",35.3
-"12651*D","Aesculus","flava","Aesculus_flava","AEFL","Yellow Buckeye",85755,2016,13,111,113,156,112,260,282,282,46,42.30351523,-71.12133382,"07-01-1906","","11-SW",60.2
-"12651*D","Aesculus","flava","Aesculus_flava","AEFL","Yellow Buckeye",85755,2017,13,108,108,NA,108,267,NA,267,46,42.30351523,-71.12133382,"07-01-1906","","11-SW",60.2
-"12651*D","Aesculus","flava","Aesculus_flava","AEFL","Yellow Buckeye",85755,2018,13,114,117,145,117,159,272,272,46,42.30351523,-71.12133382,"07-01-1906","","11-SW",60.2
-"12651*D","Aesculus","flava","Aesculus_flava","AEFL","Yellow Buckeye",85755,2019,13,NA,NA,NA,115,272,272,272,46,42.30351523,-71.12133382,"07-01-1906","","11-SW",60.2
-"12651*D","Aesculus","flava","Aesculus_flava","AEFL","Yellow Buckeye",85755,2020,13,NA,NA,203,112,250,250,250,46,42.30351523,-71.12133382,"07-01-1906","","11-SW",60.2
-"12651*D","Aesculus","flava","Aesculus_flava","AEFL","Yellow Buckeye",85755,2015,13,NA,NA,NA,165,255,NA,255,46,42.30351523,-71.12133382,"07-01-1906","","11-SW",60.2
-"12651*H","Aesculus","flava","Aesculus_flava","AEFL","Yellow Buckeye",85756,2016,13,110,112,156,112,262,279,279,46,42.3035604,-71.12143904,"07-01-1906","","11-NW",49.1
-"12651*H","Aesculus","flava","Aesculus_flava","AEFL","Yellow Buckeye",85756,2017,13,108,108,NA,108,NA,NA,NA,46,42.3035604,-71.12143904,"07-01-1906","","11-NW",49.1
-"12651*H","Aesculus","flava","Aesculus_flava","AEFL","Yellow Buckeye",85756,2018,13,114,117,145,117,NA,NA,NA,46,42.3035604,-71.12143904,"07-01-1906","","11-NW",49.1
-"12651*H","Aesculus","flava","Aesculus_flava","AEFL","Yellow Buckeye",85756,2020,13,NA,NA,NA,112,189,213,213,46,42.3035604,-71.12143904,"07-01-1906","","11-NW",49.1
-"12651*H","Aesculus","flava","Aesculus_flava","AEFL","Yellow Buckeye",85756,2015,13,NA,NA,NA,165,255,255,255,46,42.3035604,-71.12143904,"07-01-1906","","11-NW",49.1
-"12651*H","Aesculus","flava","Aesculus_flava","AEFL","Yellow Buckeye",85756,2019,13,NA,NA,NA,124,NA,272,272,46,42.3035604,-71.12143904,"07-01-1906","","11-NW",49.1
-"12651*I","Aesculus","flava","Aesculus_flava","AEFL","Yellow Buckeye",85757,2016,26,114,129,166,116,189,NA,189,46,42.2931417,-71.12879258,"07-01-1906","","57-NE",61.1
-"12651*I","Aesculus","flava","Aesculus_flava","AEFL","Yellow Buckeye",85757,2017,26,107,NA,254,114,247,256,256,46,42.2931417,-71.12879258,"07-01-1906","","57-NE",61.1
-"12651*I","Aesculus","flava","Aesculus_flava","AEFL","Yellow Buckeye",85757,2018,26,116,124,148,117,260,260,260,46,42.2931417,-71.12879258,"07-01-1906","","57-NE",61.1
-"12651*I","Aesculus","flava","Aesculus_flava","AEFL","Yellow Buckeye",85757,2019,26,104,115,152,109,257,257,257,46,42.2931417,-71.12879258,"07-01-1906","","57-NE",61.1
-"12651*I","Aesculus","flava","Aesculus_flava","AEFL","Yellow Buckeye",85757,2020,26,119,120,155,120,190,207,207,46,42.2931417,-71.12879258,"07-01-1906","","57-NE",61.1
-"12651*I","Aesculus","flava","Aesculus_flava","AEFL","Yellow Buckeye",85757,2021,26,110,117,143,110,272,289,289,46,42.2931417,-71.12879258,"07-01-1906","","57-NE",61.1
-"12651*I","Aesculus","flava","Aesculus_flava","AEFL","Yellow Buckeye",85757,2022,26,115,115,140,115,199,NA,199,46,42.2931417,-71.12879258,"07-01-1906","","57-NE",61.1
-"12651*I","Aesculus","flava","Aesculus_flava","AEFL","Yellow Buckeye",85757,2023,26,NA,112,143,112,268,NA,268,46,42.2931417,-71.12879258,"07-01-1906","","57-NE",61.1
-"12651*I","Aesculus","flava","Aesculus_flava","AEFL","Yellow Buckeye",85757,2024,26,108,116,148,113,245,254,254,46,42.2931417,-71.12879258,"07-01-1906","","57-NE",61.1
-"12843*A","Betula","alleghaniensis","Betula_alleghaniensis","BEAL2","Yellow Birch",85759,2016,36,109,104,207,114,278,281,281,46,42.3020682,-71.12386246,"10-15-1900","","14-SW",73.8
-"12843*A","Betula","alleghaniensis","Betula_alleghaniensis","BEAL2","Yellow Birch",85759,2017,36,102,118,156,117,242,251,251,46,42.3020682,-71.12386246,"10-15-1900","","14-SW",73.8
-"12843*A","Betula","alleghaniensis","Betula_alleghaniensis","BEAL2","Yellow Birch",85759,2018,36,118,118,151,122,256,277,277,46,42.3020682,-71.12386246,"10-15-1900","","14-SW",73.8
-"12843*A","Betula","alleghaniensis","Betula_alleghaniensis","BEAL2","Yellow Birch",85759,2019,36,107,109,142,114,249,262,262,46,42.3020682,-71.12386246,"10-15-1900","","14-SW",73.8
-"12843*A","Betula","alleghaniensis","Betula_alleghaniensis","BEAL2","Yellow Birch",85759,2020,36,110,119,160,126,257,257,257,46,42.3020682,-71.12386246,"10-15-1900","","14-SW",73.8
-"12843*A","Betula","alleghaniensis","Betula_alleghaniensis","BEAL2","Yellow Birch",85759,2021,36,108,100,152,114,261,261,261,46,42.3020682,-71.12386246,"10-15-1900","","14-SW",73.8
-"12843*A","Betula","alleghaniensis","Betula_alleghaniensis","BEAL2","Yellow Birch",85759,2022,36,105,126,147,125,250,250,250,46,42.3020682,-71.12386246,"10-15-1900","","14-SW",73.8
-"12843*A","Betula","alleghaniensis","Betula_alleghaniensis","BEAL2","Yellow Birch",85759,2023,36,104,77,139,104,256,256,256,46,42.3020682,-71.12386246,"10-15-1900","","14-SW",73.8
-"12843*A","Betula","alleghaniensis","Betula_alleghaniensis","BEAL2","Yellow Birch",85759,2015,36,NA,150,191,NA,250,278,278,46,42.3020682,-71.12386246,"10-15-1900","","14-SW",73.8
-"12843*A","Betula","alleghaniensis","Betula_alleghaniensis","BEAL2","Yellow Birch",85759,2024,36,NA,NA,159,124,NA,NA,NA,46,42.3020682,-71.12386246,"10-15-1900","","14-SW",73.8
-"12843*D","Betula","alleghaniensis","Betula_alleghaniensis","BEAL2","Yellow Birch",85761,2016,36,112,101,207,119,271,284,284,46,42.302041,-71.12388059,"10-15-1900","","14-SW",70.9
-"12843*D","Betula","alleghaniensis","Betula_alleghaniensis","BEAL2","Yellow Birch",85761,2017,36,102,118,149,118,242,242,242,46,42.302041,-71.12388059,"10-15-1900","","14-SW",70.9
-"12843*D","Betula","alleghaniensis","Betula_alleghaniensis","BEAL2","Yellow Birch",85761,2018,36,114,122,140,123,266,277,277,46,42.302041,-71.12388059,"10-15-1900","","14-SW",70.9
-"12843*D","Betula","alleghaniensis","Betula_alleghaniensis","BEAL2","Yellow Birch",85761,2019,36,107,110,157,122,260,264,264,46,42.302041,-71.12388059,"10-15-1900","","14-SW",70.9
-"12843*D","Betula","alleghaniensis","Betula_alleghaniensis","BEAL2","Yellow Birch",85761,2020,36,112,85,184,126,258,271,271,46,42.302041,-71.12388059,"10-15-1900","","14-SW",70.9
-"12843*D","Betula","alleghaniensis","Betula_alleghaniensis","BEAL2","Yellow Birch",85761,2015,36,NA,150,202,NA,270,NA,270,46,42.302041,-71.12388059,"10-15-1900","","14-SW",70.9
-"12843*E","Betula","alleghaniensis","Betula_alleghaniensis","BEAL2","Yellow Birch",85762,2016,36,102,111,182,114,260,281,281,46,42.30194577,-71.12374252,"10-15-1900","","14-SW",56.2
-"12843*E","Betula","alleghaniensis","Betula_alleghaniensis","BEAL2","Yellow Birch",85762,2017,36,102,118,156,117,242,242,242,46,42.30194577,-71.12374252,"10-15-1900","","14-SW",56.2
-"12843*E","Betula","alleghaniensis","Betula_alleghaniensis","BEAL2","Yellow Birch",85762,2018,36,114,118,144,122,272,277,277,46,42.30194577,-71.12374252,"10-15-1900","","14-SW",56.2
-"12843*E","Betula","alleghaniensis","Betula_alleghaniensis","BEAL2","Yellow Birch",85762,2019,36,107,109,159,110,249,261,261,46,42.30194577,-71.12374252,"10-15-1900","","14-SW",56.2
-"12843*E","Betula","alleghaniensis","Betula_alleghaniensis","BEAL2","Yellow Birch",85762,2020,36,108,85,160,126,226,271,271,46,42.30194577,-71.12374252,"10-15-1900","","14-SW",56.2
-"12843*E","Betula","alleghaniensis","Betula_alleghaniensis","BEAL2","Yellow Birch",85762,2015,36,NA,150,187,NA,250,250,250,46,42.30194577,-71.12374252,"10-15-1900","","14-SW",56.2
-"12843*H","Betula","alleghaniensis","Betula_alleghaniensis","BEAL2","Yellow Birch",85763,2016,36,110,111,207,121,281,289,289,46,42.30199149,-71.12371027,"10-15-1900","","14-SW",64.6
-"12843*H","Betula","alleghaniensis","Betula_alleghaniensis","BEAL2","Yellow Birch",85763,2017,36,102,120,156,117,288,288,288,46,42.30199149,-71.12371027,"10-15-1900","","14-SW",64.6
-"12843*H","Betula","alleghaniensis","Betula_alleghaniensis","BEAL2","Yellow Birch",85763,2018,36,118,111,154,122,277,277,277,46,42.30199149,-71.12371027,"10-15-1900","","14-SW",64.6
-"12843*H","Betula","alleghaniensis","Betula_alleghaniensis","BEAL2","Yellow Birch",85763,2019,36,112,112,258,122,265,265,265,46,42.30199149,-71.12371027,"10-15-1900","","14-SW",64.6
-"12843*H","Betula","alleghaniensis","Betula_alleghaniensis","BEAL2","Yellow Birch",85763,2020,36,120,120,264,126,271,271,271,46,42.30199149,-71.12371027,"10-15-1900","","14-SW",64.6
-"12843*H","Betula","alleghaniensis","Betula_alleghaniensis","BEAL2","Yellow Birch",85763,2015,36,NA,167,194,NA,282,282,282,46,42.30199149,-71.12371027,"10-15-1900","","14-SW",64.6
-"12907*B","Carya","ovata","Carya_ovata","CAOV2","Shagbark Hickory",86268,2016,33,130,142,150,131,284,295,295,46,42.30172976,-71.12580046,"10-18-1883","","19-NW",54.8
-"12907*B","Carya","ovata","Carya_ovata","CAOV2","Shagbark Hickory",86268,2017,33,105,124,172,118,278,264,264,46,42.30172976,-71.12580046,"10-18-1883","","19-NW",54.8
-"12907*B","Carya","ovata","Carya_ovata","CAOV2","Shagbark Hickory",86268,2018,33,118,125,171,125,272,279,279,46,42.30172976,-71.12580046,"10-18-1883","","19-NW",54.8
-"12907*B","Carya","ovata","Carya_ovata","CAOV2","Shagbark Hickory",86268,2019,33,110,124,188,121,260,264,264,46,42.30172976,-71.12580046,"10-18-1883","","19-NW",54.8
-"12907*B","Carya","ovata","Carya_ovata","CAOV2","Shagbark Hickory",86268,2020,33,125,140,169,134,276,NA,276,46,42.30172976,-71.12580046,"10-18-1883","","19-NW",54.8
-"12907*B","Carya","ovata","Carya_ovata","CAOV2","Shagbark Hickory",86268,2015,33,NA,NA,161,NA,NA,NA,NA,46,42.30172976,-71.12580046,"10-18-1883","","19-NW",54.8
-"12907*B","Carya","ovata","Carya_ovata","CAOV2","Shagbark Hickory",86268,2022,33,NA,NA,NA,126,NA,NA,NA,46,42.30172976,-71.12580046,"10-18-1883","","19-NW",54.8
-"12907*D","Carya","ovata","Carya_ovata","CAOV2","Shagbark Hickory",86269,2017,33,105,118,172,118,264,264,264,46,42.30168923,-71.12587438,"10-18-1883","","19-NW",51.8
-"12907*D","Carya","ovata","Carya_ovata","CAOV2","Shagbark Hickory",86269,2018,33,118,125,158,125,272,279,279,46,42.30168923,-71.12587438,"10-18-1883","","19-NW",51.8
-"12907*D","Carya","ovata","Carya_ovata","CAOV2","Shagbark Hickory",86269,2019,33,108,124,160,124,248,264,264,46,42.30168923,-71.12587438,"10-18-1883","","19-NW",51.8
-"12907*D","Carya","ovata","Carya_ovata","CAOV2","Shagbark Hickory",86269,2020,33,125,141,168,134,276,NA,276,46,42.30168923,-71.12587438,"10-18-1883","","19-NW",51.8
-"12907*D","Carya","ovata","Carya_ovata","CAOV2","Shagbark Hickory",86269,2016,33,130,143,NA,132,284,295,295,46,42.30168923,-71.12587438,"10-18-1883","","19-NW",51.8
-"12907*D","Carya","ovata","Carya_ovata","CAOV2","Shagbark Hickory",86269,2022,33,NA,NA,NA,126,NA,NA,NA,46,42.30168923,-71.12587438,"10-18-1883","","19-NW",51.8
-"12907*G","Carya","ovata","Carya_ovata","CAOV2","Shagbark Hickory",86270,2016,33,110,127,200,127,278,289,289,46,42.30181554,-71.1256858,"10-18-1883","","19-NW",59.5
-"12907*G","Carya","ovata","Carya_ovata","CAOV2","Shagbark Hickory",86270,2017,33,105,117,172,117,253,253,253,46,42.30181554,-71.1256858,"10-18-1883","","19-NW",59.5
-"12907*G","Carya","ovata","Carya_ovata","CAOV2","Shagbark Hickory",86270,2018,33,122,125,239,125,272,279,279,46,42.30181554,-71.1256858,"10-18-1883","","19-NW",59.5
-"12907*G","Carya","ovata","Carya_ovata","CAOV2","Shagbark Hickory",86270,2019,33,108,119,160,119,260,264,264,46,42.30181554,-71.1256858,"10-18-1883","","19-NW",59.5
-"12907*G","Carya","ovata","Carya_ovata","CAOV2","Shagbark Hickory",86270,2020,33,125,129,170,129,262,NA,262,46,42.30181554,-71.1256858,"10-18-1883","","19-NW",59.5
-"12907*G","Carya","ovata","Carya_ovata","CAOV2","Shagbark Hickory",86270,2022,33,116,131,147,126,258,NA,258,46,42.30181554,-71.1256858,"10-18-1883","","19-NW",59.5
-"12907*G","Carya","ovata","Carya_ovata","CAOV2","Shagbark Hickory",86270,2023,33,NA,118,NA,138,NA,NA,NA,46,42.30181554,-71.1256858,"10-18-1883","","19-NW",59.5
-"12907*G","Carya","ovata","Carya_ovata","CAOV2","Shagbark Hickory",86270,2021,33,115,NA,NA,124,NA,NA,NA,46,42.30181554,-71.1256858,"10-18-1883","","19-NW",59.5
-"12907*G","Carya","ovata","Carya_ovata","CAOV2","Shagbark Hickory",86270,2015,33,NA,NA,169,NA,NA,NA,NA,46,42.30181554,-71.1256858,"10-18-1883","","19-NW",59.5
-"12907*I","Carya","ovata","Carya_ovata","CAOV2","Shagbark Hickory",86271,2016,33,130,143,NA,132,278,284,284,46,42.30185516,-71.12559225,"10-18-1883","","19-NW",51
-"12907*I","Carya","ovata","Carya_ovata","CAOV2","Shagbark Hickory",86271,2017,33,105,118,172,118,260,264,264,46,42.30185516,-71.12559225,"10-18-1883","","19-NW",51
-"12907*I","Carya","ovata","Carya_ovata","CAOV2","Shagbark Hickory",86271,2018,33,118,125,158,125,272,279,279,46,42.30185516,-71.12559225,"10-18-1883","","19-NW",51
-"12907*I","Carya","ovata","Carya_ovata","CAOV2","Shagbark Hickory",86271,2019,33,108,119,160,124,260,264,264,46,42.30185516,-71.12559225,"10-18-1883","","19-NW",51
-"12907*I","Carya","ovata","Carya_ovata","CAOV2","Shagbark Hickory",86271,2020,33,125,NA,169,136,250,NA,250,46,42.30185516,-71.12559225,"10-18-1883","","19-NW",51
-"12907*I","Carya","ovata","Carya_ovata","CAOV2","Shagbark Hickory",86271,2021,33,115,NA,NA,124,270,NA,270,46,42.30185516,-71.12559225,"10-18-1883","","19-NW",51
-"12907*I","Carya","ovata","Carya_ovata","CAOV2","Shagbark Hickory",86271,2015,33,NA,NA,161,NA,NA,NA,NA,46,42.30185516,-71.12559225,"10-18-1883","","19-NW",51
-"12907*I","Carya","ovata","Carya_ovata","CAOV2","Shagbark Hickory",86271,2022,33,NA,NA,NA,126,NA,NA,NA,46,42.30185516,-71.12559225,"10-18-1883","","19-NW",51
-"12907*N","Carya","ovata","Carya_ovata","CAOV2","Shagbark Hickory",86272,2016,33,125,143,150,132,285,295,295,46,42.30163563,-71.12561522,"10-18-1883","","19-NW",61.2
-"12907*N","Carya","ovata","Carya_ovata","CAOV2","Shagbark Hickory",86272,2017,33,112,120,172,118,253,293,293,46,42.30163563,-71.12561522,"10-18-1883","","19-NW",61.2
-"12907*N","Carya","ovata","Carya_ovata","CAOV2","Shagbark Hickory",86272,2018,33,118,125,156,125,274,282,282,46,42.30163563,-71.12561522,"10-18-1883","","19-NW",61.2
-"12907*N","Carya","ovata","Carya_ovata","CAOV2","Shagbark Hickory",86272,2019,33,108,121,145,124,260,264,264,46,42.30163563,-71.12561522,"10-18-1883","","19-NW",61.2
-"12907*N","Carya","ovata","Carya_ovata","CAOV2","Shagbark Hickory",86272,2020,33,125,129,167,134,273,NA,273,46,42.30163563,-71.12561522,"10-18-1883","","19-NW",61.2
-"12907*N","Carya","ovata","Carya_ovata","CAOV2","Shagbark Hickory",86272,2022,33,114,129,152,126,286,NA,286,46,42.30163563,-71.12561522,"10-18-1883","","19-NW",61.2
-"12907*N","Carya","ovata","Carya_ovata","CAOV2","Shagbark Hickory",86272,2021,33,115,NA,NA,NA,NA,NA,NA,46,42.30163563,-71.12561522,"10-18-1883","","19-NW",61.2
-"12907*N","Carya","ovata","Carya_ovata","CAOV2","Shagbark Hickory",86272,2015,33,NA,NA,161,NA,NA,NA,NA,46,42.30163563,-71.12561522,"10-18-1883","","19-NW",61.2
-"12907*N","Carya","ovata","Carya_ovata","CAOV2","Shagbark Hickory",86272,2023,33,NA,NA,NA,138,NA,NA,NA,46,42.30163563,-71.12561522,"10-18-1883","","19-NW",61.2
-"1323-82*A","Tilia","americana","Tilia_americana","TIAM","American Basswood",86289,2016,26,94,152,NA,118,257,286,286,46,42.29514117,-71.12601307,"10-08-1982","","51-NW",94.3
-"1323-82*A","Tilia","americana","Tilia_americana","TIAM","American Basswood",86289,2017,26,98,110,184,107,295,257,257,46,42.29514117,-71.12601307,"10-08-1982","","51-NW",94.3
-"1323-82*A","Tilia","americana","Tilia_americana","TIAM","American Basswood",86289,2018,26,121,136,188,122,276,271,271,46,42.29514117,-71.12601307,"10-08-1982","","51-NW",94.3
-"1323-82*A","Tilia","americana","Tilia_americana","TIAM","American Basswood",86289,2019,26,115,140,186,115,267,293,293,46,42.29514117,-71.12601307,"10-08-1982","","51-NW",94.3
-"1323-82*A","Tilia","americana","Tilia_americana","TIAM","American Basswood",86289,2020,26,116,147,196,125,261,261,261,46,42.29514117,-71.12601307,"10-08-1982","","51-NW",94.3
-"1323-82*A","Tilia","americana","Tilia_americana","TIAM","American Basswood",86289,2021,26,110,127,183,117,281,289,289,46,42.29514117,-71.12601307,"10-08-1982","","51-NW",94.3
-"1323-82*A","Tilia","americana","Tilia_americana","TIAM","American Basswood",86289,2022,26,106,132,186,117,NA,NA,NA,46,42.29514117,-71.12601307,"10-08-1982","","51-NW",94.3
-"1323-82*A","Tilia","americana","Tilia_americana","TIAM","American Basswood",86289,2024,26,109,134,191,116,273,273,273,46,42.29514117,-71.12601307,"10-08-1982","","51-NW",94.3
-"1323-82*A","Tilia","americana","Tilia_americana","TIAM","American Basswood",86289,2023,26,94,143,298,112,298,298,298,46,42.29514117,-71.12601307,"10-08-1982","","51-NW",94.3
-"1323-82*A","Tilia","americana","Tilia_americana","TIAM","American Basswood",86289,2015,26,NA,154,NA,NA,256,256,256,46,42.29514117,-71.12601307,"10-08-1982","","51-NW",94.3
-"15350*A","Acer","rubrum","Acer_rubrum","ACRU","Red Maple",166765,2019,13,91,86,NA,111,NA,263,263,46,42.30387456,-71.12074952,"04-16-1924","","11-NW",77.5
-"15350*A","Acer","rubrum","Acer_rubrum","ACRU","Red Maple",166765,2020,13,105,71,NA,120,220,257,257,46,42.30387456,-71.12074952,"04-16-1924","","11-NW",77.5
-"15350*A","Acer","rubrum","Acer_rubrum","ACRU","Red Maple",166765,2021,13,101,81,NA,114,236,268,268,46,42.30387456,-71.12074952,"04-16-1924","","11-NW",77.5
-"15350*A","Acer","rubrum","Acer_rubrum","ACRU","Red Maple",166765,2022,13,103,65,NA,113,153,202,202,46,42.30387456,-71.12074952,"04-16-1924","","11-NW",77.5
-"15350*A","Acer","rubrum","Acer_rubrum","ACRU","Red Maple",166765,2023,13,102,NA,NA,104,231,263,263,46,42.30387456,-71.12074952,"04-16-1924","","11-NW",77.5
-"15350*A","Acer","rubrum","Acer_rubrum","ACRU","Red Maple",166765,2024,13,104,NA,NA,111,227,NA,227,46,42.30387456,-71.12074952,"04-16-1924","","11-NW",77.5
-"15350*A","Acer","rubrum","Acer_rubrum","ACRU","Red Maple",166765,2018,13,NA,NA,NA,NA,NA,293,293,46,42.30387456,-71.12074952,"04-16-1924","","11-NW",77.5
-"16611*F","Populus","deltoides","Populus_deltoides","PODE3","Eastern Cottonwood",86278,2016,26,110,NA,NA,136,286,265,265,46,42.29432229,-71.12466088,"08-15-1895","","51-SE",93.9
-"16611*F","Populus","deltoides","Populus_deltoides","PODE3","Eastern Cottonwood",86278,2017,26,107,109,125,124,250,247,247,46,42.29432229,-71.12466088,"08-15-1895","","51-SE",93.9
-"16611*F","Populus","deltoides","Populus_deltoides","PODE3","Eastern Cottonwood",86278,2018,26,117,124,147,124,270,260,260,46,42.29432229,-71.12466088,"08-15-1895","","51-SE",93.9
-"16611*F","Populus","deltoides","Populus_deltoides","PODE3","Eastern Cottonwood",86278,2019,26,123,NA,123,123,260,260,260,46,42.29432229,-71.12466088,"08-15-1895","","51-SE",93.9
-"16611*F","Populus","deltoides","Populus_deltoides","PODE3","Eastern Cottonwood",86278,2020,26,125,104,127,126,261,261,261,46,42.29432229,-71.12466088,"08-15-1895","","51-SE",93.9
-"16611*F","Populus","deltoides","Populus_deltoides","PODE3","Eastern Cottonwood",86278,2021,26,120,103,123,123,278,257,257,46,42.29432229,-71.12466088,"08-15-1895","","51-SE",93.9
-"16611*F","Populus","deltoides","Populus_deltoides","PODE3","Eastern Cottonwood",86278,2022,26,117,108,128,127,269,269,269,46,42.29432229,-71.12466088,"08-15-1895","","51-SE",93.9
-"16611*F","Populus","deltoides","Populus_deltoides","PODE3","Eastern Cottonwood",86278,2024,26,NA,109,131,120,238,254,254,46,42.29432229,-71.12466088,"08-15-1895","","51-SE",93.9
-"16611*F","Populus","deltoides","Populus_deltoides","PODE3","Eastern Cottonwood",86278,2023,26,NA,105,129,125,254,229,229,46,42.29432229,-71.12466088,"08-15-1895","","51-SE",93.9
-"16611*F","Populus","deltoides","Populus_deltoides","PODE3","Eastern Cottonwood",86278,2015,26,NA,NA,NA,NA,NA,256,256,46,42.29432229,-71.12466088,"08-15-1895","","51-SE",93.9
-"16611*J","Populus","deltoides","Populus_deltoides","PODE3","Eastern Cottonwood",86279,2016,26,NA,NA,NA,136,286,NA,286,46,42.2941909,-71.12464076,"08-15-1895","","55-NE",71
-"16611*J","Populus","deltoides","Populus_deltoides","PODE3","Eastern Cottonwood",86279,2017,26,107,109,124,124,231,236,236,46,42.2941909,-71.12464076,"08-15-1895","","55-NE",71
-"16611*J","Populus","deltoides","Populus_deltoides","PODE3","Eastern Cottonwood",86279,2018,26,117,124,147,124,236,236,236,46,42.2941909,-71.12464076,"08-15-1895","","55-NE",71
-"16611*J","Populus","deltoides","Populus_deltoides","PODE3","Eastern Cottonwood",86279,2019,26,NA,NA,123,128,245,245,245,46,42.2941909,-71.12464076,"08-15-1895","","55-NE",71
-"16611*J","Populus","deltoides","Populus_deltoides","PODE3","Eastern Cottonwood",86279,2020,26,126,113,132,132,255,261,261,46,42.2941909,-71.12464076,"08-15-1895","","55-NE",71
-"16611*J","Populus","deltoides","Populus_deltoides","PODE3","Eastern Cottonwood",86279,2021,26,123,NA,123,125,257,257,257,46,42.2941909,-71.12464076,"08-15-1895","","55-NE",71
-"16611*J","Populus","deltoides","Populus_deltoides","PODE3","Eastern Cottonwood",86279,2022,26,117,108,127,127,NA,NA,NA,46,42.2941909,-71.12464076,"08-15-1895","","55-NE",71
-"16611*J","Populus","deltoides","Populus_deltoides","PODE3","Eastern Cottonwood",86279,2023,26,NA,NA,NA,129,254,254,254,46,42.2941909,-71.12464076,"08-15-1895","","55-NE",71
-"16611*J","Populus","deltoides","Populus_deltoides","PODE3","Eastern Cottonwood",86279,2024,26,NA,NA,NA,123,248,248,248,46,42.2941909,-71.12464076,"08-15-1895","","55-NE",71
-"16611*K","Populus","deltoides","Populus_deltoides","PODE3","Eastern Cottonwood",86280,2016,26,122,NA,NA,136,286,304,304,46,42.29404926,-71.12460511,"08-15-1895","","55-NE",81.5
-"16611*K","Populus","deltoides","Populus_deltoides","PODE3","Eastern Cottonwood",86280,2017,26,107,109,124,124,239,239,239,46,42.29404926,-71.12460511,"08-15-1895","","55-NE",81.5
-"16611*K","Populus","deltoides","Populus_deltoides","PODE3","Eastern Cottonwood",86280,2019,26,NA,NA,123,128,245,260,260,46,42.29404926,-71.12460511,"08-15-1895","","55-NE",81.5
-"16611*K","Populus","deltoides","Populus_deltoides","PODE3","Eastern Cottonwood",86280,2020,26,125,113,127,132,255,261,261,46,42.29404926,-71.12460511,"08-15-1895","","55-NE",81.5
-"16611*K","Populus","deltoides","Populus_deltoides","PODE3","Eastern Cottonwood",86280,2021,26,123,103,123,125,257,257,257,46,42.29404926,-71.12460511,"08-15-1895","","55-NE",81.5
-"16611*K","Populus","deltoides","Populus_deltoides","PODE3","Eastern Cottonwood",86280,2022,26,128,108,128,130,NA,NA,NA,46,42.29404926,-71.12460511,"08-15-1895","","55-NE",81.5
-"16611*K","Populus","deltoides","Populus_deltoides","PODE3","Eastern Cottonwood",86280,2018,26,117,124,147,129,251,251,251,46,42.29404926,-71.12460511,"08-15-1895","","55-NE",81.5
-"16611*K","Populus","deltoides","Populus_deltoides","PODE3","Eastern Cottonwood",86280,2015,26,NA,NA,NA,NA,249,NA,249,46,42.29404926,-71.12460511,"08-15-1895","","55-NE",81.5
-"16611*K","Populus","deltoides","Populus_deltoides","PODE3","Eastern Cottonwood",86280,2023,26,NA,NA,NA,129,266,266,266,46,42.29404926,-71.12460511,"08-15-1895","","55-NE",81.5
-"16611*K","Populus","deltoides","Populus_deltoides","PODE3","Eastern Cottonwood",86280,2024,26,NA,NA,NA,127,254,254,254,46,42.29404926,-71.12460511,"08-15-1895","","55-NE",81.5
-"17527*D","Tilia","americana","Tilia_americana","TIAM","American Basswood",87763,2016,13,105,152,193,115,252,281,281,46,42.3051232,-71.12189286,"11-15-1897","","7-NE",68.1
-"17527*D","Tilia","americana","Tilia_americana","TIAM","American Basswood",87763,2017,13,106,127,NA,107,234,234,234,46,42.3051232,-71.12189286,"11-15-1897","","7-NE",68.1
-"17527*D","Tilia","americana","Tilia_americana","TIAM","American Basswood",87763,2018,13,118,131,NA,122,234,227,227,46,42.3051232,-71.12189286,"11-15-1897","","7-NE",68.1
-"17527*D","Tilia","americana","Tilia_americana","TIAM","American Basswood",87763,2019,13,111,138,197,111,214,244,244,46,42.3051232,-71.12189286,"11-15-1897","","7-NE",68.1
-"17527*D","Tilia","americana","Tilia_americana","TIAM","American Basswood",87763,2020,13,108,145,189,119,220,229,229,46,42.3051232,-71.12189286,"11-15-1897","","7-NE",68.1
-"17527*D","Tilia","americana","Tilia_americana","TIAM","American Basswood",87763,2021,13,108,126,201,109,211,213,213,46,42.3051232,-71.12189286,"11-15-1897","","7-NE",68.1
-"17527*D","Tilia","americana","Tilia_americana","TIAM","American Basswood",87763,2022,13,107,138,188,107,236,236,236,46,42.3051232,-71.12189286,"11-15-1897","","7-NE",68.1
-"17527*D","Tilia","americana","Tilia_americana","TIAM","American Basswood",87763,2023,13,104,NA,173,104,231,235,235,46,42.3051232,-71.12189286,"11-15-1897","","7-NE",68.1
-"17527*D","Tilia","americana","Tilia_americana","TIAM","American Basswood",87763,2024,13,NA,134,185,111,227,NA,227,46,42.3051232,-71.12189286,"11-15-1897","","7-NE",68.1
-"17527*D","Tilia","americana","Tilia_americana","TIAM","American Basswood",87763,2015,13,NA,NA,NA,NA,230,255,255,46,42.3051232,-71.12189286,"11-15-1897","","7-NE",68.1
-"17538*A","Tilia","americana","Tilia_americana","TIAM","American Basswood",87757,2016,26,94,NA,NA,118,280,280,280,46,42.29325928,-71.12871082,"09-15-1906","","53-SE",105.9
-"17538*A","Tilia","americana","Tilia_americana","TIAM","American Basswood",87757,2017,26,109,161,184,116,270,270,270,46,42.29325928,-71.12871082,"09-15-1906","","53-SE",105.9
-"17538*A","Tilia","americana","Tilia_americana","TIAM","American Basswood",87757,2018,26,123,NA,246,124,260,262,262,46,42.29325928,-71.12871082,"09-15-1906","","53-SE",105.9
-"17538*A","Tilia","americana","Tilia_americana","TIAM","American Basswood",87757,2019,26,113,140,248,123,260,276,276,46,42.29325928,-71.12871082,"09-15-1906","","53-SE",105.9
-"17538*A","Tilia","americana","Tilia_americana","TIAM","American Basswood",87757,2020,26,123,147,188,125,260,260,260,46,42.29325928,-71.12871082,"09-15-1906","","53-SE",105.9
-"17538*A","Tilia","americana","Tilia_americana","TIAM","American Basswood",87757,2021,26,113,131,183,117,285,285,285,46,42.29325928,-71.12871082,"09-15-1906","","53-SE",105.9
-"17538*A","Tilia","americana","Tilia_americana","TIAM","American Basswood",87757,2022,26,106,142,NA,123,NA,NA,NA,46,42.29325928,-71.12871082,"09-15-1906","","53-SE",105.9
-"17538*A","Tilia","americana","Tilia_americana","TIAM","American Basswood",87757,2023,26,94,143,193,112,NA,NA,NA,46,42.29325928,-71.12871082,"09-15-1906","","53-SE",105.9
-"17538*A","Tilia","americana","Tilia_americana","TIAM","American Basswood",87757,2024,26,109,141,NA,119,254,273,273,46,42.29325928,-71.12871082,"09-15-1906","","53-SE",105.9
-"187-2006*B","Acer","saccharum","Acer_saccharum","ACSA3","Sugar Maple",92203,2016,13,130,NA,NA,133,288,315,315,46,42.30431226,-71.12006593,"04-26-2006","","8-SE",21.9
-"187-2006*B","Acer","saccharum","Acer_saccharum","ACSA3","Sugar Maple",92203,2017,13,127,NA,NA,131,294,294,294,46,42.30431226,-71.12006593,"04-26-2006","","8-SE",21.9
-"187-2006*B","Acer","saccharum","Acer_saccharum","ACSA3","Sugar Maple",92203,2018,13,125,NA,NA,127,285,292,292,46,42.30431226,-71.12006593,"04-26-2006","","8-SE",21.9
-"187-2006*B","Acer","saccharum","Acer_saccharum","ACSA3","Sugar Maple",92203,2019,13,120,NA,NA,126,260,285,285,46,42.30431226,-71.12006593,"04-26-2006","","8-SE",21.9
-"187-2006*B","Acer","saccharum","Acer_saccharum","ACSA3","Sugar Maple",92203,2020,13,126,NA,NA,133,253,271,271,46,42.30431226,-71.12006593,"04-26-2006","","8-SE",21.9
-"187-2006*B","Acer","saccharum","Acer_saccharum","ACSA3","Sugar Maple",92203,2021,13,109,121,134,126,276,276,276,46,42.30431226,-71.12006593,"04-26-2006","","8-SE",21.9
-"187-2006*B","Acer","saccharum","Acer_saccharum","ACSA3","Sugar Maple",92203,2022,13,125,NA,NA,133,266,266,266,46,42.30431226,-71.12006593,"04-26-2006","","8-SE",21.9
-"187-2006*B","Acer","saccharum","Acer_saccharum","ACSA3","Sugar Maple",92203,2023,13,118,108,121,118,274,269,269,46,42.30431226,-71.12006593,"04-26-2006","","8-SE",21.9
-"187-2006*B","Acer","saccharum","Acer_saccharum","ACSA3","Sugar Maple",92203,2024,13,124,NA,NA,128,NA,NA,NA,46,42.30431226,-71.12006593,"04-26-2006","","8-SE",21.9
-"187-2006*B","Acer","saccharum","Acer_saccharum","ACSA3","Sugar Maple",92203,2015,13,NA,NA,NA,NA,280,287,287,46,42.30431226,-71.12006593,"04-26-2006","","8-SE",21.9
-"19804*A","Tilia","americana","Tilia_americana","TIAM","American Basswood",86290,2016,13,111,142,199,115,252,281,281,46,42.30440146,-71.12199832,"07-01-1916","","7-SE",80.5
-"19804*A","Tilia","americana","Tilia_americana","TIAM","American Basswood",86290,2017,13,107,127,193,113,234,234,234,46,42.30440146,-71.12199832,"07-01-1916","","7-SE",80.5
-"19804*A","Tilia","americana","Tilia_americana","TIAM","American Basswood",86290,2018,13,118,133,199,121,231,243,243,46,42.30440146,-71.12199832,"07-01-1916","","7-SE",80.5
-"19804*A","Tilia","americana","Tilia_americana","TIAM","American Basswood",86290,2019,13,109,161,195,114,221,244,244,46,42.30440146,-71.12199832,"07-01-1916","","7-SE",80.5
-"19804*A","Tilia","americana","Tilia_americana","TIAM","American Basswood",86290,2020,13,120,147,180,126,229,250,250,46,42.30440146,-71.12199832,"07-01-1916","","7-SE",80.5
-"19804*A","Tilia","americana","Tilia_americana","TIAM","American Basswood",86290,2021,13,114,132,NA,119,247,254,254,46,42.30440146,-71.12199832,"07-01-1916","","7-SE",80.5
-"19804*A","Tilia","americana","Tilia_americana","TIAM","American Basswood",86290,2015,13,NA,NA,NA,NA,255,255,255,46,42.30440146,-71.12199832,"07-01-1916","","7-SE",80.5
-"20098*A","Carya","glabra","Carya_glabra","CAGL8","Pignut Hickory",86263,2016,33,118,122,150,118,NA,NA,NA,46,42.29994157,-71.1258635,"07-01-1883","","25-SW",62.9
-"20098*A","Carya","glabra","Carya_glabra","CAGL8","Pignut Hickory",86263,2017,33,110,118,166,118,253,253,253,46,42.29994157,-71.1258635,"07-01-1883","","25-SW",62.9
-"20098*A","Carya","glabra","Carya_glabra","CAGL8","Pignut Hickory",86263,2018,33,118,122,153,122,258,258,258,46,42.29994157,-71.1258635,"07-01-1883","","25-SW",62.9
-"20098*A","Carya","glabra","Carya_glabra","CAGL8","Pignut Hickory",86263,2019,33,108,128,145,111,253,264,264,46,42.29994157,-71.1258635,"07-01-1883","","25-SW",62.9
-"20098*A","Carya","glabra","Carya_glabra","CAGL8","Pignut Hickory",86263,2020,33,125,127,168,127,259,NA,259,46,42.29994157,-71.1258635,"07-01-1883","","25-SW",62.9
-"20098*A","Carya","glabra","Carya_glabra","CAGL8","Pignut Hickory",86263,2021,33,113,131,146,115,NA,NA,NA,46,42.29994157,-71.1258635,"07-01-1883","","25-SW",62.9
-"20098*A","Carya","glabra","Carya_glabra","CAGL8","Pignut Hickory",86263,2022,33,114,126,NA,116,251,NA,251,46,42.29994157,-71.1258635,"07-01-1883","","25-SW",62.9
-"20098*A","Carya","glabra","Carya_glabra","CAGL8","Pignut Hickory",86263,2023,33,104,NA,NA,112,NA,NA,NA,46,42.29994157,-71.1258635,"07-01-1883","","25-SW",62.9
-"20098*A","Carya","glabra","Carya_glabra","CAGL8","Pignut Hickory",86263,2024,33,NA,NA,NA,123,NA,NA,NA,46,42.29994157,-71.1258635,"07-01-1883","","25-SW",62.9
-"2019*R","Carya","glabra","Carya_glabra","CAGL8","Pignut Hickory",86266,2016,33,118,118,150,122,285,285,285,46,42.2999657,-71.12566127,"10-19-1883","","25-SW",47.6
-"2019*R","Carya","glabra","Carya_glabra","CAGL8","Pignut Hickory",86266,2017,33,100,117,147,117,253,253,253,46,42.2999657,-71.12566127,"10-19-1883","","25-SW",47.6
-"2019*R","Carya","glabra","Carya_glabra","CAGL8","Pignut Hickory",86266,2018,33,118,122,153,122,258,288,288,46,42.2999657,-71.12566127,"10-19-1883","","25-SW",47.6
-"2019*R","Carya","glabra","Carya_glabra","CAGL8","Pignut Hickory",86266,2019,33,108,115,145,111,251,264,264,46,42.2999657,-71.12566127,"10-19-1883","","25-SW",47.6
-"2019*R","Carya","glabra","Carya_glabra","CAGL8","Pignut Hickory",86266,2020,33,124,126,156,126,260,NA,260,46,42.2999657,-71.12566127,"10-19-1883","","25-SW",47.6
-"2019*R","Carya","glabra","Carya_glabra","CAGL8","Pignut Hickory",86266,2021,33,113,131,146,113,265,NA,265,46,42.2999657,-71.12566127,"10-19-1883","","25-SW",47.6
-"2019*R","Carya","glabra","Carya_glabra","CAGL8","Pignut Hickory",86266,2022,33,114,126,146,119,NA,NA,NA,46,42.2999657,-71.12566127,"10-19-1883","","25-SW",47.6
-"2019*R","Carya","glabra","Carya_glabra","CAGL8","Pignut Hickory",86266,2023,33,104,118,NA,112,NA,NA,NA,46,42.2999657,-71.12566127,"10-19-1883","","25-SW",47.6
-"2019*R","Carya","glabra","Carya_glabra","CAGL8","Pignut Hickory",86266,2024,33,119,128,147,119,NA,NA,NA,46,42.2999657,-71.12566127,"10-19-1883","","25-SW",47.6
-"2019*S","Carya","glabra","Carya_glabra","CAGL8","Pignut Hickory",86265,2016,33,122,130,150,122,285,285,285,46,42.29994973,-71.12573747,"10-19-1883","","25-SW",67.4
-"2019*S","Carya","glabra","Carya_glabra","CAGL8","Pignut Hickory",86265,2017,33,100,118,166,118,253,253,253,46,42.29994973,-71.12573747,"10-19-1883","","25-SW",67.4
-"2019*S","Carya","glabra","Carya_glabra","CAGL8","Pignut Hickory",86265,2018,33,NA,131,153,123,258,288,288,46,42.29994973,-71.12573747,"10-19-1883","","25-SW",67.4
-"2019*S","Carya","glabra","Carya_glabra","CAGL8","Pignut Hickory",86265,2019,33,108,128,155,115,260,264,264,46,42.29994973,-71.12573747,"10-19-1883","","25-SW",67.4
-"2019*S","Carya","glabra","Carya_glabra","CAGL8","Pignut Hickory",86265,2020,33,125,127,168,127,251,NA,251,46,42.29994973,-71.12573747,"10-19-1883","","25-SW",67.4
-"2019*S","Carya","glabra","Carya_glabra","CAGL8","Pignut Hickory",86265,2021,33,118,126,152,123,243,270,270,46,42.29994973,-71.12573747,"10-19-1883","","25-SW",67.4
-"2019*S","Carya","glabra","Carya_glabra","CAGL8","Pignut Hickory",86265,2022,33,114,126,NA,116,251,NA,251,46,42.29994973,-71.12573747,"10-19-1883","","25-SW",67.4
-"2019*S","Carya","glabra","Carya_glabra","CAGL8","Pignut Hickory",86265,2023,33,104,NA,NA,112,NA,NA,NA,46,42.29994973,-71.12573747,"10-19-1883","","25-SW",67.4
-"2019*S","Carya","glabra","Carya_glabra","CAGL8","Pignut Hickory",86265,2024,33,NA,128,NA,123,NA,NA,NA,46,42.29994973,-71.12573747,"10-19-1883","","25-SW",67.4
-"2019*S","Carya","glabra","Carya_glabra","CAGL8","Pignut Hickory",86265,2015,33,NA,NA,161,NA,NA,NA,NA,46,42.29994973,-71.12573747,"10-19-1883","","25-SW",67.4
-"20645*A","Acer","saccharum","Acer_saccharum","ACSA3","Sugar Maple",92206,2016,13,115,111,144,117,293,NA,293,46,42.30370116,-71.12007443,"11-09-1928","","11-NE",85.7
-"20645*A","Acer","saccharum","Acer_saccharum","ACSA3","Sugar Maple",92206,2017,13,107,105,139,113,252,259,259,46,42.30370116,-71.12007443,"11-09-1928","","11-NE",85.7
-"20645*A","Acer","saccharum","Acer_saccharum","ACSA3","Sugar Maple",92206,2019,13,109,NA,NA,111,263,263,263,46,42.30370116,-71.12007443,"11-09-1928","","11-NE",85.7
-"20645*A","Acer","saccharum","Acer_saccharum","ACSA3","Sugar Maple",92206,2020,13,121,NA,NA,124,290,290,290,46,42.30370116,-71.12007443,"11-09-1928","","11-NE",85.7
-"20645*A","Acer","saccharum","Acer_saccharum","ACSA3","Sugar Maple",92206,2015,13,NA,NA,NA,NA,280,280,280,46,42.30370116,-71.12007443,"11-09-1928","","11-NE",85.7
-"20645*A","Acer","saccharum","Acer_saccharum","ACSA3","Sugar Maple",92206,2018,13,NA,NA,NA,132,287,293,293,46,42.30370116,-71.12007443,"11-09-1928","","11-NE",85.7
-"21815*E","Quercus","alba","Quercus_alba","QUAL","White Oak",87758,2017,30,118,118,225,119,271,278,278,46,42.29918666,-71.12348625,"07-01-1931","","32-NW",73.3
-"21815*E","Quercus","alba","Quercus_alba","QUAL","White Oak",87758,2018,30,NA,128,177,126,274,279,279,46,42.29918666,-71.12348625,"07-01-1931","","32-NW",73.3
-"21815*E","Quercus","alba","Quercus_alba","QUAL","White Oak",87758,2019,30,117,NA,183,127,268,286,286,46,42.29918666,-71.12348625,"07-01-1931","","32-NW",73.3
-"21815*E","Quercus","alba","Quercus_alba","QUAL","White Oak",87758,2016,30,115,130,NA,282,282,282,282,46,42.29918666,-71.12348625,"07-01-1931","","32-NW",73.3
-"22099*A","Populus","deltoides","Populus_deltoides","PODE3","Eastern Cottonwood",86282,2016,26,127,101,NA,133,229,229,229,46,42.29378479,-71.124621,"07-01-1911","","55-NE",58
-"22099*A","Populus","deltoides","Populus_deltoides","PODE3","Eastern Cottonwood",86282,2017,26,102,109,NA,120,231,236,236,46,42.29378479,-71.124621,"07-01-1911","","55-NE",58
-"22099*A","Populus","deltoides","Populus_deltoides","PODE3","Eastern Cottonwood",86282,2018,26,117,121,NA,118,236,236,236,46,42.29378479,-71.124621,"07-01-1911","","55-NE",58
-"22099*A","Populus","deltoides","Populus_deltoides","PODE3","Eastern Cottonwood",86282,2019,26,123,104,NA,128,229,229,229,46,42.29378479,-71.124621,"07-01-1911","","55-NE",58
-"22099*A","Populus","deltoides","Populus_deltoides","PODE3","Eastern Cottonwood",86282,2020,26,125,103,NA,127,255,261,261,46,42.29378479,-71.124621,"07-01-1911","","55-NE",58
-"22099*A","Populus","deltoides","Populus_deltoides","PODE3","Eastern Cottonwood",86282,2021,26,123,99,NA,123,243,257,257,46,42.29378479,-71.124621,"07-01-1911","","55-NE",58
-"22099*A","Populus","deltoides","Populus_deltoides","PODE3","Eastern Cottonwood",86282,2022,26,123,105,NA,128,269,NA,269,46,42.29378479,-71.124621,"07-01-1911","","55-NE",58
-"22099*A","Populus","deltoides","Populus_deltoides","PODE3","Eastern Cottonwood",86282,2024,26,120,105,NA,120,245,248,248,46,42.29378479,-71.124621,"07-01-1911","","55-NE",58
-"22099*A","Populus","deltoides","Populus_deltoides","PODE3","Eastern Cottonwood",86282,2023,26,NA,105,NA,129,229,241,241,46,42.29378479,-71.124621,"07-01-1911","","55-NE",58
-"227-2011*A","Quercus","alba","Quercus_alba","QUAL","White Oak",87759,2018,30,NA,128,183,126,NA,296,296,46,42.29933201,-71.12435358,"07-26-2011","","31-NE",66.1
-"227-2011*A","Quercus","alba","Quercus_alba","QUAL","White Oak",87759,2019,30,117,NA,NA,127,268,268,268,46,42.29933201,-71.12435358,"07-26-2011","","31-NE",66.1
-"227-2011*A","Quercus","alba","Quercus_alba","QUAL","White Oak",87759,2017,30,110,127,NA,124,267,288,288,46,42.29933201,-71.12435358,"07-26-2011","","31-NE",66.1
-"227-2011*A","Quercus","alba","Quercus_alba","QUAL","White Oak",87759,2016,30,NA,NA,NA,282,282,282,282,46,42.29933201,-71.12435358,"07-26-2011","","31-NE",66.1
-"22834*B","Acer","saccharum","Acer_saccharum","ACSA3","Sugar Maple",92204,2016,13,109,108,125,112,293,315,315,46,42.3040241,-71.12065871,"02-02-1950","","11-NW",81.9
-"22834*B","Acer","saccharum","Acer_saccharum","ACSA3","Sugar Maple",92204,2017,13,101,105,127,108,271,276,276,46,42.3040241,-71.12065871,"02-02-1950","","11-NW",81.9
-"22834*B","Acer","saccharum","Acer_saccharum","ACSA3","Sugar Maple",92204,2019,13,106,107,126,111,279,278,278,46,42.3040241,-71.12065871,"02-02-1950","","11-NW",81.9
-"22834*B","Acer","saccharum","Acer_saccharum","ACSA3","Sugar Maple",92204,2020,13,122,108,162,121,291,291,291,46,42.3040241,-71.12065871,"02-02-1950","","11-NW",81.9
-"22834*B","Acer","saccharum","Acer_saccharum","ACSA3","Sugar Maple",92204,2021,13,101,91,121,103,276,276,276,46,42.3040241,-71.12065871,"02-02-1950","","11-NW",81.9
-"22834*B","Acer","saccharum","Acer_saccharum","ACSA3","Sugar Maple",92204,2022,13,125,NA,NA,125,153,285,285,46,42.3040241,-71.12065871,"02-02-1950","","11-NW",81.9
-"22834*B","Acer","saccharum","Acer_saccharum","ACSA3","Sugar Maple",92204,2023,13,102,88,121,104,274,274,274,46,42.3040241,-71.12065871,"02-02-1950","","11-NW",81.9
-"22834*B","Acer","saccharum","Acer_saccharum","ACSA3","Sugar Maple",92204,2024,13,121,NA,NA,121,276,283,283,46,42.3040241,-71.12065871,"02-02-1950","","11-NW",81.9
-"22834*B","Acer","saccharum","Acer_saccharum","ACSA3","Sugar Maple",92204,2015,13,NA,NA,NA,NA,280,280,280,46,42.3040241,-71.12065871,"02-02-1950","","11-NW",81.9
-"22834*B","Acer","saccharum","Acer_saccharum","ACSA3","Sugar Maple",92204,2018,13,NA,119,264,125,285,285,285,46,42.3040241,-71.12065871,"02-02-1950","","11-NW",81.9
-"22886*D","Quercus","alba","Quercus_alba","QUAL","White Oak",88311,2017,30,110,127,NA,119,257,285,285,46,42.29940788,-71.12438014,"07-01-1950","","31-NE",87.2
-"22886*D","Quercus","alba","Quercus_alba","QUAL","White Oak",88311,2018,30,NA,128,183,123,NA,296,296,46,42.29940788,-71.12438014,"07-01-1950","","31-NE",87.2
-"22886*D","Quercus","alba","Quercus_alba","QUAL","White Oak",88311,2019,30,117,126,NA,127,260,NA,260,46,42.29940788,-71.12438014,"07-01-1950","","31-NE",87.2
-"22886*D","Quercus","alba","Quercus_alba","QUAL","White Oak",88311,2016,30,115,NA,NA,282,279,282,282,46,42.29940788,-71.12438014,"07-01-1950","","31-NE",87.2
-"358-82*A","Quercus","alba","Quercus_alba","QUAL","White Oak",87761,2017,30,117,NA,266,124,291,300,300,46,42.29920928,-71.12373613,"03-25-1982","","32-NW",38.4
-"358-82*A","Quercus","alba","Quercus_alba","QUAL","White Oak",87761,2018,30,122,131,NA,123,282,282,282,46,42.29920928,-71.12373613,"03-25-1982","","32-NW",38.4
-"358-82*A","Quercus","alba","Quercus_alba","QUAL","White Oak",87761,2019,30,111,129,NA,127,286,291,291,46,42.29920928,-71.12373613,"03-25-1982","","32-NW",38.4
-"358-82*A","Quercus","alba","Quercus_alba","QUAL","White Oak",87761,2024,30,121,NA,NA,128,277,277,277,46,42.29920928,-71.12373613,"03-25-1982","","32-NW",38.4
-"358-82*A","Quercus","alba","Quercus_alba","QUAL","White Oak",87761,2016,30,115,NA,NA,282,282,303,303,46,42.29920928,-71.12373613,"03-25-1982","","32-NW",38.4
-"358-82*A","Quercus","alba","Quercus_alba","QUAL","White Oak",87761,2020,30,NA,NA,NA,126,273,NA,273,46,42.29920928,-71.12373613,"03-25-1982","","32-NW",38.4
-"524-2009*A","Acer","rubrum","Acer_rubrum","ACRU","Red Maple",166767,2019,13,106,92,117,115,269,286,286,46,42.30316247,-71.12125376,"09-09-2009","","11-SW",64.2
-"524-2009*A","Acer","rubrum","Acer_rubrum","ACRU","Red Maple",166767,2020,13,120,NA,124,120,258,271,271,46,42.30316247,-71.12125376,"09-09-2009","","11-SW",64.2
-"524-2009*A","Acer","rubrum","Acer_rubrum","ACRU","Red Maple",166767,2021,13,NA,93,109,122,NA,NA,NA,46,42.30316247,-71.12125376,"09-09-2009","","11-SW",64.2
-"525-2009*A","Acer","rubrum","Acer_rubrum","ACRU","Red Maple",166766,2019,13,107,92,NA,111,286,293,293,46,42.30320004,-71.12119722,"09-09-2009","","11-SW",55.7
-"525-2009*A","Acer","rubrum","Acer_rubrum","ACRU","Red Maple",166766,2020,13,120,NA,NA,120,258,271,271,46,42.30320004,-71.12119722,"09-09-2009","","11-SW",55.7
-"5859*A","Quercus","rubra","Quercus_rubra","QURU","Northern Red Oak",87760,2017,30,110,NA,NA,117,272,288,288,46,42.29994632,-71.12375725,"09-02-1908","","26-SW",80.7
-"5859*A","Quercus","rubra","Quercus_rubra","QURU","Northern Red Oak",87760,2018,30,122,128,NA,122,264,282,282,46,42.29994632,-71.12375725,"09-02-1908","","26-SW",80.7
-"5859*A","Quercus","rubra","Quercus_rubra","QURU","Northern Red Oak",87760,2019,30,107,121,NA,113,260,NA,260,46,42.29994632,-71.12375725,"09-02-1908","","26-SW",80.7
-"5859*A","Quercus","rubra","Quercus_rubra","QURU","Northern Red Oak",87760,2016,30,115,115,NA,127,282,282,282,46,42.29994632,-71.12375725,"09-02-1908","","26-SW",80.7
-"5859*B","Quercus","rubra","Quercus_rubra","QURU","Northern Red Oak",86287,2017,30,110,NA,NA,113,272,291,291,46,42.2999613,-71.12363106,"09-02-1908","","26-SW",92.6
-"5859*B","Quercus","rubra","Quercus_rubra","QURU","Northern Red Oak",86287,2018,30,118,128,208,122,272,282,282,46,42.2999613,-71.12363106,"09-02-1908","","26-SW",92.6
-"5859*B","Quercus","rubra","Quercus_rubra","QURU","Northern Red Oak",86287,2019,30,107,121,158,113,260,260,260,46,42.2999613,-71.12363106,"09-02-1908","","26-SW",92.6
-"5859*B","Quercus","rubra","Quercus_rubra","QURU","Northern Red Oak",86287,2016,30,115,115,NA,127,282,282,282,46,42.2999613,-71.12363106,"09-02-1908","","26-SW",92.6
-"611-2010*A","Quercus","alba","Quercus_alba","QUAL","White Oak",87756,2016,26,115,NA,NA,133,280,291,291,46,42.29281823,-71.12903099,"11-15-2010","","57-NE",75.7
-"611-2010*A","Quercus","alba","Quercus_alba","QUAL","White Oak",87756,2017,26,117,NA,260,120,288,288,288,46,42.29281823,-71.12903099,"11-15-2010","","57-NE",75.7
-"611-2010*A","Quercus","alba","Quercus_alba","QUAL","White Oak",87756,2018,26,NA,136,NA,124,287,287,287,46,42.29281823,-71.12903099,"11-15-2010","","57-NE",75.7
-"611-2010*A","Quercus","alba","Quercus_alba","QUAL","White Oak",87756,2019,26,113,NA,NA,123,287,288,288,46,42.29281823,-71.12903099,"11-15-2010","","57-NE",75.7
-"611-2010*A","Quercus","alba","Quercus_alba","QUAL","White Oak",87756,2020,26,123,127,NA,125,272,289,289,46,42.29281823,-71.12903099,"11-15-2010","","57-NE",75.7
-"611-2010*A","Quercus","alba","Quercus_alba","QUAL","White Oak",87756,2021,26,113,NA,NA,117,289,301,301,46,42.29281823,-71.12903099,"11-15-2010","","57-NE",75.7
-"611-2010*A","Quercus","alba","Quercus_alba","QUAL","White Oak",87756,2022,26,117,NA,NA,128,281,296,296,46,42.29281823,-71.12903099,"11-15-2010","","57-NE",75.7
-"611-2010*A","Quercus","alba","Quercus_alba","QUAL","White Oak",87756,2023,26,NA,NA,NA,112,289,NA,289,46,42.29281823,-71.12903099,"11-15-2010","","57-NE",75.7
-"611-2010*A","Quercus","alba","Quercus_alba","QUAL","White Oak",87756,2024,26,116,NA,NA,123,277,NA,277,46,42.29281823,-71.12903099,"11-15-2010","","57-NE",75.7
-"689-2010*A","Acer","saccharum","Acer_saccharum","ACSA3","Sugar Maple",92209,2016,26,116,110,NA,130,249,249,249,46,42.2917509,-71.1278148,"11-18-2010","","62-NW",78
-"689-2010*A","Acer","saccharum","Acer_saccharum","ACSA3","Sugar Maple",92209,2017,26,102,109,125,108,254,254,254,46,42.2917509,-71.1278148,"11-18-2010","","62-NW",78
-"689-2010*A","Acer","saccharum","Acer_saccharum","ACSA3","Sugar Maple",92209,2018,26,NA,NA,NA,122,287,292,292,46,42.2917509,-71.1278148,"11-18-2010","","62-NW",78
-"689-2010*A","Acer","saccharum","Acer_saccharum","ACSA3","Sugar Maple",92209,2019,26,209,NA,NA,115,285,285,285,46,42.2917509,-71.1278148,"11-18-2010","","62-NW",78
-"689-2010*A","Acer","saccharum","Acer_saccharum","ACSA3","Sugar Maple",92209,2020,26,112,112,NA,123,260,261,261,46,42.2917509,-71.1278148,"11-18-2010","","62-NW",78
-"689-2010*A","Acer","saccharum","Acer_saccharum","ACSA3","Sugar Maple",92209,2021,26,99,96,118,110,289,301,301,46,42.2917509,-71.1278148,"11-18-2010","","62-NW",78
-"689-2010*A","Acer","saccharum","Acer_saccharum","ACSA3","Sugar Maple",92209,2022,26,106,NA,NA,117,281,285,285,46,42.2917509,-71.1278148,"11-18-2010","","62-NW",78
-"689-2010*A","Acer","saccharum","Acer_saccharum","ACSA3","Sugar Maple",92209,2024,26,NA,NA,NA,116,277,277,277,46,42.2917509,-71.1278148,"11-18-2010","","62-NW",78
-"689-2010*A","Acer","saccharum","Acer_saccharum","ACSA3","Sugar Maple",92209,2023,26,NA,98,NA,NA,NA,NA,NA,46,42.2917509,-71.1278148,"11-18-2010","","62-NW",78
-"6990*A","Carya","glabra","Carya_glabra","CAGL8","Pignut Hickory",86264,2016,33,110,NA,166,118,NA,NA,NA,46,42.30020379,-71.12586584,"12-29-1909","","25-SW",45.7
-"6990*A","Carya","glabra","Carya_glabra","CAGL8","Pignut Hickory",86264,2017,33,100,NA,241,114,253,253,253,46,42.30020379,-71.12586584,"12-29-1909","","25-SW",45.7
-"6990*A","Carya","glabra","Carya_glabra","CAGL8","Pignut Hickory",86264,2018,33,119,NA,153,122,249,256,256,46,42.30020379,-71.12586584,"12-29-1909","","25-SW",45.7
-"6990*A","Carya","glabra","Carya_glabra","CAGL8","Pignut Hickory",86264,2019,33,108,132,188,111,251,264,264,46,42.30020379,-71.12586584,"12-29-1909","","25-SW",45.7
-"6990*A","Carya","glabra","Carya_glabra","CAGL8","Pignut Hickory",86264,2020,33,119,NA,220,127,262,NA,262,46,42.30020379,-71.12586584,"12-29-1909","","25-SW",45.7
-"6990*A","Carya","glabra","Carya_glabra","CAGL8","Pignut Hickory",86264,2021,33,NA,NA,146,113,NA,NA,NA,46,42.30020379,-71.12586584,"12-29-1909","","25-SW",45.7
-"6990*A","Carya","glabra","Carya_glabra","CAGL8","Pignut Hickory",86264,2022,33,112,126,NA,116,NA,NA,NA,46,42.30020379,-71.12586584,"12-29-1909","","25-SW",45.7
-"6990*A","Carya","glabra","Carya_glabra","CAGL8","Pignut Hickory",86264,2023,33,104,NA,137,104,NA,NA,NA,46,42.30020379,-71.12586584,"12-29-1909","","25-SW",45.7
-"6990*A","Carya","glabra","Carya_glabra","CAGL8","Pignut Hickory",86264,2024,33,NA,NA,NA,123,NA,NA,NA,46,42.30020379,-71.12586584,"12-29-1909","","25-SW",45.7
-"7141*A","Tilia","americana","Tilia_americana","TIAM","American Basswood",87762,2016,13,111,154,199,115,215,290,290,46,42.30415322,-71.12252621,"12-15-1912","","7-SE",58.9
-"7141*A","Tilia","americana","Tilia_americana","TIAM","American Basswood",87762,2017,13,101,127,186,107,301,301,301,46,42.30415322,-71.12252621,"12-15-1912","","7-SE",58.9
-"7141*A","Tilia","americana","Tilia_americana","TIAM","American Basswood",87762,2018,13,117,141,192,122,246,234,234,46,42.30415322,-71.12252621,"12-15-1912","","7-SE",58.9
-"7141*A","Tilia","americana","Tilia_americana","TIAM","American Basswood",87762,2019,13,109,138,190,111,185,243,243,46,42.30415322,-71.12252621,"12-15-1912","","7-SE",58.9
-"7141*A","Tilia","americana","Tilia_americana","TIAM","American Basswood",87762,2020,13,112,NA,206,126,229,229,229,46,42.30415322,-71.12252621,"12-15-1912","","7-SE",58.9
-"7141*A","Tilia","americana","Tilia_americana","TIAM","American Basswood",87762,2021,13,114,NA,261,114,247,247,247,46,42.30415322,-71.12252621,"12-15-1912","","7-SE",58.9
-"7141*A","Tilia","americana","Tilia_americana","TIAM","American Basswood",87762,2022,13,107,145,188,117,250,250,250,46,42.30415322,-71.12252621,"12-15-1912","","7-SE",58.9
-"7141*A","Tilia","americana","Tilia_americana","TIAM","American Basswood",87762,2023,13,104,118,194,108,256,263,263,46,42.30415322,-71.12252621,"12-15-1912","","7-SE",58.9
-"7141*A","Tilia","americana","Tilia_americana","TIAM","American Basswood",87762,2024,13,NA,NA,276,117,227,283,283,46,42.30415322,-71.12252621,"12-15-1912","","7-SE",58.9
-"7141*A","Tilia","americana","Tilia_americana","TIAM","American Basswood",87762,2015,13,NA,NA,NA,NA,255,255,255,46,42.30415322,-71.12252621,"12-15-1912","","7-SE",58.9
-"8197*A","Quercus","rubra","Quercus_rubra","QURU","Northern Red Oak",86288,2017,30,110,NA,NA,119,271,311,311,46,42.2999685,-71.12424385,"07-01-1916","","25-SE",66.2
-"8197*A","Quercus","rubra","Quercus_rubra","QURU","Northern Red Oak",86288,2018,30,122,128,260,123,282,296,296,46,42.2999685,-71.12424385,"07-01-1916","","25-SE",66.2
-"8197*A","Quercus","rubra","Quercus_rubra","QURU","Northern Red Oak",86288,2019,30,107,129,NA,128,268,268,268,46,42.2999685,-71.12424385,"07-01-1916","","25-SE",66.2
-"8197*A","Quercus","rubra","Quercus_rubra","QURU","Northern Red Oak",86288,2016,30,115,NA,290,130,289,289,289,46,42.2999685,-71.12424385,"07-01-1916","","25-SE",66.2
-"925-79*B","Aesculus","flava","Aesculus_flava","AEFL","Yellow Buckeye",85758,2016,13,110,112,144,112,252,290,290,46,42.30391297,-71.12232333,"09-24-1979","rich woods","10-NE",44.5
-"925-79*B","Aesculus","flava","Aesculus_flava","AEFL","Yellow Buckeye",85758,2017,13,101,108,136,108,NA,NA,NA,46,42.30391297,-71.12232333,"09-24-1979","rich woods","10-NE",44.5
-"925-79*B","Aesculus","flava","Aesculus_flava","AEFL","Yellow Buckeye",85758,2018,13,112,116,151,116,178,192,192,46,42.30391297,-71.12232333,"09-24-1979","rich woods","10-NE",44.5
-"925-79*B","Aesculus","flava","Aesculus_flava","AEFL","Yellow Buckeye",85758,2019,13,107,107,142,107,185,243,243,46,42.30391297,-71.12232333,"09-24-1979","rich woods","10-NE",44.5
-"925-79*B","Aesculus","flava","Aesculus_flava","AEFL","Yellow Buckeye",85758,2020,13,105,108,147,111,183,206,206,46,42.30391297,-71.12232333,"09-24-1979","rich woods","10-NE",44.5
-"925-79*B","Aesculus","flava","Aesculus_flava","AEFL","Yellow Buckeye",85758,2021,13,98,98,134,98,196,268,268,46,42.30391297,-71.12232333,"09-24-1979","rich woods","10-NE",44.5
-"925-79*B","Aesculus","flava","Aesculus_flava","AEFL","Yellow Buckeye",85758,2022,13,106,109,138,107,202,202,202,46,42.30391297,-71.12232333,"09-24-1979","rich woods","10-NE",44.5
-"925-79*B","Aesculus","flava","Aesculus_flava","AEFL","Yellow Buckeye",85758,2023,13,102,103,128,104,231,263,263,46,42.30391297,-71.12232333,"09-24-1979","rich woods","10-NE",44.5
-"925-79*B","Aesculus","flava","Aesculus_flava","AEFL","Yellow Buckeye",85758,2024,13,106,107,144,107,227,NA,227,46,42.30391297,-71.12232333,"09-24-1979","rich woods","10-NE",44.5
-"925-79*B","Aesculus","flava","Aesculus_flava","AEFL","Yellow Buckeye",85758,2015,13,NA,NA,NA,NA,218,NA,218,46,42.30391297,-71.12232333,"09-24-1979","rich woods","10-NE",44.5
-=======
-"plantNickname","genus","species","Common_Name","id","year","elev","budburst","flowers","fruits","leafout","coloredLeaves","leafDrop","last.obs","gdd.start","lat","long","AccessionDate","habitat","gardenLocation","DBH"
-"11253*A","Quercus","rubra","Northern Red Oak",86286,2016,30,127,NA,NA,282,282,282,282,46,42.30002036,-71.12432118,"01-13-1917","","25-SE",69.5
-"11253*A","Quercus","rubra","Northern Red Oak",86286,2017,30,119,NA,236,124,270,267,267,46,42.30002036,-71.12432118,"01-13-1917","","25-SE",69.5
-"11253*A","Quercus","rubra","Northern Red Oak",86286,2018,30,122,128,NA,125,282,282,282,46,42.30002036,-71.12432118,"01-13-1917","","25-SE",69.5
-"11253*A","Quercus","rubra","Northern Red Oak",86286,2019,30,110,126,190,128,260,268,268,46,42.30002036,-71.12432118,"01-13-1917","","25-SE",69.5
-"1196-84*A","Acer","rubrum","Red Maple",166763,2018,13,NA,NA,NA,NA,272,NA,272,46,42.30388171,-71.12019927,"10-15-1984","","11-NE",27.3
-"1196-84*A","Acer","rubrum","Red Maple",166763,2019,13,103,97,115,115,269,269,269,46,42.30388171,-71.12019927,"10-15-1984","","11-NE",27.3
-"1196-84*A","Acer","rubrum","Red Maple",166763,2020,13,119,75,120,124,220,257,257,46,42.30388171,-71.12019927,"10-15-1984","","11-NE",27.3
-"1196-84*A","Acer","rubrum","Red Maple",166763,2021,13,101,86,104,114,NA,NA,NA,46,42.30388171,-71.12019927,"10-15-1984","","11-NE",27.3
-"1196-84*A","Acer","rubrum","Red Maple",166763,2022,13,105,77,105,125,NA,NA,NA,46,42.30388171,-71.12019927,"10-15-1984","","11-NE",27.3
-"1196-84*A","Acer","rubrum","Red Maple",166763,2023,13,NA,83,NA,NA,NA,NA,NA,46,42.30388171,-71.12019927,"10-15-1984","","11-NE",27.3
-"1196-84*A","Acer","rubrum","Red Maple",166763,2024,13,107,NA,117,121,NA,NA,NA,46,42.30388171,-71.12019927,"10-15-1984","","11-NE",27.3
-"1199*D","Betula","nigra","River Birch",86258,2015,36,NA,NA,NA,NA,282,282,282,46,42.30215088,-71.12401559,"07-17-1877","","13-SE",68
-"1199*D","Betula","nigra","River Birch",86258,2016,36,114,124,NA,132,281,281,281,46,42.30215088,-71.12401559,"07-17-1877","","13-SE",68
-"1199*D","Betula","nigra","River Birch",86258,2017,36,100,112,149,118,235,241,241,46,42.30215088,-71.12401559,"07-17-1877","","13-SE",68
-"1199*D","Betula","nigra","River Birch",86258,2018,36,125,122,154,125,294,294,294,46,42.30215088,-71.12401559,"07-17-1877","","13-SE",68
-"1199*D","Betula","nigra","River Birch",86258,2019,36,112,111,155,126,264,249,249,46,42.30215088,-71.12401559,"07-17-1877","","13-SE",68
-"1199*D","Betula","nigra","River Birch",86258,2020,36,126,85,160,128,271,271,271,46,42.30215088,-71.12401559,"07-17-1877","","13-SE",68
-"1199*J","Betula","nigra","River Birch",86261,2015,36,NA,150,NA,NA,250,270,270,46,42.30252077,-71.12397574,"07-17-1877","","13-NE",89.1
-"1199*J","Betula","nigra","River Birch",86261,2016,36,114,124,NA,130,279,289,289,46,42.30252077,-71.12397574,"07-17-1877","","13-NE",89.1
-"1199*J","Betula","nigra","River Birch",86261,2017,36,100,118,149,118,250,247,247,46,42.30252077,-71.12397574,"07-17-1877","","13-NE",89.1
-"1199*J","Betula","nigra","River Birch",86261,2018,36,122,122,154,122,272,272,272,46,42.30252077,-71.12397574,"07-17-1877","","13-NE",89.1
-"1199*J","Betula","nigra","River Birch",86261,2019,36,111,111,NA,126,237,251,251,46,42.30252077,-71.12397574,"07-17-1877","","13-NE",89.1
-"1199*J","Betula","nigra","River Birch",86261,2020,36,126,120,160,128,258,271,271,46,42.30252077,-71.12397574,"07-17-1877","","13-NE",89.1
-"1251-79*A","Betula","nigra","River Birch",86259,2015,36,NA,150,NA,NA,218,270,270,46,42.30223154,-71.12410601,"12-20-1979","Along south bank of Castor River","13-SE",78
-"1251-79*A","Betula","nigra","River Birch",86259,2016,36,111,111,161,127,210,260,260,46,42.30223154,-71.12410601,"12-20-1979","Along south bank of Castor River","13-SE",78
-"1251-79*A","Betula","nigra","River Birch",86259,2017,36,100,112,139,108,202,202,202,46,42.30223154,-71.12410601,"12-20-1979","Along south bank of Castor River","13-SE",78
-"1251-79*A","Betula","nigra","River Birch",86259,2018,36,118,122,151,125,243,243,243,46,42.30223154,-71.12410601,"12-20-1979","Along south bank of Castor River","13-SE",78
-"1251-79*A","Betula","nigra","River Birch",86259,2019,36,107,114,150,122,214,214,214,46,42.30223154,-71.12410601,"12-20-1979","Along south bank of Castor River","13-SE",78
-"1251-79*A","Betula","nigra","River Birch",86259,2020,36,126,120,160,128,197,197,197,46,42.30223154,-71.12410601,"12-20-1979","Along south bank of Castor River","13-SE",78
-"1251-79*A","Betula","nigra","River Birch",86259,2022,36,NA,105,NA,NA,NA,NA,NA,46,42.30223154,-71.12410601,"12-20-1979","Along south bank of Castor River","13-SE",78
-"1251-79*A","Betula","nigra","River Birch",86259,2024,36,110,111,NA,124,NA,NA,NA,46,42.30223154,-71.12410601,"12-20-1979","Along south bank of Castor River","13-SE",78
-"1251-79*B","Betula","nigra","River Birch",86260,2015,36,142,150,NA,313,218,240,240,46,42.30228781,-71.12445659,"12-20-1979","Along south bank of Castor River","13-SE",70.8
-"1251-79*B","Betula","nigra","River Birch",86260,2016,36,111,114,147,125,246,260,260,46,42.30228781,-71.12445659,"12-20-1979","Along south bank of Castor River","13-SE",70.8
-"1251-79*B","Betula","nigra","River Birch",86260,2017,36,101,109,136,117,209,230,230,46,42.30228781,-71.12445659,"12-20-1979","Along south bank of Castor River","13-SE",70.8
-"1251-79*B","Betula","nigra","River Birch",86260,2018,36,118,122,138,122,250,257,257,46,42.30228781,-71.12445659,"12-20-1979","Along south bank of Castor River","13-SE",70.8
-"1251-79*B","Betula","nigra","River Birch",86260,2019,36,107,107,152,122,230,230,230,46,42.30228781,-71.12445659,"12-20-1979","Along south bank of Castor River","13-SE",70.8
-"1251-79*B","Betula","nigra","River Birch",86260,2020,36,126,120,147,133,197,197,197,46,42.30228781,-71.12445659,"12-20-1979","Along south bank of Castor River","13-SE",70.8
-"1251-79*B","Betula","nigra","River Birch",86260,2021,36,114,114,134,122,261,261,261,46,42.30228781,-71.12445659,"12-20-1979","Along south bank of Castor River","13-SE",70.8
-"1251-79*B","Betula","nigra","River Birch",86260,2022,36,103,103,147,125,238,215,215,46,42.30228781,-71.12445659,"12-20-1979","Along south bank of Castor River","13-SE",70.8
-"1251-79*B","Betula","nigra","River Birch",86260,2023,36,104,101,139,108,231,235,235,46,42.30228781,-71.12445659,"12-20-1979","Along south bank of Castor River","13-SE",70.8
-"1251-79*B","Betula","nigra","River Birch",86260,2024,36,121,104,NA,121,257,257,257,46,42.30228781,-71.12445659,"12-20-1979","Along south bank of Castor River","13-SE",70.8
-"1251-79*E","Betula","nigra","River Birch",87754,2015,36,NA,150,NA,NA,218,240,240,46,42.3022236,-71.12398789,"12-20-1979","Along south bank of Castor River","13-SE",70
-"1251-79*E","Betula","nigra","River Birch",87754,2016,36,112,124,162,130,281,284,284,46,42.3022236,-71.12398789,"12-20-1979","Along south bank of Castor River","13-SE",70
-"1251-79*E","Betula","nigra","River Birch",87754,2017,36,101,125,149,118,230,241,241,46,42.3022236,-71.12398789,"12-20-1979","Along south bank of Castor River","13-SE",70
-"1251-79*E","Betula","nigra","River Birch",87754,2018,36,122,125,154,125,251,256,256,46,42.3022236,-71.12398789,"12-20-1979","Along south bank of Castor River","13-SE",70
-"1251-79*E","Betula","nigra","River Birch",87754,2019,36,110,112,157,126,237,239,239,46,42.3022236,-71.12398789,"12-20-1979","Along south bank of Castor River","13-SE",70
-"1251-79*E","Betula","nigra","River Birch",87754,2020,36,126,120,160,126,226,271,271,46,42.3022236,-71.12398789,"12-20-1979","Along south bank of Castor River","13-SE",70
-"12565*C","Acer","saccharum","Sugar Maple",92208,2015,13,NA,NA,NA,NA,280,280,280,46,42.30346585,-71.12008242,"10-15-1883","","11-SE",97.6
-"12565*C","Acer","saccharum","Sugar Maple",92208,2016,13,121,118,NA,130,286,NA,286,46,42.30346585,-71.12008242,"10-15-1883","","11-SE",97.6
-"12565*C","Acer","saccharum","Sugar Maple",92208,2017,13,101,108,127,113,288,NA,288,46,42.30346585,-71.12008242,"10-15-1883","","11-SE",97.6
-"12565*C","Acer","saccharum","Sugar Maple",92208,2018,13,NA,NA,NA,132,272,276,276,46,42.30346585,-71.12008242,"10-15-1883","","11-SE",97.6
-"12565*C","Acer","saccharum","Sugar Maple",92208,2019,13,109,NA,NA,120,276,269,269,46,42.30346585,-71.12008242,"10-15-1883","","11-SE",97.6
-"12565*C","Acer","saccharum","Sugar Maple",92208,2020,13,121,NA,NA,124,278,290,290,46,42.30346585,-71.12008242,"10-15-1883","","11-SE",97.6
-"12651*C","Aesculus","flava","Yellow Buckeye",85751,2015,13,NA,NA,NA,165,NA,NA,NA,46,42.30355576,-71.1212595,"07-01-1906","","11-NW",35.3
-"12651*C","Aesculus","flava","Yellow Buckeye",85751,2016,13,105,110,156,108,274,282,282,46,42.30355576,-71.1212595,"07-01-1906","","11-NW",35.3
-"12651*C","Aesculus","flava","Yellow Buckeye",85751,2017,13,108,119,NA,108,NA,NA,NA,46,42.30355576,-71.1212595,"07-01-1906","","11-NW",35.3
-"12651*C","Aesculus","flava","Yellow Buckeye",85751,2018,13,117,117,151,122,199,NA,199,46,42.30355576,-71.1212595,"07-01-1906","","11-NW",35.3
-"12651*C","Aesculus","flava","Yellow Buckeye",85751,2019,13,NA,111,237,111,163,243,243,46,42.30355576,-71.1212595,"07-01-1906","","11-NW",35.3
-"12651*C","Aesculus","flava","Yellow Buckeye",85751,2020,13,101,108,147,112,197,206,206,46,42.30355576,-71.1212595,"07-01-1906","","11-NW",35.3
-"12651*C","Aesculus","flava","Yellow Buckeye",85751,2021,13,NA,73,NA,100,NA,NA,NA,46,42.30355576,-71.1212595,"07-01-1906","","11-NW",35.3
-"12651*D","Aesculus","flava","Yellow Buckeye",85755,2015,13,NA,NA,NA,165,255,NA,255,46,42.30351523,-71.12133382,"07-01-1906","","11-SW",60.2
-"12651*D","Aesculus","flava","Yellow Buckeye",85755,2016,13,111,113,156,112,260,282,282,46,42.30351523,-71.12133382,"07-01-1906","","11-SW",60.2
-"12651*D","Aesculus","flava","Yellow Buckeye",85755,2017,13,108,108,NA,108,267,NA,267,46,42.30351523,-71.12133382,"07-01-1906","","11-SW",60.2
-"12651*D","Aesculus","flava","Yellow Buckeye",85755,2018,13,114,117,145,117,159,272,272,46,42.30351523,-71.12133382,"07-01-1906","","11-SW",60.2
-"12651*D","Aesculus","flava","Yellow Buckeye",85755,2019,13,NA,NA,NA,115,272,272,272,46,42.30351523,-71.12133382,"07-01-1906","","11-SW",60.2
-"12651*D","Aesculus","flava","Yellow Buckeye",85755,2020,13,NA,NA,203,112,250,250,250,46,42.30351523,-71.12133382,"07-01-1906","","11-SW",60.2
-"12651*H","Aesculus","flava","Yellow Buckeye",85756,2015,13,NA,NA,NA,165,255,255,255,46,42.3035604,-71.12143904,"07-01-1906","","11-NW",49.1
-"12651*H","Aesculus","flava","Yellow Buckeye",85756,2016,13,110,112,156,112,262,279,279,46,42.3035604,-71.12143904,"07-01-1906","","11-NW",49.1
-"12651*H","Aesculus","flava","Yellow Buckeye",85756,2017,13,108,108,NA,108,NA,NA,NA,46,42.3035604,-71.12143904,"07-01-1906","","11-NW",49.1
-"12651*H","Aesculus","flava","Yellow Buckeye",85756,2018,13,114,117,145,117,NA,NA,NA,46,42.3035604,-71.12143904,"07-01-1906","","11-NW",49.1
-"12651*H","Aesculus","flava","Yellow Buckeye",85756,2019,13,NA,NA,NA,124,NA,272,272,46,42.3035604,-71.12143904,"07-01-1906","","11-NW",49.1
-"12651*H","Aesculus","flava","Yellow Buckeye",85756,2020,13,NA,NA,NA,112,189,213,213,46,42.3035604,-71.12143904,"07-01-1906","","11-NW",49.1
-"12651*I","Aesculus","flava","Yellow Buckeye",85757,2016,26,114,129,166,116,189,NA,189,46,42.2931417,-71.12879258,"07-01-1906","","57-NE",61.1
-"12651*I","Aesculus","flava","Yellow Buckeye",85757,2017,26,107,NA,254,114,247,256,256,46,42.2931417,-71.12879258,"07-01-1906","","57-NE",61.1
-"12651*I","Aesculus","flava","Yellow Buckeye",85757,2018,26,116,124,148,117,260,260,260,46,42.2931417,-71.12879258,"07-01-1906","","57-NE",61.1
-"12651*I","Aesculus","flava","Yellow Buckeye",85757,2019,26,104,115,152,109,257,257,257,46,42.2931417,-71.12879258,"07-01-1906","","57-NE",61.1
-"12651*I","Aesculus","flava","Yellow Buckeye",85757,2020,26,119,120,155,120,190,207,207,46,42.2931417,-71.12879258,"07-01-1906","","57-NE",61.1
-"12651*I","Aesculus","flava","Yellow Buckeye",85757,2021,26,110,117,143,110,272,289,289,46,42.2931417,-71.12879258,"07-01-1906","","57-NE",61.1
-"12651*I","Aesculus","flava","Yellow Buckeye",85757,2022,26,115,115,140,115,199,NA,199,46,42.2931417,-71.12879258,"07-01-1906","","57-NE",61.1
-"12651*I","Aesculus","flava","Yellow Buckeye",85757,2023,26,NA,112,143,112,268,NA,268,46,42.2931417,-71.12879258,"07-01-1906","","57-NE",61.1
-"12651*I","Aesculus","flava","Yellow Buckeye",85757,2024,26,108,116,148,113,245,254,254,46,42.2931417,-71.12879258,"07-01-1906","","57-NE",61.1
-"12843*A","Betula","alleghaniensis","Yellow Birch",85759,2015,36,NA,150,191,NA,250,278,278,46,42.3020682,-71.12386246,"10-15-1900","","14-SW",73.8
-"12843*A","Betula","alleghaniensis","Yellow Birch",85759,2016,36,109,104,207,114,278,281,281,46,42.3020682,-71.12386246,"10-15-1900","","14-SW",73.8
-"12843*A","Betula","alleghaniensis","Yellow Birch",85759,2017,36,102,118,156,117,242,251,251,46,42.3020682,-71.12386246,"10-15-1900","","14-SW",73.8
-"12843*A","Betula","alleghaniensis","Yellow Birch",85759,2018,36,118,118,151,122,256,277,277,46,42.3020682,-71.12386246,"10-15-1900","","14-SW",73.8
-"12843*A","Betula","alleghaniensis","Yellow Birch",85759,2019,36,107,109,142,114,249,262,262,46,42.3020682,-71.12386246,"10-15-1900","","14-SW",73.8
-"12843*A","Betula","alleghaniensis","Yellow Birch",85759,2020,36,110,119,160,126,257,257,257,46,42.3020682,-71.12386246,"10-15-1900","","14-SW",73.8
-"12843*A","Betula","alleghaniensis","Yellow Birch",85759,2021,36,108,100,152,114,261,261,261,46,42.3020682,-71.12386246,"10-15-1900","","14-SW",73.8
-"12843*A","Betula","alleghaniensis","Yellow Birch",85759,2022,36,105,126,147,125,250,250,250,46,42.3020682,-71.12386246,"10-15-1900","","14-SW",73.8
-"12843*A","Betula","alleghaniensis","Yellow Birch",85759,2023,36,104,77,139,104,256,256,256,46,42.3020682,-71.12386246,"10-15-1900","","14-SW",73.8
-"12843*A","Betula","alleghaniensis","Yellow Birch",85759,2024,36,NA,NA,159,124,NA,NA,NA,46,42.3020682,-71.12386246,"10-15-1900","","14-SW",73.8
-"12843*D","Betula","alleghaniensis","Yellow Birch",85761,2015,36,NA,150,202,NA,270,NA,270,46,42.302041,-71.12388059,"10-15-1900","","14-SW",70.9
-"12843*D","Betula","alleghaniensis","Yellow Birch",85761,2016,36,112,101,207,119,271,284,284,46,42.302041,-71.12388059,"10-15-1900","","14-SW",70.9
-"12843*D","Betula","alleghaniensis","Yellow Birch",85761,2017,36,102,118,149,118,242,242,242,46,42.302041,-71.12388059,"10-15-1900","","14-SW",70.9
-"12843*D","Betula","alleghaniensis","Yellow Birch",85761,2018,36,114,122,140,123,266,277,277,46,42.302041,-71.12388059,"10-15-1900","","14-SW",70.9
-"12843*D","Betula","alleghaniensis","Yellow Birch",85761,2019,36,107,110,157,122,260,264,264,46,42.302041,-71.12388059,"10-15-1900","","14-SW",70.9
-"12843*D","Betula","alleghaniensis","Yellow Birch",85761,2020,36,112,85,184,126,258,271,271,46,42.302041,-71.12388059,"10-15-1900","","14-SW",70.9
-"12843*E","Betula","alleghaniensis","Yellow Birch",85762,2015,36,NA,150,187,NA,250,250,250,46,42.30194577,-71.12374252,"10-15-1900","","14-SW",56.2
-"12843*E","Betula","alleghaniensis","Yellow Birch",85762,2016,36,102,111,182,114,260,281,281,46,42.30194577,-71.12374252,"10-15-1900","","14-SW",56.2
-"12843*E","Betula","alleghaniensis","Yellow Birch",85762,2017,36,102,118,156,117,242,242,242,46,42.30194577,-71.12374252,"10-15-1900","","14-SW",56.2
-"12843*E","Betula","alleghaniensis","Yellow Birch",85762,2018,36,114,118,144,122,272,277,277,46,42.30194577,-71.12374252,"10-15-1900","","14-SW",56.2
-"12843*E","Betula","alleghaniensis","Yellow Birch",85762,2019,36,107,109,159,110,249,261,261,46,42.30194577,-71.12374252,"10-15-1900","","14-SW",56.2
-"12843*E","Betula","alleghaniensis","Yellow Birch",85762,2020,36,108,85,160,126,226,271,271,46,42.30194577,-71.12374252,"10-15-1900","","14-SW",56.2
-"12843*H","Betula","alleghaniensis","Yellow Birch",85763,2015,36,NA,167,194,NA,282,282,282,46,42.30199149,-71.12371027,"10-15-1900","","14-SW",64.6
-"12843*H","Betula","alleghaniensis","Yellow Birch",85763,2016,36,110,111,207,121,281,289,289,46,42.30199149,-71.12371027,"10-15-1900","","14-SW",64.6
-"12843*H","Betula","alleghaniensis","Yellow Birch",85763,2017,36,102,120,156,117,288,288,288,46,42.30199149,-71.12371027,"10-15-1900","","14-SW",64.6
-"12843*H","Betula","alleghaniensis","Yellow Birch",85763,2018,36,118,111,154,122,277,277,277,46,42.30199149,-71.12371027,"10-15-1900","","14-SW",64.6
-"12843*H","Betula","alleghaniensis","Yellow Birch",85763,2019,36,112,112,258,122,265,265,265,46,42.30199149,-71.12371027,"10-15-1900","","14-SW",64.6
-"12843*H","Betula","alleghaniensis","Yellow Birch",85763,2020,36,120,120,264,126,271,271,271,46,42.30199149,-71.12371027,"10-15-1900","","14-SW",64.6
-"12907*B","Carya","ovata","Shagbark Hickory",86268,2015,33,NA,NA,161,NA,NA,NA,NA,46,42.30172976,-71.12580046,"10-18-1883","","19-NW",54.8
-"12907*B","Carya","ovata","Shagbark Hickory",86268,2016,33,130,142,150,131,284,295,295,46,42.30172976,-71.12580046,"10-18-1883","","19-NW",54.8
-"12907*B","Carya","ovata","Shagbark Hickory",86268,2017,33,105,124,172,118,278,264,264,46,42.30172976,-71.12580046,"10-18-1883","","19-NW",54.8
-"12907*B","Carya","ovata","Shagbark Hickory",86268,2018,33,118,125,171,125,272,279,279,46,42.30172976,-71.12580046,"10-18-1883","","19-NW",54.8
-"12907*B","Carya","ovata","Shagbark Hickory",86268,2019,33,110,124,188,121,260,264,264,46,42.30172976,-71.12580046,"10-18-1883","","19-NW",54.8
-"12907*B","Carya","ovata","Shagbark Hickory",86268,2020,33,125,140,169,134,276,NA,276,46,42.30172976,-71.12580046,"10-18-1883","","19-NW",54.8
-"12907*B","Carya","ovata","Shagbark Hickory",86268,2022,33,NA,NA,NA,126,NA,NA,NA,46,42.30172976,-71.12580046,"10-18-1883","","19-NW",54.8
-"12907*D","Carya","ovata","Shagbark Hickory",86269,2016,33,130,143,NA,132,284,295,295,46,42.30168923,-71.12587438,"10-18-1883","","19-NW",51.8
-"12907*D","Carya","ovata","Shagbark Hickory",86269,2017,33,105,118,172,118,264,264,264,46,42.30168923,-71.12587438,"10-18-1883","","19-NW",51.8
-"12907*D","Carya","ovata","Shagbark Hickory",86269,2018,33,118,125,158,125,272,279,279,46,42.30168923,-71.12587438,"10-18-1883","","19-NW",51.8
-"12907*D","Carya","ovata","Shagbark Hickory",86269,2019,33,108,124,160,124,248,264,264,46,42.30168923,-71.12587438,"10-18-1883","","19-NW",51.8
-"12907*D","Carya","ovata","Shagbark Hickory",86269,2020,33,125,141,168,134,276,NA,276,46,42.30168923,-71.12587438,"10-18-1883","","19-NW",51.8
-"12907*D","Carya","ovata","Shagbark Hickory",86269,2022,33,NA,NA,NA,126,NA,NA,NA,46,42.30168923,-71.12587438,"10-18-1883","","19-NW",51.8
-"12907*G","Carya","ovata","Shagbark Hickory",86270,2015,33,NA,NA,169,NA,NA,NA,NA,46,42.30181554,-71.1256858,"10-18-1883","","19-NW",59.5
-"12907*G","Carya","ovata","Shagbark Hickory",86270,2016,33,110,127,200,127,278,289,289,46,42.30181554,-71.1256858,"10-18-1883","","19-NW",59.5
-"12907*G","Carya","ovata","Shagbark Hickory",86270,2017,33,105,117,172,117,253,253,253,46,42.30181554,-71.1256858,"10-18-1883","","19-NW",59.5
-"12907*G","Carya","ovata","Shagbark Hickory",86270,2018,33,122,125,239,125,272,279,279,46,42.30181554,-71.1256858,"10-18-1883","","19-NW",59.5
-"12907*G","Carya","ovata","Shagbark Hickory",86270,2019,33,108,119,160,119,260,264,264,46,42.30181554,-71.1256858,"10-18-1883","","19-NW",59.5
-"12907*G","Carya","ovata","Shagbark Hickory",86270,2020,33,125,129,170,129,262,NA,262,46,42.30181554,-71.1256858,"10-18-1883","","19-NW",59.5
-"12907*G","Carya","ovata","Shagbark Hickory",86270,2021,33,115,NA,NA,124,NA,NA,NA,46,42.30181554,-71.1256858,"10-18-1883","","19-NW",59.5
-"12907*G","Carya","ovata","Shagbark Hickory",86270,2022,33,116,131,147,126,258,NA,258,46,42.30181554,-71.1256858,"10-18-1883","","19-NW",59.5
-"12907*G","Carya","ovata","Shagbark Hickory",86270,2023,33,NA,118,NA,138,NA,NA,NA,46,42.30181554,-71.1256858,"10-18-1883","","19-NW",59.5
-"12907*I","Carya","ovata","Shagbark Hickory",86271,2015,33,NA,NA,161,NA,NA,NA,NA,46,42.30185516,-71.12559225,"10-18-1883","","19-NW",51
-"12907*I","Carya","ovata","Shagbark Hickory",86271,2016,33,130,143,NA,132,278,284,284,46,42.30185516,-71.12559225,"10-18-1883","","19-NW",51
-"12907*I","Carya","ovata","Shagbark Hickory",86271,2017,33,105,118,172,118,260,264,264,46,42.30185516,-71.12559225,"10-18-1883","","19-NW",51
-"12907*I","Carya","ovata","Shagbark Hickory",86271,2018,33,118,125,158,125,272,279,279,46,42.30185516,-71.12559225,"10-18-1883","","19-NW",51
-"12907*I","Carya","ovata","Shagbark Hickory",86271,2019,33,108,119,160,124,260,264,264,46,42.30185516,-71.12559225,"10-18-1883","","19-NW",51
-"12907*I","Carya","ovata","Shagbark Hickory",86271,2020,33,125,NA,169,136,250,NA,250,46,42.30185516,-71.12559225,"10-18-1883","","19-NW",51
-"12907*I","Carya","ovata","Shagbark Hickory",86271,2021,33,115,NA,NA,124,270,NA,270,46,42.30185516,-71.12559225,"10-18-1883","","19-NW",51
-"12907*I","Carya","ovata","Shagbark Hickory",86271,2022,33,NA,NA,NA,126,NA,NA,NA,46,42.30185516,-71.12559225,"10-18-1883","","19-NW",51
-"12907*N","Carya","ovata","Shagbark Hickory",86272,2015,33,NA,NA,161,NA,NA,NA,NA,46,42.30163563,-71.12561522,"10-18-1883","","19-NW",61.2
-"12907*N","Carya","ovata","Shagbark Hickory",86272,2016,33,125,143,150,132,285,295,295,46,42.30163563,-71.12561522,"10-18-1883","","19-NW",61.2
-"12907*N","Carya","ovata","Shagbark Hickory",86272,2017,33,112,120,172,118,253,293,293,46,42.30163563,-71.12561522,"10-18-1883","","19-NW",61.2
-"12907*N","Carya","ovata","Shagbark Hickory",86272,2018,33,118,125,156,125,274,282,282,46,42.30163563,-71.12561522,"10-18-1883","","19-NW",61.2
-"12907*N","Carya","ovata","Shagbark Hickory",86272,2019,33,108,121,145,124,260,264,264,46,42.30163563,-71.12561522,"10-18-1883","","19-NW",61.2
-"12907*N","Carya","ovata","Shagbark Hickory",86272,2020,33,125,129,167,134,273,NA,273,46,42.30163563,-71.12561522,"10-18-1883","","19-NW",61.2
-"12907*N","Carya","ovata","Shagbark Hickory",86272,2021,33,115,NA,NA,NA,NA,NA,NA,46,42.30163563,-71.12561522,"10-18-1883","","19-NW",61.2
-"12907*N","Carya","ovata","Shagbark Hickory",86272,2022,33,114,129,152,126,286,NA,286,46,42.30163563,-71.12561522,"10-18-1883","","19-NW",61.2
-"12907*N","Carya","ovata","Shagbark Hickory",86272,2023,33,NA,NA,NA,138,NA,NA,NA,46,42.30163563,-71.12561522,"10-18-1883","","19-NW",61.2
-"1323-82*A","Tilia","americana","American Basswood",86289,2015,26,NA,154,NA,NA,256,256,256,46,42.29514117,-71.12601307,"10-08-1982","","51-NW",94.3
-"1323-82*A","Tilia","americana","American Basswood",86289,2016,26,94,152,NA,118,257,286,286,46,42.29514117,-71.12601307,"10-08-1982","","51-NW",94.3
-"1323-82*A","Tilia","americana","American Basswood",86289,2017,26,98,110,184,107,295,257,257,46,42.29514117,-71.12601307,"10-08-1982","","51-NW",94.3
-"1323-82*A","Tilia","americana","American Basswood",86289,2018,26,121,136,188,122,276,271,271,46,42.29514117,-71.12601307,"10-08-1982","","51-NW",94.3
-"1323-82*A","Tilia","americana","American Basswood",86289,2019,26,115,140,186,115,267,293,293,46,42.29514117,-71.12601307,"10-08-1982","","51-NW",94.3
-"1323-82*A","Tilia","americana","American Basswood",86289,2020,26,116,147,196,125,261,261,261,46,42.29514117,-71.12601307,"10-08-1982","","51-NW",94.3
-"1323-82*A","Tilia","americana","American Basswood",86289,2021,26,110,127,183,117,281,289,289,46,42.29514117,-71.12601307,"10-08-1982","","51-NW",94.3
-"1323-82*A","Tilia","americana","American Basswood",86289,2022,26,106,132,186,117,NA,NA,NA,46,42.29514117,-71.12601307,"10-08-1982","","51-NW",94.3
-"1323-82*A","Tilia","americana","American Basswood",86289,2023,26,94,143,298,112,298,298,298,46,42.29514117,-71.12601307,"10-08-1982","","51-NW",94.3
-"1323-82*A","Tilia","americana","American Basswood",86289,2024,26,109,134,191,116,273,273,273,46,42.29514117,-71.12601307,"10-08-1982","","51-NW",94.3
-"15350*A","Acer","rubrum","Red Maple",166765,2018,13,NA,NA,NA,NA,NA,293,293,46,42.30387456,-71.12074952,"04-16-1924","","11-NW",77.5
-"15350*A","Acer","rubrum","Red Maple",166765,2019,13,91,86,NA,111,NA,263,263,46,42.30387456,-71.12074952,"04-16-1924","","11-NW",77.5
-"15350*A","Acer","rubrum","Red Maple",166765,2020,13,105,71,NA,120,220,257,257,46,42.30387456,-71.12074952,"04-16-1924","","11-NW",77.5
-"15350*A","Acer","rubrum","Red Maple",166765,2021,13,101,81,NA,114,236,268,268,46,42.30387456,-71.12074952,"04-16-1924","","11-NW",77.5
-"15350*A","Acer","rubrum","Red Maple",166765,2022,13,103,65,NA,113,153,202,202,46,42.30387456,-71.12074952,"04-16-1924","","11-NW",77.5
-"15350*A","Acer","rubrum","Red Maple",166765,2023,13,102,NA,NA,104,231,263,263,46,42.30387456,-71.12074952,"04-16-1924","","11-NW",77.5
-"15350*A","Acer","rubrum","Red Maple",166765,2024,13,104,NA,NA,111,227,NA,227,46,42.30387456,-71.12074952,"04-16-1924","","11-NW",77.5
-"16611*F","Populus","deltoides","Eastern Cottonwood",86278,2015,26,NA,NA,NA,NA,NA,256,256,46,42.29432229,-71.12466088,"08-15-1895","","51-SE",93.9
-"16611*F","Populus","deltoides","Eastern Cottonwood",86278,2016,26,110,NA,NA,136,286,265,265,46,42.29432229,-71.12466088,"08-15-1895","","51-SE",93.9
-"16611*F","Populus","deltoides","Eastern Cottonwood",86278,2017,26,107,109,125,124,250,247,247,46,42.29432229,-71.12466088,"08-15-1895","","51-SE",93.9
-"16611*F","Populus","deltoides","Eastern Cottonwood",86278,2018,26,117,124,147,124,270,260,260,46,42.29432229,-71.12466088,"08-15-1895","","51-SE",93.9
-"16611*F","Populus","deltoides","Eastern Cottonwood",86278,2019,26,123,NA,123,123,260,260,260,46,42.29432229,-71.12466088,"08-15-1895","","51-SE",93.9
-"16611*F","Populus","deltoides","Eastern Cottonwood",86278,2020,26,125,104,127,126,261,261,261,46,42.29432229,-71.12466088,"08-15-1895","","51-SE",93.9
-"16611*F","Populus","deltoides","Eastern Cottonwood",86278,2021,26,120,103,123,123,278,257,257,46,42.29432229,-71.12466088,"08-15-1895","","51-SE",93.9
-"16611*F","Populus","deltoides","Eastern Cottonwood",86278,2022,26,117,108,128,127,269,269,269,46,42.29432229,-71.12466088,"08-15-1895","","51-SE",93.9
-"16611*F","Populus","deltoides","Eastern Cottonwood",86278,2023,26,NA,105,129,125,254,229,229,46,42.29432229,-71.12466088,"08-15-1895","","51-SE",93.9
-"16611*F","Populus","deltoides","Eastern Cottonwood",86278,2024,26,NA,109,131,120,238,254,254,46,42.29432229,-71.12466088,"08-15-1895","","51-SE",93.9
-"16611*J","Populus","deltoides","Eastern Cottonwood",86279,2016,26,NA,NA,NA,136,286,NA,286,46,42.2941909,-71.12464076,"08-15-1895","","55-NE",71
-"16611*J","Populus","deltoides","Eastern Cottonwood",86279,2017,26,107,109,124,124,231,236,236,46,42.2941909,-71.12464076,"08-15-1895","","55-NE",71
-"16611*J","Populus","deltoides","Eastern Cottonwood",86279,2018,26,117,124,147,124,236,236,236,46,42.2941909,-71.12464076,"08-15-1895","","55-NE",71
-"16611*J","Populus","deltoides","Eastern Cottonwood",86279,2019,26,NA,NA,123,128,245,245,245,46,42.2941909,-71.12464076,"08-15-1895","","55-NE",71
-"16611*J","Populus","deltoides","Eastern Cottonwood",86279,2020,26,126,113,132,132,255,261,261,46,42.2941909,-71.12464076,"08-15-1895","","55-NE",71
-"16611*J","Populus","deltoides","Eastern Cottonwood",86279,2021,26,123,NA,123,125,257,257,257,46,42.2941909,-71.12464076,"08-15-1895","","55-NE",71
-"16611*J","Populus","deltoides","Eastern Cottonwood",86279,2022,26,117,108,127,127,NA,NA,NA,46,42.2941909,-71.12464076,"08-15-1895","","55-NE",71
-"16611*J","Populus","deltoides","Eastern Cottonwood",86279,2023,26,NA,NA,NA,129,254,254,254,46,42.2941909,-71.12464076,"08-15-1895","","55-NE",71
-"16611*J","Populus","deltoides","Eastern Cottonwood",86279,2024,26,NA,NA,NA,123,248,248,248,46,42.2941909,-71.12464076,"08-15-1895","","55-NE",71
-"16611*K","Populus","deltoides","Eastern Cottonwood",86280,2015,26,NA,NA,NA,NA,249,NA,249,46,42.29404926,-71.12460511,"08-15-1895","","55-NE",81.5
-"16611*K","Populus","deltoides","Eastern Cottonwood",86280,2016,26,122,NA,NA,136,286,304,304,46,42.29404926,-71.12460511,"08-15-1895","","55-NE",81.5
-"16611*K","Populus","deltoides","Eastern Cottonwood",86280,2017,26,107,109,124,124,239,239,239,46,42.29404926,-71.12460511,"08-15-1895","","55-NE",81.5
-"16611*K","Populus","deltoides","Eastern Cottonwood",86280,2018,26,117,124,147,129,251,251,251,46,42.29404926,-71.12460511,"08-15-1895","","55-NE",81.5
-"16611*K","Populus","deltoides","Eastern Cottonwood",86280,2019,26,NA,NA,123,128,245,260,260,46,42.29404926,-71.12460511,"08-15-1895","","55-NE",81.5
-"16611*K","Populus","deltoides","Eastern Cottonwood",86280,2020,26,125,113,127,132,255,261,261,46,42.29404926,-71.12460511,"08-15-1895","","55-NE",81.5
-"16611*K","Populus","deltoides","Eastern Cottonwood",86280,2021,26,123,103,123,125,257,257,257,46,42.29404926,-71.12460511,"08-15-1895","","55-NE",81.5
-"16611*K","Populus","deltoides","Eastern Cottonwood",86280,2022,26,128,108,128,130,NA,NA,NA,46,42.29404926,-71.12460511,"08-15-1895","","55-NE",81.5
-"16611*K","Populus","deltoides","Eastern Cottonwood",86280,2023,26,NA,NA,NA,129,266,266,266,46,42.29404926,-71.12460511,"08-15-1895","","55-NE",81.5
-"16611*K","Populus","deltoides","Eastern Cottonwood",86280,2024,26,NA,NA,NA,127,254,254,254,46,42.29404926,-71.12460511,"08-15-1895","","55-NE",81.5
-"17527*D","Tilia","americana","American Basswood",87763,2015,13,NA,NA,NA,NA,230,255,255,46,42.3051232,-71.12189286,"11-15-1897","","7-NE",68.1
-"17527*D","Tilia","americana","American Basswood",87763,2016,13,105,152,193,115,252,281,281,46,42.3051232,-71.12189286,"11-15-1897","","7-NE",68.1
-"17527*D","Tilia","americana","American Basswood",87763,2017,13,106,127,NA,107,234,234,234,46,42.3051232,-71.12189286,"11-15-1897","","7-NE",68.1
-"17527*D","Tilia","americana","American Basswood",87763,2018,13,118,131,NA,122,234,227,227,46,42.3051232,-71.12189286,"11-15-1897","","7-NE",68.1
-"17527*D","Tilia","americana","American Basswood",87763,2019,13,111,138,197,111,214,244,244,46,42.3051232,-71.12189286,"11-15-1897","","7-NE",68.1
-"17527*D","Tilia","americana","American Basswood",87763,2020,13,108,145,189,119,220,229,229,46,42.3051232,-71.12189286,"11-15-1897","","7-NE",68.1
-"17527*D","Tilia","americana","American Basswood",87763,2021,13,108,126,201,109,211,213,213,46,42.3051232,-71.12189286,"11-15-1897","","7-NE",68.1
-"17527*D","Tilia","americana","American Basswood",87763,2022,13,107,138,188,107,236,236,236,46,42.3051232,-71.12189286,"11-15-1897","","7-NE",68.1
-"17527*D","Tilia","americana","American Basswood",87763,2023,13,104,NA,173,104,231,235,235,46,42.3051232,-71.12189286,"11-15-1897","","7-NE",68.1
-"17527*D","Tilia","americana","American Basswood",87763,2024,13,NA,134,185,111,227,NA,227,46,42.3051232,-71.12189286,"11-15-1897","","7-NE",68.1
-"17538*A","Tilia","americana","American Basswood",87757,2016,26,94,NA,NA,118,280,280,280,46,42.29325928,-71.12871082,"09-15-1906","","53-SE",105.9
-"17538*A","Tilia","americana","American Basswood",87757,2017,26,109,161,184,116,270,270,270,46,42.29325928,-71.12871082,"09-15-1906","","53-SE",105.9
-"17538*A","Tilia","americana","American Basswood",87757,2018,26,123,NA,246,124,260,262,262,46,42.29325928,-71.12871082,"09-15-1906","","53-SE",105.9
-"17538*A","Tilia","americana","American Basswood",87757,2019,26,113,140,248,123,260,276,276,46,42.29325928,-71.12871082,"09-15-1906","","53-SE",105.9
-"17538*A","Tilia","americana","American Basswood",87757,2020,26,123,147,188,125,260,260,260,46,42.29325928,-71.12871082,"09-15-1906","","53-SE",105.9
-"17538*A","Tilia","americana","American Basswood",87757,2021,26,113,131,183,117,285,285,285,46,42.29325928,-71.12871082,"09-15-1906","","53-SE",105.9
-"17538*A","Tilia","americana","American Basswood",87757,2022,26,106,142,NA,123,NA,NA,NA,46,42.29325928,-71.12871082,"09-15-1906","","53-SE",105.9
-"17538*A","Tilia","americana","American Basswood",87757,2023,26,94,143,193,112,NA,NA,NA,46,42.29325928,-71.12871082,"09-15-1906","","53-SE",105.9
-"17538*A","Tilia","americana","American Basswood",87757,2024,26,109,141,NA,119,254,273,273,46,42.29325928,-71.12871082,"09-15-1906","","53-SE",105.9
-"187-2006*B","Acer","saccharum","Sugar Maple",92203,2015,13,NA,NA,NA,NA,280,287,287,46,42.30431226,-71.12006593,"04-26-2006","","8-SE",21.9
-"187-2006*B","Acer","saccharum","Sugar Maple",92203,2016,13,130,NA,NA,133,288,315,315,46,42.30431226,-71.12006593,"04-26-2006","","8-SE",21.9
-"187-2006*B","Acer","saccharum","Sugar Maple",92203,2017,13,127,NA,NA,131,294,294,294,46,42.30431226,-71.12006593,"04-26-2006","","8-SE",21.9
-"187-2006*B","Acer","saccharum","Sugar Maple",92203,2018,13,125,NA,NA,127,285,292,292,46,42.30431226,-71.12006593,"04-26-2006","","8-SE",21.9
-"187-2006*B","Acer","saccharum","Sugar Maple",92203,2019,13,120,NA,NA,126,260,285,285,46,42.30431226,-71.12006593,"04-26-2006","","8-SE",21.9
-"187-2006*B","Acer","saccharum","Sugar Maple",92203,2020,13,126,NA,NA,133,253,271,271,46,42.30431226,-71.12006593,"04-26-2006","","8-SE",21.9
-"187-2006*B","Acer","saccharum","Sugar Maple",92203,2021,13,109,121,134,126,276,276,276,46,42.30431226,-71.12006593,"04-26-2006","","8-SE",21.9
-"187-2006*B","Acer","saccharum","Sugar Maple",92203,2022,13,125,NA,NA,133,266,266,266,46,42.30431226,-71.12006593,"04-26-2006","","8-SE",21.9
-"187-2006*B","Acer","saccharum","Sugar Maple",92203,2023,13,118,108,121,118,274,269,269,46,42.30431226,-71.12006593,"04-26-2006","","8-SE",21.9
-"187-2006*B","Acer","saccharum","Sugar Maple",92203,2024,13,124,NA,NA,128,NA,NA,NA,46,42.30431226,-71.12006593,"04-26-2006","","8-SE",21.9
-"19804*A","Tilia","americana","American Basswood",86290,2015,13,NA,NA,NA,NA,255,255,255,46,42.30440146,-71.12199832,"07-01-1916","","7-SE",80.5
-"19804*A","Tilia","americana","American Basswood",86290,2016,13,111,142,199,115,252,281,281,46,42.30440146,-71.12199832,"07-01-1916","","7-SE",80.5
-"19804*A","Tilia","americana","American Basswood",86290,2017,13,107,127,193,113,234,234,234,46,42.30440146,-71.12199832,"07-01-1916","","7-SE",80.5
-"19804*A","Tilia","americana","American Basswood",86290,2018,13,118,133,199,121,231,243,243,46,42.30440146,-71.12199832,"07-01-1916","","7-SE",80.5
-"19804*A","Tilia","americana","American Basswood",86290,2019,13,109,161,195,114,221,244,244,46,42.30440146,-71.12199832,"07-01-1916","","7-SE",80.5
-"19804*A","Tilia","americana","American Basswood",86290,2020,13,120,147,180,126,229,250,250,46,42.30440146,-71.12199832,"07-01-1916","","7-SE",80.5
-"19804*A","Tilia","americana","American Basswood",86290,2021,13,114,132,NA,119,247,254,254,46,42.30440146,-71.12199832,"07-01-1916","","7-SE",80.5
-"20098*A","Carya","glabra","Pignut Hickory",86263,2016,33,118,122,150,118,NA,NA,NA,46,42.29994157,-71.1258635,"07-01-1883","","25-SW",62.9
-"20098*A","Carya","glabra","Pignut Hickory",86263,2017,33,110,118,166,118,253,253,253,46,42.29994157,-71.1258635,"07-01-1883","","25-SW",62.9
-"20098*A","Carya","glabra","Pignut Hickory",86263,2018,33,118,122,153,122,258,258,258,46,42.29994157,-71.1258635,"07-01-1883","","25-SW",62.9
-"20098*A","Carya","glabra","Pignut Hickory",86263,2019,33,108,128,145,111,253,264,264,46,42.29994157,-71.1258635,"07-01-1883","","25-SW",62.9
-"20098*A","Carya","glabra","Pignut Hickory",86263,2020,33,125,127,168,127,259,NA,259,46,42.29994157,-71.1258635,"07-01-1883","","25-SW",62.9
-"20098*A","Carya","glabra","Pignut Hickory",86263,2021,33,113,131,146,115,NA,NA,NA,46,42.29994157,-71.1258635,"07-01-1883","","25-SW",62.9
-"20098*A","Carya","glabra","Pignut Hickory",86263,2022,33,114,126,NA,116,251,NA,251,46,42.29994157,-71.1258635,"07-01-1883","","25-SW",62.9
-"20098*A","Carya","glabra","Pignut Hickory",86263,2023,33,104,NA,NA,112,NA,NA,NA,46,42.29994157,-71.1258635,"07-01-1883","","25-SW",62.9
-"20098*A","Carya","glabra","Pignut Hickory",86263,2024,33,NA,NA,NA,123,NA,NA,NA,46,42.29994157,-71.1258635,"07-01-1883","","25-SW",62.9
-"2019*R","Carya","glabra","Pignut Hickory",86266,2016,33,118,118,150,122,285,285,285,46,42.2999657,-71.12566127,"10-19-1883","","25-SW",47.6
-"2019*R","Carya","glabra","Pignut Hickory",86266,2017,33,100,117,147,117,253,253,253,46,42.2999657,-71.12566127,"10-19-1883","","25-SW",47.6
-"2019*R","Carya","glabra","Pignut Hickory",86266,2018,33,118,122,153,122,258,288,288,46,42.2999657,-71.12566127,"10-19-1883","","25-SW",47.6
-"2019*R","Carya","glabra","Pignut Hickory",86266,2019,33,108,115,145,111,251,264,264,46,42.2999657,-71.12566127,"10-19-1883","","25-SW",47.6
-"2019*R","Carya","glabra","Pignut Hickory",86266,2020,33,124,126,156,126,260,NA,260,46,42.2999657,-71.12566127,"10-19-1883","","25-SW",47.6
-"2019*R","Carya","glabra","Pignut Hickory",86266,2021,33,113,131,146,113,265,NA,265,46,42.2999657,-71.12566127,"10-19-1883","","25-SW",47.6
-"2019*R","Carya","glabra","Pignut Hickory",86266,2022,33,114,126,146,119,NA,NA,NA,46,42.2999657,-71.12566127,"10-19-1883","","25-SW",47.6
-"2019*R","Carya","glabra","Pignut Hickory",86266,2023,33,104,118,NA,112,NA,NA,NA,46,42.2999657,-71.12566127,"10-19-1883","","25-SW",47.6
-"2019*R","Carya","glabra","Pignut Hickory",86266,2024,33,119,128,147,119,NA,NA,NA,46,42.2999657,-71.12566127,"10-19-1883","","25-SW",47.6
-"2019*S","Carya","glabra","Pignut Hickory",86265,2015,33,NA,NA,161,NA,NA,NA,NA,46,42.29994973,-71.12573747,"10-19-1883","","25-SW",67.4
-"2019*S","Carya","glabra","Pignut Hickory",86265,2016,33,122,130,150,122,285,285,285,46,42.29994973,-71.12573747,"10-19-1883","","25-SW",67.4
-"2019*S","Carya","glabra","Pignut Hickory",86265,2017,33,100,118,166,118,253,253,253,46,42.29994973,-71.12573747,"10-19-1883","","25-SW",67.4
-"2019*S","Carya","glabra","Pignut Hickory",86265,2018,33,NA,131,153,123,258,288,288,46,42.29994973,-71.12573747,"10-19-1883","","25-SW",67.4
-"2019*S","Carya","glabra","Pignut Hickory",86265,2019,33,108,128,155,115,260,264,264,46,42.29994973,-71.12573747,"10-19-1883","","25-SW",67.4
-"2019*S","Carya","glabra","Pignut Hickory",86265,2020,33,125,127,168,127,251,NA,251,46,42.29994973,-71.12573747,"10-19-1883","","25-SW",67.4
-"2019*S","Carya","glabra","Pignut Hickory",86265,2021,33,118,126,152,123,243,270,270,46,42.29994973,-71.12573747,"10-19-1883","","25-SW",67.4
-"2019*S","Carya","glabra","Pignut Hickory",86265,2022,33,114,126,NA,116,251,NA,251,46,42.29994973,-71.12573747,"10-19-1883","","25-SW",67.4
-"2019*S","Carya","glabra","Pignut Hickory",86265,2023,33,104,NA,NA,112,NA,NA,NA,46,42.29994973,-71.12573747,"10-19-1883","","25-SW",67.4
-"2019*S","Carya","glabra","Pignut Hickory",86265,2024,33,NA,128,NA,123,NA,NA,NA,46,42.29994973,-71.12573747,"10-19-1883","","25-SW",67.4
-"20645*A","Acer","saccharum","Sugar Maple",92206,2015,13,NA,NA,NA,NA,280,280,280,46,42.30370116,-71.12007443,"11-09-1928","","11-NE",85.7
-"20645*A","Acer","saccharum","Sugar Maple",92206,2016,13,115,111,144,117,293,NA,293,46,42.30370116,-71.12007443,"11-09-1928","","11-NE",85.7
-"20645*A","Acer","saccharum","Sugar Maple",92206,2017,13,107,105,139,113,252,259,259,46,42.30370116,-71.12007443,"11-09-1928","","11-NE",85.7
-"20645*A","Acer","saccharum","Sugar Maple",92206,2018,13,NA,NA,NA,132,287,293,293,46,42.30370116,-71.12007443,"11-09-1928","","11-NE",85.7
-"20645*A","Acer","saccharum","Sugar Maple",92206,2019,13,109,NA,NA,111,263,263,263,46,42.30370116,-71.12007443,"11-09-1928","","11-NE",85.7
-"20645*A","Acer","saccharum","Sugar Maple",92206,2020,13,121,NA,NA,124,290,290,290,46,42.30370116,-71.12007443,"11-09-1928","","11-NE",85.7
-"21815*E","Quercus","alba","White Oak",87758,2016,30,115,130,NA,282,282,282,282,46,42.29918666,-71.12348625,"07-01-1931","","32-NW",73.3
-"21815*E","Quercus","alba","White Oak",87758,2017,30,118,118,225,119,271,278,278,46,42.29918666,-71.12348625,"07-01-1931","","32-NW",73.3
-"21815*E","Quercus","alba","White Oak",87758,2018,30,NA,128,177,126,274,279,279,46,42.29918666,-71.12348625,"07-01-1931","","32-NW",73.3
-"21815*E","Quercus","alba","White Oak",87758,2019,30,117,NA,183,127,268,286,286,46,42.29918666,-71.12348625,"07-01-1931","","32-NW",73.3
-"22099*A","Populus","deltoides","Eastern Cottonwood",86282,2016,26,127,101,NA,133,229,229,229,46,42.29378479,-71.124621,"07-01-1911","","55-NE",58
-"22099*A","Populus","deltoides","Eastern Cottonwood",86282,2017,26,102,109,NA,120,231,236,236,46,42.29378479,-71.124621,"07-01-1911","","55-NE",58
-"22099*A","Populus","deltoides","Eastern Cottonwood",86282,2018,26,117,121,NA,118,236,236,236,46,42.29378479,-71.124621,"07-01-1911","","55-NE",58
-"22099*A","Populus","deltoides","Eastern Cottonwood",86282,2019,26,123,104,NA,128,229,229,229,46,42.29378479,-71.124621,"07-01-1911","","55-NE",58
-"22099*A","Populus","deltoides","Eastern Cottonwood",86282,2020,26,125,103,NA,127,255,261,261,46,42.29378479,-71.124621,"07-01-1911","","55-NE",58
-"22099*A","Populus","deltoides","Eastern Cottonwood",86282,2021,26,123,99,NA,123,243,257,257,46,42.29378479,-71.124621,"07-01-1911","","55-NE",58
-"22099*A","Populus","deltoides","Eastern Cottonwood",86282,2022,26,123,105,NA,128,269,NA,269,46,42.29378479,-71.124621,"07-01-1911","","55-NE",58
-"22099*A","Populus","deltoides","Eastern Cottonwood",86282,2023,26,NA,105,NA,129,229,241,241,46,42.29378479,-71.124621,"07-01-1911","","55-NE",58
-"22099*A","Populus","deltoides","Eastern Cottonwood",86282,2024,26,120,105,NA,120,245,248,248,46,42.29378479,-71.124621,"07-01-1911","","55-NE",58
-"227-2011*A","Quercus","alba","White Oak",87759,2016,30,NA,NA,NA,282,282,282,282,46,42.29933201,-71.12435358,"07-26-2011","","31-NE",66.1
-"227-2011*A","Quercus","alba","White Oak",87759,2017,30,110,127,NA,124,267,288,288,46,42.29933201,-71.12435358,"07-26-2011","","31-NE",66.1
-"227-2011*A","Quercus","alba","White Oak",87759,2018,30,NA,128,183,126,NA,296,296,46,42.29933201,-71.12435358,"07-26-2011","","31-NE",66.1
-"227-2011*A","Quercus","alba","White Oak",87759,2019,30,117,NA,NA,127,268,268,268,46,42.29933201,-71.12435358,"07-26-2011","","31-NE",66.1
-"22834*B","Acer","saccharum","Sugar Maple",92204,2015,13,NA,NA,NA,NA,280,280,280,46,42.3040241,-71.12065871,"02-02-1950","","11-NW",81.9
-"22834*B","Acer","saccharum","Sugar Maple",92204,2016,13,109,108,125,112,293,315,315,46,42.3040241,-71.12065871,"02-02-1950","","11-NW",81.9
-"22834*B","Acer","saccharum","Sugar Maple",92204,2017,13,101,105,127,108,271,276,276,46,42.3040241,-71.12065871,"02-02-1950","","11-NW",81.9
-"22834*B","Acer","saccharum","Sugar Maple",92204,2018,13,NA,119,264,125,285,285,285,46,42.3040241,-71.12065871,"02-02-1950","","11-NW",81.9
-"22834*B","Acer","saccharum","Sugar Maple",92204,2019,13,106,107,126,111,279,278,278,46,42.3040241,-71.12065871,"02-02-1950","","11-NW",81.9
-"22834*B","Acer","saccharum","Sugar Maple",92204,2020,13,122,108,162,121,291,291,291,46,42.3040241,-71.12065871,"02-02-1950","","11-NW",81.9
-"22834*B","Acer","saccharum","Sugar Maple",92204,2021,13,101,91,121,103,276,276,276,46,42.3040241,-71.12065871,"02-02-1950","","11-NW",81.9
-"22834*B","Acer","saccharum","Sugar Maple",92204,2022,13,125,NA,NA,125,153,285,285,46,42.3040241,-71.12065871,"02-02-1950","","11-NW",81.9
-"22834*B","Acer","saccharum","Sugar Maple",92204,2023,13,102,88,121,104,274,274,274,46,42.3040241,-71.12065871,"02-02-1950","","11-NW",81.9
-"22834*B","Acer","saccharum","Sugar Maple",92204,2024,13,121,NA,NA,121,276,283,283,46,42.3040241,-71.12065871,"02-02-1950","","11-NW",81.9
-"22886*D","Quercus","alba","White Oak",88311,2016,30,115,NA,NA,282,279,282,282,46,42.29940788,-71.12438014,"07-01-1950","","31-NE",87.2
-"22886*D","Quercus","alba","White Oak",88311,2017,30,110,127,NA,119,257,285,285,46,42.29940788,-71.12438014,"07-01-1950","","31-NE",87.2
-"22886*D","Quercus","alba","White Oak",88311,2018,30,NA,128,183,123,NA,296,296,46,42.29940788,-71.12438014,"07-01-1950","","31-NE",87.2
-"22886*D","Quercus","alba","White Oak",88311,2019,30,117,126,NA,127,260,NA,260,46,42.29940788,-71.12438014,"07-01-1950","","31-NE",87.2
-"358-82*A","Quercus","alba","White Oak",87761,2016,30,115,NA,NA,282,282,303,303,46,42.29920928,-71.12373613,"03-25-1982","","32-NW",38.4
-"358-82*A","Quercus","alba","White Oak",87761,2017,30,117,NA,266,124,291,300,300,46,42.29920928,-71.12373613,"03-25-1982","","32-NW",38.4
-"358-82*A","Quercus","alba","White Oak",87761,2018,30,122,131,NA,123,282,282,282,46,42.29920928,-71.12373613,"03-25-1982","","32-NW",38.4
-"358-82*A","Quercus","alba","White Oak",87761,2019,30,111,129,NA,127,286,291,291,46,42.29920928,-71.12373613,"03-25-1982","","32-NW",38.4
-"358-82*A","Quercus","alba","White Oak",87761,2020,30,NA,NA,NA,126,273,NA,273,46,42.29920928,-71.12373613,"03-25-1982","","32-NW",38.4
-"358-82*A","Quercus","alba","White Oak",87761,2024,30,121,NA,NA,128,277,277,277,46,42.29920928,-71.12373613,"03-25-1982","","32-NW",38.4
-"524-2009*A","Acer","rubrum","Red Maple",166767,2019,13,106,92,117,115,269,286,286,46,42.30316247,-71.12125376,"09-09-2009","","11-SW",64.2
-"524-2009*A","Acer","rubrum","Red Maple",166767,2020,13,120,NA,124,120,258,271,271,46,42.30316247,-71.12125376,"09-09-2009","","11-SW",64.2
-"524-2009*A","Acer","rubrum","Red Maple",166767,2021,13,NA,93,109,122,NA,NA,NA,46,42.30316247,-71.12125376,"09-09-2009","","11-SW",64.2
-"525-2009*A","Acer","rubrum","Red Maple",166766,2019,13,107,92,NA,111,286,293,293,46,42.30320004,-71.12119722,"09-09-2009","","11-SW",55.7
-"525-2009*A","Acer","rubrum","Red Maple",166766,2020,13,120,NA,NA,120,258,271,271,46,42.30320004,-71.12119722,"09-09-2009","","11-SW",55.7
-"5859*A","Quercus","rubra","Northern Red Oak",87760,2016,30,115,115,NA,127,282,282,282,46,42.29994632,-71.12375725,"09-02-1908","","26-SW",80.7
-"5859*A","Quercus","rubra","Northern Red Oak",87760,2017,30,110,NA,NA,117,272,288,288,46,42.29994632,-71.12375725,"09-02-1908","","26-SW",80.7
-"5859*A","Quercus","rubra","Northern Red Oak",87760,2018,30,122,128,NA,122,264,282,282,46,42.29994632,-71.12375725,"09-02-1908","","26-SW",80.7
-"5859*A","Quercus","rubra","Northern Red Oak",87760,2019,30,107,121,NA,113,260,NA,260,46,42.29994632,-71.12375725,"09-02-1908","","26-SW",80.7
-"5859*B","Quercus","rubra","Northern Red Oak",86287,2016,30,115,115,NA,127,282,282,282,46,42.2999613,-71.12363106,"09-02-1908","","26-SW",92.6
-"5859*B","Quercus","rubra","Northern Red Oak",86287,2017,30,110,NA,NA,113,272,291,291,46,42.2999613,-71.12363106,"09-02-1908","","26-SW",92.6
-"5859*B","Quercus","rubra","Northern Red Oak",86287,2018,30,118,128,208,122,272,282,282,46,42.2999613,-71.12363106,"09-02-1908","","26-SW",92.6
-"5859*B","Quercus","rubra","Northern Red Oak",86287,2019,30,107,121,158,113,260,260,260,46,42.2999613,-71.12363106,"09-02-1908","","26-SW",92.6
-"611-2010*A","Quercus","alba","White Oak",87756,2016,26,115,NA,NA,133,280,291,291,46,42.29281823,-71.12903099,"11-15-2010","","57-NE",75.7
-"611-2010*A","Quercus","alba","White Oak",87756,2017,26,117,NA,260,120,288,288,288,46,42.29281823,-71.12903099,"11-15-2010","","57-NE",75.7
-"611-2010*A","Quercus","alba","White Oak",87756,2018,26,NA,136,NA,124,287,287,287,46,42.29281823,-71.12903099,"11-15-2010","","57-NE",75.7
-"611-2010*A","Quercus","alba","White Oak",87756,2019,26,113,NA,NA,123,287,288,288,46,42.29281823,-71.12903099,"11-15-2010","","57-NE",75.7
-"611-2010*A","Quercus","alba","White Oak",87756,2020,26,123,127,NA,125,272,289,289,46,42.29281823,-71.12903099,"11-15-2010","","57-NE",75.7
-"611-2010*A","Quercus","alba","White Oak",87756,2021,26,113,NA,NA,117,289,301,301,46,42.29281823,-71.12903099,"11-15-2010","","57-NE",75.7
-"611-2010*A","Quercus","alba","White Oak",87756,2022,26,117,NA,NA,128,281,296,296,46,42.29281823,-71.12903099,"11-15-2010","","57-NE",75.7
-"611-2010*A","Quercus","alba","White Oak",87756,2023,26,NA,NA,NA,112,289,NA,289,46,42.29281823,-71.12903099,"11-15-2010","","57-NE",75.7
-"611-2010*A","Quercus","alba","White Oak",87756,2024,26,116,NA,NA,123,277,NA,277,46,42.29281823,-71.12903099,"11-15-2010","","57-NE",75.7
-"689-2010*A","Acer","saccharum","Sugar Maple",92209,2016,26,116,110,NA,130,249,249,249,46,42.2917509,-71.1278148,"11-18-2010","","62-NW",78
-"689-2010*A","Acer","saccharum","Sugar Maple",92209,2017,26,102,109,125,108,254,254,254,46,42.2917509,-71.1278148,"11-18-2010","","62-NW",78
-"689-2010*A","Acer","saccharum","Sugar Maple",92209,2018,26,NA,NA,NA,122,287,292,292,46,42.2917509,-71.1278148,"11-18-2010","","62-NW",78
-"689-2010*A","Acer","saccharum","Sugar Maple",92209,2019,26,209,NA,NA,115,285,285,285,46,42.2917509,-71.1278148,"11-18-2010","","62-NW",78
-"689-2010*A","Acer","saccharum","Sugar Maple",92209,2020,26,112,112,NA,123,260,261,261,46,42.2917509,-71.1278148,"11-18-2010","","62-NW",78
-"689-2010*A","Acer","saccharum","Sugar Maple",92209,2021,26,99,96,118,110,289,301,301,46,42.2917509,-71.1278148,"11-18-2010","","62-NW",78
-"689-2010*A","Acer","saccharum","Sugar Maple",92209,2022,26,106,NA,NA,117,281,285,285,46,42.2917509,-71.1278148,"11-18-2010","","62-NW",78
-"689-2010*A","Acer","saccharum","Sugar Maple",92209,2023,26,NA,98,NA,NA,NA,NA,NA,46,42.2917509,-71.1278148,"11-18-2010","","62-NW",78
-"689-2010*A","Acer","saccharum","Sugar Maple",92209,2024,26,NA,NA,NA,116,277,277,277,46,42.2917509,-71.1278148,"11-18-2010","","62-NW",78
-"6990*A","Carya","glabra","Pignut Hickory",86264,2016,33,110,NA,166,118,NA,NA,NA,46,42.30020379,-71.12586584,"12-29-1909","","25-SW",45.7
-"6990*A","Carya","glabra","Pignut Hickory",86264,2017,33,100,NA,241,114,253,253,253,46,42.30020379,-71.12586584,"12-29-1909","","25-SW",45.7
-"6990*A","Carya","glabra","Pignut Hickory",86264,2018,33,119,NA,153,122,249,256,256,46,42.30020379,-71.12586584,"12-29-1909","","25-SW",45.7
-"6990*A","Carya","glabra","Pignut Hickory",86264,2019,33,108,132,188,111,251,264,264,46,42.30020379,-71.12586584,"12-29-1909","","25-SW",45.7
-"6990*A","Carya","glabra","Pignut Hickory",86264,2020,33,119,NA,220,127,262,NA,262,46,42.30020379,-71.12586584,"12-29-1909","","25-SW",45.7
-"6990*A","Carya","glabra","Pignut Hickory",86264,2021,33,NA,NA,146,113,NA,NA,NA,46,42.30020379,-71.12586584,"12-29-1909","","25-SW",45.7
-"6990*A","Carya","glabra","Pignut Hickory",86264,2022,33,112,126,NA,116,NA,NA,NA,46,42.30020379,-71.12586584,"12-29-1909","","25-SW",45.7
-"6990*A","Carya","glabra","Pignut Hickory",86264,2023,33,104,NA,137,104,NA,NA,NA,46,42.30020379,-71.12586584,"12-29-1909","","25-SW",45.7
-"6990*A","Carya","glabra","Pignut Hickory",86264,2024,33,NA,NA,NA,123,NA,NA,NA,46,42.30020379,-71.12586584,"12-29-1909","","25-SW",45.7
-"7141*A","Tilia","americana","American Basswood",87762,2015,13,NA,NA,NA,NA,255,255,255,46,42.30415322,-71.12252621,"12-15-1912","","7-SE",58.9
-"7141*A","Tilia","americana","American Basswood",87762,2016,13,111,154,199,115,215,290,290,46,42.30415322,-71.12252621,"12-15-1912","","7-SE",58.9
-"7141*A","Tilia","americana","American Basswood",87762,2017,13,101,127,186,107,301,301,301,46,42.30415322,-71.12252621,"12-15-1912","","7-SE",58.9
-"7141*A","Tilia","americana","American Basswood",87762,2018,13,117,141,192,122,246,234,234,46,42.30415322,-71.12252621,"12-15-1912","","7-SE",58.9
-"7141*A","Tilia","americana","American Basswood",87762,2019,13,109,138,190,111,185,243,243,46,42.30415322,-71.12252621,"12-15-1912","","7-SE",58.9
-"7141*A","Tilia","americana","American Basswood",87762,2020,13,112,NA,206,126,229,229,229,46,42.30415322,-71.12252621,"12-15-1912","","7-SE",58.9
-"7141*A","Tilia","americana","American Basswood",87762,2021,13,114,NA,261,114,247,247,247,46,42.30415322,-71.12252621,"12-15-1912","","7-SE",58.9
-"7141*A","Tilia","americana","American Basswood",87762,2022,13,107,145,188,117,250,250,250,46,42.30415322,-71.12252621,"12-15-1912","","7-SE",58.9
-"7141*A","Tilia","americana","American Basswood",87762,2023,13,104,118,194,108,256,263,263,46,42.30415322,-71.12252621,"12-15-1912","","7-SE",58.9
-"7141*A","Tilia","americana","American Basswood",87762,2024,13,NA,NA,276,117,227,283,283,46,42.30415322,-71.12252621,"12-15-1912","","7-SE",58.9
-"8197*A","Quercus","rubra","Northern Red Oak",86288,2016,30,115,NA,290,130,289,289,289,46,42.2999685,-71.12424385,"07-01-1916","","25-SE",66.2
-"8197*A","Quercus","rubra","Northern Red Oak",86288,2017,30,110,NA,NA,119,271,311,311,46,42.2999685,-71.12424385,"07-01-1916","","25-SE",66.2
-"8197*A","Quercus","rubra","Northern Red Oak",86288,2018,30,122,128,260,123,282,296,296,46,42.2999685,-71.12424385,"07-01-1916","","25-SE",66.2
-"8197*A","Quercus","rubra","Northern Red Oak",86288,2019,30,107,129,NA,128,268,268,268,46,42.2999685,-71.12424385,"07-01-1916","","25-SE",66.2
-"925-79*B","Aesculus","flava","Yellow Buckeye",85758,2015,13,NA,NA,NA,NA,218,NA,218,46,42.30391297,-71.12232333,"09-24-1979","rich woods","10-NE",44.5
-"925-79*B","Aesculus","flava","Yellow Buckeye",85758,2016,13,110,112,144,112,252,290,290,46,42.30391297,-71.12232333,"09-24-1979","rich woods","10-NE",44.5
-"925-79*B","Aesculus","flava","Yellow Buckeye",85758,2017,13,101,108,136,108,NA,NA,NA,46,42.30391297,-71.12232333,"09-24-1979","rich woods","10-NE",44.5
-"925-79*B","Aesculus","flava","Yellow Buckeye",85758,2018,13,112,116,151,116,178,192,192,46,42.30391297,-71.12232333,"09-24-1979","rich woods","10-NE",44.5
-"925-79*B","Aesculus","flava","Yellow Buckeye",85758,2019,13,107,107,142,107,185,243,243,46,42.30391297,-71.12232333,"09-24-1979","rich woods","10-NE",44.5
-"925-79*B","Aesculus","flava","Yellow Buckeye",85758,2020,13,105,108,147,111,183,206,206,46,42.30391297,-71.12232333,"09-24-1979","rich woods","10-NE",44.5
-"925-79*B","Aesculus","flava","Yellow Buckeye",85758,2021,13,98,98,134,98,196,268,268,46,42.30391297,-71.12232333,"09-24-1979","rich woods","10-NE",44.5
-"925-79*B","Aesculus","flava","Yellow Buckeye",85758,2022,13,106,109,138,107,202,202,202,46,42.30391297,-71.12232333,"09-24-1979","rich woods","10-NE",44.5
-"925-79*B","Aesculus","flava","Yellow Buckeye",85758,2023,13,102,103,128,104,231,263,263,46,42.30391297,-71.12232333,"09-24-1979","rich woods","10-NE",44.5
-"925-79*B","Aesculus","flava","Yellow Buckeye",85758,2024,13,106,107,144,107,227,NA,227,46,42.30391297,-71.12232333,"09-24-1979","rich woods","10-NE",44.5
->>>>>>> fd4fc856699d80f367dc327b8341a8254f463e48
+"plantNickname","genus","species","Common_Name","year","numYs","budburst","coloredLeaves","flowers","fruits","IncreasingLeafSize","leafDrop","leafout","OpenFlowers","PollenRelease","RecentFruitorSeedDrop","ripeFruits","last.obs","lat","long","AccessionDate","habitat","gardenLocation","DBH"
+"11253*A","Quercus","rubra","Northern red oak",2016,1,127,282,NA,NA,NA,282,282,NA,NA,NA,NA,282,42.30002036,-71.12432118,"01-13-1917","","25-SE",69.5
+"11253*A","Quercus","rubra","Northern red oak",2017,1,119,270,NA,236,132,267,124,NA,NA,242,NA,267,42.30002036,-71.12432118,"01-13-1917","","25-SE",69.5
+"11253*A","Quercus","rubra","Northern red oak",2018,1,122,282,128,NA,125,282,125,130,131,NA,NA,282,42.30002036,-71.12432118,"01-13-1917","","25-SE",69.5
+"11253*A","Quercus","rubra","Northern red oak",2019,1,110,260,126,190,128,268,128,NA,NA,NA,260,268,42.30002036,-71.12432118,"01-13-1917","","25-SE",69.5
+"1196-84*A","Acer","rubrum","Red maple",2018,1,NA,272,NA,NA,NA,NA,NA,NA,NA,NA,NA,272,42.30388171,-71.12019927,"10-15-1984","","11-NE",27.3
+"1196-84*A","Acer","rubrum","Red maple",2022,1,105,NA,77,105,125,NA,125,84,NA,NA,NA,NA,42.30388171,-71.12019927,"10-15-1984","","11-NE",27.3
+"1196-84*A","Acer","rubrum","Red maple",2019,1,103,269,97,115,115,269,115,97,NA,144,144,269,42.30388171,-71.12019927,"10-15-1984","","11-NE",27.3
+"1196-84*A","Acer","rubrum","Red maple",2023,1,NA,NA,83,NA,NA,NA,NA,90,NA,NA,NA,NA,42.30388171,-71.12019927,"10-15-1984","","11-NE",27.3
+"1196-84*A","Acer","rubrum","Red maple",2024,1,107,NA,NA,117,121,NA,121,90,NA,NA,NA,NA,42.30388171,-71.12019927,"10-15-1984","","11-NE",27.3
+"1196-84*A","Acer","rubrum","Red maple",2020,1,119,220,75,120,124,257,124,75,92,148,148,257,42.30388171,-71.12019927,"10-15-1984","","11-NE",27.3
+"1196-84*A","Acer","rubrum","Red maple",2021,1,101,NA,86,104,114,NA,114,86,NA,NA,NA,NA,42.30388171,-71.12019927,"10-15-1984","","11-NE",27.3
+"1199*D","Betula","nigra","River birch",2015,1,NA,282,NA,NA,NA,282,NA,NA,NA,NA,NA,282,42.30215088,-71.12401559,"07-17-1877","","13-SE",68
+"1199*D","Betula","nigra","River birch",2016,1,114,281,124,NA,132,281,132,NA,NA,NA,NA,281,42.30215088,-71.12401559,"07-17-1877","","13-SE",68
+"1199*D","Betula","nigra","River birch",2018,1,125,294,122,154,125,294,125,125,130,NA,NA,294,42.30215088,-71.12401559,"07-17-1877","","13-SE",68
+"1199*D","Betula","nigra","River birch",2019,1,112,264,111,155,124,249,126,NA,NA,NA,NA,249,42.30215088,-71.12401559,"07-17-1877","","13-SE",68
+"1199*D","Betula","nigra","River birch",2020,1,126,271,85,160,133,271,128,128,NA,NA,NA,271,42.30215088,-71.12401559,"07-17-1877","","13-SE",68
+"1199*D","Betula","nigra","River birch",2017,1,100,235,112,149,119,241,118,118,117,162,162,241,42.30215088,-71.12401559,"07-17-1877","","13-SE",68
+"1199*J","Betula","nigra","River birch",2015,1,NA,250,150,NA,NA,270,NA,158,NA,NA,NA,270,42.30252077,-71.12397574,"07-17-1877","","13-NE",89.1
+"1199*J","Betula","nigra","River birch",2018,1,122,272,122,154,123,272,122,122,130,162,161,272,42.30252077,-71.12397574,"07-17-1877","","13-NE",89.1
+"1199*J","Betula","nigra","River birch",2019,1,111,237,111,NA,115,251,126,130,NA,NA,NA,251,42.30252077,-71.12397574,"07-17-1877","","13-NE",89.1
+"1199*J","Betula","nigra","River birch",2020,1,126,258,120,160,133,271,128,126,NA,167,167,271,42.30252077,-71.12397574,"07-17-1877","","13-NE",89.1
+"1199*J","Betula","nigra","River birch",2016,1,114,279,124,NA,130,289,130,132,NA,NA,NA,289,42.30252077,-71.12397574,"07-17-1877","","13-NE",89.1
+"1199*J","Betula","nigra","River birch",2017,1,100,250,118,149,120,247,118,118,117,162,162,247,42.30252077,-71.12397574,"07-17-1877","","13-NE",89.1
+"1251-79*A","Betula","nigra","River birch",2018,1,118,243,122,151,125,243,125,124,125,162,162,243,42.30223154,-71.12410601,"12-20-1979","Along south bank of Castor River","13-SE",78
+"1251-79*A","Betula","nigra","River birch",2019,1,107,214,114,150,122,214,122,111,124,168,167,214,42.30223154,-71.12410601,"12-20-1979","Along south bank of Castor River","13-SE",78
+"1251-79*A","Betula","nigra","River birch",2020,1,126,197,120,160,133,197,128,126,NA,167,167,197,42.30223154,-71.12410601,"12-20-1979","Along south bank of Castor River","13-SE",78
+"1251-79*A","Betula","nigra","River birch",2015,1,NA,218,150,NA,NA,270,NA,NA,NA,164,NA,270,42.30223154,-71.12410601,"12-20-1979","Along south bank of Castor River","13-SE",78
+"1251-79*A","Betula","nigra","River birch",2016,1,111,210,111,161,130,260,127,114,114,165,165,260,42.30223154,-71.12410601,"12-20-1979","Along south bank of Castor River","13-SE",78
+"1251-79*A","Betula","nigra","River birch",2024,1,110,NA,111,NA,124,NA,124,NA,NA,NA,159,NA,42.30223154,-71.12410601,"12-20-1979","Along south bank of Castor River","13-SE",78
+"1251-79*A","Betula","nigra","River birch",2022,1,NA,NA,105,NA,NA,NA,NA,NA,NA,NA,NA,NA,42.30223154,-71.12410601,"12-20-1979","Along south bank of Castor River","13-SE",78
+"1251-79*A","Betula","nigra","River birch",2017,1,100,202,112,139,117,202,108,117,117,167,NA,202,42.30223154,-71.12410601,"12-20-1979","Along south bank of Castor River","13-SE",78
+"1251-79*B","Betula","nigra","River birch",2022,1,103,238,103,147,125,215,125,125,125,158,158,215,42.30228781,-71.12445659,"12-20-1979","Along south bank of Castor River","13-SE",70.8
+"1251-79*B","Betula","nigra","River birch",2015,1,142,218,150,NA,NA,240,313,NA,NA,158,NA,240,42.30228781,-71.12445659,"12-20-1979","Along south bank of Castor River","13-SE",70.8
+"1251-79*B","Betula","nigra","River birch",2024,1,121,257,104,NA,121,257,121,117,NA,NA,NA,257,42.30228781,-71.12445659,"12-20-1979","Along south bank of Castor River","13-SE",70.8
+"1251-79*B","Betula","nigra","River birch",2019,1,107,230,107,152,122,230,122,123,124,159,159,230,42.30228781,-71.12445659,"12-20-1979","Along south bank of Castor River","13-SE",70.8
+"1251-79*B","Betula","nigra","River birch",2020,1,126,197,120,147,133,197,133,126,NA,164,160,197,42.30228781,-71.12445659,"12-20-1979","Along south bank of Castor River","13-SE",70.8
+"1251-79*B","Betula","nigra","River birch",2021,1,114,261,114,134,122,261,122,116,116,NA,NA,261,42.30228781,-71.12445659,"12-20-1979","Along south bank of Castor River","13-SE",70.8
+"1251-79*B","Betula","nigra","River birch",2017,1,101,209,109,136,117,230,117,114,117,158,158,230,42.30228781,-71.12445659,"12-20-1979","Along south bank of Castor River","13-SE",70.8
+"1251-79*B","Betula","nigra","River birch",2018,1,118,250,122,138,124,257,122,122,NA,156,156,257,42.30228781,-71.12445659,"12-20-1979","Along south bank of Castor River","13-SE",70.8
+"1251-79*B","Betula","nigra","River birch",2023,1,104,231,101,139,117,235,108,104,112,159,159,235,42.30228781,-71.12445659,"12-20-1979","Along south bank of Castor River","13-SE",70.8
+"1251-79*B","Betula","nigra","River birch",2016,1,111,246,114,147,130,260,125,125,132,161,161,260,42.30228781,-71.12445659,"12-20-1979","Along south bank of Castor River","13-SE",70.8
+"1251-79*E","Betula","nigra","River birch",2019,1,110,237,112,157,124,239,126,133,NA,NA,NA,239,42.3022236,-71.12398789,"12-20-1979","Along south bank of Castor River","13-SE",70
+"1251-79*E","Betula","nigra","River birch",2017,1,101,230,125,149,120,241,118,131,117,162,162,241,42.3022236,-71.12398789,"12-20-1979","Along south bank of Castor River","13-SE",70
+"1251-79*E","Betula","nigra","River birch",2018,1,122,251,125,154,125,256,125,125,130,162,162,256,42.3022236,-71.12398789,"12-20-1979","Along south bank of Castor River","13-SE",70
+"1251-79*E","Betula","nigra","River birch",2020,1,126,226,120,160,133,271,126,126,NA,NA,NA,271,42.3022236,-71.12398789,"12-20-1979","Along south bank of Castor River","13-SE",70
+"1251-79*E","Betula","nigra","River birch",2015,1,NA,218,150,NA,NA,240,NA,NA,NA,164,NA,240,42.3022236,-71.12398789,"12-20-1979","Along south bank of Castor River","13-SE",70
+"1251-79*E","Betula","nigra","River birch",2016,1,112,281,124,162,130,284,130,138,NA,165,NA,284,42.3022236,-71.12398789,"12-20-1979","Along south bank of Castor River","13-SE",70
+"12565*C","Acer","saccharum","Sugar maple",2015,1,NA,280,NA,NA,NA,280,NA,NA,NA,NA,NA,280,42.30346585,-71.12008242,"10-15-1883","","11-SE",97.6
+"12565*C","Acer","saccharum","Sugar maple",2018,1,NA,272,NA,NA,NA,276,132,NA,NA,NA,NA,276,42.30346585,-71.12008242,"10-15-1883","","11-SE",97.6
+"12565*C","Acer","saccharum","Sugar maple",2019,1,109,276,NA,NA,120,269,120,NA,NA,NA,NA,269,42.30346585,-71.12008242,"10-15-1883","","11-SE",97.6
+"12565*C","Acer","saccharum","Sugar maple",2020,1,121,278,NA,NA,126,290,124,NA,NA,NA,NA,290,42.30346585,-71.12008242,"10-15-1883","","11-SE",97.6
+"12565*C","Acer","saccharum","Sugar maple",2016,1,121,286,118,NA,130,NA,130,NA,NA,NA,NA,286,42.30346585,-71.12008242,"10-15-1883","","11-SE",97.6
+"12565*C","Acer","saccharum","Sugar maple",2017,1,101,288,108,127,113,NA,113,NA,NA,259,202,288,42.30346585,-71.12008242,"10-15-1883","","11-SE",97.6
+"12651*C","Aesculus","flava","Yellow buckeye",2015,1,NA,NA,NA,NA,NA,NA,165,NA,NA,NA,NA,NA,42.30355576,-71.1212595,"07-01-1906","","11-NW",35.3
+"12651*C","Aesculus","flava","Yellow buckeye",2018,1,117,199,117,151,122,NA,122,131,NA,NA,NA,199,42.30355576,-71.1212595,"07-01-1906","","11-NW",35.3
+"12651*C","Aesculus","flava","Yellow buckeye",2019,1,NA,163,111,237,111,243,111,128,NA,255,255,243,42.30355576,-71.1212595,"07-01-1906","","11-NW",35.3
+"12651*C","Aesculus","flava","Yellow buckeye",2021,1,NA,NA,73,NA,100,NA,100,NA,NA,NA,NA,NA,42.30355576,-71.1212595,"07-01-1906","","11-NW",35.3
+"12651*C","Aesculus","flava","Yellow buckeye",2016,1,105,274,110,156,113,282,108,130,NA,274,274,282,42.30355576,-71.1212595,"07-01-1906","","11-NW",35.3
+"12651*C","Aesculus","flava","Yellow buckeye",2017,1,108,NA,119,NA,110,NA,108,127,NA,NA,NA,NA,42.30355576,-71.1212595,"07-01-1906","","11-NW",35.3
+"12651*C","Aesculus","flava","Yellow buckeye",2020,1,101,197,108,147,112,206,112,140,NA,271,NA,206,42.30355576,-71.1212595,"07-01-1906","","11-NW",35.3
+"12651*D","Aesculus","flava","Yellow buckeye",2018,1,114,159,117,145,122,272,117,133,NA,263,263,272,42.30351523,-71.12133382,"07-01-1906","","11-SW",60.2
+"12651*D","Aesculus","flava","Yellow buckeye",2020,1,NA,250,NA,203,112,250,112,NA,NA,250,213,250,42.30351523,-71.12133382,"07-01-1906","","11-SW",60.2
+"12651*D","Aesculus","flava","Yellow buckeye",2016,1,111,260,113,156,112,282,112,130,NA,260,262,282,42.30351523,-71.12133382,"07-01-1906","","11-SW",60.2
+"12651*D","Aesculus","flava","Yellow buckeye",2017,1,108,267,108,NA,110,NA,108,127,NA,NA,NA,267,42.30351523,-71.12133382,"07-01-1906","","11-SW",60.2
+"12651*D","Aesculus","flava","Yellow buckeye",2019,1,NA,272,NA,NA,160,272,115,NA,NA,NA,NA,272,42.30351523,-71.12133382,"07-01-1906","","11-SW",60.2
+"12651*D","Aesculus","flava","Yellow buckeye",2015,1,NA,255,NA,NA,NA,NA,165,NA,NA,NA,NA,255,42.30351523,-71.12133382,"07-01-1906","","11-SW",60.2
+"12651*H","Aesculus","flava","Yellow buckeye",2019,1,NA,NA,NA,NA,NA,272,124,NA,NA,NA,NA,272,42.3035604,-71.12143904,"07-01-1906","","11-NW",49.1
+"12651*H","Aesculus","flava","Yellow buckeye",2020,1,NA,189,NA,NA,112,213,112,NA,NA,189,213,213,42.3035604,-71.12143904,"07-01-1906","","11-NW",49.1
+"12651*H","Aesculus","flava","Yellow buckeye",2015,1,NA,255,NA,NA,NA,255,165,NA,NA,NA,255,255,42.3035604,-71.12143904,"07-01-1906","","11-NW",49.1
+"12651*H","Aesculus","flava","Yellow buckeye",2018,1,114,NA,117,145,117,NA,117,131,NA,NA,NA,NA,42.3035604,-71.12143904,"07-01-1906","","11-NW",49.1
+"12651*H","Aesculus","flava","Yellow buckeye",2016,1,110,262,112,156,112,279,112,130,NA,262,262,279,42.3035604,-71.12143904,"07-01-1906","","11-NW",49.1
+"12651*H","Aesculus","flava","Yellow buckeye",2017,1,108,NA,108,NA,110,NA,108,127,NA,NA,NA,NA,42.3035604,-71.12143904,"07-01-1906","","11-NW",49.1
+"12651*I","Aesculus","flava","Yellow buckeye",2018,1,116,260,124,148,121,260,117,141,NA,251,251,260,42.2931417,-71.12879258,"07-01-1906","","57-NE",61.1
+"12651*I","Aesculus","flava","Yellow buckeye",2021,1,110,272,117,143,110,289,110,NA,NA,243,243,289,42.2931417,-71.12879258,"07-01-1906","","57-NE",61.1
+"12651*I","Aesculus","flava","Yellow buckeye",2020,1,119,190,120,155,120,207,120,135,NA,225,220,207,42.2931417,-71.12879258,"07-01-1906","","57-NE",61.1
+"12651*I","Aesculus","flava","Yellow buckeye",2022,1,115,199,115,140,115,NA,115,128,NA,NA,NA,199,42.2931417,-71.12879258,"07-01-1906","","57-NE",61.1
+"12651*I","Aesculus","flava","Yellow buckeye",2017,1,107,247,NA,254,114,256,114,NA,NA,241,NA,256,42.2931417,-71.12879258,"07-01-1906","","57-NE",61.1
+"12651*I","Aesculus","flava","Yellow buckeye",2023,1,NA,268,112,143,112,NA,112,125,NA,241,241,268,42.2931417,-71.12879258,"07-01-1906","","57-NE",61.1
+"12651*I","Aesculus","flava","Yellow buckeye",2019,1,104,257,115,152,109,257,109,140,NA,248,248,257,42.2931417,-71.12879258,"07-01-1906","","57-NE",61.1
+"12651*I","Aesculus","flava","Yellow buckeye",2024,1,108,245,116,148,113,254,113,NA,NA,NA,NA,254,42.2931417,-71.12879258,"07-01-1906","","57-NE",61.1
+"12651*I","Aesculus","flava","Yellow buckeye",2016,1,114,189,129,166,119,NA,116,NA,NA,248,NA,189,42.2931417,-71.12879258,"07-01-1906","","57-NE",61.1
+"12843*A","Betula","alleghaniensis","Yellow birch",2015,1,NA,250,150,191,NA,278,NA,NA,NA,NA,240,278,42.3020682,-71.12386246,"10-15-1900","","14-SW",73.8
+"12843*A","Betula","alleghaniensis","Yellow birch",2024,1,NA,NA,NA,159,NA,NA,124,NA,NA,NA,NA,NA,42.3020682,-71.12386246,"10-15-1900","","14-SW",73.8
+"12843*A","Betula","alleghaniensis","Yellow birch",2019,1,107,249,109,142,114,262,114,124,NA,265,237,262,42.3020682,-71.12386246,"10-15-1900","","14-SW",73.8
+"12843*A","Betula","alleghaniensis","Yellow birch",2016,1,109,278,104,207,121,281,114,114,114,234,229,281,42.3020682,-71.12386246,"10-15-1900","","14-SW",73.8
+"12843*A","Betula","alleghaniensis","Yellow birch",2023,1,104,256,77,139,104,256,104,104,104,228,228,256,42.3020682,-71.12386246,"10-15-1900","","14-SW",73.8
+"12843*A","Betula","alleghaniensis","Yellow birch",2020,1,110,257,119,160,126,257,126,126,NA,257,236,257,42.3020682,-71.12386246,"10-15-1900","","14-SW",73.8
+"12843*A","Betula","alleghaniensis","Yellow birch",2017,1,102,242,118,156,117,251,117,118,NA,NA,259,251,42.3020682,-71.12386246,"10-15-1900","","14-SW",73.8
+"12843*A","Betula","alleghaniensis","Yellow birch",2022,1,105,250,126,147,125,250,125,NA,NA,230,230,250,42.3020682,-71.12386246,"10-15-1900","","14-SW",73.8
+"12843*A","Betula","alleghaniensis","Yellow birch",2021,1,108,261,100,152,114,261,114,109,NA,211,211,261,42.3020682,-71.12386246,"10-15-1900","","14-SW",73.8
+"12843*A","Betula","alleghaniensis","Yellow birch",2018,1,118,256,118,151,124,277,122,124,NA,278,236,277,42.3020682,-71.12386246,"10-15-1900","","14-SW",73.8
+"12843*D","Betula","alleghaniensis","Yellow birch",2015,1,NA,270,150,202,NA,NA,NA,NA,NA,NA,243,270,42.302041,-71.12388059,"10-15-1900","","14-SW",70.9
+"12843*D","Betula","alleghaniensis","Yellow birch",2018,1,114,266,122,140,123,277,123,123,NA,294,251,277,42.302041,-71.12388059,"10-15-1900","","14-SW",70.9
+"12843*D","Betula","alleghaniensis","Yellow birch",2016,1,112,271,101,207,119,284,119,114,124,NA,229,284,42.302041,-71.12388059,"10-15-1900","","14-SW",70.9
+"12843*D","Betula","alleghaniensis","Yellow birch",2017,1,102,242,118,149,119,242,118,118,NA,NA,NA,242,42.302041,-71.12388059,"10-15-1900","","14-SW",70.9
+"12843*D","Betula","alleghaniensis","Yellow birch",2019,1,107,260,110,157,122,264,122,115,125,265,212,264,42.302041,-71.12388059,"10-15-1900","","14-SW",70.9
+"12843*D","Betula","alleghaniensis","Yellow birch",2020,1,112,258,85,184,126,271,126,NA,NA,NA,243,271,42.302041,-71.12388059,"10-15-1900","","14-SW",70.9
+"12843*E","Betula","alleghaniensis","Yellow birch",2015,1,NA,250,150,187,NA,250,NA,164,NA,262,240,250,42.30194577,-71.12374252,"10-15-1900","","14-SW",56.2
+"12843*E","Betula","alleghaniensis","Yellow birch",2016,1,102,260,111,182,121,281,114,111,114,NA,229,281,42.30194577,-71.12374252,"10-15-1900","","14-SW",56.2
+"12843*E","Betula","alleghaniensis","Yellow birch",2018,1,114,272,118,144,123,277,122,122,125,278,259,277,42.30194577,-71.12374252,"10-15-1900","","14-SW",56.2
+"12843*E","Betula","alleghaniensis","Yellow birch",2017,1,102,242,118,156,117,242,117,118,NA,NA,251,242,42.30194577,-71.12374252,"10-15-1900","","14-SW",56.2
+"12843*E","Betula","alleghaniensis","Yellow birch",2019,1,107,249,109,159,122,261,110,111,125,286,249,261,42.30194577,-71.12374252,"10-15-1900","","14-SW",56.2
+"12843*E","Betula","alleghaniensis","Yellow birch",2020,1,108,226,85,160,126,271,126,126,NA,NA,236,271,42.30194577,-71.12374252,"10-15-1900","","14-SW",56.2
+"12843*H","Betula","alleghaniensis","Yellow birch",2015,1,NA,282,167,194,NA,282,NA,167,NA,NA,282,282,42.30199149,-71.12371027,"10-15-1900","","14-SW",64.6
+"12843*H","Betula","alleghaniensis","Yellow birch",2018,1,118,277,111,154,125,277,122,122,NA,274,210,277,42.30199149,-71.12371027,"10-15-1900","","14-SW",64.6
+"12843*H","Betula","alleghaniensis","Yellow birch",2016,1,110,281,111,207,121,289,121,114,124,NA,229,289,42.30199149,-71.12371027,"10-15-1900","","14-SW",64.6
+"12843*H","Betula","alleghaniensis","Yellow birch",2019,1,112,265,112,258,122,265,122,NA,NA,286,258,265,42.30199149,-71.12371027,"10-15-1900","","14-SW",64.6
+"12843*H","Betula","alleghaniensis","Yellow birch",2017,1,102,288,120,156,117,288,117,120,NA,NA,NA,288,42.30199149,-71.12371027,"10-15-1900","","14-SW",64.6
+"12843*H","Betula","alleghaniensis","Yellow birch",2020,1,120,271,120,264,126,271,126,NA,NA,NA,NA,271,42.30199149,-71.12371027,"10-15-1900","","14-SW",64.6
+"12907*B","Carya","ovata","Shagbark hickory",2015,1,NA,NA,NA,161,NA,NA,NA,NA,NA,NA,NA,NA,42.30172976,-71.12580046,"10-18-1883","","19-NW",54.8
+"12907*B","Carya","ovata","Shagbark hickory",2018,1,118,272,125,171,125,279,125,144,NA,249,263,279,42.30172976,-71.12580046,"10-18-1883","","19-NW",54.8
+"12907*B","Carya","ovata","Shagbark hickory",2019,1,110,260,124,188,124,264,121,142,NA,264,NA,264,42.30172976,-71.12580046,"10-18-1883","","19-NW",54.8
+"12907*B","Carya","ovata","Shagbark hickory",2020,1,125,276,140,169,140,NA,134,146,NA,259,259,276,42.30172976,-71.12580046,"10-18-1883","","19-NW",54.8
+"12907*B","Carya","ovata","Shagbark hickory",2016,1,130,284,142,150,132,295,131,NA,NA,NA,NA,295,42.30172976,-71.12580046,"10-18-1883","","19-NW",54.8
+"12907*B","Carya","ovata","Shagbark hickory",2017,1,105,278,124,172,124,264,118,133,NA,251,251,264,42.30172976,-71.12580046,"10-18-1883","","19-NW",54.8
+"12907*B","Carya","ovata","Shagbark hickory",2022,1,NA,NA,NA,NA,NA,NA,126,NA,NA,NA,NA,NA,42.30172976,-71.12580046,"10-18-1883","","19-NW",54.8
+"12907*D","Carya","ovata","Shagbark hickory",2019,1,108,248,124,160,124,264,124,NA,NA,264,297,264,42.30168923,-71.12587438,"10-18-1883","","19-NW",51.8
+"12907*D","Carya","ovata","Shagbark hickory",2018,1,118,272,125,158,125,279,125,131,NA,249,251,279,42.30168923,-71.12587438,"10-18-1883","","19-NW",51.8
+"12907*D","Carya","ovata","Shagbark hickory",2016,1,130,284,143,NA,NA,295,132,NA,NA,NA,NA,295,42.30168923,-71.12587438,"10-18-1883","","19-NW",51.8
+"12907*D","Carya","ovata","Shagbark hickory",2017,1,105,264,118,172,118,264,118,133,NA,251,251,264,42.30168923,-71.12587438,"10-18-1883","","19-NW",51.8
+"12907*D","Carya","ovata","Shagbark hickory",2022,1,NA,NA,NA,NA,NA,NA,126,NA,NA,NA,NA,NA,42.30168923,-71.12587438,"10-18-1883","","19-NW",51.8
+"12907*D","Carya","ovata","Shagbark hickory",2020,1,125,276,141,168,140,NA,134,NA,NA,259,259,276,42.30168923,-71.12587438,"10-18-1883","","19-NW",51.8
+"12907*G","Carya","ovata","Shagbark hickory",2015,1,NA,NA,NA,169,NA,NA,NA,NA,NA,NA,NA,NA,42.30181554,-71.1256858,"10-18-1883","","19-NW",59.5
+"12907*G","Carya","ovata","Shagbark hickory",2019,1,108,260,119,160,124,264,119,125,NA,264,297,264,42.30181554,-71.1256858,"10-18-1883","","19-NW",59.5
+"12907*G","Carya","ovata","Shagbark hickory",2020,1,125,262,129,170,140,NA,129,146,NA,259,259,262,42.30181554,-71.1256858,"10-18-1883","","19-NW",59.5
+"12907*G","Carya","ovata","Shagbark hickory",2018,1,122,272,125,239,125,279,125,131,NA,249,249,279,42.30181554,-71.1256858,"10-18-1883","","19-NW",59.5
+"12907*G","Carya","ovata","Shagbark hickory",2021,1,115,NA,NA,NA,NA,NA,124,NA,NA,NA,NA,NA,42.30181554,-71.1256858,"10-18-1883","","19-NW",59.5
+"12907*G","Carya","ovata","Shagbark hickory",2022,1,116,258,131,147,126,NA,126,136,NA,NA,NA,258,42.30181554,-71.1256858,"10-18-1883","","19-NW",59.5
+"12907*G","Carya","ovata","Shagbark hickory",2017,1,105,253,117,172,117,253,117,129,NA,251,251,253,42.30181554,-71.1256858,"10-18-1883","","19-NW",59.5
+"12907*G","Carya","ovata","Shagbark hickory",2023,1,NA,NA,118,NA,NA,NA,138,132,132,NA,NA,NA,42.30181554,-71.1256858,"10-18-1883","","19-NW",59.5
+"12907*G","Carya","ovata","Shagbark hickory",2016,1,110,278,127,200,132,289,127,142,144,NA,NA,289,42.30181554,-71.1256858,"10-18-1883","","19-NW",59.5
+"12907*I","Carya","ovata","Shagbark hickory",2015,1,NA,NA,NA,161,NA,NA,NA,NA,NA,NA,NA,NA,42.30185516,-71.12559225,"10-18-1883","","19-NW",51
+"12907*I","Carya","ovata","Shagbark hickory",2019,1,108,260,119,160,124,264,124,142,152,264,248,264,42.30185516,-71.12559225,"10-18-1883","","19-NW",51
+"12907*I","Carya","ovata","Shagbark hickory",2016,1,130,278,143,NA,142,284,132,NA,NA,NA,NA,284,42.30185516,-71.12559225,"10-18-1883","","19-NW",51
+"12907*I","Carya","ovata","Shagbark hickory",2021,1,115,270,NA,NA,NA,NA,124,NA,NA,261,NA,270,42.30185516,-71.12559225,"10-18-1883","","19-NW",51
+"12907*I","Carya","ovata","Shagbark hickory",2020,1,125,250,NA,169,140,NA,136,NA,NA,237,NA,250,42.30185516,-71.12559225,"10-18-1883","","19-NW",51
+"12907*I","Carya","ovata","Shagbark hickory",2018,1,118,272,125,158,125,279,125,NA,NA,249,272,279,42.30185516,-71.12559225,"10-18-1883","","19-NW",51
+"12907*I","Carya","ovata","Shagbark hickory",2022,1,NA,NA,NA,NA,NA,NA,126,NA,NA,NA,NA,NA,42.30185516,-71.12559225,"10-18-1883","","19-NW",51
+"12907*I","Carya","ovata","Shagbark hickory",2017,1,105,260,118,172,118,264,118,133,NA,247,247,264,42.30185516,-71.12559225,"10-18-1883","","19-NW",51
+"12907*N","Carya","ovata","Shagbark hickory",2019,1,108,260,121,145,124,264,124,142,NA,264,297,264,42.30163563,-71.12561522,"10-18-1883","","19-NW",61.2
+"12907*N","Carya","ovata","Shagbark hickory",2018,1,118,274,125,156,125,282,125,144,146,249,251,282,42.30163563,-71.12561522,"10-18-1883","","19-NW",61.2
+"12907*N","Carya","ovata","Shagbark hickory",2021,1,115,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,42.30163563,-71.12561522,"10-18-1883","","19-NW",61.2
+"12907*N","Carya","ovata","Shagbark hickory",2020,1,125,273,129,167,138,NA,134,146,149,205,205,273,42.30163563,-71.12561522,"10-18-1883","","19-NW",61.2
+"12907*N","Carya","ovata","Shagbark hickory",2023,1,NA,NA,NA,NA,NA,NA,138,NA,NA,NA,NA,NA,42.30163563,-71.12561522,"10-18-1883","","19-NW",61.2
+"12907*N","Carya","ovata","Shagbark hickory",2017,1,112,253,120,172,118,293,118,133,NA,248,251,293,42.30163563,-71.12561522,"10-18-1883","","19-NW",61.2
+"12907*N","Carya","ovata","Shagbark hickory",2022,1,114,286,129,152,126,NA,126,136,NA,NA,NA,286,42.30163563,-71.12561522,"10-18-1883","","19-NW",61.2
+"12907*N","Carya","ovata","Shagbark hickory",2015,1,NA,NA,NA,161,NA,NA,NA,NA,NA,NA,NA,NA,42.30163563,-71.12561522,"10-18-1883","","19-NW",61.2
+"12907*N","Carya","ovata","Shagbark hickory",2016,1,125,285,143,150,143,295,132,150,149,NA,236,295,42.30163563,-71.12561522,"10-18-1883","","19-NW",61.2
+"1323-82*A","Tilia","americana","American basswood",2015,1,NA,256,154,NA,NA,256,NA,NA,NA,NA,NA,256,42.29514117,-71.12601307,"10-08-1982","","51-NW",94.3
+"1323-82*A","Tilia","americana","American basswood",2018,1,121,276,136,188,124,271,122,177,NA,202,236,271,42.29514117,-71.12601307,"10-08-1982","","51-NW",94.3
+"1323-82*A","Tilia","americana","American basswood",2024,1,109,273,134,191,116,273,116,NA,NA,198,210,273,42.29514117,-71.12601307,"10-08-1982","","51-NW",94.3
+"1323-82*A","Tilia","americana","American basswood",2021,1,110,281,127,183,117,289,117,NA,NA,NA,NA,289,42.29514117,-71.12601307,"10-08-1982","","51-NW",94.3
+"1323-82*A","Tilia","americana","American basswood",2016,1,94,257,152,NA,133,286,118,188,189,NA,NA,286,42.29514117,-71.12601307,"10-08-1982","","51-NW",94.3
+"1323-82*A","Tilia","americana","American basswood",2017,1,98,295,110,184,107,257,107,NA,NA,231,241,257,42.29514117,-71.12601307,"10-08-1982","","51-NW",94.3
+"1323-82*A","Tilia","americana","American basswood",2019,1,115,267,140,186,115,293,115,183,183,NA,243,293,42.29514117,-71.12601307,"10-08-1982","","51-NW",94.3
+"1323-82*A","Tilia","americana","American basswood",2020,1,116,261,147,196,125,261,125,181,NA,251,217,261,42.29514117,-71.12601307,"10-08-1982","","51-NW",94.3
+"1323-82*A","Tilia","americana","American basswood",2022,1,106,NA,132,186,117,NA,117,176,NA,210,210,NA,42.29514117,-71.12601307,"10-08-1982","","51-NW",94.3
+"1323-82*A","Tilia","americana","American basswood",2023,1,94,298,143,298,NA,298,112,NA,NA,NA,298,298,42.29514117,-71.12601307,"10-08-1982","","51-NW",94.3
+"15350*A","Acer","rubrum","Red maple",2018,1,NA,NA,NA,NA,NA,293,NA,NA,NA,NA,NA,293,42.30387456,-71.12074952,"04-16-1924","","11-NW",77.5
+"15350*A","Acer","rubrum","Red maple",2019,1,91,NA,86,NA,120,263,111,89,NA,NA,NA,263,42.30387456,-71.12074952,"04-16-1924","","11-NW",77.5
+"15350*A","Acer","rubrum","Red maple",2023,1,102,231,NA,NA,104,263,104,82,94,NA,NA,263,42.30387456,-71.12074952,"04-16-1924","","11-NW",77.5
+"15350*A","Acer","rubrum","Red maple",2024,1,104,227,NA,NA,111,NA,111,76,NA,NA,NA,227,42.30387456,-71.12074952,"04-16-1924","","11-NW",77.5
+"15350*A","Acer","rubrum","Red maple",2020,1,105,220,71,NA,120,257,120,72,75,NA,NA,257,42.30387456,-71.12074952,"04-16-1924","","11-NW",77.5
+"15350*A","Acer","rubrum","Red maple",2022,1,103,153,65,NA,113,202,113,77,90,NA,NA,202,42.30387456,-71.12074952,"04-16-1924","","11-NW",77.5
+"15350*A","Acer","rubrum","Red maple",2021,1,101,236,81,NA,114,268,114,84,86,NA,NA,268,42.30387456,-71.12074952,"04-16-1924","","11-NW",77.5
+"16611*F","Populus","deltoides","Eastern cottonwood",2015,1,NA,NA,NA,NA,NA,256,NA,NA,NA,NA,NA,256,42.29432229,-71.12466088,"08-15-1895","","51-SE",93.9
+"16611*F","Populus","deltoides","Eastern cottonwood",2019,1,123,260,NA,123,123,260,123,NA,NA,NA,NA,260,42.29432229,-71.12466088,"08-15-1895","","51-SE",93.9
+"16611*F","Populus","deltoides","Eastern cottonwood",2016,1,110,286,NA,NA,148,265,136,NA,NA,NA,NA,265,42.29432229,-71.12466088,"08-15-1895","","51-SE",93.9
+"16611*F","Populus","deltoides","Eastern cottonwood",2023,1,NA,254,105,129,NA,229,125,NA,NA,NA,NA,229,42.29432229,-71.12466088,"08-15-1895","","51-SE",93.9
+"16611*F","Populus","deltoides","Eastern cottonwood",2020,1,125,261,104,127,126,261,126,120,NA,151,151,261,42.29432229,-71.12466088,"08-15-1895","","51-SE",93.9
+"16611*F","Populus","deltoides","Eastern cottonwood",2017,1,107,250,109,125,124,247,124,NA,NA,147,143,247,42.29432229,-71.12466088,"08-15-1895","","51-SE",93.9
+"16611*F","Populus","deltoides","Eastern cottonwood",2024,1,NA,238,109,131,120,254,120,112,NA,150,150,254,42.29432229,-71.12466088,"08-15-1895","","51-SE",93.9
+"16611*F","Populus","deltoides","Eastern cottonwood",2021,1,120,278,103,123,123,257,123,109,NA,145,145,257,42.29432229,-71.12466088,"08-15-1895","","51-SE",93.9
+"16611*F","Populus","deltoides","Eastern cottonwood",2018,1,117,270,124,147,124,260,124,NA,NA,148,NA,260,42.29432229,-71.12466088,"08-15-1895","","51-SE",93.9
+"16611*F","Populus","deltoides","Eastern cottonwood",2022,1,117,269,108,128,128,269,127,117,NA,148,148,269,42.29432229,-71.12466088,"08-15-1895","","51-SE",93.9
+"16611*J","Populus","deltoides","Eastern cottonwood",2016,1,NA,286,NA,NA,148,NA,136,NA,NA,NA,NA,286,42.2941909,-71.12464076,"08-15-1895","","55-NE",71
+"16611*J","Populus","deltoides","Eastern cottonwood",2023,1,NA,254,NA,NA,NA,254,129,NA,NA,NA,NA,254,42.2941909,-71.12464076,"08-15-1895","","55-NE",71
+"16611*J","Populus","deltoides","Eastern cottonwood",2017,1,107,231,109,124,124,236,124,109,NA,NA,NA,236,42.2941909,-71.12464076,"08-15-1895","","55-NE",71
+"16611*J","Populus","deltoides","Eastern cottonwood",2024,1,NA,248,NA,NA,NA,248,123,NA,NA,NA,NA,248,42.2941909,-71.12464076,"08-15-1895","","55-NE",71
+"16611*J","Populus","deltoides","Eastern cottonwood",2018,1,117,236,124,147,124,236,124,NA,NA,NA,NA,236,42.2941909,-71.12464076,"08-15-1895","","55-NE",71
+"16611*J","Populus","deltoides","Eastern cottonwood",2022,1,117,NA,108,127,127,NA,127,NA,NA,NA,NA,NA,42.2941909,-71.12464076,"08-15-1895","","55-NE",71
+"16611*J","Populus","deltoides","Eastern cottonwood",2019,1,NA,245,NA,123,128,245,128,NA,NA,160,NA,245,42.2941909,-71.12464076,"08-15-1895","","55-NE",71
+"16611*J","Populus","deltoides","Eastern cottonwood",2020,1,126,255,113,132,132,261,132,120,NA,164,164,261,42.2941909,-71.12464076,"08-15-1895","","55-NE",71
+"16611*J","Populus","deltoides","Eastern cottonwood",2021,1,123,257,NA,123,125,257,125,113,NA,153,NA,257,42.2941909,-71.12464076,"08-15-1895","","55-NE",71
+"16611*K","Populus","deltoides","Eastern cottonwood",2019,1,NA,245,NA,123,128,260,128,NA,NA,160,156,260,42.29404926,-71.12460511,"08-15-1895","","55-NE",81.5
+"16611*K","Populus","deltoides","Eastern cottonwood",2020,1,125,255,113,127,132,261,132,120,NA,161,158,261,42.29404926,-71.12460511,"08-15-1895","","55-NE",81.5
+"16611*K","Populus","deltoides","Eastern cottonwood",2021,1,123,257,103,123,125,257,125,113,NA,153,153,257,42.29404926,-71.12460511,"08-15-1895","","55-NE",81.5
+"16611*K","Populus","deltoides","Eastern cottonwood",2018,1,117,251,124,147,NA,251,129,NA,NA,159,154,251,42.29404926,-71.12460511,"08-15-1895","","55-NE",81.5
+"16611*K","Populus","deltoides","Eastern cottonwood",2015,1,NA,249,NA,NA,NA,NA,NA,NA,NA,NA,NA,249,42.29404926,-71.12460511,"08-15-1895","","55-NE",81.5
+"16611*K","Populus","deltoides","Eastern cottonwood",2022,1,128,NA,108,128,130,NA,130,114,NA,NA,152,NA,42.29404926,-71.12460511,"08-15-1895","","55-NE",81.5
+"16611*K","Populus","deltoides","Eastern cottonwood",2016,1,122,286,NA,NA,148,304,136,NA,NA,NA,NA,304,42.29404926,-71.12460511,"08-15-1895","","55-NE",81.5
+"16611*K","Populus","deltoides","Eastern cottonwood",2023,1,NA,266,NA,NA,NA,266,129,NA,NA,NA,NA,266,42.29404926,-71.12460511,"08-15-1895","","55-NE",81.5
+"16611*K","Populus","deltoides","Eastern cottonwood",2017,1,107,239,109,124,124,239,124,109,NA,161,161,239,42.29404926,-71.12460511,"08-15-1895","","55-NE",81.5
+"16611*K","Populus","deltoides","Eastern cottonwood",2024,1,NA,254,NA,NA,NA,254,127,NA,NA,NA,NA,254,42.29404926,-71.12460511,"08-15-1895","","55-NE",81.5
+"17527*D","Tilia","americana","American basswood",2016,1,105,252,152,193,122,281,115,176,NA,293,274,281,42.3051232,-71.12189286,"11-15-1897","","7-NE",68.1
+"17527*D","Tilia","americana","American basswood",2017,1,106,234,127,NA,117,234,107,173,NA,NA,NA,234,42.3051232,-71.12189286,"11-15-1897","","7-NE",68.1
+"17527*D","Tilia","americana","American basswood",2019,1,111,214,138,197,115,244,111,NA,NA,278,278,244,42.3051232,-71.12189286,"11-15-1897","","7-NE",68.1
+"17527*D","Tilia","americana","American basswood",2023,1,104,231,NA,173,104,235,104,NA,NA,250,235,235,42.3051232,-71.12189286,"11-15-1897","","7-NE",68.1
+"17527*D","Tilia","americana","American basswood",2015,1,NA,230,NA,NA,NA,255,NA,NA,NA,NA,NA,255,42.3051232,-71.12189286,"11-15-1897","","7-NE",68.1
+"17527*D","Tilia","americana","American basswood",2018,1,118,234,131,NA,128,227,122,NA,NA,NA,NA,227,42.3051232,-71.12189286,"11-15-1897","","7-NE",68.1
+"17527*D","Tilia","americana","American basswood",2024,1,NA,227,134,185,111,NA,111,NA,NA,NA,NA,227,42.3051232,-71.12189286,"11-15-1897","","7-NE",68.1
+"17527*D","Tilia","americana","American basswood",2021,1,108,211,126,201,109,213,109,NA,NA,211,211,213,42.3051232,-71.12189286,"11-15-1897","","7-NE",68.1
+"17527*D","Tilia","americana","American basswood",2022,1,107,236,138,188,117,236,107,NA,NA,NA,NA,236,42.3051232,-71.12189286,"11-15-1897","","7-NE",68.1
+"17527*D","Tilia","americana","American basswood",2020,1,108,220,145,189,119,229,119,NA,NA,NA,NA,229,42.3051232,-71.12189286,"11-15-1897","","7-NE",68.1
+"17538*A","Tilia","americana","American basswood",2022,1,106,NA,142,NA,123,NA,123,NA,NA,NA,NA,NA,42.29325928,-71.12871082,"09-15-1906","","53-SE",105.9
+"17538*A","Tilia","americana","American basswood",2019,1,113,260,140,248,123,276,123,183,183,229,229,276,42.29325928,-71.12871082,"09-15-1906","","53-SE",105.9
+"17538*A","Tilia","americana","American basswood",2021,1,113,285,131,183,117,285,117,NA,NA,NA,NA,285,42.29325928,-71.12871082,"09-15-1906","","53-SE",105.9
+"17538*A","Tilia","americana","American basswood",2023,1,94,NA,143,193,112,NA,112,NA,NA,212,NA,NA,42.29325928,-71.12871082,"09-15-1906","","53-SE",105.9
+"17538*A","Tilia","americana","American basswood",2017,1,109,270,161,184,116,270,116,179,NA,200,224,270,42.29325928,-71.12871082,"09-15-1906","","53-SE",105.9
+"17538*A","Tilia","americana","American basswood",2018,1,123,260,NA,246,124,262,124,NA,NA,246,225,262,42.29325928,-71.12871082,"09-15-1906","","53-SE",105.9
+"17538*A","Tilia","americana","American basswood",2020,1,123,260,147,188,125,260,125,177,NA,217,222,260,42.29325928,-71.12871082,"09-15-1906","","53-SE",105.9
+"17538*A","Tilia","americana","American basswood",2024,1,109,254,141,NA,119,273,119,NA,NA,NA,NA,273,42.29325928,-71.12871082,"09-15-1906","","53-SE",105.9
+"17538*A","Tilia","americana","American basswood",2016,1,94,280,NA,NA,133,280,118,NA,NA,NA,NA,280,42.29325928,-71.12871082,"09-15-1906","","53-SE",105.9
+"187-2006*B","Acer","saccharum","Sugar maple",2018,1,125,285,NA,NA,130,292,127,NA,NA,NA,NA,292,42.30431226,-71.12006593,"04-26-2006","","8-SE",21.9
+"187-2006*B","Acer","saccharum","Sugar maple",2021,1,109,276,121,134,126,276,126,121,NA,283,270,276,42.30431226,-71.12006593,"04-26-2006","","8-SE",21.9
+"187-2006*B","Acer","saccharum","Sugar maple",2020,1,126,253,NA,NA,133,271,133,NA,NA,NA,NA,271,42.30431226,-71.12006593,"04-26-2006","","8-SE",21.9
+"187-2006*B","Acer","saccharum","Sugar maple",2016,1,130,288,NA,NA,133,315,133,NA,NA,NA,NA,315,42.30431226,-71.12006593,"04-26-2006","","8-SE",21.9
+"187-2006*B","Acer","saccharum","Sugar maple",2017,1,127,294,NA,NA,131,294,131,NA,NA,NA,NA,294,42.30431226,-71.12006593,"04-26-2006","","8-SE",21.9
+"187-2006*B","Acer","saccharum","Sugar maple",2019,1,120,260,NA,NA,126,285,126,NA,NA,NA,NA,285,42.30431226,-71.12006593,"04-26-2006","","8-SE",21.9
+"187-2006*B","Acer","saccharum","Sugar maple",2024,1,124,NA,NA,NA,128,NA,128,NA,NA,NA,NA,NA,42.30431226,-71.12006593,"04-26-2006","","8-SE",21.9
+"187-2006*B","Acer","saccharum","Sugar maple",2015,1,NA,280,NA,NA,NA,287,NA,NA,NA,NA,NA,287,42.30431226,-71.12006593,"04-26-2006","","8-SE",21.9
+"187-2006*B","Acer","saccharum","Sugar maple",2022,1,125,266,NA,NA,133,266,133,NA,NA,NA,NA,266,42.30431226,-71.12006593,"04-26-2006","","8-SE",21.9
+"187-2006*B","Acer","saccharum","Sugar maple",2023,1,118,274,108,121,118,269,118,117,121,279,279,269,42.30431226,-71.12006593,"04-26-2006","","8-SE",21.9
+"19804*A","Tilia","americana","American basswood",2021,1,114,247,132,NA,121,254,119,NA,NA,201,201,254,42.30440146,-71.12199832,"07-01-1916","","7-SE",80.5
+"19804*A","Tilia","americana","American basswood",2016,1,111,252,142,199,122,281,115,182,NA,262,262,281,42.30440146,-71.12199832,"07-01-1916","","7-SE",80.5
+"19804*A","Tilia","americana","American basswood",2018,1,118,231,133,199,127,243,121,NA,NA,257,218,243,42.30440146,-71.12199832,"07-01-1916","","7-SE",80.5
+"19804*A","Tilia","americana","American basswood",2020,1,120,229,147,180,126,250,126,NA,NA,203,182,250,42.30440146,-71.12199832,"07-01-1916","","7-SE",80.5
+"19804*A","Tilia","americana","American basswood",2015,1,NA,255,NA,NA,NA,255,NA,NA,NA,NA,NA,255,42.30440146,-71.12199832,"07-01-1916","","7-SE",80.5
+"19804*A","Tilia","americana","American basswood",2017,1,107,234,127,193,119,234,113,NA,NA,NA,234,234,42.30440146,-71.12199832,"07-01-1916","","7-SE",80.5
+"19804*A","Tilia","americana","American basswood",2019,1,109,221,161,195,112,244,114,185,NA,262,227,244,42.30440146,-71.12199832,"07-01-1916","","7-SE",80.5
+"20098*A","Carya","glabra","Pignut hickory",2020,1,125,259,127,168,141,NA,127,141,NA,259,262,259,42.29994157,-71.1258635,"07-01-1883","","25-SW",62.9
+"20098*A","Carya","glabra","Pignut hickory",2021,1,113,NA,131,146,120,NA,115,131,NA,NA,NA,NA,42.29994157,-71.1258635,"07-01-1883","","25-SW",62.9
+"20098*A","Carya","glabra","Pignut hickory",2022,1,114,251,126,NA,116,NA,116,NA,NA,NA,NA,251,42.29994157,-71.1258635,"07-01-1883","","25-SW",62.9
+"20098*A","Carya","glabra","Pignut hickory",2019,1,108,253,128,145,115,264,111,NA,NA,287,NA,264,42.29994157,-71.1258635,"07-01-1883","","25-SW",62.9
+"20098*A","Carya","glabra","Pignut hickory",2016,1,118,NA,122,150,122,NA,118,NA,NA,NA,NA,NA,42.29994157,-71.1258635,"07-01-1883","","25-SW",62.9
+"20098*A","Carya","glabra","Pignut hickory",2023,1,104,NA,NA,NA,129,NA,112,NA,NA,NA,NA,NA,42.29994157,-71.1258635,"07-01-1883","","25-SW",62.9
+"20098*A","Carya","glabra","Pignut hickory",2017,1,110,253,118,166,124,253,118,124,NA,253,253,253,42.29994157,-71.1258635,"07-01-1883","","25-SW",62.9
+"20098*A","Carya","glabra","Pignut hickory",2024,1,NA,NA,NA,NA,123,NA,123,NA,NA,NA,NA,NA,42.29994157,-71.1258635,"07-01-1883","","25-SW",62.9
+"20098*A","Carya","glabra","Pignut hickory",2018,1,118,258,122,153,122,258,122,NA,NA,249,249,258,42.29994157,-71.1258635,"07-01-1883","","25-SW",62.9
+"2019*R","Carya","glabra","Pignut hickory",2016,1,118,285,118,150,124,285,122,143,144,230,230,285,42.2999657,-71.12566127,"10-19-1883","","25-SW",47.6
+"2019*R","Carya","glabra","Pignut hickory",2023,1,104,NA,118,NA,129,NA,112,NA,NA,NA,NA,NA,42.2999657,-71.12566127,"10-19-1883","","25-SW",47.6
+"2019*R","Carya","glabra","Pignut hickory",2017,1,100,253,117,147,117,253,117,126,NA,253,253,253,42.2999657,-71.12566127,"10-19-1883","","25-SW",47.6
+"2019*R","Carya","glabra","Pignut hickory",2024,1,119,NA,128,147,119,NA,119,NA,NA,NA,NA,NA,42.2999657,-71.12566127,"10-19-1883","","25-SW",47.6
+"2019*R","Carya","glabra","Pignut hickory",2018,1,118,258,122,153,122,288,122,NA,NA,249,249,288,42.2999657,-71.12566127,"10-19-1883","","25-SW",47.6
+"2019*R","Carya","glabra","Pignut hickory",2022,1,114,NA,126,146,119,NA,119,NA,NA,NA,NA,NA,42.2999657,-71.12566127,"10-19-1883","","25-SW",47.6
+"2019*R","Carya","glabra","Pignut hickory",2019,1,108,251,115,145,115,264,111,NA,NA,287,NA,264,42.2999657,-71.12566127,"10-19-1883","","25-SW",47.6
+"2019*R","Carya","glabra","Pignut hickory",2020,1,124,260,126,156,125,NA,126,134,NA,215,215,260,42.2999657,-71.12566127,"10-19-1883","","25-SW",47.6
+"2019*R","Carya","glabra","Pignut hickory",2021,1,113,265,131,146,120,NA,113,131,NA,NA,NA,265,42.2999657,-71.12566127,"10-19-1883","","25-SW",47.6
+"2019*S","Carya","glabra","Pignut hickory",2015,1,NA,NA,NA,161,NA,NA,NA,NA,NA,NA,NA,NA,42.29994973,-71.12573747,"10-19-1883","","25-SW",67.4
+"2019*S","Carya","glabra","Pignut hickory",2022,1,114,251,126,NA,116,NA,116,136,NA,NA,NA,251,42.29994973,-71.12573747,"10-19-1883","","25-SW",67.4
+"2019*S","Carya","glabra","Pignut hickory",2019,1,108,260,128,155,115,264,115,NA,NA,287,NA,264,42.29994973,-71.12573747,"10-19-1883","","25-SW",67.4
+"2019*S","Carya","glabra","Pignut hickory",2016,1,122,285,130,150,125,285,122,NA,149,NA,NA,285,42.29994973,-71.12573747,"10-19-1883","","25-SW",67.4
+"2019*S","Carya","glabra","Pignut hickory",2023,1,104,NA,NA,NA,129,NA,112,NA,NA,NA,NA,NA,42.29994973,-71.12573747,"10-19-1883","","25-SW",67.4
+"2019*S","Carya","glabra","Pignut hickory",2020,1,125,251,127,168,141,NA,127,144,NA,220,224,251,42.29994973,-71.12573747,"10-19-1883","","25-SW",67.4
+"2019*S","Carya","glabra","Pignut hickory",2017,1,100,253,118,166,124,253,118,141,NA,253,253,253,42.29994973,-71.12573747,"10-19-1883","","25-SW",67.4
+"2019*S","Carya","glabra","Pignut hickory",2024,1,NA,NA,128,NA,123,NA,123,NA,NA,NA,NA,NA,42.29994973,-71.12573747,"10-19-1883","","25-SW",67.4
+"2019*S","Carya","glabra","Pignut hickory",2021,1,118,243,126,152,126,270,123,131,NA,270,270,270,42.29994973,-71.12573747,"10-19-1883","","25-SW",67.4
+"2019*S","Carya","glabra","Pignut hickory",2018,1,NA,258,131,153,131,288,123,NA,NA,249,249,288,42.29994973,-71.12573747,"10-19-1883","","25-SW",67.4
+"20645*A","Acer","saccharum","Sugar maple",2019,1,109,263,NA,NA,115,263,111,NA,NA,263,263,263,42.30370116,-71.12007443,"11-09-1928","","11-NE",85.7
+"20645*A","Acer","saccharum","Sugar maple",2018,1,NA,287,NA,NA,NA,293,132,NA,NA,NA,NA,293,42.30370116,-71.12007443,"11-09-1928","","11-NE",85.7
+"20645*A","Acer","saccharum","Sugar maple",2020,1,121,290,NA,NA,126,290,124,NA,NA,NA,NA,290,42.30370116,-71.12007443,"11-09-1928","","11-NE",85.7
+"20645*A","Acer","saccharum","Sugar maple",2015,1,NA,280,NA,NA,NA,280,NA,NA,NA,NA,NA,280,42.30370116,-71.12007443,"11-09-1928","","11-NE",85.7
+"20645*A","Acer","saccharum","Sugar maple",2017,1,107,252,105,139,113,259,113,113,NA,172,253,259,42.30370116,-71.12007443,"11-09-1928","","11-NE",85.7
+"20645*A","Acer","saccharum","Sugar maple",2016,1,115,293,111,144,118,NA,117,111,NA,NA,262,293,42.30370116,-71.12007443,"11-09-1928","","11-NE",85.7
+"21815*E","Quercus","alba","White oak",2016,1,115,282,130,NA,NA,282,282,NA,NA,NA,NA,282,42.29918666,-71.12348625,"07-01-1931","","32-NW",73.3
+"21815*E","Quercus","alba","White oak",2017,1,118,271,118,225,119,278,119,131,NA,264,257,278,42.29918666,-71.12348625,"07-01-1931","","32-NW",73.3
+"21815*E","Quercus","alba","White oak",2019,1,117,268,NA,183,126,286,127,NA,NA,NA,NA,286,42.29918666,-71.12348625,"07-01-1931","","32-NW",73.3
+"21815*E","Quercus","alba","White oak",2018,1,NA,274,128,177,129,279,126,136,NA,258,258,279,42.29918666,-71.12348625,"07-01-1931","","32-NW",73.3
+"22099*A","Populus","deltoides","Eastern cottonwood",2021,1,123,243,99,NA,123,257,123,113,NA,NA,NA,257,42.29378479,-71.124621,"07-01-1911","","55-NE",58
+"22099*A","Populus","deltoides","Eastern cottonwood",2018,1,117,236,121,NA,123,236,118,NA,NA,NA,NA,236,42.29378479,-71.124621,"07-01-1911","","55-NE",58
+"22099*A","Populus","deltoides","Eastern cottonwood",2022,1,123,269,105,NA,128,NA,128,114,114,NA,NA,269,42.29378479,-71.124621,"07-01-1911","","55-NE",58
+"22099*A","Populus","deltoides","Eastern cottonwood",2019,1,123,229,104,NA,128,229,128,NA,NA,NA,NA,229,42.29378479,-71.124621,"07-01-1911","","55-NE",58
+"22099*A","Populus","deltoides","Eastern cottonwood",2016,1,127,229,101,NA,133,229,133,114,NA,NA,NA,229,42.29378479,-71.124621,"07-01-1911","","55-NE",58
+"22099*A","Populus","deltoides","Eastern cottonwood",2023,1,NA,229,105,NA,NA,241,129,105,NA,NA,NA,241,42.29378479,-71.124621,"07-01-1911","","55-NE",58
+"22099*A","Populus","deltoides","Eastern cottonwood",2020,1,125,255,103,NA,127,261,127,113,120,NA,NA,261,42.29378479,-71.124621,"07-01-1911","","55-NE",58
+"22099*A","Populus","deltoides","Eastern cottonwood",2017,1,102,231,109,NA,120,236,120,109,NA,NA,NA,236,42.29378479,-71.124621,"07-01-1911","","55-NE",58
+"22099*A","Populus","deltoides","Eastern cottonwood",2024,1,120,245,105,NA,120,248,120,112,112,NA,NA,248,42.29378479,-71.124621,"07-01-1911","","55-NE",58
+"227-2011*A","Quercus","alba","White oak",2019,1,117,268,NA,NA,126,268,127,NA,NA,NA,NA,268,42.29933201,-71.12435358,"07-26-2011","","31-NE",66.1
+"227-2011*A","Quercus","alba","White oak",2016,1,NA,282,NA,NA,NA,282,282,NA,NA,NA,NA,282,42.29933201,-71.12435358,"07-26-2011","","31-NE",66.1
+"227-2011*A","Quercus","alba","White oak",2018,1,NA,NA,128,183,129,296,126,136,NA,NA,NA,296,42.29933201,-71.12435358,"07-26-2011","","31-NE",66.1
+"227-2011*A","Quercus","alba","White oak",2017,1,110,267,127,NA,NA,288,124,NA,NA,257,257,288,42.29933201,-71.12435358,"07-26-2011","","31-NE",66.1
+"22834*B","Acer","saccharum","Sugar maple",2018,1,NA,285,119,264,NA,285,125,NA,NA,NA,NA,285,42.3040241,-71.12065871,"02-02-1950","","11-NW",81.9
+"22834*B","Acer","saccharum","Sugar maple",2024,1,121,276,NA,NA,121,283,121,NA,NA,NA,NA,283,42.3040241,-71.12065871,"02-02-1950","","11-NW",81.9
+"22834*B","Acer","saccharum","Sugar maple",2023,1,102,274,88,121,104,274,104,102,112,263,263,274,42.3040241,-71.12065871,"02-02-1950","","11-NW",81.9
+"22834*B","Acer","saccharum","Sugar maple",2015,1,NA,280,NA,NA,NA,280,NA,NA,NA,NA,NA,280,42.3040241,-71.12065871,"02-02-1950","","11-NW",81.9
+"22834*B","Acer","saccharum","Sugar maple",2021,1,101,276,91,121,104,276,103,101,109,268,268,276,42.3040241,-71.12065871,"02-02-1950","","11-NW",81.9
+"22834*B","Acer","saccharum","Sugar maple",2020,1,122,291,108,162,126,291,121,NA,NA,NA,NA,291,42.3040241,-71.12065871,"02-02-1950","","11-NW",81.9
+"22834*B","Acer","saccharum","Sugar maple",2016,1,109,293,108,125,118,315,112,110,112,182,262,315,42.3040241,-71.12065871,"02-02-1950","","11-NW",81.9
+"22834*B","Acer","saccharum","Sugar maple",2022,1,125,153,NA,NA,125,285,125,NA,NA,NA,NA,285,42.3040241,-71.12065871,"02-02-1950","","11-NW",81.9
+"22834*B","Acer","saccharum","Sugar maple",2017,1,101,271,105,127,110,276,108,108,113,260,253,276,42.3040241,-71.12065871,"02-02-1950","","11-NW",81.9
+"22834*B","Acer","saccharum","Sugar maple",2019,1,106,279,107,126,111,278,111,111,114,262,255,278,42.3040241,-71.12065871,"02-02-1950","","11-NW",81.9
+"22886*D","Quercus","alba","White oak",2019,1,117,260,126,NA,126,NA,127,NA,NA,NA,NA,260,42.29940788,-71.12438014,"07-01-1950","","31-NE",87.2
+"22886*D","Quercus","alba","White oak",2018,1,NA,NA,128,183,129,296,123,131,135,NA,NA,296,42.29940788,-71.12438014,"07-01-1950","","31-NE",87.2
+"22886*D","Quercus","alba","White oak",2017,1,110,257,127,NA,131,285,119,127,NA,288,NA,285,42.29940788,-71.12438014,"07-01-1950","","31-NE",87.2
+"22886*D","Quercus","alba","White oak",2016,1,115,279,NA,NA,NA,282,282,NA,NA,NA,NA,282,42.29940788,-71.12438014,"07-01-1950","","31-NE",87.2
+"358-82*A","Quercus","alba","White oak",2018,1,122,282,131,NA,126,282,123,NA,NA,274,NA,282,42.29920928,-71.12373613,"03-25-1982","","32-NW",38.4
+"358-82*A","Quercus","alba","White oak",2017,1,117,291,NA,266,124,300,124,NA,NA,264,266,300,42.29920928,-71.12373613,"03-25-1982","","32-NW",38.4
+"358-82*A","Quercus","alba","White oak",2024,1,121,277,NA,NA,128,277,128,NA,NA,NA,NA,277,42.29920928,-71.12373613,"03-25-1982","","32-NW",38.4
+"358-82*A","Quercus","alba","White oak",2019,1,111,286,129,NA,126,291,127,NA,NA,NA,NA,291,42.29920928,-71.12373613,"03-25-1982","","32-NW",38.4
+"358-82*A","Quercus","alba","White oak",2016,1,115,282,NA,NA,NA,303,282,NA,NA,NA,NA,303,42.29920928,-71.12373613,"03-25-1982","","32-NW",38.4
+"358-82*A","Quercus","alba","White oak",2020,1,NA,273,NA,NA,NA,NA,126,NA,NA,NA,NA,273,42.29920928,-71.12373613,"03-25-1982","","32-NW",38.4
+"524-2009*A","Acer","rubrum","Red maple",2020,1,120,258,NA,124,126,271,120,75,NA,NA,NA,271,42.30316247,-71.12125376,"09-09-2009","","11-SW",64.2
+"524-2009*A","Acer","rubrum","Red maple",2019,1,106,269,92,117,120,286,115,96,NA,NA,NA,286,42.30316247,-71.12125376,"09-09-2009","","11-SW",64.2
+"524-2009*A","Acer","rubrum","Red maple",2021,1,NA,NA,93,109,122,NA,122,93,NA,NA,NA,NA,42.30316247,-71.12125376,"09-09-2009","","11-SW",64.2
+"525-2009*A","Acer","rubrum","Red maple",2020,1,120,258,NA,NA,126,271,120,75,NA,NA,NA,271,42.30320004,-71.12119722,"09-09-2009","","11-SW",55.7
+"525-2009*A","Acer","rubrum","Red maple",2019,1,107,286,92,NA,111,293,111,92,NA,NA,NA,293,42.30320004,-71.12119722,"09-09-2009","","11-SW",55.7
+"5859*A","Quercus","rubra","Northern red oak",2016,1,115,282,115,NA,NA,282,127,NA,NA,NA,NA,282,42.29994632,-71.12375725,"09-02-1908","","26-SW",80.7
+"5859*A","Quercus","rubra","Northern red oak",2017,1,110,272,NA,NA,124,288,117,NA,NA,NA,NA,288,42.29994632,-71.12375725,"09-02-1908","","26-SW",80.7
+"5859*A","Quercus","rubra","Northern red oak",2018,1,122,264,128,NA,122,282,122,135,NA,NA,NA,282,42.29994632,-71.12375725,"09-02-1908","","26-SW",80.7
+"5859*A","Quercus","rubra","Northern red oak",2019,1,107,260,121,NA,113,NA,113,NA,NA,NA,NA,260,42.29994632,-71.12375725,"09-02-1908","","26-SW",80.7
+"5859*B","Quercus","rubra","Northern red oak",2016,1,115,282,115,NA,NA,282,127,115,NA,NA,NA,282,42.2999613,-71.12363106,"09-02-1908","","26-SW",92.6
+"5859*B","Quercus","rubra","Northern red oak",2017,1,110,272,NA,NA,113,291,113,NA,NA,NA,NA,291,42.2999613,-71.12363106,"09-02-1908","","26-SW",92.6
+"5859*B","Quercus","rubra","Northern red oak",2018,1,118,272,128,208,122,282,122,129,NA,251,NA,282,42.2999613,-71.12363106,"09-02-1908","","26-SW",92.6
+"5859*B","Quercus","rubra","Northern red oak",2019,1,107,260,121,158,113,260,113,NA,NA,NA,NA,260,42.2999613,-71.12363106,"09-02-1908","","26-SW",92.6
+"611-2010*A","Quercus","alba","White oak",2017,1,117,288,NA,260,120,288,120,NA,NA,247,260,288,42.29281823,-71.12903099,"11-15-2010","","57-NE",75.7
+"611-2010*A","Quercus","alba","White oak",2018,1,NA,287,136,NA,124,287,124,136,NA,251,NA,287,42.29281823,-71.12903099,"11-15-2010","","57-NE",75.7
+"611-2010*A","Quercus","alba","White oak",2019,1,113,287,NA,NA,123,288,123,NA,NA,248,NA,288,42.29281823,-71.12903099,"11-15-2010","","57-NE",75.7
+"611-2010*A","Quercus","alba","White oak",2016,1,115,280,NA,NA,133,291,133,NA,NA,NA,NA,291,42.29281823,-71.12903099,"11-15-2010","","57-NE",75.7
+"611-2010*A","Quercus","alba","White oak",2021,1,113,289,NA,NA,117,301,117,NA,NA,NA,NA,301,42.29281823,-71.12903099,"11-15-2010","","57-NE",75.7
+"611-2010*A","Quercus","alba","White oak",2022,1,117,281,NA,NA,128,296,128,NA,NA,NA,NA,296,42.29281823,-71.12903099,"11-15-2010","","57-NE",75.7
+"611-2010*A","Quercus","alba","White oak",2023,1,NA,289,NA,NA,112,NA,112,NA,NA,NA,NA,289,42.29281823,-71.12903099,"11-15-2010","","57-NE",75.7
+"611-2010*A","Quercus","alba","White oak",2020,1,123,272,127,NA,126,289,125,NA,NA,NA,NA,289,42.29281823,-71.12903099,"11-15-2010","","57-NE",75.7
+"611-2010*A","Quercus","alba","White oak",2024,1,116,277,NA,NA,123,NA,123,NA,NA,NA,NA,277,42.29281823,-71.12903099,"11-15-2010","","57-NE",75.7
+"689-2010*A","Acer","saccharum","Sugar maple",2020,1,112,260,112,NA,123,261,123,NA,NA,NA,NA,261,42.2917509,-71.1278148,"11-18-2010","","62-NW",78
+"689-2010*A","Acer","saccharum","Sugar maple",2016,1,116,249,110,NA,124,249,130,NA,NA,NA,NA,249,42.2917509,-71.1278148,"11-18-2010","","62-NW",78
+"689-2010*A","Acer","saccharum","Sugar maple",2018,1,NA,287,NA,NA,124,292,122,NA,NA,NA,NA,292,42.2917509,-71.1278148,"11-18-2010","","62-NW",78
+"689-2010*A","Acer","saccharum","Sugar maple",2021,1,99,289,96,118,110,301,110,99,NA,187,187,301,42.2917509,-71.1278148,"11-18-2010","","62-NW",78
+"689-2010*A","Acer","saccharum","Sugar maple",2019,1,209,285,NA,NA,115,285,115,NA,NA,233,NA,285,42.2917509,-71.1278148,"11-18-2010","","62-NW",78
+"689-2010*A","Acer","saccharum","Sugar maple",2023,1,NA,NA,98,NA,NA,NA,NA,NA,NA,NA,NA,NA,42.2917509,-71.1278148,"11-18-2010","","62-NW",78
+"689-2010*A","Acer","saccharum","Sugar maple",2022,1,106,281,NA,NA,120,285,117,NA,NA,NA,NA,285,42.2917509,-71.1278148,"11-18-2010","","62-NW",78
+"689-2010*A","Acer","saccharum","Sugar maple",2017,1,102,254,109,125,114,254,108,NA,NA,224,200,254,42.2917509,-71.1278148,"11-18-2010","","62-NW",78
+"689-2010*A","Acer","saccharum","Sugar maple",2024,1,NA,277,NA,NA,116,277,116,NA,NA,NA,NA,277,42.2917509,-71.1278148,"11-18-2010","","62-NW",78
+"6990*A","Carya","glabra","Pignut hickory",2021,1,NA,NA,NA,146,115,NA,113,NA,NA,NA,NA,NA,42.30020379,-71.12586584,"12-29-1909","","25-SW",45.7
+"6990*A","Carya","glabra","Pignut hickory",2018,1,119,249,NA,153,131,256,122,NA,NA,249,249,256,42.30020379,-71.12586584,"12-29-1909","","25-SW",45.7
+"6990*A","Carya","glabra","Pignut hickory",2022,1,112,NA,126,NA,116,NA,116,NA,NA,NA,NA,NA,42.30020379,-71.12586584,"12-29-1909","","25-SW",45.7
+"6990*A","Carya","glabra","Pignut hickory",2019,1,108,251,132,188,111,264,111,NA,NA,264,NA,264,42.30020379,-71.12586584,"12-29-1909","","25-SW",45.7
+"6990*A","Carya","glabra","Pignut hickory",2016,1,110,NA,NA,166,122,NA,118,NA,NA,NA,NA,NA,42.30020379,-71.12586584,"12-29-1909","","25-SW",45.7
+"6990*A","Carya","glabra","Pignut hickory",2023,1,104,NA,NA,137,112,NA,104,NA,NA,NA,NA,NA,42.30020379,-71.12586584,"12-29-1909","","25-SW",45.7
+"6990*A","Carya","glabra","Pignut hickory",2020,1,119,262,NA,220,141,NA,127,NA,NA,220,NA,262,42.30020379,-71.12586584,"12-29-1909","","25-SW",45.7
+"6990*A","Carya","glabra","Pignut hickory",2017,1,100,253,NA,241,124,253,114,134,NA,266,266,253,42.30020379,-71.12586584,"12-29-1909","","25-SW",45.7
+"6990*A","Carya","glabra","Pignut hickory",2024,1,NA,NA,NA,NA,123,NA,123,NA,NA,NA,NA,NA,42.30020379,-71.12586584,"12-29-1909","","25-SW",45.7
+"7141*A","Tilia","americana","American basswood",2022,1,107,250,145,188,117,250,117,172,NA,244,230,250,42.30415322,-71.12252621,"12-15-1912","","7-SE",58.9
+"7141*A","Tilia","americana","American basswood",2020,1,112,229,NA,206,126,229,126,NA,NA,213,220,229,42.30415322,-71.12252621,"12-15-1912","","7-SE",58.9
+"7141*A","Tilia","americana","American basswood",2016,1,111,215,154,199,122,290,115,179,NA,262,262,290,42.30415322,-71.12252621,"12-15-1912","","7-SE",58.9
+"7141*A","Tilia","americana","American basswood",2018,1,117,246,141,192,128,234,122,NA,NA,257,243,234,42.30415322,-71.12252621,"12-15-1912","","7-SE",58.9
+"7141*A","Tilia","americana","American basswood",2019,1,109,185,138,190,111,243,111,178,NA,262,227,243,42.30415322,-71.12252621,"12-15-1912","","7-SE",58.9
+"7141*A","Tilia","americana","American basswood",2024,1,NA,227,NA,276,117,283,117,NA,NA,NA,276,283,42.30415322,-71.12252621,"12-15-1912","","7-SE",58.9
+"7141*A","Tilia","americana","American basswood",2021,1,114,247,NA,261,114,247,114,NA,NA,261,261,247,42.30415322,-71.12252621,"12-15-1912","","7-SE",58.9
+"7141*A","Tilia","americana","American basswood",2017,1,101,301,127,186,110,301,107,172,NA,234,221,301,42.30415322,-71.12252621,"12-15-1912","","7-SE",58.9
+"7141*A","Tilia","americana","American basswood",2015,1,NA,255,NA,NA,NA,255,NA,NA,NA,NA,NA,255,42.30415322,-71.12252621,"12-15-1912","","7-SE",58.9
+"7141*A","Tilia","americana","American basswood",2023,1,104,256,118,194,108,263,108,NA,NA,235,235,263,42.30415322,-71.12252621,"12-15-1912","","7-SE",58.9
+"8197*A","Quercus","rubra","Northern red oak",2016,1,115,289,NA,290,NA,289,130,NA,NA,NA,290,289,42.2999685,-71.12424385,"07-01-1916","","25-SE",66.2
+"8197*A","Quercus","rubra","Northern red oak",2017,1,110,271,NA,NA,127,311,119,NA,NA,264,NA,311,42.2999685,-71.12424385,"07-01-1916","","25-SE",66.2
+"8197*A","Quercus","rubra","Northern red oak",2018,1,122,282,128,260,125,296,123,130,131,260,NA,296,42.2999685,-71.12424385,"07-01-1916","","25-SE",66.2
+"8197*A","Quercus","rubra","Northern red oak",2019,1,107,268,129,NA,128,268,128,NA,NA,NA,NA,268,42.2999685,-71.12424385,"07-01-1916","","25-SE",66.2
+"925-79*B","Aesculus","flava","Yellow buckeye",2016,1,110,252,112,144,112,290,112,130,NA,274,260,290,42.30391297,-71.12232333,"09-24-1979","rich woods","10-NE",44.5
+"925-79*B","Aesculus","flava","Yellow buckeye",2018,1,112,178,116,151,117,192,116,125,NA,259,259,192,42.30391297,-71.12232333,"09-24-1979","rich woods","10-NE",44.5
+"925-79*B","Aesculus","flava","Yellow buckeye",2015,1,NA,218,NA,NA,NA,NA,NA,NA,NA,255,255,218,42.30391297,-71.12232333,"09-24-1979","rich woods","10-NE",44.5
+"925-79*B","Aesculus","flava","Yellow buckeye",2023,1,102,231,103,128,104,263,104,114,NA,263,250,263,42.30391297,-71.12232333,"09-24-1979","rich woods","10-NE",44.5
+"925-79*B","Aesculus","flava","Yellow buckeye",2019,1,107,185,107,142,107,243,107,124,NA,255,255,243,42.30391297,-71.12232333,"09-24-1979","rich woods","10-NE",44.5
+"925-79*B","Aesculus","flava","Yellow buckeye",2022,1,106,202,109,138,107,202,107,117,NA,258,NA,202,42.30391297,-71.12232333,"09-24-1979","rich woods","10-NE",44.5
+"925-79*B","Aesculus","flava","Yellow buckeye",2024,1,106,227,107,144,107,NA,107,121,NA,NA,NA,227,42.30391297,-71.12232333,"09-24-1979","rich woods","10-NE",44.5
+"925-79*B","Aesculus","flava","Yellow buckeye",2017,1,101,NA,108,136,108,NA,108,119,NA,NA,NA,NA,42.30391297,-71.12232333,"09-24-1979","rich woods","10-NE",44.5
+"925-79*B","Aesculus","flava","Yellow buckeye",2021,1,98,196,98,134,98,268,98,119,NA,268,256,268,42.30391297,-71.12232333,"09-24-1979","rich woods","10-NE",44.5
+"925-79*B","Aesculus","flava","Yellow buckeye",2020,1,105,183,108,147,111,206,111,126,NA,213,213,206,42.30391297,-71.12232333,"09-24-1979","rich woods","10-NE",44.5

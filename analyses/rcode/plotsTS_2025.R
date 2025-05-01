@@ -21,7 +21,7 @@ library(reshape2)
 # setwd("~/Documents/git/projects/treegarden/treespotters")
 # Christophe's directory
 setwd("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/")
-d <- read.csv("output/clean_treespotters_allphenodataApr2025.csv", header=TRUE)
+d <- read.csv("output/cleanTS.csv", header=TRUE)
 
 if(FALSE){ # Not running
   
@@ -37,57 +37,57 @@ if(FALSE){ # Not running
   
   prov <- read.csv("output/provenanceinfo.csv", header=TRUE)
   prov <- subset(prov, select= c("Individual_ID", "provenance.lat", "provenance.long"))
-  prov <- prov %>% rename(id=Individual_ID)
+  prov <- prov %>% rename(plantNickname=Individual_ID)
   
   ts <- full_join(prov, phenos)
   
-  colstokeep <- c("id", "provenance.lat", "provenance.long", "genus", "species", "year", "budburst", "leafout", "yr.end", "gdd.start", "type")
+  colstokeep <- c("plantNickname", "provenance.lat", "provenance.long", "genus", "species", "year", "budburst", "leafout", "yr.end", "gdd.start", "type")
   d <- subset(ts, select=colstokeep)
   d <- d[!is.na(d$genus),]
   
-  d$id <- as.character(d$id)
+  d$plantNickname <- as.character(d$plantNickname)
 }
 
 
 #### Plotting! 
-quartz()
-ggplot(phenos, aes(x=year, y=budburst, color=id, group=id)) +
+# quartz()
+ggplot(d, aes(x=year, y=budburst, colour = plantNickname)) +
   geom_point()+
   geom_line()+
-  facet_wrap( .~genus)
+  facet_wrap( .~Common_Name)
 
-ggplot(phenos, aes(x=year, y=leafout, group=id)) +
+ggplot(d, aes(x=year, y=leafout, colour = plantNickname)) +
   geom_point()+
   geom_line()+
-  facet_wrap( .~genus)
+  facet_wrap( .~Common_Name)
 
-ggplot(phenos, aes(x=year, y=leafDrop, group=id)) +
+ggplot(d, aes(x=year, y=leafDrop, colour = plantNickname)) +
   geom_point()+
   geom_line()+
-  facet_wrap( .~genus)
+  facet_wrap( .~Common_Name)
 
 # cleaning ...
-c <- subset(phenos, budburst<160)
-phenoscleaner <- subset(c, leafout<250)
+ 
+#### I AM HERE IN THE CLEANING OF THIS CODE
 phenoscleaner$latbi <- paste(phenoscleaner$genus, phenoscleaner$species)
-phenossmwide <- subset(phenoscleaner, select=c("genus", "species", "latbi", "id", "year", "budburst", "leafout", "leafDrop"))
+phenossmwide <- subset(phenoscleaner, select=c("genus", "species", "latbi", "plantNickname", "year", "budburst", "leafout", "leafDrop"))
 
 
-bbplot <- ggplot(phenoscleaner, aes(x=year, y=budburst, color=as.factor(id), group=as.factor(id))) +
+bbplot <- ggplot(phenoscleaner, aes(x=year, y=budburst, color=as.factor(plantNickname), group=as.factor(plantNickname))) +
   geom_point() +
   geom_line() +
   facet_wrap(.~latbi) + 
   theme_bw() + 
   theme(legend.position = "none")
 
-loplot <- ggplot(phenoscleaner, aes(x=year, y=leafout, color=as.factor(id), group=as.factor(id))) +
+loplot <- ggplot(phenoscleaner, aes(x=year, y=leafout, color=as.factor(plantNickname), group=as.factor(plantNickname))) +
   geom_point() +
   geom_line() +
   facet_wrap(.~latbi) + 
   theme_bw() + 
   theme(legend.position = "none")
 
-ldplot <- ggplot(phenoscleaner, aes(x=year, y=leafDrop, color=as.factor(id), group=as.factor(id))) +
+ldplot <- ggplot(phenoscleaner, aes(x=year, y=leafDrop, color=as.factor(plantNickname), group=as.factor(plantNickname))) +
   geom_point() +
   geom_line() +
   facet_wrap(.~latbi) + 
@@ -98,15 +98,15 @@ ggsave("figures/update2024_budburst_byspp.pdf",bbplot, width=9, height=6)
 ggsave("figures/update2024_leafout_byspp.pdf",loplot, width=9, height=6)
 ggsave("figures/update2024_leafdrop_byspp.pdf",ldplot, width=9, height=6)
 
-phenossm <- melt(phenossmwide, id = c("genus", "species", "latbi", "id", "year"), 
+phenossm <- melt(phenossmwide, plantNickname = c("genus", "species", "latbi", "plantNickname", "year"), 
                  measure = c("budburst", "leafout", "leafDrop"))
 
 
-ggplot(subset(phenossm, variable!="leafDrop"), aes(x=year, y=value, color=variable, group=id)) +
+ggplot(subset(phenossm, variable!="leafDrop"), aes(x=year, y=value, color=variable, group=plantNickname)) +
   geom_point()+
   # geom_line()+
   facet_wrap( .~latbi)
-ggplot(phenossm, aes(x=year, y=value, color=variable, group=id)) +
+ggplot(phenossm, aes(x=year, y=value, color=variable, group=plantNickname)) +
   geom_point()+
   # geom_line()+
   facet_wrap( .~latbi)
@@ -153,13 +153,13 @@ ggplot(acru) +
   ) +
   labs(color = "Phenophase", x = "Year", y = "Day of Year") +
   theme_minimal() +
-  facet_wrap(~id)
+  facet_wrap(~plantNickname)
 
 
 View(acru)
-cut <- acru[, c("id", "year","budburst", "leafout", "leafDrop", "coloredLeaves" )]
+cut <- acru[, c("plantNickname", "year","budburst", "leafout", "leafDrop", "coloredLeaves" )]
 df_summary <- cut %>%
-  group_by(id) %>%
+  group_by(plantNickname) %>%
   summarise(
     budburst = sum(!is.na(budburst)), 
     leafout = sum(!is.na(leafout)), 
@@ -169,16 +169,16 @@ df_summary <- cut %>%
 
 m <- read.csv("input/status_intensity_observation_data.csv")
 mcut <- m[!duplicated(m$Individual_ID), c("Individual_ID", "Plant_Nickname")]
-df_summary <- merge(df_summary, mcut, by.x = "id", by.y = "Individual_ID", all.x = TRUE)
+df_summary <- merge(df_summary, mcut, by.x = "plantNickname", by.y = "Individual_ID", all.x = TRUE)
 df_summary <- df_summary[, c("Plant_Nickname", "budburst", "leafout", "leafDrop", "coloredLeaves")]
 write.csv(df_summary, "output/nyearsAceRub.csv")
 library(dplyr)
 df_long <- cut %>%
-  pivot_longer(cols = -c(id, year), names_to = "phenophase", values_to = "value") %>%
+  pivot_longer(cols = -c(plantNickname, year), names_to = "phenophase", values_to = "value") %>%
   filter(!is.na(value)) %>%
   distinct(year, phenophase) %>%
   arrange(phenophase, year)
-df_summary <- merge(df_long, mcut, by.x = "id", by.y = "Individual_ID", all.x = TRUE)
+df_summary <- merge(df_long, mcut, by.x = "plantNickname", by.y = "Individual_ID", all.x = TRUE)
 df_summary <- df_summary[, c("Plant_Nickname", "year", "phenophase")]
 write.csv(df_summary, "output/phenobyyearAceRub.csv")
 
