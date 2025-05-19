@@ -8,11 +8,9 @@
 # And go to the Phenology Observation Portal
 # 2) Select 'Individual Phenometrics' and press NEXT 
 # 3) Set Date range applicable to your question and press 'Set Date' and NEXT
-# 4) Select 'Partner Groups' tab on left: press the + next to 
-# 'Botanic Gardens and Arboretums and select 'Arnold Arboretum - Tree Spotters'
+# 4) Select 'Partner Groups' tab on left: press the + next to 'Botanic Gardens and Arboretums and select 'Arnold Arboretum - Tree Spotters'
 # Press 'Set Groups' and NEXT
-# 5) Select 'Output fields' tab on left: and select 'ObservedBy Person ID' and 'Multiple Observers' and ...
-# in 2024 I added these (as I think they are in the code): 'NumYs in Series' and 'Multiple FirstY'
+# 5) Select 'Output fields' tab on left: and select 'ObservedBy Person ID' and 'Multiple Observers' and ... in 2024 I added these (as I think they are in the code): 'NumYs in Series' and 'Multiple FirstY'
 
 
 ## housekeeping
@@ -27,12 +25,12 @@ library(ggplot2)
 library(reshape2)
 # library(lubridate)
 
-
 # Set Working Directory
 # Lizzie's directory
 # setwd("~/Documents/git/projects/treegarden/treespotters")
 # Christophe's directory
 setwd("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/")
+
 indPheno <- read.csv("input/individual_phenometrics_data2025.csv", header=TRUE) # from NPN
 trees2core <- read.csv("input/2025ApprovedPlantListforcoring.csv", header=TRUE) # from list of trees we can core
 coord <- read.csv("input/listTreesfromInteractiveMap.csv", header=TRUE) # from arboretum explorer map 
@@ -50,7 +48,6 @@ d <- indPheno[indPheno$plantNickname %in% trees2core$ACC_NUM.QUAL,]
 d <- d[(d$Multiple_FirstY>=1 | d$Multiple_Observers>0),] ## This selects data where multiple people observed the same phenophase.
 d <- d[(d$NumYs_in_Series>=3),] ## This selects data again where the same phenophase was seen 3 times in a row
 d <- d[(d$NumDays_Since_Prior_No>=0 & d$NumDays_Since_Prior_No<=14),] ## And this limits to data where a no is followed by a yes, so that it is a new observation/new phenophase but has been detected within a reasonable timeframe
-d$latbi <- paste(d$Genus, d$Species, sep=" ")
 
 ### === === === === === === === === ===###
 # Clean Arboretum tree coordinates file #
@@ -97,6 +94,7 @@ bb <- d %>%
     symbol = USDA_PLANTS_Symbol,
     plantNickname = plantNickname
   )
+
 # add latin binomial column
 bb$latbi <- paste(bb$genus, bb$species, sep=" ")
 
@@ -113,7 +111,7 @@ bb$Common_Name[which(bb$Common_Name == "shagbark hickory")] <- "Shagbark hickory
 bb$Common_Name[which(bb$Common_Name == "northern red oak")] <- "Northern red oak"
 bb$Common_Name[which(bb$Common_Name == "red maple")] <- "Red maple"
 
-bb.pheno<-dplyr::select(bb, genus, species, latbi, Common_Name, phase, year, doy, numYs, plantNickname)
+bb.pheno <- bb[, c("genus", "species", "latbi", "Common_Name", "phase", "year", "doy", "numYs", "plantNickname")]
 
 # clean phenophase names
 bb.pheno$phase<-ifelse(bb.pheno$phase=="Breaking leaf buds", "budburst", bb.pheno$phase)
@@ -130,6 +128,7 @@ bb.pheno$phase<-ifelse(bb.pheno$phase=="Pollen release (flowers)", "PollenReleas
 
 ### Now work on finding day of budburst, etc.
 bb.pheno <-filter(bb.pheno, numYs>0)
+
 # Below, I group each individual by phenophase and year to find the first observation (using the slice function), 
 ## so first day of budburst for that individual for that year
 doy_pheno<-bb.pheno%>% 
