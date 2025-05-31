@@ -21,18 +21,52 @@ setwd("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses")
 # === === === === === === === === === === === === === === === === 
 #### Step 1. Come up with a model ####
 # === === === === === === === === === === === === === === === === 
+cleants <- read.csv2("output/cleanTS.csv", sep = ",")
+spp <- unique(cleants$Common_Name)
 
 # Simulate ring width for each year, from 2017 to 2023 for 4 species
 
 ### assign more digestible names and years to help me understand what the hell im doing
-spp <- c("betall")
-plot <- c("wm1",)
-yr <- 2015:2024
-rep <- 1:3
+# let's first set it in mm and multiply by 10 to set the scale closer to gdd
+a <- 1.5
+b <- 0.4
+sigma_y <- 0.3 # standard deviation
 
-# set species specific slopes to depend on gdd
+n_ids <- 100
+rep <- 3
+N <- n_ids * rep
 
+ids <- rep(paste0("t", 1:n_ids), each = rep)
+# sigma_id <- 0.2
+# u_id     <- rnorm(n_ids, 0, sigma_id)[ids] 
+gdd <- round(rnorm(N, 180000, 10000))
+gddcons <- gdd / 20000
 
+error <- rnorm(N, 0, sigma_y)
+
+# calculate ring width
+ringwidth <- a + beta * gddcons + error
+
+gdd_sim <- data.frame(
+  ids = ids,
+  gdd = gdd,
+  gddcons = gddcons,
+  ringwidth = ringwidth
+)
+
+plot(ringwidth~gdd, data=gdd_sim)
+
+# run models
+runmodels <- TRUE
+if(runmodels){
+  fit <- stan_lmer(
+    ringwidth ~ gddcons + (1 | ids),  
+    data = gdd_sim,
+    chains = 4,
+    iter = 4000,
+    core=4
+  )
+}
 #make a dataframe for ring width
 wdat <- data.frame(
   yr = rep(yr, each = length(plot) * length(spp) * length(rep)),
