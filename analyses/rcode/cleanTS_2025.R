@@ -150,4 +150,8 @@ head(phenosCoord)
 # write it up!
 write.csv(phenosCoord, file="output/cleanTS.csv", row.names=FALSE)
 
-
+# remove duplicates
+temp <- phenosCoord[!duplicated(phenosCoord$plantNickname),]
+# count per latbi
+temp %>%
+  count(latbi)

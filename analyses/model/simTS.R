@@ -28,9 +28,9 @@ spp <- unique(cleants$Common_Name)
 
 ### assign more digestible names and years to help me understand what the hell im doing
 # let's first set it in mm and multiply by 10 to set the scale closer to gdd
-a <- 1.5
-b <- 0.4
-sigma_y <- 0.3 # standard deviation
+a <- 0.1
+b <- 0.2
+sigma_y <- 0.1 # standard deviation
 
 n_ids <- 100
 rep <- 3
