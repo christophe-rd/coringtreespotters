@@ -1,6 +1,6 @@
 ## REMOVE guides 
 
-setwd("/Volumes/PortableSSD/CoringTreespotters/FromScan/cookies_with_guides")
+setwd("/Users/christophe_rouleau-desrochers/github/coringtreespotters/data/coreImagesROI")
 
 # rename in place: remove "_guides" from every file name
 file.rename(
