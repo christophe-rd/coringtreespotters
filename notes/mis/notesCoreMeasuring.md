@@ -20,3 +20,13 @@
 **CAGL_6990_A_I**: MICROSCOPE look at ring 19 if its really a ring
 
 **PODE_22099_A_I**: MICROSCOPE look at ring 23 whether it's false or not
+
+**ACSA_187-2006_B_I**: First ring and the second and third don't match between I and II
+
+**AEFL_12651_D_I**: verify that second ring is actually split by a crack. Check on II if the second ring is narrow.
+
+**AEFL_12651_H_I**: MICROSCOPE: check all rings as their are so pale
+
+**CAGL_2019_R_I**: RESCAN
+
+**QUAL_385-82_A_II**: RESCAN
