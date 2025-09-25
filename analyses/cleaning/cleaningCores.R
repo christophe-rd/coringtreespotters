@@ -7,6 +7,7 @@ directory <- "/Users/christophe_rouleau-desrochers/github/coringtreespotters/ana
 setwd(directory)
 
 files <- list.files(pattern = "\\.csv$")
+
 process_core <- function(f) {
   df <- read.csv(f)
   
@@ -33,11 +34,47 @@ all_cores <- do.call(rbind, lapply(files, process_core))
 
 # clean some names
 all_cores$Code[which(all_cores$Code == "525-2069")] <- "525-2009"
+all_cores$Code[which(all_cores$Code == "385-82")] <- "358-82"
+all_cores$Code[which(all_cores$Code == "22-834")] <- "22834"
+
 
 all_cores$id <- paste(all_cores$Species, all_cores$Code, all_cores$Letter, all_cores$Rep, sep = "_")
 
 # keep only the columns i want
 all_cores2 <- all_cores[, c("id", "Species", "Code", "Letter", "Rep", "Year", "Length")]
+
+# read og file
+setwd("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/")
+og <- read.csv("output/treesToCoredes.csv")
+
+corescannotscan <- read.csv("input/cores/coresCannotScan/coresCannotScan.csv")
+
+og$name <- gsub("\\*", "_",og$name)
+og$name <- gsub("\\|", "_", og$name)
+og$name <- gsub(" ", "", og$name)
+
+
+# temporary id col to fit these guys
+all_cores$id2 <- paste(all_cores$Code, all_cores$Letter, all_cores$Species, sep = "_")
+veccores <- unique(all_cores$id2)
+og_vec <- og$name
+
+setdiff(og_vec, veccores) 
+# beni 1199 D is ok.
+# beni 1199 J_I: will be scanned
+# 12651_I_AEFL: ok
+# 1323-82_A_TIAM: ok
+# 17527_D_TIAM: ok
+# 17538_A_TIAM: ok
+# 19804_A_TIAM: ok
+# 20098_A_CAGL: ok
+# TIAM_7141_A_I: ok
+# 925-79_B_AEFL: ok
+
+
+# looking at replicates
+all_cores2 <- all_cores[!duplicated(all_cores$id),]
+
 
 # convert inches to cm
 all_cores2$lengthCM <- all_cores2$Length*2.54
