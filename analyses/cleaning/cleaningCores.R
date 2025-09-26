@@ -38,11 +38,14 @@ all_cores$Code[which(all_cores$Code == "385-82")] <- "358-82"
 all_cores$Code[which(all_cores$Code == "22-834")] <- "22834"
 
 
-all_cores$id <- paste(all_cores$Species, all_cores$Code, all_cores$Letter, all_cores$Rep, sep = "_")
+all_cores$id <- paste(all_cores$Species, all_cores$Code, all_cores$Letter, sep = "_")
+all_cores$idrep <- paste(all_cores$Species, all_cores$Code, all_cores$Letter, all_cores$Rep, sep = "_")
 
 # keep only the columns i want
-all_cores2 <- all_cores[, c("id", "Species", "Code", "Letter", "Rep", "Year", "Length")]
+all_cores2 <- all_cores[, c("X", "id", "idrep", "Species", "Code", "Letter", "Rep", "Year", "Length")]
 
+# <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+# Make some checks
 # read og file
 setwd("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/")
 og <- read.csv("output/treesToCoredes.csv")
@@ -52,6 +55,8 @@ corescannotscan <- read.csv("input/cores/coresCannotScan/coresCannotScan.csv")
 og$name <- gsub("\\*", "_",og$name)
 og$name <- gsub("\\|", "_", og$name)
 og$name <- gsub(" ", "", og$name)
+
+og$name[grepl("6990", og$name)]
 
 
 # temporary id col to fit these guys
@@ -71,24 +76,128 @@ setdiff(og_vec, veccores)
 # TIAM_7141_A_I: ok
 # 925-79_B_AEFL: ok
 
-
-# looking at replicates
-all_cores2 <- all_cores[!duplicated(all_cores$id),]
-
-
+# <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 # convert inches to cm
 all_cores2$lengthCM <- all_cores2$Length*2.54
 
 all_cores2$scaled_length <- scale(all_cores2$lengthCM)
 
+# CAOV 12097 G. One of the cores is rotten outside, so Ill check if changing the ring dates may change something
+caovG <- subset(all_cores2, Code == "12907" & Letter == "G")
 
-ggplot(all_cores2, aes(x = Year, y = scaled_length, color = id, group = id)) +
+caovG$newyear <- caovG$Year
+
+caovG$newyear <- ifelse(caovG$Rep == "II", caovG$Year-3, caovG$Year)
+
+ggplot(caovG, aes(x = newyear, y = lengthCM, color = idrep, group = idrep)) +
   geom_line(linewidth = 0.6) +
   labs(title = "Ring-width series per core",
        x = "Year",
        y = "Ring width (Length)",
        color = "Core ID") +
+  theme_minimal(base_size = 14) +
+  scale_x_continuous(breaks=unique(caovG$Year))+
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1)  # tilt labels
+  )
+
+
+
+
+# start by removing sepecies with litle replication **for now
+coressub <- subset(all_cores2, !(Species %in% c("AEFL", "CAGL")))
+
+# start with acsa
+ACSA <- subset(all_cores2, Species == "ACSA")
+ggplot(ACSA, aes(x = X, y = lengthCM, color = id, group = idrep)) +
+  geom_line(linewidth = 0.6) +
+  labs(title = "Ring-width series per core",
+       x = "Year",
+       y = "Ring width (Length)",
+       color = "Core ID") +
+  facet_wrap(~id, nrow = 5, ncol = 1, scales = "free_y") +
+  theme_minimal(base_size = 14) +
+  scale_x_reverse(breaks=unique(caovG$X))+
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1)  # tilt labels
+  )
+
+# start with BEAL
+BEAL <- subset(all_cores2, Species == "BEAL")
+ggplot(BEAL, aes(x = X, y = lengthCM, color = id, group = idrep)) +
+  geom_line(linewidth = 0.6) +
+  labs(title = "Ring-width series per core",
+       x = "Year",
+       y = "Ring width (Length)",
+       color = "Core ID") +
+  facet_wrap(~id, nrow = length(unique(BEAL$id)), ncol = 1, scales = "free_y") +
+  theme_minimal(base_size = 14)+
+  theme_minimal(base_size = 14) +
+  scale_x_reverse(breaks=unique(BEAL$X))+
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1)  # tilt labels
+  )
+
+
+# start with BENI
+BENI <- subset(all_cores2, Species == "BENI")
+ggplot(BENI, aes(x = Year, y = lengthCM, color = id, group = idrep)) +
+  geom_line(linewidth = 0.6) +
+  labs(title = "Ring-width series per core",
+       x = "Year",
+       y = "Ring width (Length)",
+       color = "Core ID") +
+  facet_wrap(~id, nrow = length(unique(BENI$id)), ncol = 1, scales = "free_y") +
   theme_minimal(base_size = 14)
+
+betula <- subset(all_cores2, Species %in% c("BENI", "BEAL"))
+ggplot(betula, aes(x = Year, y = lengthCM, color = id, group = idrep)) +
+  geom_line(linewidth = 0.6) +
+  labs(title = "Ring-width series per core",
+       x = "Year",
+       y = "Ring width (Length)",
+       color = "Core ID") +
+  facet_wrap(~id, nrow = length(unique(betula$id)), ncol = 1, scales = "free_y") +
+  theme_minimal(base_size = 14)
+ggsave("figures/betulaspaghetti_plot.jpeg", width = 6, height = 8, units = "in", dpi = 300)
+
+# start with CAOV
+CAOV <- subset(all_cores2, Species == "CAOV")
+ggplot(CAOV, aes(x = Year, y = lengthCM, color = id, group = idrep)) +
+  geom_line(linewidth = 0.6) +
+  labs(title = "Ring-width series per core",
+       x = "Year",
+       y = "Ring width (Length)",
+       color = "Core ID") +
+  facet_wrap(~id, nrow = length(unique(CAOV$id)), ncol = 1, scales = "free_y") +
+  theme_minimal(base_size = 14)
+
+
+# start with QUAL   
+QUAL <- subset(all_cores2, Species == "QUAL")
+ggplot(QUAL, aes(x = Year, y = lengthCM, color = id, group = idrep)) +
+  geom_line(linewidth = 0.6) +
+  labs(title = "Ring-width series per core",
+       x = "Year",
+       y = "Ring width (Length)",
+       color = "Core ID") +
+  facet_wrap(~id, nrow = length(unique(QUAL$id)), ncol = 1, scales = "free_y") +
+  theme_minimal(base_size = 14)
+
+# start with QURU
+QURU <- subset(all_cores2, Species == "QURU")
+ggplot(QURU, aes(x = Year, y = lengthCM, color = id, group = idrep)) +
+  geom_line(linewidth = 0.6) +
+  labs(title = "Ring-width series per core",
+       x = "Year",
+       y = "Ring width (Length)",
+       color = "Core ID") +
+  facet_wrap(~id, nrow = length(unique(QURU$id)), ncol = 1, scales = "free_y") +
+  theme_minimal(base_size = 14)
+
+# make a plot to show how many 
+
+  
 
 # check some pairs along
 acrutest1 <- subset(all_cores2, Code == "525-2009")
@@ -112,26 +221,42 @@ ggplot(acsatest1, aes(x = Year, y = scaled_length, color = id, group = id)) +
   theme_minimal(base_size = 14)
 
 
-# lets try some shitty chat gpt analyses: 
+# LET'S DO THE dplR tutorial ####
 library(dplR)
 library(tidyverse)
 
-# ---- Convert long-format df to RWL data.frame ----
-rw_df <- all_cores2 %>%
-  select(id, Year, Length) %>%
-  pivot_wider(names_from = id, values_from = Length) %>%
+# convert to long as rwl objects need to have series as columns and years as rows
+### start with only 
+qu <- subset(all_cores2, Species %in% c("QUAL", "QURU"))
+nodup <- all_cores2[!duplicated(all_cores2$idrep),]
+table(nodup$Species)
+
+caov <- subset(all_cores2, Species %in% c("CAOV"))
+
+rw_df <- all_cores2%>%
+  select(idrep, Year, lengthCM) %>%
+  pivot_wider(names_from = idrep, values_from = lengthCM) %>%
   arrange(Year) %>%
   column_to_rownames("Year") %>%
   as.data.frame()            # keep as data.frame
+rw_df
 
-# Assign class "rwl"
+# assign rwl class necessary for downstream analyses
 class(rw_df) <- c("rwl", "data.frame")
 
-# ---- Plot raw ring-width series ----
+# plot ring width series
+# open jpeg device from the ggsave settings above
+jpeg(filename = "figures/fullspag_plot.jpeg",
+     width = 16,       
+     height = 8,      
+     units = "in",    
+     res = 300)    
 plot.rwl(rw_df, plot.type = "spag")  # spaghetti plot
+dev.off()
+
 plot.rwl(rw_df, plot.type = "seg", nyrs = 30)  # running segment means
 
-# ---- Build standardized chronology ----
+# build stanadardized chronology
 rw_chron <- chron(rw_df, prewhiten = TRUE)
 
 # Plot chronology
@@ -139,8 +264,7 @@ plot(rw_chron, type = "l", lwd = 2,
      main = "Standard Chronology",
      xlab = "Year", ylab = "Ring Width Index")
 
-# ---- Segment-wise crossdating (COFECHA-style) ----
-# seg.plot works now because rw_df is a data.frame
+# segment-wise crossdating
 n_years <- apply(rw_df, 2, function(x) sum(!is.na(x)))
 min_years <- min(n_years, na.rm = TRUE)
 
@@ -153,3 +277,34 @@ bin_floor <- max(floor(seg_len / 3), 2)  # rule-of-thumb
 # Now run segment correlations safely
 res <- corr.rwl.seg(rw_df, seg.length = seg_len, bin.floor = bin_floor, make.plot = TRUE)
 summary(res)
+
+# report
+class(rw_df)
+rwl.report(rw_df)
+rw_df.stats <- summary(rw_df) 
+
+boxplot(rw_df.stats$ar1,ylab=expression(phi[1]),col = "lightblue")
+stripchart(rw_df.stats$ar1, vertical = TRUE,  
+           method = "jitter", jitter = 0.02,add = TRUE, pch = 20, col = 'darkblue',cex=1.25)
+ar1Quant <- quantile(rw_df.stats$ar1,probs = c(0.25,0.5,0.75))
+abline(h=ar1Quant,lty="dashed",col="grey")
+mtext(text = names(ar1Quant),side = 4,at = ar1Quant,las=2)
+
+ca533.ids <- read.ids(rw_df, stc = c(3, 2, 1))
+ca533.rwi <- detrend(rwl = rw_df, method = "AgeDepSpline")
+rwi.stats(ca533.rwi, ca533.ids, prewhiten=TRUE)
+
+ca533.rho <- interseries.cor(rw_df, prewhiten=TRUE,
+                             method="spearman")
+ca533.rho[1:5, ]
+
+ca533.crn <- chron(ca533.rwi)
+plot(ca533.crn, add.spline=TRUE, nyrs=20)
+
+
+# CROSS-DATING ####
+# FROM: https://rpubs.com/andybunn/xdate
+dat.sum <- summary(rw_df)
+dat.sum
+rw_df_long2 <- rw_df[, dat.sum$year >= 40]
+rwl.60 <- corr.rwl.seg(rw_df_long2, seg.length =1, pcrit=0.01)
