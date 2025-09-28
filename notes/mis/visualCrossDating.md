@@ -6,3 +6,6 @@
 **CAOV_12097_G_II**: outside is rotten. First ring is not 2024. Adjusted for -3 years so first measured ring is 2021. It fits a little better. But not great. 
 
 **ACSA_689-2010_A_II**: verified and measurements are correct
+
+
+*as of 26 September, I checked that all twin cores kind of matched each other. The ones that couldn't get scanned are not done, so I'll have to subset for those ids and check the matches.*
