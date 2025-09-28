@@ -82,30 +82,28 @@ all_cores2$lengthCM <- all_cores2$Length*2.54
 
 all_cores2$scaled_length <- scale(all_cores2$lengthCM)
 
-# CAOV 12097 G. One of the cores is rotten outside, so Ill check if changing the ring dates may change something
-caovG <- subset(all_cores2, Code == "12907" & Letter == "G")
+all_cores2$yearCor <- all_cores2$Year
 
-caovG$newyear <- caovG$Year
-
-caovG$newyear <- ifelse(caovG$Rep == "II", caovG$Year-3, caovG$Year)
-
-ggplot(caovG, aes(x = newyear, y = lengthCM, color = idrep, group = idrep)) +
-  geom_line(linewidth = 0.6) +
-  labs(title = "Ring-width series per core",
-       x = "Year",
-       y = "Ring width (Length)",
-       color = "Core ID") +
-  theme_minimal(base_size = 14) +
-  scale_x_continuous(breaks=unique(caovG$Year))+
-  theme(
-    axis.text.x = element_text(angle = 45, hjust = 1)  # tilt labels
-  )
-
-
-
+#One of the cores is rotten outside, so Ill check if changing the ring dates may change something
+all_cores2$yearCor[all_cores2$idrep == "CAOV_12907_G_II"] <- 
+  all_cores2$year[all_cores2$idrep == "CAOV_12907_G_II"] - 5
 
 # start by removing sepecies with litle replication **for now
 coressub <- subset(all_cores2, !(Species %in% c("AEFL", "CAGL")))
+
+ggplot(coressub, aes(x = Year, y = lengthCM, color = id, group = idrep)) +
+  geom_line(linewidth = 0.6) +
+  labs(title = "",
+       x = "Year",
+       y = "Ring width (Length)",
+       color = "Core ID") +
+  # facet_wrap(~id, nrow = 5, ncol = 1, scales = "free_y") +
+  theme_minimal(base_size = 14) +
+  # scale_x_reverse(breaks=unique(coressub$year))+
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1)  # tilt labels
+  )
+ggsave("figures/coreslineup.jpeg", width = 12, height = 6, units = "in", dpi = 300)
 
 # start with acsa
 ACSA <- subset(all_cores2, Species == "ACSA")
@@ -141,20 +139,20 @@ ggplot(BEAL, aes(x = X, y = lengthCM, color = id, group = idrep)) +
 
 # start with BENI
 BENI <- subset(all_cores2, Species == "BENI")
-ggplot(BENI, aes(x = Year, y = lengthCM, color = id, group = idrep)) +
+ggplot(BENI, aes(x = yearCor, y = lengthCM, color = id, group = idrep)) +
   geom_line(linewidth = 0.6) +
   labs(title = "Ring-width series per core",
-       x = "Year",
+       x = "yearCor",
        y = "Ring width (Length)",
        color = "Core ID") +
   facet_wrap(~id, nrow = length(unique(BENI$id)), ncol = 1, scales = "free_y") +
   theme_minimal(base_size = 14)
 
 betula <- subset(all_cores2, Species %in% c("BENI", "BEAL"))
-ggplot(betula, aes(x = Year, y = lengthCM, color = id, group = idrep)) +
+ggplot(betula, aes(x = yearCor, y = lengthCM, color = id, group = idrep)) +
   geom_line(linewidth = 0.6) +
   labs(title = "Ring-width series per core",
-       x = "Year",
+       x = "yearCor",
        y = "Ring width (Length)",
        color = "Core ID") +
   facet_wrap(~id, nrow = length(unique(betula$id)), ncol = 1, scales = "free_y") +
@@ -163,10 +161,10 @@ ggsave("figures/betulaspaghetti_plot.jpeg", width = 6, height = 8, units = "in",
 
 # start with CAOV
 CAOV <- subset(all_cores2, Species == "CAOV")
-ggplot(CAOV, aes(x = Year, y = lengthCM, color = id, group = idrep)) +
+ggplot(CAOV, aes(x = yearCor, y = lengthCM, color = id, group = idrep)) +
   geom_line(linewidth = 0.6) +
   labs(title = "Ring-width series per core",
-       x = "Year",
+       x = "yearCor",
        y = "Ring width (Length)",
        color = "Core ID") +
   facet_wrap(~id, nrow = length(unique(CAOV$id)), ncol = 1, scales = "free_y") +
@@ -175,10 +173,10 @@ ggplot(CAOV, aes(x = Year, y = lengthCM, color = id, group = idrep)) +
 
 # start with QUAL   
 QUAL <- subset(all_cores2, Species == "QUAL")
-ggplot(QUAL, aes(x = Year, y = lengthCM, color = id, group = idrep)) +
+ggplot(QUAL, aes(x = yearCor, y = lengthCM, color = id, group = idrep)) +
   geom_line(linewidth = 0.6) +
   labs(title = "Ring-width series per core",
-       x = "Year",
+       x = "yearCor",
        y = "Ring width (Length)",
        color = "Core ID") +
   facet_wrap(~id, nrow = length(unique(QUAL$id)), ncol = 1, scales = "free_y") +
@@ -186,10 +184,10 @@ ggplot(QUAL, aes(x = Year, y = lengthCM, color = id, group = idrep)) +
 
 # start with QURU
 QURU <- subset(all_cores2, Species == "QURU")
-ggplot(QURU, aes(x = Year, y = lengthCM, color = id, group = idrep)) +
+ggplot(QURU, aes(x = yearCor, y = lengthCM, color = id, group = idrep)) +
   geom_line(linewidth = 0.6) +
   labs(title = "Ring-width series per core",
-       x = "Year",
+       x = "yearCor",
        y = "Ring width (Length)",
        color = "Core ID") +
   facet_wrap(~id, nrow = length(unique(QURU$id)), ncol = 1, scales = "free_y") +
@@ -202,20 +200,20 @@ ggplot(QURU, aes(x = Year, y = lengthCM, color = id, group = idrep)) +
 # check some pairs along
 acrutest1 <- subset(all_cores2, Code == "525-2009")
 
-ggplot(acrutest1, aes(x = Year, y = scaled_length, color = id, group = id)) +
+ggplot(acrutest1, aes(x = yearCor, y = scaled_length, color = id, group = id)) +
   geom_line(linewidth = 0.6) +
   labs(title = "Ring-width series per core",
-       x = "Year",
+       x = "yearCor",
        y = "Ring width (Length)",
        color = "Core ID") +
   theme_minimal(base_size = 14)
 
 acsatest1 <- subset(all_cores2, Code == "689-2010")
 
-ggplot(acsatest1, aes(x = Year, y = scaled_length, color = id, group = id)) +
+ggplot(acsatest1, aes(x = yearCor, y = scaled_length, color = id, group = id)) +
   geom_line(linewidth = 0.6) +
   labs(title = "Ring-width series per core",
-       x = "Year",
+       x = "yearCor",
        y = "Ring width (Length)",
        color = "Core ID") +
   theme_minimal(base_size = 14)
