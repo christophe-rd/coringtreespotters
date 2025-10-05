@@ -1,6 +1,18 @@
 # 12 September 2025
 # Cleaning and plotting core measurements 
 
+
+# housekeeping
+rm(list=ls()) 
+options(stringsAsFactors = FALSE)
+options(max.print = 150) 
+options(digits = 3)
+# quartz()
+
+# Load library 
+library(ggplot2)
+library(wesanderson)
+
 # Set main directory
 directory <- "/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/input/cores"
 
@@ -91,40 +103,45 @@ all_cores2$yearCor[all_cores2$idrep == "CAOV_12907_G_II"] <-
 # start by removing sepecies with litle replication **for now
 coressub <- subset(all_cores2, !(Species %in% c("AEFL", "CAGL")))
 
-ggplot(coressub, aes(x = Year, y = lengthCM, color = id, group = idrep)) +
-  geom_line(linewidth = 0.6) +
-  labs(title = "",
-       x = "Year",
-       y = "Ring width (Length)",
-       color = "Core ID") +
-  # facet_wrap(~id, nrow = 5, ncol = 1, scales = "free_y") +
-  theme_minimal(base_size = 14) +
-  # scale_x_reverse(breaks=unique(coressub$year))+
-  theme(
-    axis.text.x = element_text(angle = 45, hjust = 1)  # tilt labels
-  )
-ggsave("figures/coreslineup.jpeg", width = 12, height = 6, units = "in", dpi = 300)
+# === === === === === === === === === === === === === === === === === 
+# Plot each species #### 
+# === === === === === === === === === === === === === === === === === 
+# MARKER YEARS ##### 
+markers <- c(1965, 
+             1966, 
+             1981, # gypsy moth defoliation
+             2012, 
+             2016)
 
-# start with acsa
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+# ACSA ##### 
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
 ACSA <- subset(all_cores2, Species == "ACSA")
-ggplot(ACSA, aes(x = X, y = lengthCM, color = id, group = idrep)) +
+ggplot(ACSA, aes(x = yearCor, y = lengthCM, color = id, group = idrep)) +
   geom_line(linewidth = 0.6) +
-  labs(title = "Ring-width series per core",
+  geom_vline(xintercept = markers, linetype = "dashed", color = "black") +
+  labs(title = "ACSA ring width series",
        x = "Year",
        y = "Ring width (Length)",
        color = "Core ID") +
   facet_wrap(~id, nrow = 5, ncol = 1, scales = "free_y") +
   theme_minimal(base_size = 14) +
-  scale_x_reverse(breaks=unique(caovG$X))+
+  # scale_x_reverse(breaks=unique(caovG$X))+
+  scale_x_continuous(breaks = seq(min(ACSA$yearCor), max(ACSA$yearCor), by = 5)) +
+  
   theme(
     axis.text.x = element_text(angle = 45, hjust = 1)  # tilt labels
-  )
+  ) +
+  scale_color_manual(values = wes_palette("FantasticFox1")) 
+ggsave("figures/acsaspaghetti_plot.jpeg", width = 10, height = 6, units = "in", dpi = 300)
 
-# start with BEAL
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+# BEAL ##### 
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
 BEAL <- subset(all_cores2, Species == "BEAL")
 ggplot(BEAL, aes(x = X, y = lengthCM, color = id, group = idrep)) +
   geom_line(linewidth = 0.6) +
-  labs(title = "Ring-width series per core",
+  labs(title = "BEAL ring width series",
        x = "Year",
        y = "Ring width (Length)",
        color = "Core ID") +
@@ -137,21 +154,26 @@ ggplot(BEAL, aes(x = X, y = lengthCM, color = id, group = idrep)) +
   )
 
 
-# start with BENI
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+# BENI ##### 
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
 BENI <- subset(all_cores2, Species == "BENI")
 ggplot(BENI, aes(x = yearCor, y = lengthCM, color = id, group = idrep)) +
   geom_line(linewidth = 0.6) +
-  labs(title = "Ring-width series per core",
+  labs(title = "BENI ring width series",
        x = "yearCor",
        y = "Ring width (Length)",
        color = "Core ID") +
   facet_wrap(~id, nrow = length(unique(BENI$id)), ncol = 1, scales = "free_y") +
   theme_minimal(base_size = 14)
 
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+# BEAL and BENI ##### 
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
 betula <- subset(all_cores2, Species %in% c("BENI", "BEAL"))
 ggplot(betula, aes(x = yearCor, y = lengthCM, color = id, group = idrep)) +
   geom_line(linewidth = 0.6) +
-  labs(title = "Ring-width series per core",
+  labs(title = "BEAL and BENI ring width series",
        x = "yearCor",
        y = "Ring width (Length)",
        color = "Core ID") +
@@ -159,34 +181,48 @@ ggplot(betula, aes(x = yearCor, y = lengthCM, color = id, group = idrep)) +
   theme_minimal(base_size = 14)
 ggsave("figures/betulaspaghetti_plot.jpeg", width = 6, height = 8, units = "in", dpi = 300)
 
-# start with CAOV
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+# CAOV ##### 
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
 CAOV <- subset(all_cores2, Species == "CAOV")
 ggplot(CAOV, aes(x = yearCor, y = lengthCM, color = id, group = idrep)) +
   geom_line(linewidth = 0.6) +
-  labs(title = "Ring-width series per core",
+  labs(title = "CAOV ring width series",
        x = "yearCor",
        y = "Ring width (Length)",
        color = "Core ID") +
   facet_wrap(~id, nrow = length(unique(CAOV$id)), ncol = 1, scales = "free_y") +
   theme_minimal(base_size = 14)
 
-
-# start with QUAL   
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+# QUAL ##### 
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
 QUAL <- subset(all_cores2, Species == "QUAL")
 ggplot(QUAL, aes(x = yearCor, y = lengthCM, color = id, group = idrep)) +
   geom_line(linewidth = 0.6) +
-  labs(title = "Ring-width series per core",
-       x = "yearCor",
+  geom_vline(xintercept = markers, linetype = "dashed") +
+  labs(title = "QUAL ring width series",
+       x = "Year",
        y = "Ring width (Length)",
        color = "Core ID") +
-  facet_wrap(~id, nrow = length(unique(QUAL$id)), ncol = 1, scales = "free_y") +
-  theme_minimal(base_size = 14)
+  facet_wrap(~id, nrow = 5, ncol = 1, scales = "free_y") +
+  theme_minimal(base_size = 14) +
+  # scale_x_reverse(breaks=unique(caovG$X))+
+  scale_x_continuous(breaks = seq(min(ACSA$yearCor), max(ACSA$yearCor), by = 5)) +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1)  # tilt labels
+  ) +
+  scale_color_manual(values = wes_palette("FantasticFox1")) 
+ggsave("figures/qualspaghetti_plot.jpeg", width = 10, height = 6, units = "in", dpi = 300)
 
-# start with QURU
+
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+# QURU ##### 
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
 QURU <- subset(all_cores2, Species == "QURU")
 ggplot(QURU, aes(x = yearCor, y = lengthCM, color = id, group = idrep)) +
   geom_line(linewidth = 0.6) +
-  labs(title = "Ring-width series per core",
+  labs(title = "QURU ring width series",
        x = "yearCor",
        y = "Ring width (Length)",
        color = "Core ID") +
