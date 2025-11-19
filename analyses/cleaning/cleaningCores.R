@@ -241,6 +241,28 @@ ggplot(CAOV, aes(x = yearCor, y = lengthCM, color = id, group = idrep)) +
   facet_wrap(~id, nrow = length(unique(CAOV$id)), ncol = 1, scales = "free_y") +
   theme_minimal(base_size = 14)
 
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+# PODE ##### 
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+PODE <- subset(all_cores2, Species == "PODE")
+ggplot(PODE, aes(x = yearCor, y = lengthCM, color = id, group = idrep)) +
+  geom_line(linewidth = 0.6) +
+  geom_vline(xintercept = markers, linetype = "dashed") +
+  labs(title = "PODE ring width series",
+       x = "Year",
+       y = "Ring width (Length)",
+       color = "Core ID") +
+  facet_wrap(~id, nrow = 5, ncol = 1, scales = "free_y") +
+  theme_minimal(base_size = 14) +
+  scale_x_continuous(breaks = seq(min(ACSA$yearCor), max(ACSA$yearCor), by = 5)) +
+  theme(
+    strip.text = element_blank(),
+    strip.background = element_blank(),
+    panel.spacing = unit(0.1, "lines"),
+    axis.text.x = element_text(angle = 45, hjust = 1)
+  ) +
+  scale_color_manual(values = wes_palette("FantasticFox1")) 
+ggsave("figures/podespaghetti_plot.jpeg", width = 10, height = 6, units = "in", dpi = 300)
 
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
 # QUAL ##### 
@@ -249,7 +271,7 @@ QUAL <- subset(all_cores2, Species == "QUAL")
 ggplot(QUAL, aes(x = yearCor, y = lengthCM, color = id, group = idrep)) +
   geom_line(linewidth = 0.6) +
   geom_vline(xintercept = markers, linetype = "dashed") +
-  labs(title = "QUAL ring width series",cd
+  labs(title = "QUAL ring width series",
        x = "Year",
        y = "Ring width (Length)",
        color = "Core ID") +
