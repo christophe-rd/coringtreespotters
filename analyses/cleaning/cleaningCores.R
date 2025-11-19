@@ -13,6 +13,7 @@ options(digits = 3)
 library(ggplot2)
 library(wesanderson)
 
+
 # Set main directory
 directory <- "/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/input/cores"
 
@@ -62,7 +63,7 @@ all_cores2 <- all_cores[, c("X", "id", "idrep", "Species", "Code", "Letter", "Re
 setwd("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/")
 og <- read.csv("output/treesToCoredes.csv")
 
-corescannotscan <- read.csv("input/cores/coresCannotScan/coresCannotScan.csv")
+# corescannotscan <- read.csv("input/cores/coresCannotScan/coresCannotScan.csv")
 
 og$name <- gsub("\\*", "_",og$name)
 og$name <- gsub("\\|", "_", og$name)
@@ -114,6 +115,32 @@ markers <- c(1965,
              2016)
 
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+# ACRU ##### 
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+ACRU <- subset(all_cores2, Species == "ACRU")
+ggplot(ACRU, aes(x = yearCor, y = lengthCM, color = id, group = idrep)) +
+  geom_line(linewidth = 0.6) +
+  geom_vline(xintercept = markers, linetype = "dashed", color = "black") +
+  labs(
+    title = "ACRU ring width series",
+    x = "Year",
+    y = "Ring width (Length)",
+    color = "Core ID"
+  ) +
+  facet_wrap(~id, nrow = 5, ncol = 1, scales = "free_y") +
+  theme_minimal(base_size = 14) +
+  scale_x_continuous(breaks = seq(min(ACRU$yearCor), max(ACRU$yearCor), by = 5)) +
+  theme(
+    strip.text = element_blank(),
+    strip.background = element_blank(),
+    panel.spacing = unit(0.1, "lines"),
+    axis.text.x = element_text(angle = 45, hjust = 1)
+  )
+scale_color_manual(values = wes_palette("FantasticFox1"))
+
+ggsave("figures/acsaspaghetti_plot.jpeg", width = 10, height = 6, units = "in", dpi = 300)
+
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
 # ACSA ##### 
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
 ACSA <- subset(all_cores2, Species == "ACSA")
@@ -138,6 +165,8 @@ ggplot(ACSA, aes(x = yearCor, y = lengthCM, color = id, group = idrep)) +
   scale_color_manual(values = wes_palette("FantasticFox1"))
 
 ggsave("figures/acsaspaghetti_plot.jpeg", width = 10, height = 6, units = "in", dpi = 300)
+
+
 
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
 # BEAL ##### 
@@ -186,6 +215,20 @@ ggplot(betula, aes(x = yearCor, y = lengthCM, color = id, group = idrep)) +
 ggsave("figures/betulaspaghetti_plot.jpeg", width = 6, height = 8, units = "in", dpi = 300)
 
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+# CAGL ##### 
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+CAGL <- subset(all_cores2, Species == "CAGL")
+ggplot(CAGL, aes(x = yearCor, y = lengthCM, color = id, group = idrep)) +
+  geom_line(linewidth = 0.6) +
+  labs(title = "CAGL ring width series",
+       x = "yearCor",
+       y = "Ring width (Length)",
+       color = "Core ID") +
+  facet_wrap(~id, nrow = length(unique(CAGL$id)), ncol = 1, scales = "free_y") +
+  theme_minimal(base_size = 14)
+
+
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
 # CAOV ##### 
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
 CAOV <- subset(all_cores2, Species == "CAOV")
@@ -198,6 +241,7 @@ ggplot(CAOV, aes(x = yearCor, y = lengthCM, color = id, group = idrep)) +
   facet_wrap(~id, nrow = length(unique(CAOV$id)), ncol = 1, scales = "free_y") +
   theme_minimal(base_size = 14)
 
+
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
 # QUAL ##### 
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
@@ -205,7 +249,7 @@ QUAL <- subset(all_cores2, Species == "QUAL")
 ggplot(QUAL, aes(x = yearCor, y = lengthCM, color = id, group = idrep)) +
   geom_line(linewidth = 0.6) +
   geom_vline(xintercept = markers, linetype = "dashed") +
-  labs(title = "QUAL ring width series",
+  labs(title = "QUAL ring width series",cd
        x = "Year",
        y = "Ring width (Length)",
        color = "Core ID") +
@@ -271,18 +315,25 @@ qu <- subset(all_cores2, Species %in% c("QUAL", "QURU"))
 nodup <- all_cores2[!duplicated(all_cores2$idrep),]
 table(nodup$Species)
 
-caov <- subset(all_cores2, Species %in% c("CAOV"))
-
-rw_df <- all_cores2%>%
-  select(idrep, Year, lengthCM) %>%
+qu_df <- qu%>%
+  select(idrep, yearCor, lengthCM) %>%
   pivot_wider(names_from = idrep, values_from = lengthCM) %>%
-  arrange(Year) %>%
-  column_to_rownames("Year") %>%
+  arrange(yearCor) %>%
+  column_to_rownames("yearCor") %>%
   as.data.frame()            # keep as data.frame
-rw_df
+qu_df
+
+all_df <- all_cores2%>%
+  select(idrep, yearCor, lengthCM) %>%
+  pivot_wider(names_from = idrep, values_from = lengthCM) %>%
+  arrange(yearCor) %>%
+  column_to_rownames("yearCor") %>%
+  as.data.frame()            # keep as data.frame
+all_df
 
 # assign rwl class necessary for downstream analyses
-class(rw_df) <- c("rwl", "data.frame")
+class(qu_df) <- c("rwl", "data.frame")
+class(all_df) <- c("rwl", "data.frame")
 
 # plot ring width series
 # open jpeg device from the ggsave settings above
@@ -291,13 +342,21 @@ jpeg(filename = "figures/fullspag_plot.jpeg",
      height = 8,      
      units = "in",    
      res = 300)    
-plot.rwl(rw_df, plot.type = "spag")  # spaghetti plot
+plot.rwl(qu_df, plot.type = "spag")  # spaghetti plot
 dev.off()
 
-plot.rwl(rw_df, plot.type = "seg", nyrs = 30)  # running segment means
+jpeg(filename = "figures/fullspag_plot.jpeg",
+     width = 20,       
+     height = 8,      
+     units = "in",    
+     res = 300)    
+plot.rwl(all_df, plot.type = "spag")  # spaghetti plot
+dev.off()
+
+plot.rwl(qu_df, plot.type = "seg", nyrs = 30)  # running segment means
 
 # build stanadardized chronology
-rw_chron <- chron(rw_df, prewhiten = TRUE)
+rw_chron <- chron(qu_df, prewhiten = TRUE) 
 
 # Plot chronology
 plot(rw_chron, type = "l", lwd = 2,
@@ -305,7 +364,7 @@ plot(rw_chron, type = "l", lwd = 2,
      xlab = "Year", ylab = "Ring Width Index")
 
 # segment-wise crossdating
-n_years <- apply(rw_df, 2, function(x) sum(!is.na(x)))
+n_years <- apply(qu_df, 2, function(x) sum(!is.na(x)))
 min_years <- min(n_years, na.rm = TRUE)
 
 # Set segment length ≤ 1/2 shortest series
@@ -315,26 +374,32 @@ seg_len <- max(seg_len, 3)  # at least 3 years
 bin_floor <- max(floor(seg_len / 3), 2)  # rule-of-thumb
 
 # Now run segment correlations safely
-res <- corr.rwl.seg(rw_df, seg.length = seg_len, bin.floor = bin_floor, make.plot = TRUE)
+jpeg(filename = "figures/segmentCorrelations.jpeg",
+     width = 8,       
+     height = 8,      
+     units = "in",    
+     res = 300) 
+res <- corr.rwl.seg(qu_df, seg.length = seg_len, bin.floor = bin_floor, make.plot = TRUE)
+dev.off()
 summary(res)
 
 # report
-class(rw_df)
-rwl.report(rw_df)
-rw_df.stats <- summary(rw_df) 
+class(qu_df)
+rwl.report(qu_df)
+qu_df.stats <- summary(qu_df) 
 
-boxplot(rw_df.stats$ar1,ylab=expression(phi[1]),col = "lightblue")
-stripchart(rw_df.stats$ar1, vertical = TRUE,  
+boxplot(qu_df.stats$ar1,ylab=expression(phi[1]),col = "lightblue")
+stripchart(qu_df.stats$ar1, vertical = TRUE,  
            method = "jitter", jitter = 0.02,add = TRUE, pch = 20, col = 'darkblue',cex=1.25)
-ar1Quant <- quantile(rw_df.stats$ar1,probs = c(0.25,0.5,0.75))
+ar1Quant <- quantile(qu_df.stats$ar1,probs = c(0.25,0.5,0.75))
 abline(h=ar1Quant,lty="dashed",col="grey")
 mtext(text = names(ar1Quant),side = 4,at = ar1Quant,las=2)
 
-ca533.ids <- read.ids(rw_df, stc = c(3, 2, 1))
-ca533.rwi <- detrend(rwl = rw_df, method = "AgeDepSpline")
+ca533.ids <- read.ids(qu_df, stc = c(3, 2, 1))
+ca533.rwi <- detrend(rwl = qu_df, method = "AgeDepSpline")
 rwi.stats(ca533.rwi, ca533.ids, prewhiten=TRUE)
 
-ca533.rho <- interseries.cor(rw_df, prewhiten=TRUE,
+ca533.rho <- interseries.cor(qu_df, prewhiten=TRUE,
                              method="spearman")
 ca533.rho[1:5, ]
 
@@ -344,7 +409,88 @@ plot(ca533.crn, add.spline=TRUE, nyrs=20)
 
 # CROSS-DATING ####
 # FROM: https://rpubs.com/andybunn/xdate
-dat.sum <- summary(rw_df)
+dat.sum <- summary(qu_df)
 dat.sum
-rw_df_long2 <- rw_df[, dat.sum$year >= 40]
-rwl.60 <- corr.rwl.seg(rw_df_long2, seg.length =1, pcrit=0.01)
+qu_df_long2 <- qu_df[, dat.sum$year >= 40]
+rwl.60 <- corr.rwl.seg(qu_df_long2, seg.length =1, pcrit=0.01)
+
+# === === === === === === === === === === === === === === === === === === === ===
+# === === === === === === === === === === === === === === === === === === === ===
+# === === === === === === === === === === === === === === === === === === === ===
+# === === === === === === === === === === === === === === === === === === === ===
+
+
+# EXPORT TO RWL ####
+# shorten the names
+all_cores2$sppshort <- paste0(substr(all_cores2$Species, 1, 1),
+                             substr(all_cores2$Species, 3, 3))
+
+all_cores2$Code2 <- gsub("-", "", all_cores2$Code)
+all_cores2$codeshort <- substr(all_cores2$Code2, 1, 4)
+
+all_cores2$repnum <- ifelse(all_cores2$Rep == "I", 1, 2)
+
+
+# add length in mm
+all_cores2$lengthMM <- all_cores2$lengthCM*10
+
+
+# create separate chronologies per genera
+all_cores2$Genus <- NA
+all_cores2$Genus[grepl("AC", all_cores2$Species)] <- "Acer"
+all_cores2$Genus[grepl("BE", all_cores2$Species)] <- "Betula"
+all_cores2$Genus[grepl("CA", all_cores2$Species)] <- "Carya"
+all_cores2$Genus[grepl("QU", all_cores2$Species)] <- "Quercus"
+
+acer <- subset(all_cores2, Genus == "Acer")
+
+acer$idshort <- paste0(acer$codeshort,
+                             acer$Letter,
+                             acer$repnum)
+
+betula <- subset(all_cores2, Genus == "Betula")
+carya <- subset(all_cores2, Genus == "Carya")
+quercus <- subset(all_cores2, Genus == "Quercus")
+
+acer_df <- acer %>%
+  select(idshort, yearCor, lengthMM) %>%
+  pivot_wider(names_from = idshort, values_from = lengthMM) %>%
+  arrange(yearCor) %>%
+  column_to_rownames("yearCor") %>%
+  as.data.frame()            
+acer_df
+
+betula_df <- betula %>%
+  select(idshort, yearCor, lengthMM) %>%
+  pivot_wider(names_from = idshort, values_from = lengthMM) %>%
+  arrange(yearCor) %>%
+  column_to_rownames("yearCor") %>%
+  as.data.frame()            
+betula_df
+
+carya_df <- carya %>%
+  select(idshort, yearCor, lengthMM) %>%
+  pivot_wider(names_from = idshort, values_from = lengthMM) %>%
+  arrange(yearCor) %>%
+  column_to_rownames("yearCor") %>%
+  as.data.frame()            
+carya_df
+
+quercus_df <- quercus %>%
+  select(idshort, yearCor, lengthMM) %>%
+  pivot_wider(names_from = idshort, values_from = lengthMM) %>%
+  arrange(yearCor) %>%
+  column_to_rownames("yearCor") %>%
+  as.data.frame()            
+quercus_df
+
+
+acer_data <- as.rwl(acer_df)
+rownames(acer_data) <- as.numeric(rownames(acer_data))
+betula_data <- as.rwl(betula_df)
+carya_data <- as.rwl(carya_df)
+quercus_data <- as.rwl(quercus_df)
+head(acer_data)
+summary(acer_data)
+
+write.rwl(acer_data, fname = "cofecha/chronologyAcer.rwl")
