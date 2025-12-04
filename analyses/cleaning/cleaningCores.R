@@ -76,7 +76,6 @@ og$name[grepl("6990", og$name)]
 all_cores$id2 <- paste(all_cores$Code, all_cores$Letter, all_cores$Species, sep = "_")
 veccores <- unique(all_cores$id2)
 og_vec <- og$name
-
 setdiff(og_vec, veccores) 
 # beni 1199 D is ok.
 # beni 1199 J_I: will be scanned
@@ -88,6 +87,16 @@ setdiff(og_vec, veccores)
 # 20098_A_CAGL: ok
 # TIAM_7141_A_I: ok
 # 925-79_B_AEFL: ok
+# 3 cols
+parts <- strsplit(og$name, "_")
+
+og$spp    <- sapply(parts, `[`, 3)
+og$code   <- sapply(parts, `[`, 1)
+og$letter <- sapply(parts, `[`, 2)
+
+og$id2 <- paste(og$spp, og$code, og$letter, sep = "_")
+
+
 
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 # convert inches to cm
@@ -113,6 +122,12 @@ all_cores2$yearCor[all_cores2$idrep == "QUAL_22886_D_II"] <-
 
 # start by removing sepecies with litle replication **for now
 coressub <- subset(all_cores2, !(Species %in% c("AEFL", "CAGL")))
+
+
+# === === === === === === === === === === === === === === === === === 
+# Save csv #### 
+# === === === === === === === === === === === === === === === === === 
+write.csv(coressub, "output/ringWidthTS.csv")
 
 # === === === === === === === === === === === === === === === === === 
 # Plot each species #### 
