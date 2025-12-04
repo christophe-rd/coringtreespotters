@@ -99,7 +99,17 @@ all_cores2$yearCor <- all_cores2$Year
 
 #One of the cores is rotten outside, so Ill check if changing the ring dates may change something
 all_cores2$yearCor[all_cores2$idrep == "CAOV_12907_G_II"] <- 
-  all_cores2$year[all_cores2$idrep == "CAOV_12907_G_II"] - 5
+  all_cores2$Year[all_cores2$idrep == "CAOV_12907_G_II"] - 5
+
+# assuming there is a missing ring in 2021
+all_cores2$yearCor[all_cores2$id == "BENI_1251-79_E"& all_cores2$Year < 2022] <- 
+  all_cores2$Year[all_cores2$Year < 2022 & all_cores2$id == "BENI_1251-79_E"] - 1 
+
+# remove the first ring which i wasn't sure it was a ring but confirmed its something else
+all_cores2 <- all_cores2[ !(all_cores2$idrep == "QUAL_22886_D_II" & 
+                              all_cores2$Year == 2024), ]
+all_cores2$yearCor[all_cores2$idrep == "QUAL_22886_D_II"] <- 
+  all_cores2$Year[all_cores2$idrep == "QUAL_22886_D_II"] + 1
 
 # start by removing sepecies with litle replication **for now
 coressub <- subset(all_cores2, !(Species %in% c("AEFL", "CAGL")))
@@ -127,7 +137,7 @@ ggplot(ACRU, aes(x = yearCor, y = lengthCM, color = id, group = idrep)) +
     y = "Ring width (Length)",
     color = "Core ID"
   ) +
-  facet_wrap(~id, nrow = 5, ncol = 1, scales = "free_y") +
+  # facet_wrap(~id, nrow = 5, ncol = 1, scales = "free_y") +
   theme_minimal(base_size = 14) +
   scale_x_continuous(breaks = seq(min(ACRU$yearCor), max(ACRU$yearCor), by = 5)) +
   theme(
@@ -143,6 +153,9 @@ ggsave("figures/acsaspaghetti_plot.jpeg", width = 10, height = 6, units = "in", 
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
 # ACSA ##### 
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+all_cores2$yearCor[all_cores2$id == "ACSA_187-2006_B"] <-
+  all_cores2$Year[all_cores2$id == "ACSA_187-2006_B"] - 1
+
 ACSA <- subset(all_cores2, Species == "ACSA")
 ggplot(ACSA, aes(x = yearCor, y = lengthCM, color = id, group = idrep)) +
   geom_line(linewidth = 0.6) +
@@ -191,13 +204,14 @@ ggplot(BEAL, aes(x = X, y = lengthCM, color = id, group = idrep)) +
 # BENI ##### 
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
 BENI <- subset(all_cores2, Species == "BENI")
+
 ggplot(BENI, aes(x = yearCor, y = lengthCM, color = id, group = idrep)) +
   geom_line(linewidth = 0.6) +
   labs(title = "BENI ring width series",
        x = "yearCor",
        y = "Ring width (Length)",
        color = "Core ID") +
-  facet_wrap(~id, nrow = length(unique(BENI$id)), ncol = 1, scales = "free_y") +
+  # facet_wrap(~id, nrow = length(unique(BENI$id)), ncol = 1, scales = "free_y") +
   theme_minimal(base_size = 14)
 
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
@@ -224,7 +238,7 @@ ggplot(CAGL, aes(x = yearCor, y = lengthCM, color = id, group = idrep)) +
        x = "yearCor",
        y = "Ring width (Length)",
        color = "Core ID") +
-  facet_wrap(~id, nrow = length(unique(CAGL$id)), ncol = 1, scales = "free_y") +
+  # facet_wrap(~id, nrow = length(unique(CAGL$id)), ncol = 1, scales = "free_y") +
   theme_minimal(base_size = 14)
 
 
@@ -238,7 +252,7 @@ ggplot(CAOV, aes(x = yearCor, y = lengthCM, color = id, group = idrep)) +
        x = "yearCor",
        y = "Ring width (Length)",
        color = "Core ID") +
-  facet_wrap(~id, nrow = length(unique(CAOV$id)), ncol = 1, scales = "free_y") +
+  # facet_wrap(~id, nrow = length(unique(CAOV$id)), ncol = 1, scales = "free_y") +
   theme_minimal(base_size = 14)
 
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
@@ -252,15 +266,18 @@ ggplot(PODE, aes(x = yearCor, y = lengthCM, color = id, group = idrep)) +
        x = "Year",
        y = "Ring width (Length)",
        color = "Core ID") +
-  facet_wrap(~id, nrow = 5, ncol = 1, scales = "free_y") +
+  # facet_wrap(~id, nrow = 5, ncol = 1, scales = "free_y") +
   theme_minimal(base_size = 14) +
-  scale_x_continuous(breaks = seq(min(ACSA$yearCor), max(ACSA$yearCor), by = 5)) +
-  theme(
+  scale_x_continuous(breaks = seq(min(PODE$yearCor), max(PODE$yearCor), by = 5)) +
+  # scale_y_continuous(breaks = seq(min(PODE$lengthCM), max(PODE$lengthCM), by = )) +
+    theme(
     strip.text = element_blank(),
     strip.background = element_blank(),
     panel.spacing = unit(0.1, "lines"),
     axis.text.x = element_text(angle = 45, hjust = 1)
   ) +
+  # ylim(0, 0.3) +
+  xlim(2000, 2024)
   scale_color_manual(values = wes_palette("FantasticFox1")) 
 ggsave("figures/podespaghetti_plot.jpeg", width = 10, height = 6, units = "in", dpi = 300)
 
@@ -268,6 +285,11 @@ ggsave("figures/podespaghetti_plot.jpeg", width = 10, height = 6, units = "in", 
 # QUAL ##### 
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
 QUAL <- subset(all_cores2, Species == "QUAL")
+
+QUAL <- subset(QUAL, id != "QUAL_358-82_A")
+
+
+
 ggplot(QUAL, aes(x = yearCor, y = lengthCM, color = id, group = idrep)) +
   geom_line(linewidth = 0.6) +
   geom_vline(xintercept = markers, linetype = "dashed") +
@@ -275,7 +297,7 @@ ggplot(QUAL, aes(x = yearCor, y = lengthCM, color = id, group = idrep)) +
        x = "Year",
        y = "Ring width (Length)",
        color = "Core ID") +
-  facet_wrap(~id, nrow = 5, ncol = 1, scales = "free_y") +
+  # facet_wrap(~id, nrow = 5, ncol = 1, scales = "free_y") +
   theme_minimal(base_size = 14) +
   scale_x_continuous(breaks = seq(min(ACSA$yearCor), max(ACSA$yearCor), by = 5)) +
   theme(
@@ -283,8 +305,8 @@ ggplot(QUAL, aes(x = yearCor, y = lengthCM, color = id, group = idrep)) +
     strip.background = element_blank(),
     panel.spacing = unit(0.1, "lines"),
     axis.text.x = element_text(angle = 45, hjust = 1)
-  ) +
-  scale_color_manual(values = wes_palette("FantasticFox1")) 
+  ) 
+  # scale_color_manual(values = wes_palette("FantasticFox1")) 
 ggsave("figures/qualspaghetti_plot.jpeg", width = 10, height = 6, units = "in", dpi = 300)
 
 
@@ -298,7 +320,7 @@ ggplot(QURU, aes(x = yearCor, y = lengthCM, color = id, group = idrep)) +
        x = "yearCor",
        y = "Ring width (Length)",
        color = "Core ID") +
-  facet_wrap(~id, nrow = length(unique(QURU$id)), ncol = 1, scales = "free_y") +
+  # facet_wrap(~id, nrow = length(unique(QURU$id)), ncol = 1, scales = "free_y") +
   theme_minimal(base_size = 14)
 
 # make a plot to show how many 
@@ -433,7 +455,7 @@ plot(ca533.crn, add.spline=TRUE, nyrs=20)
 # FROM: https://rpubs.com/andybunn/xdate
 dat.sum <- summary(qu_df)
 dat.sum
-qu_df_long2 <- qu_df[, dat.sum$year >= 40]
+qu_df_long2 <- qu_df[, dat.sum$Year >= 40]
 rwl.60 <- corr.rwl.seg(qu_df_long2, seg.length =1, pcrit=0.01)
 
 # === === === === === === === === === === === === === === === === === === === ===
