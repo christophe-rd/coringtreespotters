@@ -1,6 +1,6 @@
-# Wildchrokie model
-# CRD 28 October April 2025
-# Start plotting empirical data for wildchrokie
+# coringtreespotters empirical data plots!
+# CRD 4 December 2025
+# Start plotting empirical data for coringtreespotters
 
 # housekeeping
 rm(list=ls()) 
@@ -19,22 +19,14 @@ library(wesanderson)
 library(patchwork)
 library(dplyr)
 
-setwd("/Users/christophe_rouleau-desrochers/github/wildchrokie/analyses")
+setwd("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses")
 
-sim <- read.csv("output/simdata.csv")
 emp <- read.csv("output/empiricalDataMAIN.csv")
 gdd <- read.csv("output/gddByYear.csv")
 
-# add full species
-emp$sppfull <- NA
-emp$sppfull[which(emp$spp == "ALNINC")] <- "Alnus incana"
-emp$sppfull[which(emp$spp == "BETPOP")] <- "Betula populifolia"
-emp$sppfull[which(emp$spp == "BETPAP")] <- "Betula papyrifera"
-emp$sppfull[which(emp$spp == "BETALL")] <- "Betula alleghaniensis"
-
-# load fit
-fit <- readRDS("output/stanOutput/fitEmpirical_stanlmer")
-fit_pgsNgrowingdays <- readRDS("output/stanOutput/fit_pgsNgrowingdays_Empirical_stanlmer")
+# # load fit
+# fit <- readRDS("output/stanOutput/fitEmpirical_stanlmer")
+# fit_pgsNgrowingdays <- readRDS("output/stanOutput/fit_pgsNgrowingdays_Empirical_stanlmer")
 
 # faceted
 # order by spp
@@ -46,13 +38,13 @@ emp$lengthMM <- emp$lengthCM*10
 
 # At eco evo:
 ggplot(emp, aes(x = pgsGDD, y = lengthMM, 
-                color = sppfull, 
-                fill = sppfull)) +
+                color = spp, 
+                fill = spp)) +
   geom_point(size = 2, alpha = 0.7) + 
   geom_smooth(method = "lm", se = TRUE, alpha = 0.2) +
-  scale_color_manual(values = wes_palette("AsteroidCity1")) +
-  scale_fill_manual(values = wes_palette("AsteroidCity1")) +
-  facet_wrap(~sppfull) +
+  # scale_color_manual(values = wes_palette("AsteroidCity1")) +
+  # scale_fill_manual(values = wes_palette("AsteroidCity1")) +
+  facet_wrap(~spp) +
   labs(y = "Ring width (mm)", x = "Growing degree days (GDD)", color = "Tree Species") +
   theme_bw() +
   theme(legend.key.height = unit(1.5, "lines"),
@@ -60,26 +52,24 @@ ggplot(emp, aes(x = pgsGDD, y = lengthMM,
   guides(fill = "none", color = "none") 
 ggsave("figures/empiricalData/sppLinearRegressions_pgsGDD.jpeg", width = 6, height = 6, units = "in", dpi = 300)
 
+emp$year <- as.factor(emp$year)
 # new symbols and stuff
 ggplot(emp, aes(x = pgsGDD, y = lengthMM)) +
   geom_point(size = 2, alpha = 0.9,
-             aes(shape = site,
-                 color = year, 
+             aes(color = year, 
                  fill = year)) + 
   geom_smooth(method = "lm", se = TRUE, alpha = 0.2, color = "black") +
-  scale_color_manual(values = wes_palette("AsteroidCity1")) +
-  scale_fill_manual(values = wes_palette("AsteroidCity1")) +
+  # scale_color_manual(values = wes_palette("AsteroidCity1")) +
+  # scale_fill_manual(values = wes_palette("AsteroidCity1")) +
   scale_shape_manual(values = c(21, 22, 23, 24, 25)) +  
-  facet_wrap(~sppfull) +
+  facet_wrap(~spp, nrow = 4, ncol = 2) +
   labs(y = "Ring width (mm)", 
        x = "Growing degree days (GDD)", 
        color = "Year",
        fill = "Year",
        shape = "Site") +  
-  theme_bw() +
-  guides(color = guide_legend(override.aes = list(shape = 21)),
-         fill = guide_legend(override.aes = list(shape = 21)))
-ggsave("figures/empiricalData/sppLinearRegressions_pgsGDD2.jpeg", width = 8, height = 6, units = "in", dpi = 300)
+  theme_bw() 
+ggsave("figures/empiricalData/sppLinearRegressions_pgsGDD.jpeg", width = 6, height = 8, units = "in", dpi = 300)
 
 # color coded by number of frost free days
 frostfree <- subset(gdd, minTempC > 0)

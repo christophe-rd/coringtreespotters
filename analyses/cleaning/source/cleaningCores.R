@@ -123,6 +123,7 @@ all_cores2$yearCor[all_cores2$idrep == "QUAL_22886_D_II"] <-
 
 # start by removing sepecies with litle replication **for now
 coressub <- subset(all_cores2, !(species %in% c("AEFL", "CAGL")))
+coressub <- subset(coressub, select = c("id", "idrep", "species", "Code", "Letter", "Rep", "lengthCM", "yearCor"))
 
 
 # === === === === === === === === === === === === === === === === === 

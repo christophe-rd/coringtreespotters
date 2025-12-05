@@ -98,9 +98,9 @@ nrow(ts[!is.na(ts$coloredLeaves),])
 nrow(ts[!is.na(ts$leafcolorGDD),])
 
 # add primary GS and full GS cols
-ts$pgsGDD <- ts$coloredLeaves - ts$leafoutGDD
+ts$pgsGDD <- ts$leafcolorGDD - ts$leafoutGDD
 nrow(ts[!is.na(ts$pgsGDD),]) 
-ts$fgsGDD <- ts$leafcolorGDD - ts$leafoutGDD
+ts$fgsGDD <- ts$leafcolorGDD - ts$budburstGDD
 
 # add max gdd per year
 # ts$fullGDD <- NA
