@@ -13,6 +13,7 @@ options(digits = 3)
 library(ggplot2)
 library(wesanderson)
 
+makeplots <- FALSE
 
 # Set main directory
 directory <- "/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/input/cores"
@@ -24,7 +25,7 @@ files <- list.files(pattern = "\\.csv$")
 process_core <- function(f) {
   df <- read.csv(f)
   
-  df$Year <- seq(2024, by = -1, length.out = nrow(df))
+  df$year <- seq(2024, by = -1, length.out = nrow(df))
   
   fname <- sub("\\.csv$", "", f)
   
@@ -34,7 +35,7 @@ process_core <- function(f) {
   letter <- parts[3]
   rep <- parts[4]
   
-  df$Species <- species
+  df$species <- species
   df$Code <- code
   df$Letter <- letter
   df$Rep <- rep
@@ -51,11 +52,11 @@ all_cores$Code[which(all_cores$Code == "385-82")] <- "358-82"
 all_cores$Code[which(all_cores$Code == "22-834")] <- "22834"
 
 
-all_cores$id <- paste(all_cores$Species, all_cores$Code, all_cores$Letter, sep = "_")
-all_cores$idrep <- paste(all_cores$Species, all_cores$Code, all_cores$Letter, all_cores$Rep, sep = "_")
+all_cores$id <- paste(all_cores$species, all_cores$Code, all_cores$Letter, sep = "_")
+all_cores$idrep <- paste(all_cores$species, all_cores$Code, all_cores$Letter, all_cores$Rep, sep = "_")
 
 # keep only the columns i want
-all_cores2 <- all_cores[, c("X", "id", "idrep", "Species", "Code", "Letter", "Rep", "Year", "Length")]
+all_cores2 <- all_cores[, c("X", "id", "idrep", "species", "Code", "Letter", "Rep", "year", "Length")]
 
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 # Make some checks
@@ -73,7 +74,7 @@ og$name[grepl("6990", og$name)]
 
 
 # temporary id col to fit these guys
-all_cores$id2 <- paste(all_cores$Code, all_cores$Letter, all_cores$Species, sep = "_")
+all_cores$id2 <- paste(all_cores$Code, all_cores$Letter, all_cores$species, sep = "_")
 veccores <- unique(all_cores$id2)
 og_vec <- og$name
 setdiff(og_vec, veccores) 
@@ -104,30 +105,32 @@ all_cores2$lengthCM <- all_cores2$Length*2.54
 
 all_cores2$scaled_length <- scale(all_cores2$lengthCM)
 
-all_cores2$yearCor <- all_cores2$Year
+all_cores2$yearCor <- all_cores2$year
 
 #One of the cores is rotten outside, so Ill check if changing the ring dates may change something
 all_cores2$yearCor[all_cores2$idrep == "CAOV_12907_G_II"] <- 
-  all_cores2$Year[all_cores2$idrep == "CAOV_12907_G_II"] - 5
+  all_cores2$year[all_cores2$idrep == "CAOV_12907_G_II"] - 5
 
 # assuming there is a missing ring in 2021
-all_cores2$yearCor[all_cores2$id == "BENI_1251-79_E"& all_cores2$Year < 2022] <- 
-  all_cores2$Year[all_cores2$Year < 2022 & all_cores2$id == "BENI_1251-79_E"] - 1 
+all_cores2$yearCor[all_cores2$id == "BENI_1251-79_E"& all_cores2$year < 2022] <- 
+  all_cores2$year[all_cores2$year < 2022 & all_cores2$id == "BENI_1251-79_E"] - 1 
 
 # remove the first ring which i wasn't sure it was a ring but confirmed its something else
 all_cores2 <- all_cores2[ !(all_cores2$idrep == "QUAL_22886_D_II" & 
-                              all_cores2$Year == 2024), ]
+                              all_cores2$year == 2024), ]
 all_cores2$yearCor[all_cores2$idrep == "QUAL_22886_D_II"] <- 
-  all_cores2$Year[all_cores2$idrep == "QUAL_22886_D_II"] + 1
+  all_cores2$year[all_cores2$idrep == "QUAL_22886_D_II"] + 1
 
 # start by removing sepecies with litle replication **for now
-coressub <- subset(all_cores2, !(Species %in% c("AEFL", "CAGL")))
+coressub <- subset(all_cores2, !(species %in% c("AEFL", "CAGL")))
 
 
 # === === === === === === === === === === === === === === === === === 
 # Save csv #### 
 # === === === === === === === === === === === === === === === === === 
 write.csv(coressub, "output/ringWidthTS.csv")
+
+if (makeplots) {
 
 # === === === === === === === === === === === === === === === === === 
 # Plot each species #### 
@@ -142,7 +145,7 @@ markers <- c(1965,
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
 # ACRU ##### 
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
-ACRU <- subset(all_cores2, Species == "ACRU")
+ACRU <- subset(all_cores2, species == "ACRU")
 ggplot(ACRU, aes(x = yearCor, y = lengthCM, color = id, group = idrep)) +
   geom_line(linewidth = 0.6) +
   geom_vline(xintercept = markers, linetype = "dashed", color = "black") +
@@ -169,9 +172,9 @@ ggsave("figures/acsaspaghetti_plot.jpeg", width = 10, height = 6, units = "in", 
 # ACSA ##### 
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
 all_cores2$yearCor[all_cores2$id == "ACSA_187-2006_B"] <-
-  all_cores2$Year[all_cores2$id == "ACSA_187-2006_B"] - 1
+  all_cores2$year[all_cores2$id == "ACSA_187-2006_B"] - 1
 
-ACSA <- subset(all_cores2, Species == "ACSA")
+ACSA <- subset(all_cores2, species == "ACSA")
 ggplot(ACSA, aes(x = yearCor, y = lengthCM, color = id, group = idrep)) +
   geom_line(linewidth = 0.6) +
   geom_vline(xintercept = markers, linetype = "dashed", color = "black") +
@@ -199,7 +202,7 @@ ggsave("figures/acsaspaghetti_plot.jpeg", width = 10, height = 6, units = "in", 
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
 # BEAL ##### 
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
-BEAL <- subset(all_cores2, Species == "BEAL")
+BEAL <- subset(all_cores2, species == "BEAL")
 ggplot(BEAL, aes(x = X, y = lengthCM, color = id, group = idrep)) +
   geom_line(linewidth = 0.6) +
   labs(title = "BEAL ring width series",
@@ -218,7 +221,7 @@ ggplot(BEAL, aes(x = X, y = lengthCM, color = id, group = idrep)) +
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
 # BENI ##### 
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
-BENI <- subset(all_cores2, Species == "BENI")
+BENI <- subset(all_cores2, species == "BENI")
 
 ggplot(BENI, aes(x = yearCor, y = lengthCM, color = id, group = idrep)) +
   geom_line(linewidth = 0.6) +
@@ -232,7 +235,7 @@ ggplot(BENI, aes(x = yearCor, y = lengthCM, color = id, group = idrep)) +
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
 # BEAL and BENI ##### 
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
-betula <- subset(all_cores2, Species %in% c("BENI", "BEAL"))
+betula <- subset(all_cores2, species %in% c("BENI", "BEAL"))
 ggplot(betula, aes(x = yearCor, y = lengthCM, color = id, group = idrep)) +
   geom_line(linewidth = 0.6) +
   labs(title = "BEAL and BENI ring width series",
@@ -246,7 +249,7 @@ ggsave("figures/betulaspaghetti_plot.jpeg", width = 6, height = 8, units = "in",
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
 # CAGL ##### 
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
-CAGL <- subset(all_cores2, Species == "CAGL")
+CAGL <- subset(all_cores2, species == "CAGL")
 ggplot(CAGL, aes(x = yearCor, y = lengthCM, color = id, group = idrep)) +
   geom_line(linewidth = 0.6) +
   labs(title = "CAGL ring width series",
@@ -260,7 +263,7 @@ ggplot(CAGL, aes(x = yearCor, y = lengthCM, color = id, group = idrep)) +
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
 # CAOV ##### 
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
-CAOV <- subset(all_cores2, Species == "CAOV")
+CAOV <- subset(all_cores2, species == "CAOV")
 ggplot(CAOV, aes(x = yearCor, y = lengthCM, color = id, group = idrep)) +
   geom_line(linewidth = 0.6) +
   labs(title = "CAOV ring width series",
@@ -273,7 +276,7 @@ ggplot(CAOV, aes(x = yearCor, y = lengthCM, color = id, group = idrep)) +
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
 # PODE ##### 
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
-PODE <- subset(all_cores2, Species == "PODE")
+PODE <- subset(all_cores2, species == "PODE")
 ggplot(PODE, aes(x = yearCor, y = lengthCM, color = id, group = idrep)) +
   geom_line(linewidth = 0.6) +
   geom_vline(xintercept = markers, linetype = "dashed") +
@@ -299,7 +302,7 @@ ggsave("figures/podespaghetti_plot.jpeg", width = 10, height = 6, units = "in", 
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
 # QUAL ##### 
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
-QUAL <- subset(all_cores2, Species == "QUAL")
+QUAL <- subset(all_cores2, species == "QUAL")
 
 QUAL <- subset(QUAL, id != "QUAL_358-82_A")
 
@@ -328,7 +331,7 @@ ggsave("figures/qualspaghetti_plot.jpeg", width = 10, height = 6, units = "in", 
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
 # QURU ##### 
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
-QURU <- subset(all_cores2, Species == "QURU")
+QURU <- subset(all_cores2, species == "QURU")
 ggplot(QURU, aes(x = yearCor, y = lengthCM, color = id, group = idrep)) +
   geom_line(linewidth = 0.6) +
   labs(title = "QURU ring width series",
@@ -370,9 +373,9 @@ library(tidyverse)
 
 # convert to long as rwl objects need to have series as columns and years as rows
 ### start with only 
-qu <- subset(all_cores2, Species %in% c("QUAL", "QURU"))
+qu <- subset(all_cores2, species %in% c("QUAL", "QURU"))
 nodup <- all_cores2[!duplicated(all_cores2$idrep),]
-table(nodup$Species)
+table(nodup$species)
 
 qu_df <- qu%>%
   select(idrep, yearCor, lengthCM) %>%
@@ -470,7 +473,7 @@ plot(ca533.crn, add.spline=TRUE, nyrs=20)
 # FROM: https://rpubs.com/andybunn/xdate
 dat.sum <- summary(qu_df)
 dat.sum
-qu_df_long2 <- qu_df[, dat.sum$Year >= 40]
+qu_df_long2 <- qu_df[, dat.sum$year >= 40]
 rwl.60 <- corr.rwl.seg(qu_df_long2, seg.length =1, pcrit=0.01)
 
 # === === === === === === === === === === === === === === === === === === === ===
@@ -481,8 +484,8 @@ rwl.60 <- corr.rwl.seg(qu_df_long2, seg.length =1, pcrit=0.01)
 
 # EXPORT TO RWL ####
 # shorten the names
-all_cores2$sppshort <- paste0(substr(all_cores2$Species, 1, 1),
-                             substr(all_cores2$Species, 3, 3))
+all_cores2$sppshort <- paste0(substr(all_cores2$species, 1, 1),
+                             substr(all_cores2$species, 3, 3))
 
 all_cores2$Code2 <- gsub("-", "", all_cores2$Code)
 all_cores2$codeshort <- substr(all_cores2$Code2, 1, 4)
@@ -496,10 +499,10 @@ all_cores2$lengthMM <- all_cores2$lengthCM*10
 
 # create separate chronologies per genera
 all_cores2$Genus <- NA
-all_cores2$Genus[grepl("AC", all_cores2$Species)] <- "Acer"
-all_cores2$Genus[grepl("BE", all_cores2$Species)] <- "Betula"
-all_cores2$Genus[grepl("CA", all_cores2$Species)] <- "Carya"
-all_cores2$Genus[grepl("QU", all_cores2$Species)] <- "Quercus"
+all_cores2$Genus[grepl("AC", all_cores2$species)] <- "Acer"
+all_cores2$Genus[grepl("BE", all_cores2$species)] <- "Betula"
+all_cores2$Genus[grepl("CA", all_cores2$species)] <- "Carya"
+all_cores2$Genus[grepl("QU", all_cores2$species)] <- "Quercus"
 
 acer <- subset(all_cores2, Genus == "Acer")
 
@@ -553,3 +556,4 @@ head(acer_data)
 summary(acer_data)
 
 write.rwl(acer_data, fname = "cofecha/chronologyAcer.rwl")
+}

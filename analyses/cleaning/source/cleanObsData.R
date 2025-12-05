@@ -12,11 +12,6 @@
 # Press 'Set Groups' and NEXT
 # 5) Select 'Output fields' tab on left: and select 'ObservedBy Person ID' and 'Multiple Observers' and ... in 2024 I added these (as I think they are in the code): 'NumYs in Series' and 'Multiple FirstY'
 
-
-## housekeeping
-rm(list=ls()) 
-options(stringsAsFactors = FALSE)
-
 ## Load Libraries
 # library(plyr)
 library(dplyr)
@@ -203,8 +198,8 @@ phenosCoord$idnew[which(phenosCoord$plantNicknamelatbi == "7141*A_Tilia american
 phenosCoord$idnew[which(phenosCoord$plantNicknamelatbi == "8197*A_Quercus rubra")] <- "QURU_8197_A"
 phenosCoord$idnew[which(phenosCoord$plantNicknamelatbi == "925-79*B_Aesculus flava")] <- "AEFL_925-79_B"
 
-setdiff(unique(phenosCoord$idnew), unique(og$id2))
-setdiff(unique(og$id2), unique(phenosCoord$idnew))
+# setdiff(unique(phenosCoord$idnew), unique(og$id2))
+# setdiff(unique(og$id2), unique(phenosCoord$idnew))
 
 ts_cleaned <- phenosCoord[c(
   "idnew",
@@ -233,7 +228,7 @@ colnames(ts_cleaned) <- c(
   "genus",
   "species", 
   "latbi",
-  "Year",
+  "year",
   "budburst",
   "increasingLeafSize",
   "leafout",
@@ -253,7 +248,7 @@ colnames(ts_cleaned) <- c(
 ts_cleaned <- ts_cleaned[order(
   ts_cleaned$latbi,
   ts_cleaned$id,
-  ts_cleaned$Year
+  ts_cleaned$year
 ), ]
 
 # write it up!

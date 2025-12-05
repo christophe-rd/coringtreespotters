@@ -1,4 +1,4 @@
-"id","genus","species","latbi","Year","budburst","increasingLeafSize","leafout","flowers","openFlowers","pollenRelease","fruits","ripeFruits","recentFruitorSeedDrop","coloredLeaves","DBH","accessionDate","lat","long"
+"id","genus","species","latbi","year","budburst","increasingLeafSize","leafout","flowers","openFlowers","pollenRelease","fruits","ripeFruits","recentFruitorSeedDrop","coloredLeaves","DBH","accessionDate","lat","long"
 "ACRU_1196-84_A","Acer","rubrum","Acer rubrum",2019,103,115,115,97,97,NA,115,144,144,269,27.3,"10-15-1984",42.30388171,-71.12019927
 "ACRU_1196-84_A","Acer","rubrum","Acer rubrum",2020,119,124,124,75,75,92,120,148,148,220,27.3,"10-15-1984",42.30388171,-71.12019927
 "ACRU_1196-84_A","Acer","rubrum","Acer rubrum",2021,101,114,114,86,86,NA,104,NA,NA,NA,27.3,"10-15-1984",42.30388171,-71.12019927
