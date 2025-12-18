@@ -31,8 +31,8 @@ util <- new.env()
 source('mcmc_analysis_tools_rstan.R', local=util)
 source('mcmc_visualization_tools.R', local=util)
 
-runSimData <- TRUE
-if (runSimData) {
+# runSimData <- TRUE
+# if (runSimData) {
 # === === === === === === === === === === === === === === === === 
 #### SIMULATED DATA ####
 # === === === === === === === === === === === === === === === ===
@@ -41,9 +41,9 @@ if (runSimData) {
 set.seed(124)
 a <- 5
 b <- 0.4
-sigma_y <- 0.3
-sigma_asp <- 0.6 
-sigma_atreeid <- 0.2
+sigma_y <- 0.2
+sigma_asp <- 0.4
+sigma_atreeid <- 0.25
 sigma_bsp <- 0.1
 
 n_spp <- 10 # number of species
@@ -175,18 +175,14 @@ util$check_all_hmc_diagnostics(diagnostics)
 samples <- util$extract_expectand_vals(fit)
 
 # asp
-# asp <- names(samples)[grepl("asp", names(samples))]
-# asp <- asp[!grepl("sigma", asp)]
+asp <- names(samples)[grepl("asp", names(samples))]
+asp <- asp[!grepl("sigma", asp)][1:4]
 
-# jpeg("figures/gddLeafout_empData/aspParameterization.jpg", width = 2000, height = 2000, 
-#      units = "px", res = 300)
-# util$plot_div_pairs(asp, "sigma_asp", samples, diagnostics, transforms = list("sigma_asp" = 1))
-# dev.off()
+jpeg("figures/simData/aspParameterization.jpg", width = 2000, height = 2000,
+     units = "px", res = 300)
+util$plot_div_pairs(asp, "sigma_asp", samples, diagnostics, transforms = list("sigma_asp" = 1))
+dev.off()
 
-# asite
-# asite <- names(samples)[grepl("asite", names(samples))]
-# asite <- asite[!grepl("sigma", asite)]
-# 
 # jpeg("figures/gddLeafout_empData/asiteParameterization.jpg", width = 2000, height = 2000, 
 #      units = "px", res = 300)
 # util$plot_div_pairs(asite, "sigma_asite", samples, diagnostics, transforms = list("sigma_asite" = 1))
@@ -199,15 +195,12 @@ atreeid <- atreeid[sample(length(unique(atreeid)), 21)]
 pdf("figures/simData/atreeidParameterization.pdf", width = 6, height = 18)
 util$plot_div_pairs(atreeid, "sigma_atreeid", samples, diagnostics, transforms = list("sigma_atreeid" = 1))
 dev.off()
-}
 
 
 # === === === === === === === === === === === === #
 ##### Recover parameters from the posterior #####
 # === === === === === === === === === === === === #
 df_fit <- as.data.frame(fit)
-
-if (FALSE){
 
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
 ###### Recover sigmas ######
@@ -235,10 +228,10 @@ for (i in 1:ncol(sigma_df)) { # i = 1
   sigma_df2$per95[i] <- round(quantile(sigma_df[[i]], probs = 0.95), 3)
 }
 
-sigma_df2$sim_sigma <- c(
-  sigma_bsp,
-                         sigma_asp, 
+sigma_df2$sim_sigma <- c( 
+  # sigma_bsp,
                          sigma_atreeid, 
+                         sigma_asp, 
                          sigma_y)
 
 
@@ -276,8 +269,8 @@ for (i in 1:ncol(bspp_df)) { # i = 1
 
 # grab treeid 
 treeid_cols <- colnames(df_fit)[grepl("atreeid", colnames(df_fit))]
-# remove sigma_asp for now
-treeid_cols <- treeid_cols[2:length(treeid_cols)]
+treeid_cols <- treeid_cols[!grepl("zatreeid", treeid_cols)]
+treeid_cols <- treeid_cols[!grepl("sigma", treeid_cols)]
 
 treeid_df <- df_fit[, colnames(df_fit) %in% treeid_cols]
 # change their names
@@ -347,7 +340,7 @@ sigma_simXfit_plot <- ggplot(sigma_df2, aes(x = sim_sigma, y = mean)) +
        title = "") +
   theme_minimal()
 sigma_simXfit_plot
-ggsave("figures/sigma_simXfit_plot.jpeg", sigma_simXfit_plot, width = 6, height = 6, units = "in", dpi = 300)
+ggsave("figures/simData/sigma_simXfit_plot.jpeg", sigma_simXfit_plot, width = 6, height = 6, units = "in", dpi = 300)
 
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
 ###### Plot b spp ######
@@ -371,7 +364,7 @@ bsp_simXfit_plot <- ggplot(bspptoplot, aes(x = bsp, y = fit_bsp)) +
   theme_minimal()
 bsp_simXfit_plot
 # ggsave!
-ggsave("figures/bsp_simXfit_plot2.jpeg", bsp_simXfit_plot, width = 6, height = 6, units = "in", dpi = 300)
+ggsave("figures/simData/bsp_simXfit_plot2.jpeg", bsp_simXfit_plot, width = 6, height = 6, units = "in", dpi = 300)
 
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
 ###### Plot treeid ######
@@ -391,14 +384,14 @@ treeidtoplot
 # plot treeid
 atreeid_simXfit_plot <- ggplot(treeidtoplot, aes(x = atreeid, y = fit_atreeid)) +
   geom_errorbar(aes(ymin = fit_atreeid_per5, ymax = fit_atreeid_per95), 
-                width = 0, linewidth = 0.5, color = "darkgray", alpha=0.7) +
-  geom_point(color = "#046C9A", size = 2, alpha = 0.7) +
+                width = 0, linewidth = 0.5, color = "darkgray", alpha=0.8) +
+  geom_point(color = "#046C9A", size = 2, alpha = 0.9) +
   geom_abline(intercept = 0, slope = 1, linetype = "dashed", color = "#B40F20", linewidth = 1) +
   labs(x = "sim atreeid", y = "fit atreeid", title = "") +
   theme_minimal()
 atreeid_simXfit_plot
 # ggsave!
-ggsave("figures/atreeid_simXfit_plot.jpeg", atreeid_simXfit_plot, width = 6, height = 6, units = "in", dpi = 300)
+ggsave("figures/simData/atreeid_simXfit_plot.jpeg", atreeid_simXfit_plot, width = 6, height = 6, units = "in", dpi = 300)
 
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
 ###### Plot a spp ######
@@ -426,7 +419,7 @@ asp_simXfit_plot <- ggplot(aspptoplot, aes(x = asp, y = fit_asp)) +
   theme_minimal()
 asp_simXfit_plot
 # ggsave!
-ggsave("figures/asp_simXfit_plot.jpeg", asp_simXfit_plot, width = 6, height = 6, units = "in", dpi = 300)
+ggsave("figures/simData/asp_simXfit_plot.jpeg", asp_simXfit_plot, width = 6, height = 6, units = "in", dpi = 300)
 
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
 
@@ -455,7 +448,7 @@ ggplot() +
        x = "BSP", y = "Density", color = "Curve") +
   scale_color_manual(values = wes_palette("AsteroidCity1")[3:4]) +
   theme_minimal()
-ggsave("figures/priorsPredictiveChecks/priorVSposterior_sigma_bsp.jpeg", width = 10, height = 8, units = "in", dpi = 300)
+ggsave("figures/simData/priorsPredictiveChecks/priorVSposterior_sigma_bsp.jpeg", width = 10, height = 8, units = "in", dpi = 300)
 
 sigma_asp_draw <- abs(rnorm(draws, 0, 0.5))
 sigma_atree_draw <- abs(rnorm(draws, 0, 0.05))
@@ -503,7 +496,7 @@ ggplot() +
        x = "BSP", y = "Density", color = "Curve") +
   scale_color_manual(values = wes_palette("AsteroidCity1")[3:4]) +
   theme_minimal()
-ggsave("figures/priorsPredictiveChecks/priorVSposterior_bsp.jpeg", width = 8, height = 6, units = "in", dpi = 300)
+ggsave("figures/simData/priorsPredictiveChecks/priorVSposterior_bsp.jpeg", width = 8, height = 6, units = "in", dpi = 300)
 
 # now add row for prior_bsp
 prior_bsp <- rnorm(nrow(sigma_df), 0, sigma_df$prior_sigma_bsp)
@@ -562,5 +555,3 @@ ggplot(sigma_long_atreeid, aes(x = value, color = source, fill = source)) +
   scale_color_manual(values = wes_palette("AsteroidCity1")[3:4]) +
   scale_fill_manual(values = wes_palette("AsteroidCity1")[3:4])+
   theme_minimal()
-
-}
