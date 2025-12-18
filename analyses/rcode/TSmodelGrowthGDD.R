@@ -63,7 +63,7 @@ spp <- rep(rep(1:n_spp, each = n_perspp), each = n_meas)
 spp_nonrep <- rep(1:n_spp, each = n_perspp)
 # quick check 
 
-simcoef <- data.frame(
+sim <- data.frame(
   spp = spp,
   treeid = treeid
 )
@@ -76,45 +76,47 @@ atreeid <- rnorm(n_treeid, 0, sigma_atreeid)
 bsp <- rnorm(n_spp, 0, sigma_bsp)
 
 # Add my parameters to the df
-simcoef$atreeid <- atreeid[treeid]
-simcoef$asp <- asp[simcoef$spp]
-simcoef$bsp <- bsp[simcoef$spp]
+sim$atreeid <- atreeid[treeid]
+sim$asp <- asp[sim$spp]
+sim$bsp <- bsp[sim$spp]
 
 # add the rest of the boring stuff 
-simcoef$a <- a
-simcoef$b <- b
-simcoef$sigma_y <- sigma_y
-simcoef$sigma_atreeid <- sigma_atreeid
-simcoef$sigma_asp <- sigma_asp
-simcoef$error <- rnorm(N, 0, sigma_y)
-simcoef$gdd <- rnorm(N, 1800, 100)
-simcoef$gddcons <- simcoef$gdd/200
+sim$a <- a
+sim$b <- b
+sim$sigma_y <- sigma_y
+sim$sigma_atreeid <- sigma_atreeid
+sim$sigma_asp <- sigma_asp
+sim$error <- rnorm(N, 0, sigma_y)
+sim$gdd <- rnorm(N, 1800, 100)
+sim$gddcons <- sim$gdd/200
 
 # adding both options of tree rings
-simcoef$ringwidth <- 
-  simcoef$asp + 
-  simcoef$atreeid + 
-  simcoef$a +
-  (simcoef$b*simcoef$gddcons) + 
-  (simcoef$bsp*simcoef$gddcons)+
-  simcoef$error
+sim$ringwidth <- 
+  sim$asp + 
+  sim$atreeid + 
+  sim$a +
+  (sim$b*sim$gddcons) + 
+  (sim$bsp*sim$gddcons)+
+  sim$error
 
 # prepare grouping factors
-simcoef$spp <- factor(simcoef$spp)
-simcoef$treeid <- factor(simcoef$treeid)
+sim$spp <- factor(sim$spp)
+sim$treeid <- factor(sim$treeid)
 
+sim$a_asp <- sim$a + sim$asp
+sim$b_bsp <- sim$b + sim$bsp
 
 # check sim data
 ggplot(sim) +
-  geom_histogram(aes(gddleafout, color = sitename, fill = sitename), 
-                 binwidth = 2) +
+  geom_histogram(aes(ringwidth, color = spp, fill = spp), 
+                 binwidth = 1) +
   # geom_vline(aes(xintercept = a_asite, linetype = "Site mean"),
   #            linewidth = 0.9, alpha = 0.8, color = "black") +
   geom_vline(aes(xintercept = a_asp, linetype = "Species mean"),
              linewidth = 0.9, color = "black") +
   geom_vline(aes(xintercept = a, linetype = "Grand mean"),
              linewidth = 1.2, color = "black") +
-  facet_wrap(~sppname) +
+  facet_wrap(~spp) +
   labs(y = "",
        title = "gdd at leafout",
        linetype = "line type") +
@@ -130,21 +132,32 @@ ggplot(sim) +
     legend.key.height = unit(4, "lines")
   )
 
+
+# line plots
+ggplot(sim) +
+  geom_point(aes(x = gddcons, y = ringwidth, colour = spp)) +
+  geom_abline(aes(intercept = a_asp, slope = b_bsp, colour = spp), 
+              linewidth = 0.5) +
+  labs(title = "", x = "pgsGDD", y = "ring width in mm") +
+  # scale_colour_manual(values = wes_palette("AsteroidCity1")) +
+  # facet_wrap(~ spp) +
+  theme_minimal()
+
 # === === === === === #
 ##### Run model #####
 # === === === === === #
-y <- simcoef$ringwidth
-N <- nrow(simcoef)
-gdd <- simcoef$gddcons
-Nspp <- length(unique(simcoef$spp))
-species <- as.numeric(as.character(simcoef$spp))
+y <- sim$ringwidth
+N <- nrow(sim)
+gdd <- sim$gddcons
+Nspp <- length(unique(sim$spp))
+species <- as.numeric(as.character(sim$spp))
 treeid <- treeid
 Ntreeid <- length(unique(treeid))
 table(treeid)
 
 rstan_options(auto_write = TRUE)
 
-fit <- stan("stan/twolevelhierint.stan", 
+fit <- stan("stan/TSmodelGrowthGDD.stan", 
                     data=c("N","y",
                            "Nspp","species",
                            "Ntreeid", "treeid", 
@@ -153,6 +166,41 @@ fit <- stan("stan/twolevelhierint.stan",
 
 # saveRDS(fit, "output/stanOutput/GDDleafout/fit")
 # fit <- readRDS("output/stanOutput/GDDleafout/fit")
+
+
+# Diagnostics ####
+diagnostics <- util$extract_hmc_diagnostics(fit) 
+util$check_all_hmc_diagnostics(diagnostics)
+
+samples <- util$extract_expectand_vals(fit)
+
+# asp
+# asp <- names(samples)[grepl("asp", names(samples))]
+# asp <- asp[!grepl("sigma", asp)]
+
+# jpeg("figures/gddLeafout_empData/aspParameterization.jpg", width = 2000, height = 2000, 
+#      units = "px", res = 300)
+# util$plot_div_pairs(asp, "sigma_asp", samples, diagnostics, transforms = list("sigma_asp" = 1))
+# dev.off()
+
+# asite
+# asite <- names(samples)[grepl("asite", names(samples))]
+# asite <- asite[!grepl("sigma", asite)]
+# 
+# jpeg("figures/gddLeafout_empData/asiteParameterization.jpg", width = 2000, height = 2000, 
+#      units = "px", res = 300)
+# util$plot_div_pairs(asite, "sigma_asite", samples, diagnostics, transforms = list("sigma_asite" = 1))
+# dev.off()
+
+# atreeid
+atreeid <- names(samples)[!grepl("zatreeid", names(samples))]
+atreeid <- atreeid[!grepl("sigma", atreeid)]
+atreeid <- atreeid[sample(length(unique(atreeid)), 21)]
+pdf("figures/simData/atreeidParameterization.pdf", width = 6, height = 18)
+util$plot_div_pairs(atreeid, "sigma_atreeid", samples, diagnostics, transforms = list("sigma_atreeid" = 1))
+dev.off()
+}
+
 
 # === === === === === === === === === === === === #
 ##### Recover parameters from the posterior #####
@@ -304,7 +352,7 @@ ggsave("figures/sigma_simXfit_plot.jpeg", sigma_simXfit_plot, width = 6, height 
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
 ###### Plot b spp ######
 bspptoplot <- merge(
-  simcoef[!duplicated(simcoef$spp), 
+  sim[!duplicated(sim$spp), 
           c("spp", "bsp")], 
   bspp_df2[!duplicated(bspp_df2$spp), 
            c("spp", "fit_bsp", "fit_bsp_per25", "fit_bsp_per75", "fit_bsp_per5", "fit_bsp_per95")], 
@@ -329,7 +377,7 @@ ggsave("figures/bsp_simXfit_plot2.jpeg", bsp_simXfit_plot, width = 6, height = 6
 ###### Plot treeid ######
 # add sim to fit treeid df
 treeidtoplot <- merge(
-  simcoef[!duplicated(simcoef$treeid), 
+  sim[!duplicated(sim$treeid), 
           c("treeid", "atreeid")], 
   treeid_df2[!duplicated(treeid_df2$treeid), 
              c("treeid", "fit_atreeid", 
@@ -355,7 +403,7 @@ ggsave("figures/atreeid_simXfit_plot.jpeg", atreeid_simXfit_plot, width = 6, hei
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
 ###### Plot a spp ######
 aspptoplot <- merge(
-  simcoef[!duplicated(simcoef$spp), 
+  sim[!duplicated(sim$spp), 
           c("spp", "asp")], 
   aspp_df2[!duplicated(aspp_df2$spp), 
            c("spp", "fit_asp", 
