@@ -40,11 +40,11 @@ source('mcmc_visualization_tools.R', local=util)
 # set parameters
 set.seed(124)
 a <- 5
-b <- 0.4
+b <- 0.5
 sigma_y <- 0.2
-sigma_asp <- 0.4
+sigma_asp <- 0.6
 sigma_atreeid <- 0.25
-sigma_bsp <- 0.1
+sigma_bsp <- 0.3
 
 n_spp <- 10 # number of species
 n_perspp <- 4 # number of individuals per species
@@ -73,7 +73,7 @@ asp <- rnorm(n_spp, 0, sigma_asp)
 atreeid <- rnorm(n_treeid, 0, sigma_atreeid)
 
 # get slope values for each speciess
-bsp <- rnorm(n_spp, 0, sigma_bsp)
+bsp <- rnorm(n_spp, 0.5, sigma_bsp)
 
 # Add my parameters to the df
 sim$atreeid <- atreeid[treeid]
@@ -82,7 +82,7 @@ sim$bsp <- bsp[sim$spp]
 
 # add the rest of the boring stuff 
 sim$a <- a
-sim$b <- b
+# sim$b <- b
 sim$sigma_y <- sigma_y
 sim$sigma_atreeid <- sigma_atreeid
 sim$sigma_asp <- sigma_asp
@@ -95,7 +95,7 @@ sim$ringwidth <-
   sim$asp + 
   sim$atreeid + 
   sim$a +
-  (sim$b*sim$gddcons) + 
+  # (sim$b*sim$gddcons)+
   (sim$bsp*sim$gddcons)+
   sim$error
 
@@ -104,7 +104,6 @@ sim$spp <- factor(sim$spp)
 sim$treeid <- factor(sim$treeid)
 
 sim$a_asp <- sim$a + sim$asp
-sim$b_bsp <- sim$b + sim$bsp
 
 # check sim data
 ggplot(sim) +
@@ -136,10 +135,10 @@ ggplot(sim) +
 # line plots
 ggplot(sim) +
   geom_point(aes(x = gddcons, y = ringwidth, colour = spp)) +
-  geom_abline(aes(intercept = a_asp, slope = b_bsp, colour = spp), 
+  geom_abline(aes(intercept = a_asp, slope = bsp, colour = spp), 
               linewidth = 0.5) +
   labs(title = "", x = "pgsGDD", y = "ring width in mm") +
-  # scale_colour_manual(values = wes_palette("AsteroidCity1")) +
+  scale_colour_manual(values = wes_palette("Zissou1Continuous")) +
   # facet_wrap(~ spp) +
   theme_minimal()
 
@@ -175,13 +174,12 @@ util$check_all_hmc_diagnostics(diagnostics)
 samples <- util$extract_expectand_vals(fit)
 
 # asp
-asp <- names(samples)[grepl("asp", names(samples))]
-asp <- asp[!grepl("sigma", asp)][1:4]
-
-jpeg("figures/simData/aspParameterization.jpg", width = 2000, height = 2000,
-     units = "px", res = 300)
-util$plot_div_pairs(asp, "sigma_asp", samples, diagnostics, transforms = list("sigma_asp" = 1))
-dev.off()
+# asp <- names(samples)[grepl("zasp", names(samples))]
+# asp <- asp[!grepl("sigma", asp)]
+# 
+# pdf("figures/simData/aspParameterization.pdf", width = 6, height = 8)
+# util$plot_div_pairs(asp, "sigma_asp", samples, diagnostics, transforms = list("sigma_asp" = 1))
+# dev.off()
 
 # jpeg("figures/gddLeafout_empData/asiteParameterization.jpg", width = 2000, height = 2000, 
 #      units = "px", res = 300)
@@ -231,7 +229,7 @@ for (i in 1:ncol(sigma_df)) { # i = 1
 sigma_df2$sim_sigma <- c( 
   # sigma_bsp,
                          sigma_atreeid, 
-                         sigma_asp, 
+                         # sigma_asp, 
                          sigma_y)
 
 
@@ -421,9 +419,16 @@ asp_simXfit_plot
 # ggsave!
 ggsave("figures/simData/asp_simXfit_plot.jpeg", asp_simXfit_plot, width = 6, height = 6, units = "in", dpi = 300)
 
-# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
 
-}
+##### Combined sim plots #####
+combined <- (sigma_simXfit_plot + atreeid_simXfit_plot) /
+  (bsp_simXfit_plot + asp_simXfit_plot)
+combined
+ggsave("figures/simData/combinedSimData.jpeg", combined, width = 8, height = 6, units = "in", dpi = 300)
+
+
+
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
 
 ##### Diagnostics #####
 # === === === === === === === === === === === === === === === === 
@@ -555,3 +560,7 @@ ggplot(sigma_long_atreeid, aes(x = value, color = source, fill = source)) +
   scale_color_manual(values = wes_palette("AsteroidCity1")[3:4]) +
   scale_fill_manual(values = wes_palette("AsteroidCity1")[3:4])+
   theme_minimal()
+
+# <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+# EMPIRICAL DATA
+# <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
