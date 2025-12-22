@@ -46,8 +46,8 @@ sigma_asp <- 0.6
 sigma_atreeid <- 0.25
 sigma_bsp <- 0.3
 
-n_spp <- 10 # number of species
-n_perspp <- 4 # number of individuals per species
+n_spp <- 15 # number of species
+n_perspp <- 10 # number of individuals per species
 n_treeid <- n_perspp * n_spp # number of treeid
 n_meas <- 10 # repeated measurements per id
 N <- n_treeid * n_meas # total number of measurements
@@ -138,7 +138,7 @@ ggplot(sim) +
   geom_abline(aes(intercept = a_asp, slope = bsp, colour = spp), 
               linewidth = 0.5) +
   labs(title = "", x = "pgsGDD", y = "ring width in mm") +
-  scale_colour_manual(values = wes_palette("Zissou1Continuous")) +
+  # scale_colour_manual(values = wes_palette("Zissou1Continuous")) +
   # facet_wrap(~ spp) +
   theme_minimal()
 
@@ -187,7 +187,7 @@ samples <- util$extract_expectand_vals(fit)
 # dev.off()
 
 # atreeid
-atreeid <- names(samples)[!grepl("zatreeid", names(samples))]
+atreeid <- names(samples)[grepl("atreeid", names(samples))]
 atreeid <- atreeid[!grepl("sigma", atreeid)]
 atreeid <- atreeid[sample(length(unique(atreeid)), 21)]
 pdf("figures/simData/atreeidParameterization.pdf", width = 6, height = 18)
