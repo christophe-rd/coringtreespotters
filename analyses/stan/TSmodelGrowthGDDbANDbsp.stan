@@ -16,7 +16,7 @@ array[N] real y; 		// ring width (response)
 
 parameters{
 real a;		// mean intercept across everything
-// real b; 
+real b;
 real<lower=0> sigma_atreeid;
 // real<lower=0> sigma_asp;
 real<lower=0> sigma_y; 	// measurement error, noise etc. 	
@@ -41,7 +41,7 @@ for (i in 1:N){ // don't change this for reparameterization
         a + 
         asp[species[i]] + 
         atreeid[treeid[i]] + 
-        // b*gdd[i] + 
+        b*gdd[i] +
         bsp[species[i]]*gdd[i];
 
     }
@@ -49,10 +49,10 @@ for (i in 1:N){ // don't change this for reparameterization
 
 model{	
   a ~ normal(5, 1);
-  // b ~ normal(0.5, 0.2);
+  b ~ normal(0.5, 0.2);
   zatreeid ~ normal(0, 1); // this creates the partial pooling on intercepts for tree ids, standard sigma for non-centered parameterization
   asp ~ normal(0, 0.5);
-  bsp ~ normal(0.5, 0.3);
+  bsp ~ normal(0, 0.3);
   sigma_atreeid ~ normal(0, 0.5);
   // sigma_asp ~ normal(0, 0.5);
   // sigma_bsp ~ normal(0, 0.3);
