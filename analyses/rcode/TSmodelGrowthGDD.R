@@ -47,9 +47,9 @@ sigma_atreeid <- 0.25
 sigma_bsp <- 0.3
 
 n_spp <- 15 # number of species
-n_perspp <- 10 # number of individuals per species
+n_perspp <- 20 # number of individuals per species
 n_treeid <- n_perspp * n_spp # number of treeid
-n_meas <- 10 # repeated measurements per id
+n_meas <- 15 # repeated measurements per id
 N <- n_treeid * n_meas # total number of measurements
 N
 
