@@ -18,7 +18,7 @@ source("cleaning/source/cleaningCores.R")
 # 2. Get observation data from main repo: ts_cleaned
 source("cleaning/source/cleanObsData.R")
 
-# 3. Read csv created in wildchrokie repo
+# 3. Read climate csv created in wildchrokie repo
 weldhillcomp <- read.csv("input/weldhillClimateCleaned.csv")
 
 # 4. Calculate primary and full growing season GDD: obsdataWithGDD
@@ -33,8 +33,8 @@ str(coressub)
 str(obsdataWithGDD)
 temp <- merge(coressub, obsdataWithGDD, by = c("id", "year"))
 
-# rename species
-names(temp)[which(names(temp) == "species.x")] <- "spp"
+# rename species and remove duplicated symbol col
+temp <- temp[ , !(names(temp) == "species.x")]
 names(temp)[which(names(temp) == "species.y")] <- "species"
 
 # # make some checks
@@ -46,7 +46,7 @@ names(temp)[which(names(temp) == "species.y")] <- "species"
 # temp6 <- temp5[!duplicated(temp5$idyear),] 
 # 
 # # write csv
-write_csv(temp, "output/empiricalDataMAIN.csv")
+write.csv(temp, "output/empiricalDataMAIN.csv")
 # 
 # # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
 # # Now without tree rings!

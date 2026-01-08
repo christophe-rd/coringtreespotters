@@ -47,7 +47,7 @@ y24$GDD_10 <- gdd(tmax = y24$maxT, tmin = y24$minT, tbase = 10, type = "B")
 gdd <- rbind(y15, y16, y17, y18, y19, y20, y21, y22, y23, y24)
 str(gdd)
 
-write_csv(gdd, "output/gddByYear.csv")
+write.csv(gdd, "output/gddByYear.csv")
 
 nrow(ts[!is.na(ts$leafout),]) # missing 9 rows of NaN
 
@@ -112,3 +112,4 @@ ts$fgsGDD <- ts$leafcolorGDD - ts$budburstGDD
 # ts$fullGDD[which(ts$year == "2020")] <- y20maxGDD
 
 obsdataWithGDD <- ts
+
