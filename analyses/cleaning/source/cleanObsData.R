@@ -39,7 +39,7 @@ unique(indPheno$plantNickname)
 ### === === === === === === === ###
 # Select in the main df only the trees we can core
 d <- indPheno[indPheno$plantNickname %in% trees2core$ACC_NUM.QUAL,]
-### First let's do the obligatory cleaning checks with citizen scienece data
+### First let's do the obligatory cleaning checks with citizen science data
 d <- d[(d$Multiple_FirstY>=1 | d$Multiple_Observers>0),] ## This selects data where multiple people observed the same phenophase.
 d <- d[(d$NumYs_in_Series>=3),] ## This selects data again where the same phenophase was seen 3 times in a row
 d <- d[(d$NumDays_Since_Prior_No>=0 & d$NumDays_Since_Prior_No<=14),] ## And this limits to data where a no is followed by a yes, so that it is a new observation/new phenophase but has been detected within a reasonable timeframe
@@ -94,19 +94,20 @@ bb <- d %>%
 bb$latbi <- paste(bb$genus, bb$species, sep=" ")
 
 #clean common name column
-bb$Common_Name[which(bb$Common_Name == "yellow birch")] <- "Yellow birch"
-bb$Common_Name[which(bb$Common_Name == "river birch")] <- "River birch"
-bb$Common_Name[which(bb$Common_Name == "sugar maple")] <- "Sugar maple"
-bb$Common_Name[which(bb$Common_Name == "white oak")] <- "White oak"
-bb$Common_Name[which(bb$Common_Name == "eastern cottonwood")] <- "Eastern cottonwood"
-bb$Common_Name[which(bb$Common_Name == "yellow buckeye")] <- "Yellow buckeye"
-bb$Common_Name[which(bb$Common_Name == "American beech")] <- "American beech"
-bb$Common_Name[which(bb$Common_Name == "pignut hickory")] <- "Pignut hickory"
-bb$Common_Name[which(bb$Common_Name == "shagbark hickory")] <- "Shagbark hickory"
-bb$Common_Name[which(bb$Common_Name == "northern red oak")] <- "Northern red oak"
-bb$Common_Name[which(bb$Common_Name == "red maple")] <- "Red maple"
+bb$commonName <- bb$Common_Name
+bb$commonName[which(bb$Common_Name == "yellow birch")] <- "Yellow birch"
+bb$commonName[which(bb$Common_Name == "river birch")] <- "River birch"
+bb$commonName[which(bb$Common_Name == "sugar maple")] <- "Sugar maple"
+bb$commonName[which(bb$Common_Name == "white oak")] <- "White oak"
+bb$commonName[which(bb$Common_Name == "eastern cottonwood")] <- "Eastern cottonwood"
+bb$commonName[which(bb$Common_Name == "yellow buckeye")] <- "Yellow buckeye"
+bb$commonName[which(bb$Common_Name == "American beech")] <- "American beech"
+bb$commonName[which(bb$Common_Name == "pignut hickory")] <- "Pignut hickory"
+bb$commonName[which(bb$Common_Name == "shagbark hickory")] <- "Shagbark hickory"
+bb$commonName[which(bb$Common_Name == "northern red oak")] <- "Northern red oak"
+bb$commonName[which(bb$Common_Name == "red maple")] <- "Red maple"
 
-bb.pheno <- bb[, c("genus", "species", "latbi", "Common_Name", "phase", "year", "doy", "numYs", "plantNickname")]
+bb.pheno <- bb[, c("genus", "species", "latbi", "commonName", "symbol", "phase", "year", "doy", "numYs", "plantNickname")]
 
 # clean phenophase names
 bb.pheno$phase<-ifelse(bb.pheno$phase=="Breaking leaf buds", "budburst", bb.pheno$phase)
@@ -116,29 +117,30 @@ bb.pheno$phase<-ifelse(bb.pheno$phase=="Falling leaves", "leafDrop", bb.pheno$ph
 bb.pheno$phase<-ifelse(bb.pheno$phase=="Colored leaves", "coloredLeaves", bb.pheno$phase)
 bb.pheno$phase<-ifelse(bb.pheno$phase=="Fruits", "fruits", bb.pheno$phase)
 bb.pheno$phase<-ifelse(bb.pheno$phase=="Ripe fruits", "ripeFruits", bb.pheno$phase)
-bb.pheno$phase<-ifelse(bb.pheno$phase=="Recent fruit or seed drop", "RecentFruitorSeedDrop", bb.pheno$phase)
-bb.pheno$phase<-ifelse(bb.pheno$phase=="Increasing leaf size", "IncreasingLeafSize", bb.pheno$phase)
-bb.pheno$phase<-ifelse(bb.pheno$phase=="Open flowers", "OpenFlowers", bb.pheno$phase)
-bb.pheno$phase<-ifelse(bb.pheno$phase=="Pollen release (flowers)", "PollenRelease", bb.pheno$phase)
+bb.pheno$phase<-ifelse(bb.pheno$phase=="Recent fruit or seed drop", "recentFruitOrSeedDrop", bb.pheno$phase)
+bb.pheno$phase<-ifelse(bb.pheno$phase=="Increasing leaf size", "increasingLeafSize", bb.pheno$phase)
+bb.pheno$phase<-ifelse(bb.pheno$phase=="Open flowers", "openFlowers", bb.pheno$phase)
+bb.pheno$phase<-ifelse(bb.pheno$phase=="Pollen release (flowers)", "pollenRelease", bb.pheno$phase)
 
 ### Now work on finding day of budburst, etc.
-bb.pheno <-filter(bb.pheno, numYs>0)
+bb.pheno <- filter(bb.pheno, numYs>0)
 
 # Below, I group each individual by phenophase and year to find the first observation (using the slice function), 
 ## so first day of budburst for that individual for that year
-doy_pheno<-bb.pheno%>% 
+doy_pheno <- bb.pheno%>% 
   group_by(plantNickname, phase, year) %>% 
   slice(which.min(doy))
 
 # spread this table so every phase gets its column!
-phenos<-doy_pheno%>%tidyr::spread(phase, doy)
+phenos <- doy_pheno %>% tidyr::spread(phase, doy)
 
 # remove outliers e.g. when budburst is way to late in the summer
-phenos1 <- subset(phenos , budburst<160)
-phenos2 <- subset(phenos1 , leafout<250) # redefine this to make sure its ok
+phenos1 <- subset(phenos, budburst < 160)
+phenos2 <- subset(phenos1, leafout < 250) # redefine this to make sure its ok
 
 # Add tree coordinates
 phenosCoord <- merge(phenos2, coordcut, by.x="plantNickname", by.y="PlantID", all.x=TRUE)
+
 head(phenosCoord)
 
 # clean treeid names to fit my format
@@ -206,28 +208,32 @@ ts_cleaned <- phenosCoord[c(
   "genus",
   "species", 
   "latbi",
+  "commonName",
+  "symbol",
   "year",
   "budburst",
-  "IncreasingLeafSize",
+  "increasingLeafSize",
   "leafout",
   "flowers",
-  "OpenFlowers",
-  "PollenRelease",
+  "openFlowers",
+  "pollenRelease",
   "fruits",
   "ripeFruits",
-  "RecentFruitorSeedDrop",
+  "recentFruitOrSeedDrop",
   "coloredLeaves",
   "DBH",
   "AccessionDate",
   "lat",
   "long"
 )]
-head(ts_cleaned)
+
 colnames(ts_cleaned) <- c(
   "id",
   "genus",
   "species", 
   "latbi",
+  "commonName",
+  "symbol",
   "year",
   "budburst",
   "increasingLeafSize",
