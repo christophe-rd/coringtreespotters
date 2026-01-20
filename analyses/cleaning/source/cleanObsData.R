@@ -30,6 +30,8 @@ indPheno <- read.csv("input/individual_phenometrics_data2025.csv", header=TRUE) 
 trees2core <- read.csv("input/2025ApprovedPlantListforcoring.csv", header=TRUE) # from list of trees we can core
 coord <- read.csv("input/listTreesfromInteractiveMap.csv", header=TRUE) # from arboretum explorer map 
 
+
+
 # Remove tree number from the plant nickname column
 indPheno$plantNickname <- sub(", Tree \\d+", "", indPheno$Plant_Nickname)
 unique(indPheno$plantNickname) 
