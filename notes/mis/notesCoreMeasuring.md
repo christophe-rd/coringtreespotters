@@ -66,3 +66,6 @@ PODE_16611_K_I: in box to rescan
 
 CAOV_12907_B_I: RESCAN
 
+## ## 19 January 2026
+ACRU_1196-84_A_I: check the first few rings MICROSCOPE
+
