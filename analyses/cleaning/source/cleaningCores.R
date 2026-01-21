@@ -78,16 +78,8 @@ all_cores$id2 <- paste(all_cores$Code, all_cores$Letter, all_cores$species, sep 
 veccores <- unique(all_cores$id2)
 og_vec <- og$name
 setdiff(og_vec, veccores) 
-# beni 1199 D is ok.
-# beni 1199 J_I: will be scanned
-# 12651_I_AEFL: ok
-# 1323-82_A_TIAM: ok
-# 17527_D_TIAM: ok
-# 17538_A_TIAM: ok
-# 19804_A_TIAM: ok
-# 20098_A_CAGL: ok
-# TIAM_7141_A_I: ok
-# 925-79_B_AEFL: ok
+setdiff(veccores, og_vec) 
+
 # 3 cols
 parts <- strsplit(og$name, "_")
 
@@ -97,8 +89,6 @@ og$letter <- sapply(parts, `[`, 2)
 
 og$id2 <- paste(og$spp, og$code, og$letter, sep = "_")
 
-
-
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 # convert inches to cm
 all_cores2$lengthCM <- all_cores2$Length*2.54
@@ -107,7 +97,7 @@ all_cores2$scaled_length <- scale(all_cores2$lengthCM)
 
 all_cores2$yearCor <- all_cores2$year
 
-#One of the cores is rotten outside, so Ill check if changing the ring dates may change something
+# One of the cores is rotten outside, so Ill check if changing the ring dates may change something
 all_cores2$yearCor[all_cores2$idrep == "CAOV_12907_G_II"] <- 
   all_cores2$year[all_cores2$idrep == "CAOV_12907_G_II"] - 5
 
@@ -115,15 +105,8 @@ all_cores2$yearCor[all_cores2$idrep == "CAOV_12907_G_II"] <-
 all_cores2$yearCor[all_cores2$id == "BENI_1251-79_E"& all_cores2$year < 2022] <- 
   all_cores2$year[all_cores2$year < 2022 & all_cores2$id == "BENI_1251-79_E"] - 1 
 
-# remove the first ring which i wasn't sure it was a ring but confirmed its something else
-all_cores2 <- all_cores2[ !(all_cores2$idrep == "QUAL_22886_D_II" & 
-                              all_cores2$year == 2024), ]
-all_cores2$yearCor[all_cores2$idrep == "QUAL_22886_D_II"] <- 
-  all_cores2$year[all_cores2$idrep == "QUAL_22886_D_II"] + 1
-
 # start by removing sepecies with litle replication **for now
-coressub <- subset(all_cores2, !(species %in% c("AEFL", "CAGL")))
-coressub <- subset(coressub, select = c("id", "idrep", "species", "Code", "Letter", "Rep", "lengthCM", "yearCor"))
+coressub <- subset(all_cores2, select = c("id", "idrep", "species", "Code", "Letter", "Rep", "lengthCM", "yearCor"))
 
 
 # === === === === === === === === === === === === === === === === === 
@@ -136,7 +119,7 @@ if (makeplots) {
 # === === === === === === === === === === === === === === === === === 
 # Plot each species #### 
 # === === === === === === === === === === === === === === === === === 
-# MARKER YEARS ##### 
+# MARKER YEARS ##### .
 markers <- c(1965, 
              1966, 
              1981, # gypsy moth defoliation
@@ -145,7 +128,7 @@ markers <- c(1965,
 
 
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
-# ACRU ##### 
+# AEFL ##### 
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
 AEFL <- subset(all_cores2, species == "AEFL")
 ggplot(AEFL, aes(x = yearCor, y = lengthCM, color = id, group = idrep)) +
@@ -157,7 +140,7 @@ ggplot(AEFL, aes(x = yearCor, y = lengthCM, color = id, group = idrep)) +
     y = "Ring width (Length)",
     color = "Core ID"
   ) +
-  # facet_wrap(~id, nrow = 5, ncol = 1, scales = "free_y") +
+  facet_wrap(~id, nrow = 5, ncol = 1, scales = "free_y") +
   theme_minimal(base_size = 14) +
   scale_x_continuous(breaks = seq(min(AEFL$yearCor), max(AEFL$yearCor), by = 5)) +
   theme(
@@ -184,7 +167,7 @@ ggplot(ACRU, aes(x = yearCor, y = lengthCM, color = id, group = idrep)) +
     y = "Ring width (Length)",
     color = "Core ID"
   ) +
-  # facet_wrap(~id, nrow = 5, ncol = 1, scales = "free_y") +
+  facet_wrap(~id, nrow = 5, ncol = 1, scales = "free_y") +
   theme_minimal(base_size = 14) +
   scale_x_continuous(breaks = seq(min(ACRU$yearCor), max(ACRU$yearCor), by = 5)) +
   theme(
@@ -250,6 +233,7 @@ ggplot(BEAL, aes(x = X, y = lengthCM, color = id, group = idrep)) +
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
 # BENI ##### 
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+# missing 1199J because core not suitable
 BENI <- subset(all_cores2, species == "BENI")
 
 ggplot(BENI, aes(x = yearCor, y = lengthCM, color = id, group = idrep)) +
@@ -258,7 +242,7 @@ ggplot(BENI, aes(x = yearCor, y = lengthCM, color = id, group = idrep)) +
        x = "yearCor",
        y = "Ring width (Length)",
        color = "Core ID") +
-  # facet_wrap(~id, nrow = length(unique(BENI$id)), ncol = 1, scales = "free_y") +
+  facet_wrap(~id, nrow = length(unique(BENI$id)), ncol = 1, scales = "free_y") +
   theme_minimal(base_size = 14)
 
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
@@ -278,6 +262,7 @@ ggsave("figures/betulaspaghetti_plot.jpeg", width = 6, height = 8, units = "in",
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
 # CAGL ##### 
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+# missing 6990 because core not suitable
 CAGL <- subset(all_cores2, species == "CAGL")
 ggplot(CAGL, aes(x = yearCor, y = lengthCM, color = id, group = idrep)) +
   geom_line(linewidth = 0.6) +
@@ -285,7 +270,7 @@ ggplot(CAGL, aes(x = yearCor, y = lengthCM, color = id, group = idrep)) +
        x = "yearCor",
        y = "Ring width (Length)",
        color = "Core ID") +
-  # facet_wrap(~id, nrow = length(unique(CAGL$id)), ncol = 1, scales = "free_y") +
+  facet_wrap(~id, nrow = length(unique(CAGL$id)), ncol = 1, scales = "free_y") +
   theme_minimal(base_size = 14)
 
 
@@ -299,7 +284,7 @@ ggplot(CAOV, aes(x = yearCor, y = lengthCM, color = id, group = idrep)) +
        x = "yearCor",
        y = "Ring width (Length)",
        color = "Core ID") +
-  # facet_wrap(~id, nrow = length(unique(CAOV$id)), ncol = 1, scales = "free_y") +
+  facet_wrap(~id, nrow = length(unique(CAOV$id)), ncol = 1, scales = "free_y") +
   theme_minimal(base_size = 14)
 
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
@@ -313,7 +298,7 @@ ggplot(PODE, aes(x = yearCor, y = lengthCM, color = id, group = idrep)) +
        x = "Year",
        y = "Ring width (Length)",
        color = "Core ID") +
-  # facet_wrap(~id, nrow = 5, ncol = 1, scales = "free_y") +
+  facet_wrap(~id, nrow = 5, ncol = 1, scales = "free_y") +
   theme_minimal(base_size = 14) +
   scale_x_continuous(breaks = seq(min(PODE$yearCor), max(PODE$yearCor), by = 5)) +
   # scale_y_continuous(breaks = seq(min(PODE$lengthCM), max(PODE$lengthCM), by = )) +
@@ -324,7 +309,7 @@ ggplot(PODE, aes(x = yearCor, y = lengthCM, color = id, group = idrep)) +
     axis.text.x = element_text(angle = 45, hjust = 1)
   ) +
   # ylim(0, 0.3) +
-  xlim(2000, 2024)
+  # xlim(2000, 2024)
   scale_color_manual(values = wes_palette("FantasticFox1")) 
 ggsave("figures/podespaghetti_plot.jpeg", width = 10, height = 6, units = "in", dpi = 300)
 
@@ -333,10 +318,6 @@ ggsave("figures/podespaghetti_plot.jpeg", width = 10, height = 6, units = "in", 
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
 QUAL <- subset(all_cores2, species == "QUAL")
 
-QUAL <- subset(QUAL, id != "QUAL_358-82_A")
-
-
-
 ggplot(QUAL, aes(x = yearCor, y = lengthCM, color = id, group = idrep)) +
   geom_line(linewidth = 0.6) +
   geom_vline(xintercept = markers, linetype = "dashed") +
@@ -344,9 +325,9 @@ ggplot(QUAL, aes(x = yearCor, y = lengthCM, color = id, group = idrep)) +
        x = "Year",
        y = "Ring width (Length)",
        color = "Core ID") +
-  # facet_wrap(~id, nrow = 5, ncol = 1, scales = "free_y") +
+  facet_wrap(~id, nrow = 5, ncol = 1, scales = "free_y") +
   theme_minimal(base_size = 14) +
-  scale_x_continuous(breaks = seq(min(ACSA$yearCor), max(ACSA$yearCor), by = 5)) +
+  scale_x_continuous(breaks = seq(min(QUAL$yearCor), max(QUAL$yearCor), by = 5)) +
   theme(
     strip.text = element_blank(),
     strip.background = element_blank(),
@@ -367,7 +348,7 @@ ggplot(QURU, aes(x = yearCor, y = lengthCM, color = id, group = idrep)) +
        x = "yearCor",
        y = "Ring width (Length)",
        color = "Core ID") +
-  # facet_wrap(~id, nrow = length(unique(QURU$id)), ncol = 1, scales = "free_y") +
+  facet_wrap(~id, nrow = length(unique(QURU$id)), ncol = 1, scales = "free_y") +
   theme_minimal(base_size = 14)
 
 # make a plot to show how many 
