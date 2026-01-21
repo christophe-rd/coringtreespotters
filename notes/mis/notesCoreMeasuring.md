@@ -34,7 +34,7 @@
 
 
 #### Look for the following in bacK UP
-BENI 1199 D I:need to be rescaned
+BENI 1199 D I: need to be rescaned
 CAOV 12907 I II : need to be rescaned
 CAGL_6990_A_II: the one with the knot
 
@@ -43,28 +43,10 @@ CHECK ALSO which is the core with a knot
 
 As of today 23 Setp there are 26 cores left to scan, 3 that cant be measured 
 
-## Mysteries
-BENI 1199 J I never got scanned
+BENI 1199 J I never got scanned because it was cored in a know so corfe isn't viable.
 
-
-# Missing twin: to check if I have the data somewhere otherwise put it in the rescan box
-ACSA 20645 A II: in box to rescan
-
-ACSA 12565: can't get measured
-
-BENI 1199 B II: doesnt exist. was wrongly scanned under B but actually was J. J II has a know thus wont get measured. 
-
-CAGL_2019_R_I: in box to rescan 
 
 CAGL_6990_A_II: the one with the huge knot
-
-CAGL_6990_B_I: doesnt exist
-
-CAOV_12907_I_II:in box to rescan 
-
-PODE_16611_K_I: in box to rescan 
-
-CAOV_12907_B_I: RESCAN
 
 ## ## 19 January 2026
 CAGL_2019_R_I: not measured after the 21st ring where the tree was likely damaged.
@@ -74,3 +56,5 @@ CAOV_12907_I_II: from the brown part (roughly 50th ring, the boundaries are not 
 TIAM_19804_A_I: very narrow ring, inconsistent with its twin
 
 AEFL_12651_D_I: WRONG name. Check when second round of scanning is done. 
+
+PODE_16611_K: huge differences in measurements between the two cores might be cause by I being rotten at multiple place so the tree might have struggled producing rings in this area.
