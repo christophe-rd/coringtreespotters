@@ -67,5 +67,10 @@ PODE_16611_K_I: in box to rescan
 CAOV_12907_B_I: RESCAN
 
 ## ## 19 January 2026
-ACRU_1196-84_A_I: check the first few rings MICROSCOPE
+CAGL_2019_R_I: not measured after the 21st ring where the tree was likely damaged.
 
+CAOV_12907_I_II: from the brown part (roughly 50th ring, the boundaries are not well defined, so don't use these data)
+
+TIAM_19804_A_I: very narrow ring, inconsistent with its twin
+
+AEFL_12651_D_I: WRONG name. Check when second round of scanning is done. 

@@ -143,6 +143,34 @@ markers <- c(1965,
              2012, 
              2016)
 
+
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+# ACRU ##### 
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+AEFL <- subset(all_cores2, species == "AEFL")
+ggplot(AEFL, aes(x = yearCor, y = lengthCM, color = id, group = idrep)) +
+  geom_line(linewidth = 0.6) +
+  # geom_vline(xintercept = markers, linetype = "dashed", color = "black") +
+  labs(
+    title = "AEFL ring width series",
+    x = "Year",
+    y = "Ring width (Length)",
+    color = "Core ID"
+  ) +
+  # facet_wrap(~id, nrow = 5, ncol = 1, scales = "free_y") +
+  theme_minimal(base_size = 14) +
+  scale_x_continuous(breaks = seq(min(AEFL$yearCor), max(AEFL$yearCor), by = 5)) +
+  theme(
+    strip.text = element_blank(),
+    strip.background = element_blank(),
+    panel.spacing = unit(0.1, "lines"),
+    axis.text.x = element_text(angle = 45, hjust = 1)
+  )
+scale_color_manual(values = wes_palette("FantasticFox1"))
+
+ggsave("figures/acsaspaghetti_plot.jpeg", width = 10, height = 6, units = "in", dpi = 300)
+
+
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
 # ACRU ##### 
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
