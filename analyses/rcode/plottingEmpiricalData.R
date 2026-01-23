@@ -26,7 +26,7 @@ setwd("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses")
 
 emp <- read.csv("output/empiricalDataMAIN.csv")
 gdd <- read.csv("output/gddByYear.csv")
-
+allringwidths <- read.csv("output/ringWidthTS.csv")
 # # load fit
 # fit <- readRDS("output/stanOutput/fitEmpirical_stanlmer")
 # fit_pgsNgrowingdays <- readRDS("output/stanOutput/fit_pgsNgrowingdays_Empirical_stanlmer")
@@ -59,6 +59,23 @@ ggplot(emp, aes(x = pgsGDD, y = lengthMM,
   guides(fill = "none", color = "none") 
 ggsave("figures/empiricalData/sppLinearRegressions_pgsGDD.jpeg", width = 8, height = 6, units = "in", dpi = 300)
 
+# plot just basswood
+subsetbass <- subset(emp, symbol == "TIAM")
+ggplot(subsetbass, aes(x = pgsGDD, y = lengthMM, 
+                color = id, 
+                fill = id)) +
+  geom_point(size = 2, alpha = 0.7) + 
+  geom_smooth(method = "lm", se = TRUE, alpha = 0.2) +
+  scale_color_manual(values = renoir) +
+  scale_fill_manual(values = renoir) +
+  facet_wrap(~commonName) +
+  labs(y = "Ring width (mm)", x = "Growing degree days (GDD)", color = "Tree Species") +
+  theme_bw() +
+  theme(legend.key.height = unit(1.5, "lines"),
+        strip.text = element_text(face = "bold.italic", size = 10)) +
+  guides(fill = "none", color = "none") 
+ggsave("figures/empiricalData/sppLinearRegressions_pgsGDD_TIAM.jpeg", width = 8, height = 6, units = "in", dpi = 300)
+
 emp$year <- as.factor(emp$year)
 # new symbols and stuff
 ggplot(emp, aes(x = pgsGDD, y = lengthMM)) +
@@ -80,8 +97,55 @@ ggsave("figures/empiricalData/sppLinearRegressions_pgsGDD.jpeg", width = 6, heig
 
 # age x ring width
 # accession year
-str(emp)
 emp$accessionYear <- as.numeric(substr(emp$accessionDate, 7,11))
+allringwidths2 <- allringwidths
+allringwidths2$accessionYear <- emp$accessionYear[match(allringwidths2$id, emp$id)]
+allringwidths2$commonName <- emp$commonName[match(allringwidths2$id, emp$id)]
+allringwidths2$lengthMM <- allringwidths2$lengthCM*10
+allringwidths2$treeAge <- allringwidths2$yearCor - allringwidths2$accessionYear
+
+# look at the negative ages:
+vec <- unique(allringwidths2$id[which(allringwidths2$treeAge < 0)])
+allringwidths2 <- subset(allringwidths2, !(id %in% vec))
+
+# mean age of tree
+age <- aggregate(treeAge ~ id, allringwidths2, FUN = mean)
+allringwidths2$meanAge <- age$treeAge[match(allringwidths2$id, age$id)]
+
+allringwidths2 <- allringwidths2[order(allringwidths2$meanAge),]
+
+ggplot(allringwidths2, aes(x = treeAge, y = lengthMM)) +
+  geom_point(size = 2, alpha = 0.9,
+             aes(color = commonName, 
+                 fill = commonName)) + 
+  geom_smooth(method = "lm", se = TRUE, alpha = 0.2, color = "black") +
+  scale_color_manual(values = renoir) +
+  scale_fill_manual(values = renoir) +
+  facet_wrap(~id, 7,8) +
+  labs(y = "Ring width (mm)", 
+       x = "Tree age at corresponding ring", 
+       color = "Year",
+       fill = "Year",
+       shape = "Site") +  
+  theme_bw() 
+ggsave("figures/empiricalData/ringwidthXage_perid.jpeg", width = 10, height = 6, units = "in", dpi = 300)
+
+ggplot(allringwidths2, aes(x = treeAge, y = lengthMM)) +
+  geom_point(size = 2, alpha = 0.9,
+             aes(color = commonName, 
+                 fill = commonName)) + 
+  geom_smooth(method = "lm", se = TRUE, alpha = 0.2, color = "black") +
+  scale_color_manual(values = renoir) +
+  scale_fill_manual(values = renoir) +
+  facet_wrap(~commonName, 3,4) +
+  labs(y = "Ring width (mm)", 
+       x = "Tree age at corresponding ring", 
+       color = "Year",
+       fill = "Year",
+       shape = "Site") +  
+  theme_bw() 
+ggsave("figures/empiricalData/ringwidthXage_perspp.jpeg", width = 10, height = 6, units = "in", dpi = 300)
+
 
 emp2 <- emp[!duplicated(emp$idrep),]
 emp2 <- aggregate(lengthMM ~ idrep, emp, FUN = mean)
@@ -89,22 +153,6 @@ emp2 <- aggregate(lengthMM ~ idrep, emp, FUN = mean)
 emp2$accessionYear <- emp$accessionYear[match(emp2$idrep, emp$idrep)]
 emp2$commonName <- emp$commonName[match(emp2$idrep, emp$idrep)]
 
-ggplot(emp2, aes(x = accessionYear, y = lengthMM)) +
-  geom_point(size = 2, alpha = 0.9,
-             aes(color = commonName, 
-                 fill = commonName)) + 
-  geom_smooth(method = "lm", se = TRUE, alpha = 0.2, color = "black") +
-  # scale_color_manual(values = wes_palette("AsteroidCity1")) +
-  # scale_fill_manual(values = wes_palette("AsteroidCity1")) +
-  # scale_shape_manual(values = c(21, 22, 23, 24, 25)) +  
-  # facet_wrap(~commonName, nrow = 4, ncol = 3) +
-  labs(y = "Ring width (mm)", 
-       x = "Accession year", 
-       color = "Year",
-       fill = "Year",
-       shape = "Site") +  
-  theme_bw() 
-ggsave("figures/empiricalData/ringwidthXaccessionYear.jpeg", width = 8, height = 6, units = "in", dpi = 300)
 
 # color coded by number of frost free days
 frostfree <- subset(gdd, minTempC > 0)
