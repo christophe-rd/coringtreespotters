@@ -18,7 +18,7 @@ source("cleaning/source/cleaningCores.R")
 # 2. Get observation data from main repo: ts_cleaned
 source("cleaning/source/cleanObsData.R")
 
-# 3. Read climate csv created in wildchrokie repo
+# 3. Read climate csv created from wildchrokie repo
 weldhillcomp <- read.csv("input/weldhillClimateCleaned.csv")
 
 # 4. Calculate primary and full growing season GDD: obsdataWithGDD
