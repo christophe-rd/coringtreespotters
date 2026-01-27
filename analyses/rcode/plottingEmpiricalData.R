@@ -95,8 +95,9 @@ ggplot(emp, aes(x = pgsGDD, y = lengthMM)) +
   theme_bw() 
 ggsave("figures/empiricalData/sppLinearRegressions_pgsGDD.jpeg", width = 6, height = 8, units = "in", dpi = 300)
 
-# age x ring width
-# accession year
+# <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+# Plot ring width x age at ring, 1 page per species ####
+# <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 emp$accessionYear <- as.numeric(substr(emp$accessionDate, 7,11))
 allringwidths2 <- allringwidths
 allringwidths2$accessionYear <- emp$accessionYear[match(allringwidths2$id, emp$id)]
@@ -104,7 +105,7 @@ allringwidths2$commonName <- emp$commonName[match(allringwidths2$id, emp$id)]
 allringwidths2$lengthMM <- allringwidths2$lengthCM*10
 allringwidths2$treeAge <- allringwidths2$yearCor - allringwidths2$accessionYear
 
-# look at the negative ages:
+# remove the the negative ages:
 vec <- unique(allringwidths2$id[which(allringwidths2$treeAge < 0)])
 allringwidths2 <- subset(allringwidths2, !(id %in% vec))
 
@@ -114,37 +115,60 @@ allringwidths2$meanAge <- age$treeAge[match(allringwidths2$id, age$id)]
 
 allringwidths2 <- allringwidths2[order(allringwidths2$meanAge),]
 
-ggplot(allringwidths2, aes(x = treeAge, y = lengthMM)) +
-  geom_point(size = 2, alpha = 0.9,
-             aes(color = commonName, 
-                 fill = commonName)) + 
-  geom_smooth(method = "lm", se = TRUE, alpha = 0.2, color = "black") +
-  scale_color_manual(values = renoir) +
-  scale_fill_manual(values = renoir) +
-  facet_wrap(~id, 7,8) +
-  labs(y = "Ring width (mm)", 
-       x = "Tree age at corresponding ring", 
-       color = "Year",
-       fill = "Year",
-       shape = "Site") +  
-  theme_bw() 
-ggsave("figures/empiricalData/ringwidthXage_perid.jpeg", width = 10, height = 6, units = "in", dpi = 300)
 
-ggplot(allringwidths2, aes(x = treeAge, y = lengthMM)) +
-  geom_point(size = 2, alpha = 0.9,
-             aes(color = commonName, 
-                 fill = commonName)) + 
-  geom_smooth(method = "lm", se = TRUE, alpha = 0.2, color = "black") +
-  scale_color_manual(values = renoir) +
-  scale_fill_manual(values = renoir) +
-  facet_wrap(~commonName, 3,4) +
-  labs(y = "Ring width (mm)", 
-       x = "Tree age at corresponding ring", 
-       color = "Year",
-       fill = "Year",
-       shape = "Site") +  
-  theme_bw() 
-ggsave("figures/empiricalData/ringwidthXage_perspp.jpeg", width = 10, height = 6, units = "in", dpi = 300)
+# PLOT!
+pdf("figures/empiricalData/ringwidthXage_bySpecies.pdf", width = 10, height = 6)
+
+species_list <- unique(allringwidths2$commonName)
+renoir_named <- setNames(renoir, species_list)
+
+# here I loop over each page that fits 1 species at a time
+for (sp in species_list) {
+  df_sp <- allringwidths2[allringwidths2$commonName == sp, ]
+  ids   <- unique(df_sp$id)
+  par(
+    mfrow = n2mfrow(length(ids)),
+    mar = c(4, 4, 2, 1),
+    oma = c(2, 2, 2, 1)
+  )
+  
+  # shared limits across the individuals of a given species
+  xlim <- range(df_sp$treeAge, na.rm = TRUE)
+  ylim <- range(df_sp$lengthMM, na.rm = TRUE)
+  
+  # here I loop over each individuals of each species
+  for (id_i in ids) {
+    d <- df_sp[df_sp$id == id_i, ]
+    fit <- lm(lengthMM ~ treeAge, d)
+    plot(
+      d$treeAge, d$lengthMM,
+      pch = 16,
+      cex = 0.9,
+      col = renoir_named[sp],
+      xlim = xlim,
+      ylim = ylim,
+      xlab = "Tree age at ring",
+      ylab = "Ring width (mm)",
+      main = paste(id_i)
+    )
+    abline(fit, col = "black", lwd = 2)
+    mean_age <- mean(d$meanAge, na.rm = TRUE)
+    text(
+      x = xlim[2] - 0.05 * diff(xlim),   # right side
+      y = ylim[2] - 0.05 * diff(ylim),   # top
+      labels = paste("Mean age =", round(mean_age, 1)),
+      adj = c(1, 1),                     # right + top alignment
+      cex = 1
+    )
+  }
+  mtext(sp, side = 3, outer = TRUE, line = 0.5, cex = 1.4, font = 2)
+}
+
+dev.off()
+
+
+
+
 
 
 emp2 <- emp[!duplicated(emp$idrep),]
