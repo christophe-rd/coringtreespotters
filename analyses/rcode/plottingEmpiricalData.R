@@ -116,7 +116,7 @@ allringwidths2$meanAge <- age$treeAge[match(allringwidths2$id, age$id)]
 allringwidths2 <- allringwidths2[order(allringwidths2$meanAge),]
 
 
-# PLOT!
+# PLOT!.
 pdf("figures/empiricalData/ringwidthXage_bySpecies.pdf", width = 10, height = 6)
 
 species_list <- unique(allringwidths2$commonName)
