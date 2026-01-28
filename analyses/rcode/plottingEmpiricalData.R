@@ -72,6 +72,19 @@ emp <- emp[order(emp$idyear), ]
 emp <- subset(emp, select = !(names(emp) %in% "idyear"))
 
 # now do the same for ringwidth DO THIS
+length <- aggregate(lengthCM ~ id + yearCor, allringwidths, FUN = mean)
+length$lengthMM <- length$lengthCM*10
+length$idyear <- paste(length$id, length$yearCor)
+
+allringwidths$idyear <- paste(allringwidths$id, allringwidths$yearCor)
+
+allringwidths2 <- allringwidths[!duplicated(allringwidths$idyear),]
+
+allringwidths2$lengthMM <- length$lengthMM[match(allringwidths2$idyear, length$idyear)]
+
+allringwidths2$accessionYear <- emp$accessionYear[match(allringwidths2$id, emp$id)]
+
+allringwidths2$age <- allringwidths2$yearCor - allringwidths2$accessionYear
 
 # ringwidth X GDD in PGS
 renoir <- c("#17154f", "#2f357c", "#6c5d9e", "#9d9cd5", "#b0799a", "#f6b3b0", "#e48171", "#bf3729", "#e69b00", "#f5bb50", "#ada43b", "#355828")
@@ -132,8 +145,12 @@ ggsave("figures/empiricalData/sppLinearRegressions_pgsGDD.jpeg", width = 6, heig
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 # Plot ring width x age at ring, 1 page per species ####
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+# FOR WHOLE CHRONOLOGY
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
 emp2 <- emp
 emp2$treeAge <- emp2$year - emp2$accessionYear
+allringwidths2$treeAge <- allringwidths2$yearCor - allringwidths2$accessionYear
 
 # remove the the negative ages:
 vec <- unique(allringwidths2$id[which(allringwidths2$treeAge < 0)])
@@ -145,6 +162,7 @@ allringwidths2$meanAge <- age$treeAge[match(allringwidths2$id, age$id)]
 
 allringwidths2 <- allringwidths2[order(allringwidths2$meanAge),]
 
+allringwidths2$commonName <- emp$commonName[match(allringwidths2$id, emp$id)]
 
 # PLOT!.
 pdf("figures/empiricalData/ringwidthXage_bySpeciesAllYrs.pdf", width = 10, height = 6)
@@ -194,8 +212,123 @@ for (sp in species_list) {
 
 dev.off()
 
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+# FOR CHRONOLOGY THE STUDY PERIOD (9 YEARS)
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+allringwidths3 <- subset(allringwidths2, yearCor >2015)
+# PLOT!.
+pdf("figures/empiricalData/ringwidthXage_bySpecies9Yrs.pdf", width = 10, height = 6)
+
+species_list <- unique(allringwidths3$commonName)
+renoir_named <- setNames(renoir, species_list)
+
+# here I loop over each page that fits 1 species at a time
+for (sp in species_list) {
+  df_sp <- allringwidths3[allringwidths3$commonName == sp, ]
+  ids   <- unique(df_sp$id)
+  par(
+    mfrow = n2mfrow(length(ids)),
+    mar = c(4, 4, 2, 1),
+    oma = c(2, 2, 2, 1)
+  )
+  ylim <- range(df_sp$lengthMM, na.rm = TRUE)
+  
+  # here I loop over each individuals of each species
+  for (id_i in ids) {
+    d <- df_sp[df_sp$id == id_i, ]
+    fit <- lm(lengthMM ~ treeAge, d)
+    xlim <- range(d$treeAge, na.rm = TRUE)
+    plot(
+      d$treeAge, d$lengthMM,
+      pch = 16,
+      cex = 0.9,
+      col = renoir_named[sp],
+      xlim = xlim,
+      ylim = ylim,
+      xlab = "Tree age at ring",
+      ylab = "Ring width (mm)",
+      main = paste(id_i)
+    )
+    abline(fit, col = "black", lwd = 1)
+    mean_age <- mean(d$meanAge, na.rm = TRUE)
+    text(
+      x = xlim[2] - 0.05 * diff(xlim),   # right side
+      y = ylim[2] - 0.05 * diff(ylim),   # top
+      labels = paste("Mean age =", round(mean_age, 1)),
+      adj = c(1, 1),                     # right + top alignment
+      cex = 1
+    )
+  }
+  mtext(sp, side = 3, outer = TRUE, line = 0.5, cex = 1.4, font = 2)
+}
+
+dev.off()
 
 
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+# FOR CHRONOLOGY WITH PHENODATA
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+emp2 <- emp
+emp2$treeAge <- emp2$year - emp2$accessionYear
+
+# remove the the negative ages referencing the previous vector with negative ages ids
+emp2 <- subset(emp2, !(id %in% vec))
+
+# mean age of tree
+age <- aggregate(treeAge ~ id, emp2, FUN = mean)
+emp2$meanAge <- age$treeAge[match(emp2$id, age$id)]
+
+emp2 <- emp2[order(emp2$meanAge),]
+
+emp2$commonName <- emp$commonName[match(emp2$id, emp$id)]
+
+# PLOT!.
+pdf("figures/empiricalData/ringwidthXage_bySpeciesOnlyLeafout.pdf", width = 10, height = 6)
+
+species_list <- unique(emp2$commonName)
+renoir_named <- setNames(renoir, species_list)
+
+# here I loop over each page that fits 1 species at a time
+for (sp in species_list) {
+  df_sp <- emp2[emp2$commonName == sp, ]
+  ids   <- unique(df_sp$id)
+  par(
+    mfrow = n2mfrow(length(ids)),
+    mar = c(4, 4, 2, 1),
+    oma = c(2, 2, 2, 1)
+  )
+  ylim <- range(df_sp$lengthMM, na.rm = TRUE)
+  
+  # here I loop over each individuals of each species
+  for (id_i in ids) {
+    d <- df_sp[df_sp$id == id_i, ]
+    fit <- lm(lengthMM ~ treeAge, d)
+    xlim <- range(d$treeAge, na.rm = TRUE)
+    plot(
+      d$treeAge, d$lengthMM,
+      pch = 16,
+      cex = 1.2,
+      col = renoir_named[sp],
+      xlim = xlim,
+      ylim = ylim,
+      xlab = "Tree age at ring",
+      ylab = "Ring width (mm)",
+      main = paste(id_i)
+    )
+    abline(fit, col = "black", lwd = 1)
+    mean_age <- mean(d$meanAge, na.rm = TRUE)
+    text(
+      x = xlim[2] - 0.05 * diff(xlim),   # right side
+      y = ylim[2] - 0.05 * diff(ylim),   # top
+      labels = paste("Mean age =", round(mean_age, 1)),
+      adj = c(1, 1),                     # right + top alignment
+      cex = 1
+    )
+  }
+  mtext(sp, side = 3, outer = TRUE, line = 0.5, cex = 1.4, font = 2)
+}
+
+dev.off()
 
 
 
