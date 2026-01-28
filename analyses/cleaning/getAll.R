@@ -34,7 +34,8 @@ str(obsdataWithGDD)
 temp <- merge(coressub, obsdataWithGDD, by = c("id", "year"))
 
 # rename species and remove duplicated symbol col
-temp <- temp[ , !(names(temp) == "species.x")]
+temp <- temp[ , !(names(temp) == "symbol")]
+names(temp)[which(names(temp) == "species.x")] <- "symbol"
 names(temp)[which(names(temp) == "species.y")] <- "species"
 
 # # make some checks

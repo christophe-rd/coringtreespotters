@@ -27,17 +27,51 @@ setwd("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses")
 emp <- read.csv("output/empiricalDataMAIN.csv")
 gdd <- read.csv("output/gddByYear.csv")
 allringwidths <- read.csv("output/ringWidthTS.csv")
-# # load fit
-# fit <- readRDS("output/stanOutput/fitEmpirical_stanlmer")
-# fit_pgsNgrowingdays <- readRDS("output/stanOutput/fit_pgsNgrowingdays_Empirical_stanlmer")
 
-# faceted
-# order by spp
-emp <- emp[order(emp$spp), ]
+# Make some quick changes to the main df
 emp$lengthMM <- emp$lengthCM*10
 
-# emp$year <- as.factor(emp$year)
+# average each cores per id
+meancore <- aggregate(lengthMM ~ id + year, emp, FUN = mean)
+meancore$idyear <- paste(meancore$id, meancore$year)
 
+# remove dupplicate rows 
+emp$idyear <- paste(emp$id, emp$year)
+emp$accessionYear <- as.numeric(substr(emp$accessionDate, 7,11))
+emp <- emp[!duplicated(emp$idyear), c("id", 
+                                      "year",
+                                      "symbol",
+                                      "genus",
+                                      "species",
+                                      "latbi",
+                                      "commonName",
+                                      "budburst",
+                                      "increasingLeafSize",
+                                      "leafout",
+                                      "flowers",
+                                      "openFlowers",
+                                      "pollenRelease",
+                                      "fruits",
+                                      "ripeFruits",
+                                      "recentFruitorSeedDrop",
+                                      "coloredLeaves",
+                                      "DBH",
+                                      "accessionYear",
+                                      "pgs",
+                                      "fgs",
+                                      "budburstGDD",
+                                      "leafoutGDD",
+                                      "leafcolorGDD",
+                                      "pgsGDD",
+                                      "fgsGDD",
+                                      "idyear"
+                                      )]
+
+emp$lengthMM <- meancore$lengthMM[match(emp$idyear, meancore$idyear)]
+emp <- emp[order(emp$idyear), ]
+emp <- subset(emp, select = !(names(emp) %in% "idyear"))
+
+# now do the same for ringwidth DO THIS
 
 # ringwidth X GDD in PGS
 renoir <- c("#17154f", "#2f357c", "#6c5d9e", "#9d9cd5", "#b0799a", "#f6b3b0", "#e48171", "#bf3729", "#e69b00", "#f5bb50", "#ada43b", "#355828")
@@ -98,12 +132,8 @@ ggsave("figures/empiricalData/sppLinearRegressions_pgsGDD.jpeg", width = 6, heig
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 # Plot ring width x age at ring, 1 page per species ####
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
-emp$accessionYear <- as.numeric(substr(emp$accessionDate, 7,11))
-allringwidths2 <- allringwidths
-allringwidths2$accessionYear <- emp$accessionYear[match(allringwidths2$id, emp$id)]
-allringwidths2$commonName <- emp$commonName[match(allringwidths2$id, emp$id)]
-allringwidths2$lengthMM <- allringwidths2$lengthCM*10
-allringwidths2$treeAge <- allringwidths2$yearCor - allringwidths2$accessionYear
+emp2 <- emp
+emp2$treeAge <- emp2$year - emp2$accessionYear
 
 # remove the the negative ages:
 vec <- unique(allringwidths2$id[which(allringwidths2$treeAge < 0)])
@@ -117,7 +147,7 @@ allringwidths2 <- allringwidths2[order(allringwidths2$meanAge),]
 
 
 # PLOT!.
-pdf("figures/empiricalData/ringwidthXage_bySpecies.pdf", width = 10, height = 6)
+pdf("figures/empiricalData/ringwidthXage_bySpeciesAllYrs.pdf", width = 10, height = 6)
 
 species_list <- unique(allringwidths2$commonName)
 renoir_named <- setNames(renoir, species_list)
@@ -131,15 +161,13 @@ for (sp in species_list) {
     mar = c(4, 4, 2, 1),
     oma = c(2, 2, 2, 1)
   )
-  
-  # shared limits across the individuals of a given species
-  xlim <- range(df_sp$treeAge, na.rm = TRUE)
   ylim <- range(df_sp$lengthMM, na.rm = TRUE)
   
   # here I loop over each individuals of each species
   for (id_i in ids) {
     d <- df_sp[df_sp$id == id_i, ]
     fit <- lm(lengthMM ~ treeAge, d)
+    xlim <- range(d$treeAge, na.rm = TRUE)
     plot(
       d$treeAge, d$lengthMM,
       pch = 16,
@@ -151,7 +179,7 @@ for (sp in species_list) {
       ylab = "Ring width (mm)",
       main = paste(id_i)
     )
-    abline(fit, col = "black", lwd = 2)
+    abline(fit, col = "black", lwd = 1)
     mean_age <- mean(d$meanAge, na.rm = TRUE)
     text(
       x = xlim[2] - 0.05 * diff(xlim),   # right side
