@@ -38,12 +38,23 @@ for (i in 1:N){ // don't change this for reparameterization
 }
 
 model{	
-  a ~ normal(5, 3);
+  a ~ normal(2, 3);
   atreeid ~ normal(0, sigma_atreeid); // this creates the partial pooling on intercepts for tree ids, standard sigma for non-centered parameterization
   aspp ~ normal(0, 6);
-  bspp ~ normal(0.5, 0.3);
-  sigma_atreeid ~ normal(0, 1);
+  bspp ~ normal(0, 1);
+  sigma_atreeid ~ normal(0, 2);
   sigma_y ~ normal(0, 1);
   
   y ~ normal(ypred, sigma_y); // this creates an error model where error is normally distributed
 }	
+
+generated quantities {
+  array[N] real y_rep;
+  for (i in 1:N) {
+    y_rep[i] = normal_rng(
+        a + 
+        aspp[species[i]] + 
+        atreeid[treeid[i]] + 
+        bspp[species[i]]*gdd[i], sigma_y);
+  }
+}
