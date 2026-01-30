@@ -46,7 +46,48 @@ names(temp)[which(names(temp) == "species.y")] <- "species"
 # temp5$idyear <- paste(temp5$treeid, temp5$year, sep = "_")
 # temp6 <- temp5[!duplicated(temp5$idyear),] 
 # 
-# # write csv
+temp$lengthMM <- temp$lengthCM*10
+
+# average each cores per id
+meancore <- aggregate(lengthMM ~ id + year, temp, FUN = mean)
+meancore$idyear <- paste(meancore$id, meancore$year)
+
+# reorganize and average the 2 cores per id
+temp$idyear <- paste(temp$id, temp$year)
+temp <- temp[!duplicated(temp$idyear), c("id", 
+                                      "year",
+                                      "symbol",
+                                      "genus",
+                                      "species",
+                                      "latbi",
+                                      "commonName",
+                                      "budburst",
+                                      "increasingLeafSize",
+                                      "leafout",
+                                      "flowers",
+                                      "openFlowers",
+                                      "pollenRelease",
+                                      "fruits",
+                                      "ripeFruits",
+                                      "recentFruitorSeedDrop",
+                                      "coloredLeaves",
+                                      "DBH",
+                                      "accessionDate",
+                                      "pgs",
+                                      "fgs",
+                                      "budburstGDD",
+                                      "leafoutGDD",
+                                      "leafcolorGDD",
+                                      "pgsGDD",
+                                      "fgsGDD",
+                                      "idyear"
+)]
+
+temp$lengthMM <- meancore$lengthMM[match(temp$idyear, meancore$idyear)]
+temp <- temp[order(temp$idyear), ]
+temp <- subset(temp, select = !(names(temp) %in% "idyear"))
+
+# write csv
 write.csv(temp, "output/empiricalDataMAIN.csv")
 # 
 # # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 

@@ -28,48 +28,7 @@ emp <- read.csv("output/empiricalDataMAIN.csv")
 gdd <- read.csv("output/gddByYear.csv")
 allringwidths <- read.csv("output/ringWidthTS.csv")
 
-# Make some quick changes to the main df
-emp$lengthMM <- emp$lengthCM*10
-
-# average each cores per id
-meancore <- aggregate(lengthMM ~ id + year, emp, FUN = mean)
-meancore$idyear <- paste(meancore$id, meancore$year)
-
-# remove dupplicate rows 
-emp$idyear <- paste(emp$id, emp$year)
 emp$accessionYear <- as.numeric(substr(emp$accessionDate, 7,11))
-emp <- emp[!duplicated(emp$idyear), c("id", 
-                                      "year",
-                                      "symbol",
-                                      "genus",
-                                      "species",
-                                      "latbi",
-                                      "commonName",
-                                      "budburst",
-                                      "increasingLeafSize",
-                                      "leafout",
-                                      "flowers",
-                                      "openFlowers",
-                                      "pollenRelease",
-                                      "fruits",
-                                      "ripeFruits",
-                                      "recentFruitorSeedDrop",
-                                      "coloredLeaves",
-                                      "DBH",
-                                      "accessionYear",
-                                      "pgs",
-                                      "fgs",
-                                      "budburstGDD",
-                                      "leafoutGDD",
-                                      "leafcolorGDD",
-                                      "pgsGDD",
-                                      "fgsGDD",
-                                      "idyear"
-                                      )]
-
-emp$lengthMM <- meancore$lengthMM[match(emp$idyear, meancore$idyear)]
-emp <- emp[order(emp$idyear), ]
-emp <- subset(emp, select = !(names(emp) %in% "idyear"))
 
 # now do the same for ringwidth DO THIS
 length <- aggregate(lengthCM ~ id + yearCor, allringwidths, FUN = mean)
