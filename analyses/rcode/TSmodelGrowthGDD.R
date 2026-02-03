@@ -164,7 +164,7 @@ fit <- stan("stan/TSmodelGrowthGDD.stan",
                            "gdd"),
                     iter=4000, chains=4, cores=4)
 
-# saveRDS(fit, "output/stanOutput/GDDleafout/fit")
+saveRDS(fit, "output/stanOutput/fit")
 # fit <- readRDS("output/stanOutput/GDDleafout/fit")
 
 
