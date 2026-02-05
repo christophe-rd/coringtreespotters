@@ -85,6 +85,7 @@ temp <- temp[!duplicated(temp$idyear), c("id",
                                       "leafcolorGDD10",
                                       "pgsGDD10",
                                       "fgsGDD10",
+                                      "pgsGDD10AVG",
                                       "idyear"
 )]
 

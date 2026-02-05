@@ -104,6 +104,9 @@ for(i in 1:nrow(ts)) {
   
 }
 
+nrow(ts[!is.na(ts$coloredLeaves),]) 
+nrow(ts[!is.na(ts$leafcolorGDD5),])
+
 # Loop over rows FOR GDD 10
 for(i in 1:nrow(ts)) {
   yr <- ts$year[i]
@@ -130,23 +133,22 @@ for(i in 1:nrow(ts)) {
 str(ts)
 
 # check that the loop didn't miss any rows
+nrow(ts[!is.na(ts$coloredLeaves),]) 
+nrow(ts[!is.na(ts$leafcolorGDD10),])
+
 nrow(ts[!is.na(ts$budburst),]) 
 nrow(ts[!is.na(ts$budburstGDD10),])
 
 nrow(ts[!is.na(ts$leafout),]) 
 nrow(ts[!is.na(ts$leafoutGDD10),])
 
-nrow(ts[!is.na(ts$coloredLeaves),]) 
-nrow(ts[!is.na(ts$leafcolorGDD10),])
 
 # add primary GS and full GS cols GDD 5
 ts$pgsGDD5 <- ts$leafcolorGDD5 - ts$leafoutGDD5
-nrow(ts[!is.na(ts$pgsGDD),]) 
 ts$fgsGDD5 <- ts$leafcolorGDD5 - ts$budburstGDD5
 
 # add primary GS and full GS cols GDD 10
 ts$pgsGDD10 <- ts$leafcolorGDD10 - ts$leafoutGDD10
-nrow(ts[!is.na(ts$pgsGDD),]) 
 ts$fgsGDD10 <- ts$leafcolorGDD10 - ts$budburstGDD10
 
 # NEW WAY TO CALCULATE GDD
@@ -155,20 +157,31 @@ ts$sppyear <- paste(ts$commonName, ts$year, sep="")
 
 colournona <- aggregate(coloredLeaves ~ sppyear, ts, FUN = mean)
 
-ts$coloredLeavesAVG <- colournona$coloredLeaves[match(ts$sppyear, colournona$sppyear)]
+ts$coloredLeavesAVG <- as.integer(colournona$coloredLeaves[match(ts$sppyear, colournona$sppyear)])
+
+ts$leafcolorGDD10AVG <- NA
+
+for(i in 1:nrow(ts)) {
+  yr <- ts$year[i]
+  # Leafcolor
+  if(!is.na(ts$coloredLeavesAVG[i])) {
+    idx <- which(gdd$year == yr & gdd$doy == ts$coloredLeavesAVG[i])
+    if(length(idx) == 1) ts$leafcolorGDD10AVG[i] <- gdd$GDD_10[idx]
+  }
+  
+}
+str(ts)
+str(gdd)
 
 # check number of extra rows this gives me
 nrow(ts[!is.na(ts$coloredLeaves),])
-nrow(ts[!is.na(ts$coloredLeavesAVG),]) # gives me 19 extra rows...
+nrow(ts[!is.na(ts$coloredLeavesAVG),]) # gives me 21 extra rows...
 
-# add max gdd per year
-# ts$fullGDD <- NA
-# y18maxGDD <- max(y18$GDD_10)
-# y19maxGDD <- max(y19$GDD_10)
-# y20maxGDD <- max(y20$GDD_10)
-# ts$fullGDD[which(ts$year == "2018")] <- y18maxGDD
-# ts$fullGDD[which(ts$year == "2019")] <- y19maxGDD
-# ts$fullGDD[which(ts$year == "2020")] <- y20maxGDD
+nrow(ts[!is.na(ts$leafcolorGDD10),])
+nrow(ts[!is.na(ts$leafcolorGDD10AVG),])
+
+ts$pgsGDD10AVG <- ts$leafcolorGDD10AVG - ts$leafoutGDD10
+# tsview <- ts[, c("id", "year", "leafout", "leafoutGDD10", "coloredLeaves", "leafcolorGDD10", "coloredLeavesAVG", "leafcolorGDD10AVG")]
 
 obsdataWithGDD <- ts
 
