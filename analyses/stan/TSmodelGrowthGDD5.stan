@@ -8,7 +8,7 @@ int<lower=0> Nspp; 	// number of species (grouping factor)
 array[N] int species; 	// species identity, coded as int
 int<lower=0> Ntreeid;  // number of tree ids (grouping factor)
 array[N] int treeid;   // tree id identity, coded as int
-vector[N] gdd; 	// gdd (predictor for slope)
+vector[N] gdd5; 	// gdd (predictor for slope)
 array[N] real y; 		// ring width (response)
 }
 
@@ -30,7 +30,7 @@ for (i in 1:N){ // don't change this for reparameterization
         a + 
         aspp[species[i]] + 
         atreeid[treeid[i]] + 
-        bspp[species[i]]*gdd[i];
+        bspp[species[i]]*gdd5[i];
 
     }
 }
@@ -53,6 +53,6 @@ generated quantities {
         a + 
         aspp[species[i]] + 
         atreeid[treeid[i]] + 
-        bspp[species[i]]*gdd[i], sigma_y);
+        bspp[species[i]]*gdd5[i], sigma_y);
   }
 }
