@@ -162,7 +162,8 @@ fit <- stan("stan/TSmodelGrowthGDD.stan",
                            "Nspp","species",
                            "Ntreeid", "treeid", 
                            "gdd"),
-                    iter=4000, chains=4, cores=4)
+                    iter=4000, chains=4, cores=4,
+            save_dso = FALSE)
 
 saveRDS(fit, "output/stanOutput/fit")
 # fit <- readRDS("output/stanOutput/GDDleafout/fit")
