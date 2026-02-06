@@ -579,12 +579,12 @@ table(emp$id, emp$symbol)
 table(emp$treeid_num, emp$spp_num)
 
 # remove NAs
-emp <- emp[!is.na(emp$pgsGDD), ]
+emp <- emp[!is.na(emp$pgsGDD10), ]
 
 # transform data in vectors
 y <- emp$lengthMM # ring width in mm
 N <- nrow(emp)
-gdd <- emp$pgsGDD/200
+gdd <- emp$pgsGDD10/200
 Nspp <- length(unique(emp$spp_num))
 species <- as.numeric(as.character(emp$spp_num))
 treeid <- as.numeric(emp$treeid_num)
@@ -600,7 +600,8 @@ fit <- stan("stan/TSmodelGrowthGDD.stan",
                    "Nspp","species",
                    "Ntreeid", "treeid", 
                    "gdd"),
-            iter=2000, chains=4, cores=4)
+            iter=4000, chains=4, cores=4)
+saveRDS(fit, "output/stanOutput/fit_modelGrowth")
 
 # diagnostics
 diagnostics <- util$extract_hmc_diagnostics(fit) 
