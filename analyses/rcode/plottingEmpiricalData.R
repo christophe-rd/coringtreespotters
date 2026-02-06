@@ -27,6 +27,7 @@ setwd("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses")
 emp <- read.csv("output/empiricalDataMAIN.csv")
 gdd <- read.csv("output/gddByYear.csv")
 allringwidths <- read.csv("output/ringWidthTS.csv")
+longtermgdd <- read.csv("output/longTermGDDperYear.csv")
 
 emp$accessionYear <- as.numeric(substr(emp$accessionDate, 7,11))
 
@@ -50,7 +51,7 @@ renoir <- c("#17154f", "#2f357c", "#6c5d9e", "#9d9cd5", "#b0799a", "#f6b3b0", "#
 
 subsetbass <- subset(emp, symbol == "TIAM")
 subsetbass$DBH
-ggplot(emp, aes(x = pgsGDD, y = lengthMM, 
+ggplot(emp, aes(x = pgsGDD10, y = lengthMM, 
                 color = commonName, 
                 fill = commonName)) +
   geom_point(size = 2, alpha = 0.7) + 
@@ -67,7 +68,7 @@ ggsave("figures/empiricalData/sppLinearRegressions_pgsGDD.jpeg", width = 8, heig
 
 # plot just basswood
 subsetbass <- subset(emp, symbol == "TIAM")
-ggplot(subsetbass, aes(x = pgsGDD, y = lengthMM, 
+ggplot(subsetbass, aes(x = pgsGDD10, y = lengthMM, 
                 color = id, 
                 fill = id)) +
   geom_point(size = 2, alpha = 0.7) + 
@@ -82,12 +83,12 @@ ggplot(subsetbass, aes(x = pgsGDD, y = lengthMM,
   guides(fill = "none", color = "none") 
 ggsave("figures/empiricalData/sppLinearRegressions_pgsGDD_TIAM.jpeg", width = 8, height = 6, units = "in", dpi = 300)
 
-emp$year <- as.factor(emp$year)
+emp$year2 <- as.factor(emp$year)
 # new symbols and stuff
-ggplot(emp, aes(x = pgsGDD, y = lengthMM)) +
+ggplot(emp, aes(x = pgsGDD10, y = lengthMM)) +
   geom_point(size = 2, alpha = 0.9,
-             aes(color = year, 
-                 fill = year)) + 
+             aes(color = year2, 
+                 fill = year2)) + 
   geom_smooth(method = "lm", se = TRUE, alpha = 0.2, color = "black") +
   # scale_color_manual(values = wes_palette("AsteroidCity1")) +
   # scale_fill_manual(values = wes_palette("AsteroidCity1")) +
@@ -108,45 +109,47 @@ ggsave("figures/empiricalData/sppLinearRegressions_pgsGDD.jpeg", width = 6, heig
 # FOR WHOLE CHRONOLOGY
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
 emp2 <- emp
+str(emp2)
 emp2$treeAge <- emp2$year - emp2$accessionYear
 allringwidths2$treeAge <- allringwidths2$yearCor - allringwidths2$accessionYear
 
-# remove the the negative ages:
+# remove the negative ages:
 vec <- unique(allringwidths2$id[which(allringwidths2$treeAge < 0)])
 allringwidths2 <- subset(allringwidths2, !(id %in% vec))
 
 # mean age of tree
 age <- aggregate(treeAge ~ id, allringwidths2, FUN = mean)
 allringwidths2$meanAge <- age$treeAge[match(allringwidths2$id, age$id)]
-
 allringwidths2 <- allringwidths2[order(allringwidths2$meanAge),]
-
 allringwidths2$commonName <- emp$commonName[match(allringwidths2$id, emp$id)]
 
-# PLOT!.
-pdf("figures/empiricalData/ringwidthXage_bySpeciesAllYrs.pdf", width = 10, height = 6)
+allringwidths2$gdd <- longtermgdd$GDD_5[match(allringwidths2$yearCor, longtermgdd$year)]
 
+pdf("figures/empiricalData/ringwidthXyear_bySpeciesAllYrs.pdf", width = 10, height = 6)
 species_list <- unique(allringwidths2$commonName)
 renoir_named <- setNames(renoir, species_list)
 
-# here I loop over each page that fits 1 species at a time
+# Loop over each species
 for (sp in species_list) {
   df_sp <- allringwidths2[allringwidths2$commonName == sp, ]
   ids   <- unique(df_sp$id)
   par(
     mfrow = n2mfrow(length(ids)),
-    mar = c(4, 4, 2, 1),
+    mar = c(4, 4, 2, 4),  # CHANGED: added right margin for 2nd axis
     oma = c(2, 2, 2, 1)
   )
   ylim <- range(df_sp$lengthMM, na.rm = TRUE)
   
-  # here I loop over each individuals of each species
+  # Loop over each individual tree
   for (id_i in ids) {
     d <- df_sp[df_sp$id == id_i, ]
-    fit <- lm(lengthMM ~ treeAge, d)
-    xlim <- range(d$treeAge, na.rm = TRUE)
+    fit <- lm(lengthMM ~ yearCor, d)
+    xlim <- range(d$yearCor, na.rm = TRUE)
+    ylim_gdd <- range(d$gdd, na.rm = TRUE)  # NEW: GDD y-axis limits
+    
+    # Plot ring width (PRIMARY PLOT)
     plot(
-      d$treeAge, d$lengthMM,
+      d$yearCor, d$lengthMM,
       pch = 16,
       cex = 0.9,
       col = renoir_named[sp],
@@ -157,21 +160,49 @@ for (sp in species_list) {
       main = paste(id_i)
     )
     abline(fit, col = "black", lwd = 1)
+    
+    # NEW: Add GDD as line on secondary axis
+    par(new = TRUE)
+    plot(
+      d$yearCor, d$gdd,
+      type = "l",
+      col = "blue",
+      lwd = 1,
+      lty = 1,
+      xlim = xlim,
+      ylim = ylim_gdd,
+      axes = FALSE,
+      xlab = "",
+      ylab = ""
+    )
+    axis(4, col = "blue", col.axis = "blue")
+    mtext("GDD", side = 4, line = 2.5, col = "blue", cex = 0.7)
+    
+    # NEW: Add legend
+    legend("topleft", 
+           legend = c("Ring width", "GDD"),
+           col = c(renoir_named[sp], "blue"),
+           lty = c(NA, 2),
+           pch = c(16, NA),
+           lwd = c(NA, 2),
+           cex = 0.7,
+           bty = "n")
+    
+    # UNCHANGED: Mean age text
     mean_age <- mean(d$meanAge, na.rm = TRUE)
     text(
-      x = xlim[2] - 0.05 * diff(xlim),   # right side
-      y = ylim[2] - 0.05 * diff(ylim),   # top
+      x = xlim[2] - 0.05 * diff(xlim),
+      y = ylim[2] - 0.05 * diff(ylim),
       labels = paste("Mean age =", round(mean_age, 1)),
-      adj = c(1, 1),                     # right + top alignment
+      adj = c(1, 1),
       cex = 1
     )
   }
   mtext(sp, side = 3, outer = TRUE, line = 0.5, cex = 1.4, font = 2)
-}
-
+} 
 dev.off()
 
-# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+ # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
 # FOR CHRONOLOGY THE STUDY PERIOD (9 YEARS)
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
 allringwidths3 <- subset(allringwidths2, yearCor >2015)

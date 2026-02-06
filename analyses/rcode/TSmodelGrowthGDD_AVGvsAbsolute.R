@@ -32,7 +32,7 @@ source('mcmc_analysis_tools_rstan.R', local=util)
 source('mcmc_visualization_tools.R', local=util)
 
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
-# EMPIRICAL DATA ####
+# REAL VALUES ####
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 emp <- read.csv("output/empiricalDataMAIN.csv")
 
@@ -45,62 +45,57 @@ table(emp$symbol, emp$spp_num)
 table(emp$id, emp$symbol)
 table(emp$treeid_num, emp$spp_num)
 
-# remove NAs
-emp <- emp[!is.na(emp$pgsGDD), ]
-
-# transform data in vectors
-y <- emp$lengthMM # ring width in mm
-N <- nrow(emp)
-gdd <- emp$pgsGDD/200
-Nspp <- length(unique(emp$spp_num))
-species <- as.numeric(as.character(emp$spp_num))
-treeid <- as.numeric(emp$treeid_num)
-Ntreeid <- length(unique(treeid))
-
-# check that everything is fine
-table(treeid,species)
-
-# plot the data first
-nrow(emp[!is.na(emp$pgsGDD10),])
-nrow(emp[!is.na(emp$pgsGDD10AVG),])
-
 ggplot(emp, aes(x = pgsGDD10, y = pgsGDD10AVG)) +
   geom_point(color = "#046C9A", size = 2) +
   geom_abline(intercept = 0, slope = 1, linetype = "dashed", color = "#B40F20", linewidth = 1) +
-  labs(x = "real", y = "averaged leaf colour data/spp + year", title = "atreeid") +
+  labs(x = real, y = "averaged leaf colour data/spp + year", title = "atreeid") +
   theme_minimal()
 
-# <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+# remove NAs
+empabs <- emp[!is.na(emp$pgsGDD10), ]
+
+# transform data in vectors
+y <- empabs$lengthMM # ring width in mm
+N <- nrow(empabs)
+gdd <- empabs$pgsGDD10/200
+Nspp <- length(unique(empabs$spp_num))
+species <- as.numeric(as.character(empabs$spp_num))
+treeid <- as.numeric(empabs$treeid_num)
+Ntreeid <- length(unique(treeid))
+
 rstan_options(auto_write = TRUE)
 fit <- stan("stan/TSmodelGrowthGDD.stan", 
             data=c("N","y",
                    "Nspp","species",
                    "Ntreeid", "treeid", 
                    "gdd"),
-            iter=2000, chains=4, cores=4)
+            iter=4000, chains=4, cores=4)
 
-# diagnostics
-diagnostics <- util$extract_hmc_diagnostics(fit) 
-util$check_all_hmc_diagnostics(diagnostics)
+# <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+# AVG VALUES ####
+# <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+# remove NAs
+empavg <- emp[!is.na(emp$pgsGDD10AVG), ]
 
-samples <- util$extract_expectand_vals(fit)
-atreeid <- names(samples)[grepl("atreeid", names(samples))]
-atreeid <- atreeid[!grepl("sigma", atreeid)]
-# atreeid <- atreeid[sample(length(unique(atreeid)), 9)]
+# transform data in vectors
+y <- empavg$lengthMM # ring width in mm
+N <- nrow(empavg)
+gdd <- empavg$pgsGDD10AVG/200
+Nspp <- length(unique(empavg$spp_num))
+species <- as.numeric(as.character(empavg$spp_num))
+treeid <- as.numeric(empavg$treeid_num)
+Ntreeid <- length(unique(treeid))
 
-# check tree id parameterization
-if (FALSE) {
-pdf("figures/troubleshootingModelGrowthGDD/atreeidParameterization.pdf",
-    width = 14, height = 18)
-# jpeg("figures/atreeidParameterization.jpeg", 
-     # width = 2000, height = 3000,
-     # units = "px", res = 300)
-util$plot_div_pairs(atreeid, "sigma_atreeid", samples, diagnostics, transforms = list("sigma_atreeid" = 1))
-dev.off()
-}
+rstan_options(auto_write = TRUE)
+fitavg <- stan("stan/TSmodelGrowthGDD.stan", 
+            data=c("N","y",
+                   "Nspp","species",
+                   "Ntreeid", "treeid", 
+                   "gdd"),
+            iter=4000, chains=4, cores=4)
 
 # === === === === === === === === === === === === #
-##### Recover parameters from the posterior ##### 
+##### Recover parameters from the posterior REAL##### 
 # === === === === === === === === === === === === #
 df_fit <- as.data.frame(fit)
 
@@ -217,182 +212,200 @@ for (i in 1:ncol(aspp_df)) { # i = 1
 }
 aspp_df2
 
-# === === === === === === === === #
-##### Plot posterior vs prior #####
-# === === === === === === === === #
-
-###### Plot a prior vs posterior ######
-a_posterior <- df_fit[, colnames(df_fit) %in% "a"]
-
-a_prior <- rnorm(1e4, 2, 3)
-
-priora <- ggplot() +
-  geom_density(data = data.frame(a = a_prior),
-               aes(x = a, colour = "Prior at N(2,3)"),
-               linewidth = 1) +
-  geom_density(data = data.frame(value = a_posterior),
-               aes(x = value, colour = "Posterior"),
-               linewidth = 1) +
-  labs(title = "priorVSposterior_a",
-       x = "a", y = "Density", color = "Curve") +
-  scale_color_manual(values = wes_palette("AsteroidCity1")[3:4]) +
-  theme_minimal()
-priora
+# === === === === === === === === === === === === #
+##### Recover parameters from the posterior AVG ##### 
+# === === === === === === === === === === === === #
+df_fit_avg <- as.data.frame(fitavg)
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+###### Recover sigmas ######
+unique(colnames(df_fit_avg))
+sigma_cols_avg <- colnames(df_fit_avg)[grepl("sigma", colnames(df_fit_avg))]
 
-###### Plot sigmas prior vs posterior ######
-sigma_long <- reshape(
-  sigma_df,
-  direction = "long",
-  varying = list(names(sigma_df)),
-  v.names = "value",
-  timevar = "parameter",
-  times = names(sigma_df),
-  idvar = "draw"
+sigma_df_avg <- df_fit_avg[, colnames(df_fit_avg) %in% sigma_cols_avg]
+
+sigma_df2_avg <- data.frame(
+  sigma = character(ncol(sigma_df_avg)),
+  mean = numeric(ncol(sigma_df_avg)),  
+  per5 = NA, 
+  per25 = NA,
+  per75 = NA,
+  per95 = NA
 )
-sigma_long
+sigma_df2_avg
 
-sigma_long$prior <- NA
-sigma_long$prior[which(sigma_long$parameter == "sigma_atreeid")] <- rnorm(8e3, 0, 2)
-sigma_long$prior[which(sigma_long$parameter == "sigma_y")] <- rnorm(8e3, 0, 1)
-
-priorsigmas <- ggplot(sigma_long) +
-  geom_density(aes(x = prior, colour = "Prior sigma_atreeid  at N(0, 2)
-Prior sigma_y at N(0, 1)"),
-               linewidth = 0.8) +
-  geom_density(aes(x = value, colour = "Posterior"),
-               linewidth = 0.8) +
-  facet_wrap(~parameter) + 
-  labs(title = "priorVSposterior_sigmas",
-       x = "", y = "Density", color = "Curve") +
-  scale_color_manual(values = wes_palette("AsteroidCity1")[3:4]) +
-  theme_minimal()
-priorsigmas
-
-# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
-###### Plot atreeid prior vs posterior ######
-treeid_long <- reshape(
-  treeid_df,
-  direction = "long",
-  varying = list(names(treeid_df)),
-  v.names = "value",
-  timevar = "treeid",
-  times = names(treeid_df),
-  idvar = "draw"
-)
-treeid_long
-
-# simulate priors
-hyperparameter_draws <- 8000
-parameter_draws <- 1000
-n_sigmatreeid <- 200
-
-# set to prior values
-sigmatreeid_vec <- abs(rnorm(n_sigmatreeid, 0, 1))
-
-prior_treeid <- rep(NA, parameter_draws*length(sigmatreeid_vec))
-
-for (i in 1: length(sigmatreeid_vec)) {
-  prior_treeid[((i - 1)*parameter_draws + 1):(i*parameter_draws)] <- rnorm(parameter_draws, 0, sigmatreeid_vec[i])
+for (i in 1:ncol(sigma_df_avg)) { # i = 1
+  sigma_df2_avg$sigma[i] <- colnames(sigma_df_avg)[i]         
+  sigma_df2_avg$mean[i] <- round(mean(sigma_df_avg[[i]]),3)  
+  sigma_df2_avg$per5[i] <- round(quantile(sigma_df_avg[[i]], probs = 0.05), 3)
+  sigma_df2_avg$per25[i] <- round(quantile(sigma_df_avg[[i]], probs = 0.25), 3)
+  sigma_df2_avg$per75[i] <- round(quantile(sigma_df_avg[[i]], probs = 0.75), 3)
+  sigma_df2_avg$per95[i] <- round(quantile(sigma_df_avg[[i]], probs = 0.95), 3)
 }
-prior_treeid
+sigma_df2_avg
 
-# sub of some treeids for plotting
-subtreeid <- subset(treeid_long, treeid %in% sample(treeid_long$treeid, 5))
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+###### Recover b spp ######
+bspp_cols_avg <- colnames(df_fit_avg)[grepl("bsp", colnames(df_fit_avg))]
+# remove sigma_bspp for now
+# bspp_cols_avg <- bspp_cols_avg[2:length(bspp_cols_avg)]
 
-prioratreeid <- ggplot() +
-  geom_density(data = data.frame(prior_treeid = prior_treeid),
-               aes(x = prior_treeid, colour = "Prior"),
-               linewidth = 0.8) +
-  geom_density(data = subtreeid,
-               aes(x = value, colour = "Posterior"),
-               linewidth = 0.8) +
-  facet_wrap(~treeid) + 
-  labs(title = "priorVSposterior_treeid",
-       x = "treeid", y = "Density", color = "Curve") +
-  scale_color_manual(values = wes_palette("AsteroidCity1")[3:4]) +
-  theme_minimal()
-prioratreeid
-
-###### Plot aspp prior vs posterior ######
-# convert posterior distribution to long format
-aspp_long <- reshape(
-  aspp_df,
-  direction = "long",
-  varying = list(names(aspp_df)),
-  v.names = "value",
-  timevar = "spp",
-  times = names(aspp_df),
-  idvar = "draw"
+bspp_df_avg <- df_fit_avg[, colnames(df_fit_avg) %in% bspp_cols_avg]
+# change their names
+colnames(bspp_df_avg) <- sub("bsp\\[(\\d+)\\]", "\\1", colnames(bspp_df_avg))
+#empty spp df
+bspp_df2_avg <- data.frame(
+  spp = character(ncol(bspp_df_avg)),
+  fit_bspp = numeric(ncol(bspp_df_avg)),  
+  fit_bspp_per5 = NA, 
+  fit_bspp_per25 = NA,
+  fit_bspp_per75 = NA,
+  fit_bspp_per95 = NA
 )
-aspp_long
+for (i in 1:ncol(bspp_df_avg)) { # i = 1
+  bspp_df2_avg$spp[i] <- colnames(bspp_df_avg)[i]         
+  bspp_df2_avg$fit_bspp[i] <- round(mean(bspp_df_avg[[i]]),3)  
+  bspp_df2_avg$fit_bspp_per5[i] <- round(quantile(bspp_df_avg[[i]], probs = 0.05), 3)
+  bspp_df2_avg$fit_bspp_per25[i] <- round(quantile(bspp_df_avg[[i]], probs = 0.25), 3)
+  bspp_df2_avg$fit_bspp_per75[i] <- round(quantile(bspp_df_avg[[i]], probs = 0.75), 3)
+  bspp_df2_avg$fit_bspp_per95[i] <- round(quantile(bspp_df_avg[[i]], probs = 0.95), 3)
+}
+bspp_df2_avg
 
-# aspp prior
-aspp_prior <- rnorm(1e4, 0, 6)
 
-prioraspp <- ggplot() +
-  geom_density(data = data.frame(aspp_prior = aspp_prior),
-               aes(x = aspp_prior, colour = "Prior at N(0, 6)"),
-               linewidth = 0.8) +
-  geom_density(data = aspp_long,
-               aes(x = value, colour = "Posterior", group = spp),
-               linewidth = 0.5) +
-  # facet_wrap(~spp) + 
-  labs(title = "priorVSposterior_aspp",
-       x = "aspp", y = "Density", color = "Curve") +
-  scale_color_manual(values = wes_palette("AsteroidCity1")[3:4]) +
-  xlim(c(-20, 20)) +
-  theme_minimal()
-prioraspp
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+###### Recover treeid ######
 
-###### Plot bsp prior vs posterior ######
-# convert posterior distribution to long format
-bsp_long <- reshape(
-  bspp_df,
-  direction = "long",
-  varying = list(names(bspp_df)),
-  v.names = "value",
-  timevar = "spp",
-  times = names(bspp_df),
-  idvar = "draw"
+# grab treeid 
+treeid_cols_avg <- colnames(df_fit_avg)[grepl("atreeid", colnames(df_fit_avg))]
+treeid_cols_avg <- treeid_cols_avg[!grepl("zatreeid", treeid_cols_avg)]
+treeid_cols_avg <- treeid_cols_avg[!grepl("sigma", treeid_cols_avg)]
+
+treeid_df_avg <- df_fit_avg[, colnames(df_fit_avg) %in% treeid_cols_avg]
+
+# change their names
+colnames(treeid_df_avg) <- sub("atreeid\\[(\\d+)\\]", "\\1", colnames(treeid_df_avg))
+# empty treeid dataframe
+treeid_df2_avg <- data.frame(
+  treeid = character(ncol(treeid_df_avg)),
+  fit_atreeid = numeric(ncol(treeid_df_avg)),  
+  fit_atreeid_per5 = NA, 
+  fit_atreeid_per25 = NA,
+  fit_atreeid_per75 = NA,
+  fit_atreeid_per95 = NA
 )
-bsp_long
+for (i in 1:ncol(treeid_df_avg)) { # i = 1
+  treeid_df2_avg$treeid[i] <- colnames(treeid_df_avg)[i]         
+  treeid_df2_avg$fit_atreeid[i] <- round(mean(treeid_df_avg[[i]]),3)  
+  treeid_df2_avg$fit_atreeid_per5[i] <- round(quantile(treeid_df_avg[[i]], probs = 0.05), 3)
+  treeid_df2_avg$fit_atreeid_per25[i] <- round(quantile(treeid_df_avg[[i]], probs = 0.25), 3)
+  treeid_df2_avg$fit_atreeid_per75[i] <- round(quantile(treeid_df_avg[[i]], probs = 0.75), 3)
+  treeid_df2_avg$fit_atreeid_per95[i] <- round(quantile(treeid_df_avg[[i]], probs = 0.95), 3)
+}
+treeid_df2_avg
 
-# aspp prior
-bsp_prior <- rnorm(1e4, 0, 1)
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+###### Recover a spp  ######
+aspp_cols_avg <- colnames(df_fit_avg)[grepl("aspp", colnames(df_fit_avg))]
 
-priorbsp <- ggplot() +
-  geom_density(data = data.frame(bsp_prior = bsp_prior),
-               aes(x = bsp_prior, colour = "Prior at N(0, 1)"),
-               linewidth = 0.8) +
-  geom_density(data = bsp_long,
-               aes(x = value, colour = "Posterior", group = spp),
-               linewidth = 0.5) +
-  # facet_wrap(~spp) + 
-  labs(title = "priorVSposterior_bsp",
-       x = "bsp", y = "Density", color = "Curve") +
-  scale_color_manual(values = wes_palette("AsteroidCity1")[3:4]) +
-  theme_minimal()
-priorbsp
-
-#  --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
-priorcombined <- (priorsigmas) / (priora) / (prioraspp)  / (priorbsp)
-ggsave("figures/troubleshootingModelGrowthGDD/priorVSposteriorCombined.jpeg", priorcombined, width = 8, height = 12, units = "in", dpi = 300)
-#  --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+aspp_df_avg <- df_fit_avg[, colnames(df_fit_avg) %in% aspp_cols_avg]
+# change their names
+colnames(aspp_df_avg) <- sub("aspp\\[(\\d+)\\]", "\\1", colnames(aspp_df_avg))
+#empty aspp df
+aspp_df2_avg <- data.frame(
+  spp = character(ncol(aspp_df_avg)),
+  fit_aspp = numeric(ncol(aspp_df_avg)),  
+  fit_aspp_per5 = NA, 
+  fit_aspp_per25 = NA,
+  fit_aspp_per75 = NA,
+  fit_aspp_per95 = NA
+)
+for (i in 1:ncol(aspp_df_avg)) { # i = 1
+  aspp_df2_avg$spp[i] <- colnames(aspp_df_avg)[i]         
+  aspp_df2_avg$fit_aspp[i] <- round(mean(aspp_df_avg[[i]]),3)  
+  aspp_df2_avg$fit_aspp_per5[i] <- round(quantile(aspp_df_avg[[i]], probs = 0.05), 3)
+  aspp_df2_avg$fit_aspp_per25[i] <- round(quantile(aspp_df_avg[[i]], probs = 0.25), 3)
+  aspp_df2_avg$fit_aspp_per75[i] <- round(quantile(aspp_df_avg[[i]], probs = 0.75), 3)
+  aspp_df2_avg$fit_aspp_per95[i] <- round(quantile(aspp_df_avg[[i]], probs = 0.95), 3)
+}
+aspp_df2_avg
 
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
-# Retrodictive checks ####
+# PLOTS ####
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
-jpeg(
-  filename = "figures/modelGrowthGDD/retrodictiveCheckHist.jpeg",
-  width = 2400,      
-  height = 2400,
-  res = 300          
-)
-util$plot_hist_quantiles(samples, "y_rep", 
-                         -5, # lower x axis limit
-                         15, # upper x axis limit
-                         0.5, # binning
-                         baseline_values = y,
-                         xlab = "Ring width (mm)")
-dev.off()
+# Plot comparison sigmas ####
+colnames(sigma_df2_avg)[2:ncol(sigma_df2_avg)] <- paste(colnames(sigma_df2_avg)[2:ncol(sigma_df2_avg)], "avg", sep = "_")
+
+sigmaforplot <- merge(sigma_df2_avg, sigma_df2, by = "sigma")
+
+sigmaplot <- ggplot(sigmaforplot, aes(x = mean_avg, y = mean)) +
+  geom_errorbar(aes(xmin = per25_avg, xmax = per75_avg), 
+                width = 0, linewidth = 0.7, color = "darkgray", alpha=0.7) +
+  geom_errorbar(aes(ymin = per25, ymax = per75), 
+                width = 0, linewidth = 0.7, color = "darkgray", alpha = 0.7) +
+  geom_point(color = "#046C9A", size = 2) +
+  geom_abline(intercept = 0, slope = 1, linetype = "dashed", color = "#B40F20", linewidth = 1) +
+  labs(x = "Primary growing seasonGDD with averaged leaf  
+color date", y = "Primary growing season GDD 
+with real leaf color date", title = "sigma") +
+  theme_minimal()
+sigmaplot
+
+
+# Plot comparison bspp ####
+colnames(bspp_df2_avg)[2:ncol(bspp_df2_avg)] <- paste(colnames(bspp_df2_avg)[2:ncol(bspp_df2_avg)], "avg", sep = "_")
+
+bsppforplot <- merge(bspp_df2_avg, bspp_df2, by = "spp")
+
+bsppplot <- ggplot(bsppforplot, aes(x = fit_bspp_avg, y = fit_bspp)) +
+  geom_errorbar(aes(xmin = fit_bspp_per25_avg, xmax = fit_bspp_per75_avg), 
+                width = 0, linewidth = 0.7, color = "darkgray", alpha=0.7) +
+  geom_errorbar(aes(ymin = fit_bspp_per25, ymax = fit_bspp_per75), 
+                width = 0, linewidth = 0.7, color = "darkgray", alpha = 0.7) +
+  geom_point(color = "#046C9A", size = 2) +
+  geom_abline(intercept = 0, slope = 1, linetype = "dashed", color = "#B40F20", linewidth = 1) +
+  labs(x = "Primary growing seasonGDD with averaged leaf 
+color date", y = "Primary growing season GDD 
+with real leaf color date", title = "bspp") +
+  theme_minimal()
+bsppplot
+
+# Plot comparison aspp ####
+colnames(aspp_df2_avg)[2:ncol(aspp_df2_avg)] <- paste(colnames(aspp_df2_avg)[2:ncol(aspp_df2_avg)], "avg", sep = "_")
+
+asppforplot <- merge(aspp_df2_avg, aspp_df2, by = "spp")
+
+asppplot <- ggplot(asppforplot, aes(x = fit_aspp_avg, y = fit_aspp)) +
+  geom_errorbar(aes(xmin = fit_aspp_per25_avg, xmax = fit_aspp_per75_avg), 
+                width = 0, linewidth = 0.7, color = "darkgray", alpha=0.7) +
+  geom_errorbar(aes(ymin = fit_aspp_per25, ymax = fit_aspp_per75), 
+                width = 0, linewidth = 0.7, color = "darkgray", alpha = 0.7) +
+  geom_point(color = "#046C9A", size = 2) +
+  geom_abline(intercept = 0, slope = 1, linetype = "dashed", color = "#B40F20", linewidth = 1) +
+  labs(x = "Primary growing seasonGDD with averaged leaf  
+color date", y = "Primary growing season GDD 
+with real leaf color date", title = "aspp") +
+  theme_minimal()
+asppplot
+
+# Plot comparison atreeid ####
+colnames(treeid_df2_avg)[2:ncol(treeid_df2_avg)] <- paste(colnames(treeid_df2_avg)[2:ncol(treeid_df2_avg)], "avg", sep = "_")
+
+treeidforplot <- merge(treeid_df2_avg, treeid_df2, by = "treeid")
+
+treeidplot <- ggplot(treeidforplot, aes(x = fit_atreeid_avg, y = fit_atreeid)) +
+  geom_errorbar(aes(xmin = fit_atreeid_per25_avg, xmax = fit_atreeid_per75_avg), 
+                width = 0, linewidth = 0.7, color = "darkgray", alpha=0.7) +
+  geom_errorbar(aes(ymin = fit_atreeid_per25, ymax = fit_atreeid_per75), 
+                width = 0, linewidth = 0.7, color = "darkgray", alpha = 0.7) +
+  geom_point(color = "#046C9A", size = 2) +
+  geom_abline(intercept = 0, slope = 1, linetype = "dashed", color = "#B40F20", linewidth = 1) +
+  labs(x = "Primary Growing Season GDD with averaged leaf  
+color date", y = "Primary growing season GDD 
+with real leaf color date", title = "atreeid") +
+  theme_minimal()
+treeidplot
+
+combined <- (sigmaplot + treeidplot) /
+  (asppplot + bsppplot)
+ggsave("figures/modelGrowthGDD/comparisonGDD/avgvsrealLeafcolordates.jpeg", combined, width = 8, height = 6, units = "in", dpi = 300)
+
