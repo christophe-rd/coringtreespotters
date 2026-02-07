@@ -28,6 +28,7 @@ emp <- read.csv("output/empiricalDataMAIN.csv")
 gdd <- read.csv("output/gddByYear.csv")
 allringwidths <- read.csv("output/ringWidthTS.csv")
 longtermgdd <- read.csv("output/longTermGDDperYear.csv")
+longtermgdd5yr <- read.csv("output/longTermGDD5YrAvg.csv")
 
 emp$accessionYear <- as.numeric(substr(emp$accessionDate, 7,11))
 
@@ -123,7 +124,14 @@ allringwidths2$meanAge <- age$treeAge[match(allringwidths2$id, age$id)]
 allringwidths2 <- allringwidths2[order(allringwidths2$meanAge),]
 allringwidths2$commonName <- emp$commonName[match(allringwidths2$id, emp$id)]
 
-allringwidths2$gdd <- longtermgdd$GDD_5[match(allringwidths2$yearCor, longtermgdd$year)]
+str(longtermgdd5yr)
+allringwidths2$gdd <- longtermgdd5yr$GDD_avg[match(allringwidths2$yearCor, longtermgdd5yr$year)]
+
+allringwidths2$interval_idx <- findInterval(allringwidths2$yearCor, longtermgdd5yr$year_start)
+allringwidths2$gdd <- longtermgdd5yr$GDD_avg[allringwidths2$interval_idx]
+
+# Clean up if you don't want the helper column
+allringwidths2$interval_idx <- NULL
 
 pdf("figures/empiricalData/ringwidthXyear_bySpeciesAllYrs.pdf", width = 10, height = 6)
 species_list <- unique(allringwidths2$commonName)
@@ -135,7 +143,7 @@ for (sp in species_list) {
   ids   <- unique(df_sp$id)
   par(
     mfrow = n2mfrow(length(ids)),
-    mar = c(4, 4, 2, 4),  # CHANGED: added right margin for 2nd axis
+    mar = c(4, 4, 2, 4), 
     oma = c(2, 2, 2, 1)
   )
   ylim <- range(df_sp$lengthMM, na.rm = TRUE)
@@ -145,9 +153,8 @@ for (sp in species_list) {
     d <- df_sp[df_sp$id == id_i, ]
     fit <- lm(lengthMM ~ yearCor, d)
     xlim <- range(d$yearCor, na.rm = TRUE)
-    ylim_gdd <- range(d$gdd, na.rm = TRUE)  # NEW: GDD y-axis limits
+    ylim_gdd <- range(d$gdd, na.rm = TRUE)  
     
-    # Plot ring width (PRIMARY PLOT)
     plot(
       d$yearCor, d$lengthMM,
       pch = 16,
@@ -161,12 +168,12 @@ for (sp in species_list) {
     )
     abline(fit, col = "black", lwd = 1)
     
-    # NEW: Add GDD as line on secondary axis
     par(new = TRUE)
     plot(
       d$yearCor, d$gdd,
       type = "l",
-      col = "blue",
+      col = adjustcolor("blue", alpha.f = 0.5),
+      alpha = 0.5,
       lwd = 1,
       lty = 1,
       xlim = xlim,
@@ -178,7 +185,6 @@ for (sp in species_list) {
     axis(4, col = "blue", col.axis = "blue")
     mtext("GDD", side = 4, line = 2.5, col = "blue", cex = 0.7)
     
-    # NEW: Add legend
     legend("topleft", 
            legend = c("Ring width", "GDD"),
            col = c(renoir_named[sp], "blue"),
@@ -188,7 +194,6 @@ for (sp in species_list) {
            cex = 0.7,
            bty = "n")
     
-    # UNCHANGED: Mean age text
     mean_age <- mean(d$meanAge, na.rm = TRUE)
     text(
       x = xlim[2] - 0.05 * diff(xlim),
