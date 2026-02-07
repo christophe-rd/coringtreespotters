@@ -13,6 +13,7 @@ options(digits = 3)
 library(ggplot2)
 library(wesanderson)
 library(patchwork)
+library(pollen)
 
 if (length(grep("christophe_rouleau-desrochers", getwd())) > 0) {
   setwd("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses")
@@ -43,9 +44,8 @@ colnames(logan) <- c(
 )
 
 str(logan)
-logan$date <- as.Date(logan$date, format = "%Y-%m-%d")
-logan$year <- as.numeric(format(logan$date2, "%Y"))
-logan$doy <- as.numeric(format(logan$date2, "%j"))
+logan$year <- as.numeric(format(as.Date(logan$date), "%Y"))
+logan$doy <- as.numeric(format(as.Date(logan$date), "%j"))
 
 ###Calculate gdd
 logan <- logan[order(logan$year, logan$date), ]
@@ -71,10 +71,23 @@ for (y in years) {
 }
 logan2 <- subset(logan, doy > 121 & doy < 243)
 
+str(logan2)
 gddperyear <- aggregate(GDD_5 ~ year, logan2, FUN = max)
+library(dplyr)
+
+gdd_5yr_intervals <- gddperyear %>%
+  mutate(interval = floor((year - min(year)) / 5)) %>%
+  group_by(interval) %>%
+  summarise(
+    year_start = min(year),
+    year_end = max(year),
+    GDD_avg = mean(GDD_5, na.rm = TRUE),
+    n_years = n()
+  ) %>%
+  select(-interval)
 
 # write csv
 write.csv(gddperyear, "output/longTermGDDperYear.csv", row.names = FALSE)
-
+write.csv(gdd_5yr_intervals, "output/longTermGDD5YrAvg.csv", row.names = FALSE)
 
 
