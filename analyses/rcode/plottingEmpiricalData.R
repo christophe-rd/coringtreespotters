@@ -173,7 +173,7 @@ for (sp in species_list) {
       d$yearCor, d$gdd,
       type = "l",
       col = adjustcolor("blue", alpha.f = 0.5),
-      alpha = 0.5,
+      alpha = 0.01,
       lwd = 1,
       lty = 1,
       xlim = xlim,
