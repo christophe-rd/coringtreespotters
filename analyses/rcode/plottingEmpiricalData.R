@@ -154,26 +154,10 @@ for (sp in species_list) {
     fit <- lm(lengthMM ~ yearCor, d)
     xlim <- range(d$yearCor, na.rm = TRUE)
     ylim_gdd <- range(d$gdd, na.rm = TRUE)  
-    
-    plot(
-      d$yearCor, d$lengthMM,
-      pch = 16,
-      cex = 0.9,
-      col = renoir_named[sp],
-      xlim = xlim,
-      ylim = ylim,
-      xlab = "Tree age at ring",
-      ylab = "Ring width (mm)",
-      main = paste(id_i)
-    )
-    abline(fit, col = "black", lwd = 1)
-    
-    par(new = TRUE)
     plot(
       d$yearCor, d$gdd,
       type = "l",
-      col = adjustcolor("blue", alpha.f = 0.5),
-      alpha = 0.01,
+      col = adjustcolor("#B40F20", alpha.f = 0.3),
       lwd = 1,
       lty = 1,
       xlim = xlim,
@@ -182,12 +166,12 @@ for (sp in species_list) {
       xlab = "",
       ylab = ""
     )
-    axis(4, col = "blue", col.axis = "blue")
-    mtext("GDD", side = 4, line = 2.5, col = "blue", cex = 0.7)
+    axis(4, col = "#B40F20", col.axis = "#B40F20")
+    mtext("GDD", side = 4, line = 2.5, col = "#B40F20", cex = 0.7)
     
     legend("topleft", 
            legend = c("Ring width", "GDD"),
-           col = c(renoir_named[sp], "blue"),
+           col = c(renoir_named[sp], "#B40F20"),
            lty = c(NA, 2),
            pch = c(16, NA),
            lwd = c(NA, 2),
@@ -202,6 +186,22 @@ for (sp in species_list) {
       adj = c(1, 1),
       cex = 1
     )
+    par(new = TRUE)
+    plot(
+      d$yearCor, d$lengthMM,
+      pch = 16,
+      cex = 0.9,
+      col = renoir_named[sp],
+      xlim = xlim,
+      ylim = ylim,
+      xlab = "Tree age at ring",
+      ylab = "Ring width (mm)",
+      main = paste(id_i)
+    )
+    abline(fit, col = "black", lwd = 1)
+    
+    
+    
   }
   mtext(sp, side = 3, outer = TRUE, line = 0.5, cex = 1.4, font = 2)
 } 
