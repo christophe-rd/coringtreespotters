@@ -130,6 +130,8 @@ allringwidths2$gdd <- longtermgdd5yr$GDD_avg[match(allringwidths2$yearCor, longt
 allringwidths2$interval_idx <- findInterval(allringwidths2$yearCor, longtermgdd5yr$year_start)
 allringwidths2$gdd <- longtermgdd5yr$GDD_avg[allringwidths2$interval_idx]
 
+
+
 # Clean up if you don't want the helper column
 allringwidths2$interval_idx <- NULL
 
@@ -154,6 +156,7 @@ for (sp in species_list) {
     fit <- lm(lengthMM ~ yearCor, d)
     xlim <- range(d$yearCor, na.rm = TRUE)
     ylim_gdd <- range(d$gdd, na.rm = TRUE)  
+    
     plot(
       d$yearCor, d$gdd,
       type = "l",
@@ -167,7 +170,7 @@ for (sp in species_list) {
       ylab = ""
     )
     axis(4, col = "#B40F20", col.axis = "#B40F20")
-    mtext("GDD", side = 4, line = 2.5, col = "#B40F20", cex = 0.7)
+    mtext("Growing degree days (GDD)", side = 4, line = 2.5, col = "#B40F20", cex = 0.7)
     
     legend("topleft", 
            legend = c("Ring width", "GDD"),
@@ -194,7 +197,7 @@ for (sp in species_list) {
       col = renoir_named[sp],
       xlim = xlim,
       ylim = ylim,
-      xlab = "Tree age at ring",
+      xlab = "Calendar year",
       ylab = "Ring width (mm)",
       main = paste(id_i)
     )
