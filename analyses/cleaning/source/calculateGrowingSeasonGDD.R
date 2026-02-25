@@ -159,6 +159,15 @@ colournona <- aggregate(coloredLeaves ~ sppyear, ts, FUN = mean)
 
 ts$coloredLeavesAVG <- as.integer(colournona$coloredLeaves[match(ts$sppyear, colournona$sppyear)])
 
+nrow(ts[!is.na(ts$coloredLeaves),]) 
+nrow(ts[!is.na(ts$coloredLeavesAVG),])
+
+ggplot(ts) +
+  geom_point(aes(x = coloredLeaves, y= coloredLeavesAVG, color = latbi)) + 
+  geom_abline(intercept = 0, slope = 1, linetype = "dashed", color = "#B40F20", linewidth = 1) + 
+  facet_wrap(~ latbi) +
+  labs(x = "Leaf color date averaged by spp + year", y = "Leaf color date real values")
+
 ts$leafcolorGDD10AVG <- NA
 
 for(i in 1:nrow(ts)) {

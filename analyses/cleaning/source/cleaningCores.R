@@ -333,8 +333,8 @@ ggplot(QUAL, aes(x = yearCor, y = lengthCM, color = id, group = idrep)) +
     strip.background = element_blank(),
     panel.spacing = unit(0.1, "lines"),
     axis.text.x = element_text(angle = 45, hjust = 1)
-  ) 
-  # scale_color_manual(values = wes_palette("FantasticFox1")) 
+  ) +
+  scale_color_manual(values = wes_palette("FantasticFox1"))
 ggsave("figures/qualspaghetti_plot.jpeg", width = 10, height = 6, units = "in", dpi = 300)
 
 
