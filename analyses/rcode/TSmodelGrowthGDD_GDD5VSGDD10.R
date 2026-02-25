@@ -68,7 +68,7 @@ fitgdd5 <- stan("stan/TSmodelGrowthGDD5.stan",
                    "Nspp","species",
                    "Ntreeid", "treeid", 
                    "gdd5"),
-            iter=4000, chains=4, cores=4)
+            iter=2000, chains=4, cores=4)
 
 
 fitgdd10 <- stan("stan/TSmodelGrowthGDD10.stan", 
@@ -76,7 +76,7 @@ fitgdd10 <- stan("stan/TSmodelGrowthGDD10.stan",
                        "Nspp","species",
                        "Ntreeid", "treeid", 
                        "gdd10"),
-                iter=4000, chains=4, cores=4)
+                iter=2000, chains=4, cores=4)
 # diagnostics
 diagnostics <- util$extract_hmc_diagnostics(fit) 
 util$check_all_hmc_diagnostics(diagnostics)
@@ -398,6 +398,11 @@ treeidplot
 combined <- (sigmaplot + treeidplot) /
   (asppplot + bsppplot)
 ggsave("figures/modelGrowthGDD/comparisonGDD/GDD5vsGDD10.jpeg", combined, width = 8, height = 6, units = "in", dpi = 300)
+
+# Check which species diverge the most
+subset(asppforplot, spp == 9)
+subset(bsppforplot, spp == "bspp[9]")
+subset(emp, spp_num == 9)
 
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 # Retrodictive checks ####

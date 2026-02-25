@@ -7,9 +7,12 @@
 rm(list=ls()) 
 options(stringsAsFactors = FALSE)
 options(max.print = 150) 
-options(mc.cores = parallel::detectCores())
 options(digits = 3)
-# quartz()
+
+# stan options
+rstan_options(auto_write = TRUE)
+options(mc.cores = parallel::detectCores())
+parallel:::setDefaultClusterOptions(setup_strategy = "sequential")
 
 # Load library 
 library(ggplot2)
@@ -579,12 +582,12 @@ table(emp$id, emp$symbol)
 table(emp$treeid_num, emp$spp_num)
 
 # remove NAs
-emp <- emp[!is.na(emp$pgsGDD10), ]
+emp <- emp[!is.na(emp$pgsGDD5), ]
 
 # transform data in vectors
 y <- emp$lengthMM # ring width in mm
 N <- nrow(emp)
-gdd <- emp$pgsGDD10/200
+gdd <- emp$pgsGDD5/200
 Nspp <- length(unique(emp$spp_num))
 species <- as.numeric(as.character(emp$spp_num))
 treeid <- as.numeric(emp$treeid_num)
@@ -600,7 +603,7 @@ fit <- stan("stan/TSmodelGrowthGDD.stan",
                    "Nspp","species",
                    "Ntreeid", "treeid", 
                    "gdd"),
-            iter=4000, chains=4, cores=4)
+            warmup = 1000, iter = 2000, chains=4)
 saveRDS(fit, "output/stanOutput/fit_modelGrowth")
 
 # diagnostics

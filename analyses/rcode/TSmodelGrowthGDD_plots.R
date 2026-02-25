@@ -31,19 +31,24 @@ util <- new.env()
 source('mcmc_analysis_tools_rstan.R', local=util)
 source('mcmc_visualization_tools.R', local=util)
 
+# specify colors
+renoir <- c("#17154f", "#2f357c", "#6c5d9e", "#9d9cd5", "#b0799a", "#f6b3b0", "#e48171", "#bf3729", "#e69b00", "#f5bb50", "#ada43b", "#355828")
+
 # === === === === === === === === === === === === === === === === 
 # EMPIRICAL DATA ####
 # === === === === === === === === === === === === === === === === 
 emp <- read.csv("output/empiricalDataMAIN.csv")
+# remove NAs
+emp <- emp[!is.na(emp$pgsGDD5), ]
 
 # transform my groups to numeric values
 emp$spp_num <- match(emp$symbol, unique(emp$symbol))
 emp$treeid_num <- match(emp$id, unique(emp$id))
 
 # transform data in vectors
-y <- emp$lengthCM*10 # ring width in mm
+y <- emp$lengthMM
 N <- nrow(emp)
-gdd <- emp$pgsGDD10/200
+gdd <- emp$pgsGDD5/200
 Nspp <- length(unique(emp$spp_num))
 Nsite <- length(unique(emp$site_num))
 site <- as.numeric(as.character(emp$site_num))
@@ -170,32 +175,6 @@ for (i in 1:ncol(aspp_df)) { # i = 1
 }
 aspp_df2
 
-# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
-##### Recover a site #####
-site_cols <- colnames(df_fit)[grepl("asite", colnames(df_fit))]
-
-site_df <- df_fit[, colnames(df_fit) %in% site_cols]
-# change their names
-colnames(site_df) <- sub("asite\\[(\\d+)\\]", "\\1", colnames(site_df))
-# empty site df
-site_df2 <- data.frame(
-  site = character(ncol(site_df)),
-  fit_a_site = numeric(ncol(site_df)),  
-  fit_a_site_per5 = NA, 
-  fit_a_site_per25 = NA,
-  fit_a_site_per75 = NA,
-  fit_a_site_per95 = NA
-)
-for (i in 1:ncol(site_df)) { # i = 1
-  site_df2$site[i] <- colnames(site_df)[i]         
-  site_df2$fit_a_site[i] <- round(mean(site_df[[i]]),3)  
-  site_df2$fit_a_site_per5[i] <- round(quantile(site_df[[i]], probs = 0.05), 3)
-  site_df2$fit_a_site_per25[i] <- round(quantile(site_df[[i]], probs = 0.25), 3)
-  site_df2$fit_a_site_per75[i] <- round(quantile(site_df[[i]], probs = 0.75), 3)
-  site_df2$fit_a_site_per95[i] <- round(quantile(site_df[[i]], probs = 0.95), 3)
-}
-site_df2
-
 #### Plot lines ####
 # Gdd on the x axis and growth on y ####
 aspp_df2$a <- mean(df_fit[,"a"])
@@ -211,7 +190,7 @@ emp2 <- merge(emp2, aspp_df2[, c("spp_num", "a", "bsp", "a_asp")],
               by = "spp_num")
 # plot lines
 ggplot(emp2) +
-  geom_point(aes(x = pgsGDD10/200, y = lengthMM, colour = symbol)) +
+  geom_point(aes(x = pgsGDD/200, y = lengthMM, colour = symbol)) +
   geom_abline(aes(intercept = a_asp, slope = bsp, colour = symbol), 
               linewidth = 0.5) +
   labs(title = "", x = "pgsGDD", y = "ring width in mm") +
@@ -241,8 +220,8 @@ colnames(atreeidsub) <- 1:length(subyvec)
 # start by filling a df with treeid intercepts only
 
 # get the spp and site identities for each tree id
-treeid_spp_site <- unique(emp[, c("treeid_num", "spp_num", "site_num",
-                                  "treeid", "spp", "site", "latbi")])
+treeid_spp <- unique(emp[, c("treeid_num", "spp_num",
+                                  "id", "symbol", "commonName")])
 
 # the spp values for each tree id
 treeid_aspp <- data.frame(matrix(ncol = ncol(atreeidsub), nrow = nrow(df_fit)))
@@ -250,21 +229,10 @@ colnames(treeid_aspp) <- colnames(atreeidsub)
 
 for (i in seq_len(ncol(treeid_aspp))) { # i = 1
   tree_id <- as.integer(colnames(treeid_aspp)[i])
-  spp_id <- treeid_spp_site$spp_num[match(tree_id, treeid_spp_site$treeid_num)]
+  spp_id <- treeid_spp$spp_num[match(tree_id, treeid_spp$treeid_num)]
   treeid_aspp[, i] <- aspp_df[, spp_id]
 }
 treeid_aspp
-
-# the site values for each tree id
-treeid_asite <- data.frame(matrix(ncol = ncol(atreeidsub), nrow = nrow(df_fit)))
-colnames(treeid_asite) <- colnames(atreeidsub)
-
-for (i in seq_len(ncol(treeid_asite))) { # i = 1
-  tree_id <- as.integer(colnames(treeid_asite)[i])
-  site_id <- treeid_spp_site$site_num[match(tree_id, treeid_spp_site$treeid_num)]
-  treeid_asite[, i] <- site_df[, site_id]
-}
-treeid_asite
 
 # recover a
 treeid_a <- data.frame(matrix(ncol = ncol(atreeidsub), nrow = nrow(df_fit)))
@@ -278,8 +246,7 @@ for (i in seq_len(ncol(treeid_a))) { # i = 1
 fullintercept <-
   treeid_a + # CHECK: convert to 75 cols
   atreeidsub +
-  treeid_aspp +
-  treeid_asite
+  treeid_aspp 
 fullintercept
 
 # now get the slope for each treeid
@@ -287,39 +254,39 @@ treeid_bspp <- data.frame(matrix(ncol = ncol(atreeidsub), nrow = nrow(df_fit)))
 colnames(treeid_bspp) <- colnames(atreeidsub)
 
 # back convert the slopes to their original scales
-for (i in 1:ncol(bspp_df)){
-  bspp_df[[i]] <- bspp_df[[i]] / 200
+bspp_df2 <- bspp_df
+for (i in 1:ncol(bspp_df2)){
+  bspp_df2[[i]] <- bspp_df2[[i]] / 200
 }
 
 for (i in seq_len(ncol(treeid_bspp))) { # i = 30
   tree_id <- as.integer(colnames(treeid_bspp)[i])
-  spp_id <- treeid_spp_site$spp_num[match(tree_id, treeid_spp_site$treeid_num)]
-  treeid_bspp[, i] <- bspp_df[, spp_id]
+  spp_id <- treeid_spp$spp_num[match(tree_id, treeid_spp$treeid_num)]
+  treeid_bspp[, i] <- bspp_df2[, spp_id]
 }
 treeid_bspp
 
 treeidvecnum <- 1:ncol(fullintercept)
-treeidvecname <- treeid_spp_site$treeid
-x <- seq(min(emp$pgsGDD), max(emp$pgsGDD), length.out = 100)  
+treeidvecname <- treeid_spp$id
+x <- seq(min(emp$pgsGDD5), max(emp$pgsGDD5), length.out = 100)  
 y_post_list <- list()  # store posterior predictions in a list where each tree id gets matrix
-sppcols <- c(wes_palette("AsteroidCity1"))[1:4]
-sppcols
-
-# PDF output
-pdf(file = "figures/empiricalData/growthModelSlopesperTreeid.pdf", width = 10, height = 8)
-
-# Layout: 2 rows × 2 columns per page
-par(mfrow = c(2, 2), mar = c(4, 4, 2, 1))
 
 # below I create a list where each row is the posterior estimate for each value of gdd (so the first row correspond to the model estimate for the first gdd value stored in x) and each column is the iteration (from 1 to 8000)
 for (i in seq_along(treeidvecnum)) { # i = 1
   tree_col <- as.character(treeidvecnum[i]) 
-  # TO CHANGE: get the 8000 samples back
-  y_post <- sapply(1:8000, function(f) {
-    rnorm(length(x), fullintercept[f, tree_col] + treeid_bspp[f, tree_col] * x, sigma_df$sigma_y[f])
+  # TO CHANGE: get the nrow(df_fit) samples back
+  y_post <- sapply(1:nrow(df_fit), function(f) {
+    rnorm(length(x), 
+          fullintercept[f, tree_col] + treeid_bspp[f, tree_col] * x, 
+          sigma_df$sigma_y[f])
   })
   y_post_list[[tree_col]] <- y_post
 }
+
+# PDF output
+pdf(file = "figures/empiricalData/growthModelSlopesperTreeid.pdf", width = 10, height = 8)
+# Layout: 2 rows × 2 columns per page
+par(mfrow = c(2, 2), mar = c(4, 4, 2, 1))
 
 # Loop over trees again to plot each tree individually
 for (i in seq_along(treeidvecnum)) { # i = 1
@@ -339,15 +306,15 @@ for (i in seq_along(treeidvecnum)) { # i = 1
   y_high <- apply(y_post, 1, quantile, 0.75)
   
   # empty plot first
-  plot(emp$pgsGDD, y, type = "n", 
-       ylim = range(c(emp_treeid$lengthCM * 10, y_low, y_high), na.rm = TRUE),
+  plot(emp$pgsGDD5, y, type = "n", 
+       ylim = range(c(emp_treeid$lengthMM, y_low, y_high), na.rm = TRUE),
        xlab = "Primary growing season GDD", ylab = "Ring width (mm)",
        main = tree_col_name) # set the name for each plot
   
-  spp_id <- treeid_spp_site$spp_num[
-    match(tree_id_num, treeid_spp_site$treeid_num)
+  spp_id <- treeid_spp$spp_num[
+    match(tree_id_num, treeid_spp$treeid_num)
   ]
-  line_col <- sppcols[spp_id]
+  line_col <- renoir[spp_id]
   
   # shaded interval
   polygon(c(x, rev(x)), 
@@ -362,8 +329,8 @@ for (i in seq_along(treeidvecnum)) { # i = 1
         lwd = 2)
   
   points(
-    emp_treeid$pgsGDD,
-    emp_treeid$lengthCM * 10,
+    emp_treeid$pgsGDD5,
+    emp_treeid$lengthMM,
     pch = 16,
     cex = 2,
     col = line_col)
@@ -374,16 +341,30 @@ dev.off()
 ##### Per Spp, facet #####
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
 # get a vector for each treeid for each species
-spp1vec <- treeid_spp_site$treeid_num[treeid_spp_site$spp_num == 1]
-spp2vec <- treeid_spp_site$treeid_num[treeid_spp_site$spp_num == 2]
-spp3vec <- treeid_spp_site$treeid_num[treeid_spp_site$spp_num == 3]
-spp4vec <- treeid_spp_site$treeid_num[treeid_spp_site$spp_num == 4]
+spp1vec <- treeid_spp$treeid_num[treeid_spp$spp_num == 1]
+spp2vec <- treeid_spp$treeid_num[treeid_spp$spp_num == 2]
+spp3vec <- treeid_spp$treeid_num[treeid_spp$spp_num == 3]
+spp4vec <- treeid_spp$treeid_num[treeid_spp$spp_num == 4]
+spp5vec <- treeid_spp$treeid_num[treeid_spp$spp_num == 5]
+spp6vec <- treeid_spp$treeid_num[treeid_spp$spp_num == 6]
+spp7vec <- treeid_spp$treeid_num[treeid_spp$spp_num == 7]
+spp8vec <- treeid_spp$treeid_num[treeid_spp$spp_num == 8]
+spp9vec <- treeid_spp$treeid_num[treeid_spp$spp_num == 9]
+spp10vec <- treeid_spp$treeid_num[treeid_spp$spp_num == 10]
+spp11vec <- treeid_spp$treeid_num[treeid_spp$spp_num == 11]
 
 spp_list <- list(
   "1" = spp1vec,
   "2" = spp2vec,
   "3" = spp3vec,
-  "4" = spp4vec
+  "4" = spp4vec,
+  "5" = spp5vec,
+  "6" = spp6vec,
+  "7" = spp7vec,
+  "8" = spp8vec,
+  "9" = spp9vec,
+  "10" = spp10vec,
+  "11" = spp11vec
 )
 
 # Average each entry of the 75 treeids according to their species 
@@ -391,11 +372,10 @@ spp_post_list <- lapply(spp_list, function(tree_vec) {
   Reduce("+", y_post_list[tree_vec]) / length(tree_vec)
 })
 
-sppvecnum <- 1:4
-sppvecname <- unique(treeid_spp_site$latbi)
+sppvecnum <- 1:11
+sppvecname <- unique(treeid_spp$commonName)
 
-x <- seq(min(emp$pgsGDD), max(emp$pgsGDD), length.out = 100)   
-sppcols <- c(wes_palette("AsteroidCity1"))[1:4]
+x <- seq(min(emp$pgsGDD5), max(emp$pgsGDD5), length.out = 100)   
 
 # jpeg output
 jpeg(
@@ -404,20 +384,8 @@ jpeg(
   height = 2400,
   res = 300          # good print-quality resolution
 )
-# Layout: 2 rows × 2 columns per page
-par(mfrow = c(2, 2), mar = c(4, 4, 2, 1))
-
-# below I create a list where each row is the posterior estimate for each value of gdd (so the first row correspond to the model estimate for the first gdd value stored in x) and each column is the iteration (from 1 to 8000)
-# for (i in seq_along(sppvecnum)) { # i = 1
-#   spp_column <- as.character(sppvecnum[i]) 
-#   # TO CHANGE: get the 8000 samples back
-#   y_post <- sapply(1:8000, function(f) {
-#     sppintercept[f, spp_column] + bspp_df[f, spp_column] * x
-#   })
-#   spp_post_list[[spp_column]] <- y_post
-# }
-
-# str(spp_post_list) # its good if x is the number of gdd and y the number of iterations
+# Layout: 4 cols x 3 rows
+par(mfrow = c(4, 3), mar = c(4, 4, 2, 1))
 
 # Loop over trees again to plot each tree individually
 for (i in seq_along(sppvecnum)) { # i = 1
@@ -440,9 +408,9 @@ for (i in seq_along(sppvecnum)) { # i = 1
   y_high <- apply(y_post, 1, quantile, 0.75)
   
   # species-specific ylim
-  ylim_spp <- range(c(emp_spp$lengthCM * 10, y_low, y_high), na.rm = TRUE)
+  ylim_spp <- range(c(emp_spp$lengthMM, y_low, y_high), na.rm = TRUE)
   
-  plot(emp_spp$pgsGDD, emp_spp$lengthCM * 10,
+  plot(emp_spp$pgsGDD5, emp_spp$lengthMM,
        type = "n",
        ylim = ylim_spp,
        xlab = "Primary growing season GDD",
@@ -450,7 +418,7 @@ for (i in seq_along(sppvecnum)) { # i = 1
        main = spp_column_name)
   
   # color
-  line_col <- sppcols[spp_num]
+  line_col <- renoir[spp_num]
   
   polygon(
     c(x, rev(x)),
@@ -462,8 +430,8 @@ for (i in seq_along(sppvecnum)) { # i = 1
   lines(x, y_mean, col = line_col, lwd = 2)
   
   points(
-    emp_spp$pgsGDD,
-    emp_spp$lengthCM * 10,
+    emp_spp$pgsGDD5,
+    emp_spp$lengthMM,
     pch = 16,
     cex = 1,
     col = line_col
@@ -488,8 +456,8 @@ par(mar = c(4, 4, 2, 1))
 
 # below I create a list where each row is the posterior estimate for each value of gdd (so the first row correspond to the model estimate for the first gdd value stored in x) and each column is the iteration (from 1 to 8000)
 
-plot(emp$pgsGDD, y, type = "n", 
-     ylim = range(min(emp$lengthCM*10), max(emp$lengthCM*10)), 
+plot(emp$pgsGDD5, y, type = "n", 
+     ylim = range(min(emp$lengthMM*10), max(emp$lengthMM*10)), 
      xlab = "Primary growing season GDD", ylab = "Ring width (mm)",
      main = "species growth responses")
 
@@ -507,7 +475,7 @@ for (i in seq_along(sppvecnum)) { # i = 1
   y_low  <- apply(y_post, 1, quantile, 0.25)
   y_high <- apply(y_post, 1, quantile, 0.75)
   
-  line_col <- sppcols[spp_num]
+  line_col <- renoir[spp_num]
   
   # shaded interval
   polygon(c(x, rev(x)), 
@@ -524,8 +492,8 @@ for (i in seq_along(sppvecnum)) { # i = 1
   emp_spp <- emp[emp$spp_num == spp_num, ]
 
   points(
-    emp_spp$pgsGDD,
-    emp_spp$lengthCM * 10,
+    emp_spp$pgsGDD5,
+    emp_spp$lengthMM,
     pch = 16,
     cex = 1,
     col = line_col)
@@ -533,7 +501,7 @@ for (i in seq_along(sppvecnum)) { # i = 1
   legend(
     "topleft",
     legend = sppvecname,
-    col = sppcols[as.integer(sppvecnum)],
+    col = renoir[as.integer(sppvecnum)],
     lwd = 2,
     pch = 16,
     bty = "n",

@@ -45,11 +45,11 @@ table(emp$symbol, emp$spp_num)
 table(emp$id, emp$symbol)
 table(emp$treeid_num, emp$spp_num)
 
-ggplot(emp, aes(x = pgsGDD10, y = pgsGDD10AVG)) +
-  geom_point(color = "#046C9A", size = 2) +
-  geom_abline(intercept = 0, slope = 1, linetype = "dashed", color = "#B40F20", linewidth = 1) +
-  labs(x = real, y = "averaged leaf colour data/spp + year", title = "atreeid") +
-  theme_minimal()
+# ggplot(emp, aes(x = pgsGDD10, y = pgsGDD10AVG)) +
+#   geom_point(color = "#046C9A", size = 2) +
+#   geom_abline(intercept = 0, slope = 1, linetype = "dashed", color = "#B40F20", linewidth = 1) +
+#   labs(x = real, y = "averaged leaf colour data/spp + year", title = "atreeid") +
+#   theme_minimal()
 
 # remove NAs
 empabs <- emp[!is.na(emp$pgsGDD10), ]
@@ -69,7 +69,7 @@ fit <- stan("stan/TSmodelGrowthGDD.stan",
                    "Nspp","species",
                    "Ntreeid", "treeid", 
                    "gdd"),
-            iter=4000, chains=4, cores=4)
+            iter=2000, chains=4, cores=4)
 
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 # AVG VALUES ####
@@ -92,7 +92,7 @@ fitavg <- stan("stan/TSmodelGrowthGDD.stan",
                    "Nspp","species",
                    "Ntreeid", "treeid", 
                    "gdd"),
-            iter=4000, chains=4, cores=4)
+            iter=2000, chains=4, cores=4)
 
 # === === === === === === === === === === === === #
 ##### Recover parameters from the posterior REAL##### 
@@ -409,3 +409,17 @@ combined <- (sigmaplot + treeidplot) /
   (asppplot + bsppplot)
 ggsave("figures/modelGrowthGDD/comparisonGDD/avgvsrealLeafcolordates.jpeg", combined, width = 8, height = 6, units = "in", dpi = 300)
 
+# make some checks
+subset(asppforplot, spp == 9)
+nrow(empabs)
+nrow(empavg)
+qualabs <- subset(empabs, spp_num == 9)
+nrow(qualabs)
+qualavg <- subset(empavg, spp_num == 9)
+nrow(qualavg)
+max(qualabs$pgsGDD10AVG)
+max(qualavg$pgsGDD10AVG)
+min(qualabs$pgsGDD10AVG)
+min(qualavg$pgsGDD10AVG)
+plot(qualabs$pgsGDD10 ~ qualavg$pgsGDD10AVG)
+abline(a = 0, b = 1, lty = 2, col = "#B40F20", lwd = 2)
