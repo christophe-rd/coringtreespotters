@@ -24,6 +24,9 @@ library(rnaturalearthdata)
 
 setwd("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses")
 
+# flags
+makeggplots <- FALSE
+
 emp <- read.csv("output/empiricalDataMAIN.csv")
 gdd <- read.csv("output/gddByYear.csv")
 allringwidths <- read.csv("output/ringWidthTS.csv")
@@ -50,6 +53,7 @@ allringwidths2$age <- allringwidths2$yearCor - allringwidths2$accessionYear
 # ringwidth X GDD in PGS
 renoir <- c("#17154f", "#2f357c", "#6c5d9e", "#9d9cd5", "#b0799a", "#f6b3b0", "#e48171", "#bf3729", "#e69b00", "#f5bb50", "#ada43b", "#355828")
 
+if (makeggplots) {
 subsetbass <- subset(emp, symbol == "TIAM")
 subsetbass$DBH
 ggplot(emp, aes(x = pgsGDD10, y = lengthMM, 
@@ -103,6 +107,21 @@ ggplot(emp, aes(x = pgsGDD10, y = lengthMM)) +
   theme_bw() 
 ggsave("figures/empiricalData/sppLinearRegressions_pgsGDD.jpeg", width = 6, height = 8, units = "in", dpi = 300)
 
+ggplot(emp, aes(x = year, y = lengthMM, 
+                color = commonName, 
+                fill = commonName)) +
+  geom_point(size = 2, alpha = 0.7) + 
+  geom_smooth(method = "lm", se = TRUE, alpha = 0) +
+  scale_color_manual(values = renoir) +
+  scale_fill_manual(values = renoir) +
+  facet_wrap(~id) +
+  labs(y = "Ring width (mm)", x = "Growing degree days (GDD)", color = "Tree Species") +
+  theme_minimal() +
+  theme(legend.key.height = unit(1.5, "lines"),
+        strip.text = element_text(face = "bold.italic", size = 10)) +
+  guides(fill = "none", color = "none") 
+}
+
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 # Plot ring width x age at ring, 1 page per species ####
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
@@ -123,16 +142,13 @@ age <- aggregate(treeAge ~ id, allringwidths2, FUN = mean)
 allringwidths2$meanAge <- age$treeAge[match(allringwidths2$id, age$id)]
 allringwidths2 <- allringwidths2[order(allringwidths2$meanAge),]
 allringwidths2$commonName <- emp$commonName[match(allringwidths2$id, emp$id)]
+allringwidths2$plantNickname <- emp$plantNickname[match(allringwidths2$id, emp$id)]
 
-str(longtermgdd5yr)
+# add 5 year gdd average
 allringwidths2$gdd <- longtermgdd5yr$GDD_avg[match(allringwidths2$yearCor, longtermgdd5yr$year)]
 
 allringwidths2$interval_idx <- findInterval(allringwidths2$yearCor, longtermgdd5yr$year_start)
 allringwidths2$gdd <- longtermgdd5yr$GDD_avg[allringwidths2$interval_idx]
-
-
-
-# Clean up if you don't want the helper column
 allringwidths2$interval_idx <- NULL
 
 pdf("figures/empiricalData/ringwidthXyear_bySpeciesAllYrs.pdf", width = 10, height = 6)
@@ -142,7 +158,7 @@ renoir_named <- setNames(renoir, species_list)
 # Loop over each species
 for (sp in species_list) {
   df_sp <- allringwidths2[allringwidths2$commonName == sp, ]
-  ids   <- unique(df_sp$id)
+  ids   <- unique(df_sp$plantNickname)
   par(
     mfrow = n2mfrow(length(ids)),
     mar = c(4, 4, 2, 4), 
@@ -152,7 +168,7 @@ for (sp in species_list) {
   
   # Loop over each individual tree
   for (id_i in ids) {
-    d <- df_sp[df_sp$id == id_i, ]
+    d <- df_sp[df_sp$plantNickname == id_i, ]
     fit <- lm(lengthMM ~ yearCor, d)
     xlim <- range(d$yearCor, na.rm = TRUE)
     ylim_gdd <- range(d$gdd, na.rm = TRUE)  
@@ -202,9 +218,6 @@ for (sp in species_list) {
       main = paste(id_i)
     )
     abline(fit, col = "black", lwd = 1)
-    
-    
-    
   }
   mtext(sp, side = 3, outer = TRUE, line = 0.5, cex = 1.4, font = 2)
 } 
@@ -328,146 +341,140 @@ for (sp in species_list) {
 
 dev.off()
 
-
-
-emp2 <- emp[!duplicated(emp$idrep),]
-emp2 <- aggregate(lengthMM ~ idrep, emp, FUN = mean)
-
-emp2$accessionYear <- emp$accessionYear[match(emp2$idrep, emp$idrep)]
-emp2$commonName <- emp$commonName[match(emp2$idrep, emp$idrep)]
-
-
-# color coded by number of frost free days
-frostfree <- subset(gdd, minTempC > 0)
-
-# count the nb of frost free days per year
-countfrost <- frostfree %>% count(year)
-colnames(countfrost) <- c("year", "countFrostFree")
-
-emp <- merge(emp, countfrost, by = "year")
-
-# associate cols
-emp$colfrost <- NA
-unique(emp$countFrostFree)
-emp$colfrost[which(emp$year %in% c(2018, 2019))] <- "#81A88D"
-emp$colfrost[which(emp$year %in% c(2020))] <- "#02401B"
-
-emp$countFrostFree <- as.factor(emp$countFrostFree)
-ggplot(emp, aes(x = pgsGDD, y = lengthMM)) +
-  geom_point(size = 2, alpha = 1,
-             aes(shape = site,
-                 color = countFrostFree, 
-                 fill = countFrostFree)) + 
-  geom_smooth(method = "lm", se = TRUE, alpha = 0.2, color = "black") +
-  scale_shape_manual(values = c(21, 22, 23, 24, 25)) +  
-  facet_wrap(~commonName) +
-  labs(y = "Ring width (mm)", 
-       x = "Growing degree days (GDD)", 
-       color = "Number of frost free days",
-       fill = "Number of frost free days",
-       shape = "Site") +  
-  theme_bw() +
-  guides(color = guide_legend(override.aes = list(shape = 21)),
-         fill = guide_legend(override.aes = list(shape = 21)))
-ggsave("figures/empiricalData/sppLinearRegressions_pgsGDD_frostFreeDays.jpeg", width = 8, height = 6, units = "in", dpi = 300)
-
-# color coded by tree id
-### start with bepa
-# BELOW IS FOR WILDCHROKIE ADAPT TO TS
-bepa <- subset(emp, spp == "BETPAP")
-bepaplot <- ggplot(bepa, aes(x = pgsGDD, y = lengthMM)) +
-geom_point(size = 2, alpha = 1) + 
-  # geom_smooth(method = "lm", se = TRUE, alpha = 0.2, color = "black") +
-  labs(y = "", 
-       x = "", 
-       color = "treeid",
-       fill = "treeid") +  
-  facet_wrap(~treeid)+
-  theme_bw() +
-  guides(color = guide_legend(override.aes = list(shape = 21)),
-         fill = guide_legend(override.aes = list(shape = 21)))
-ggsave("figures/empiricalData/sppLinearRegressions_pgsGDD_betpap.jpeg", bepaplot, width = 8, height = 6, units = "in", dpi = 300)
-
-# path them!
-combinedtreeid <- (bepaplot)/
-  (betpopplot) /
-  (betallplot) /
-  (alnincplot) 
-combinedtreeid
-ggsave("figures/empiricalData/sppLinearRegressions_pgsGDD_combined.jpeg", combinedtreeid, width = 8, height = 16, units = "in", dpi = 300)
-
-  # full growing season
-ggplot(emp, aes(x = fgsGDD, y = lengthCM, 
-                color = symbol, 
-                fill = symbol)) +
-  geom_point(size = 2, alpha = 0.7) + 
-  geom_smooth(method = "lm", se = TRUE, alpha = 0.2) +
-  scale_color_manual(values = wes_palette("AsteroidCity1")) +
-  scale_fill_manual(values = wes_palette("AsteroidCity1")) +
-  facet_wrap(~symbol) +
-  labs(y = "Ring width (cm)", x = "Growing degree days (GDD)", color = "Tree Species") +
-  theme_minimal() +
-    theme(strip.text = element_blank(),         
-          legend.key.height = unit(1.5, "lines")) +
-  guides(fill = "none") 
-ggsave("figures/empiricalData/sppLinearRegressions.jpeg", 
-       width = 9, height = 6, units = "in", dpi = 300)
-
-# just the number of days, without gdd
-emp$pgsNgrowingdays <- emp$budset - emp$leafout
-emp$fgsNgrowingdays <- emp$leafcolor - emp$budburst
-
-# number of days  in pgs
-ggplot(emp) +
-  # geom_point(size = 2, alpha = 0.7) + 
-  geom_smooth(aes(x = pgsNgrowingdays, y = lengthCM, 
-                  color = symbol, 
-                  fill = symbol),
-              method = "lm", se = TRUE, alpha = 0.2) +
-
-  scale_color_manual(values = wes_palette("AsteroidCity1")) +
-  scale_fill_manual(values = wes_palette("AsteroidCity1")) +
-  facet_wrap(~symbol) +
-  labs(y = "Ring width (cm)", x = "", color = "Tree Species") +
-  theme_minimal() +
-  theme(strip.text = element_blank(),         
-          legend.key.height = unit(1.5, "lines")) +
-  guides(fill = "none") 
-ggsave("figures/empiricalData/sppLinearRegressions_pgsNdays.jpeg", width = 9, height = 6, units = "in", dpi = 300)
-# number of days  in fgs
-ggplot(emp, aes(x = fgsNgrowingdays, y = lengthCM, 
-                color = symbol, 
-                fill = symbol)) +
-  geom_point(size = 2, alpha = 0.7) + 
-  geom_smooth(method = "lm", se = TRUE, alpha = 0.2) +
-  scale_color_manual(values = wes_palette("AsteroidCity1")) +
-  scale_fill_manual(values = wes_palette("AsteroidCity1")) +
-  facet_wrap(~sppfull) +
-  labs(y = "Ring width (cm)", x = "", color = "Tree Species") +
-  theme_minimal() +   theme(strip.text = element_blank(),                    legend.key.height = unit(1.5, "lines")) +
-  theme(strip.text = element_blank(),
-        legend.key.height = unit(1.5, "lines")) +
-  guides(fill = "none") 
-# # plot gdd
-# gddstats <- aggregate(GDD_10 ~ doy, FUN = mean, data = gdd)
-# colnames(gddstats)[2] <-  "mean"
-# gddstats2 <- aggregate(GDD_10 ~ doy, FUN = min, data = gdd)
-# colnames(gddstats2)[2] <-  "min"
-# gddstats3 <- aggregate(GDD_10 ~ doy, FUN = max, data = gdd)
-# colnames(gddstats3)[2] <-  "max"
-# 
-# gddstats <- merge(gddstats, gddstats2, by = "doy")
-# gddstats <- merge(gddstats, gddstats3, by = "doy")
-# 
-# ggplot(gddstats, aes(x = doy, y = mean)) + 
-#   geom_line() +
-#   geom_ribbon(aes(ymin = min, ymax = max), alpha = 0.2, color = NA) +
-#   geom_vline(xintercept = 5) +
-#   labs(title = "GDD accumulation")
+# <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+# Plot all tree together in one page ####
+# <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+pdf("figures/empiricalData/ringwidthXyearPhenoData1page.pdf", 
+    width = 10, height = 10)
+ids <- unique(emp$plantNickname)
+par(mfrow = c(ceiling(length(ids)/5), 5), 
+    mar = c(2, 2, 1.5, 0.5),
+    mgp = c(1.5, 0.5, 0))
+emp$year <- as.integer(emp$year)
+for(i in ids) { # i = 
+  sub <- emp[emp$plantNickname == i, ]
+  col_vals <- renoir[as.numeric(factor(sub$commonName, levels = levels(factor(emp$commonName))))]
+  
+  plot(sub$year, sub$lengthMM,
+       col = col_vals,
+       pch = 16,
+       cex = 1,
+       main = i,
+       xlab = "",
+       xaxt = "n",
+       ylab = "",
+       tck = -0.1,
+       bty = 'l')
+  
+  axis(1, at = seq(floor(min(sub$year)), floor(max(sub$year)), by = 2), tck = -0.1)
+  # regression line per species
+  for(sp in unique(sub$commonName)) {
+    ssp <- sub[sub$commonName == sp, ]
+    fit <- lm(lengthMM ~ year, data = ssp)
+    abline(fit, col = renoir[as.numeric(factor(sp, levels = levels(factor(emp$commonName))))], lwd =0.5) 
+  }
+}
+dev.off()
 
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
-# Map ####
+# Plot crossdating example ####
+# <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+TIAM <- subset(allringwidths2, species == "TIAM")
+markers <- c(1965, 
+             1966, 
+             1981, # gypsy moth defoliation
+             2012, 
+             2016)
 
+ggplot(TIAM, aes(x = yearCor, y = lengthMM, color = plantNickname, 
+                 group = idrep)) +
+  geom_line(linewidth = 0.6) +
+  geom_vline(xintercept = markers, linetype = "dashed") +
+  labs(title = "",
+       x = "Year",
+       y = "Ring width (Length)",
+       color = "Core ID") +
+  facet_wrap(~plantNickname, nrow = 5, ncol = 1, scales = "free_y") +
+  theme_minimal(base_size = 14) +
+  scale_x_continuous(breaks = seq(min(TIAM$yearCor), 
+                                  max(TIAM$yearCor), 
+                                  by = 5)) +
+  theme(
+    strip.text = element_blank(),
+    strip.background = element_blank(),
+    panel.spacing = unit(0.1, "lines"),
+    axis.text.x = element_text(angle = 45, hjust = 1)
+  ) +
+  scale_color_manual(values = wes_palette("FantasticFox1"))
+ggsave("figures/tiamspaghetti_plot.jpeg", width = 10, height = 6, 
+       units = "in", dpi = 300)
+
+# <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+# Plotting phenology ####
+# <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+# Leafout 
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+pdf("figures/empiricalData/leafoutXyear.pdf", width = 8, height = 6)
+spp <- unique(emp$commonName)
+emp$year <- as.integer(emp$year)
+par(mfrow = c(4, 3), mar = c(2, 2, 1.5, 0.5), mgp = c(1.5, 0.5, 0))
+for(i in spp) {
+  sub <- emp[emp$commonName == i, ]
+  sp_col <- renoir[as.numeric(factor(i, levels = levels(factor(emp$commonName))))]
+  
+  plot(sub$year, sub$leafout,
+       col = sp_col,
+       pch = 16,
+       cex = 1,
+       main = i,
+       xlab = "",
+       xaxt = "n",
+       ylab = "",
+       tck = -0.03,
+       bty = 'l')
+  
+  axis(1, at = seq(floor(min(sub$year)), floor(max(sub$year)), by = 2), tck = -0.03)
+  
+  for(sp in unique(sub$plantNickname)) {
+    sids <- sub[sub$plantNickname == sp, ]
+    sids <- sids[order(sids$year), ]
+    lines(sids$year, sids$leafout, col = sp_col, lwd = 0.8)
+  }
+}
+dev.off()
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+# colored leaves 
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+pdf("figures/empiricalData/coloredLeavesXyear.pdf", width = 8, height = 6)
+par(mfrow = c(4, 3), mar = c(2, 2, 1.5, 0.5), mgp = c(1.5, 0.5, 0))
+for(i in spp) {
+  sub <- emp[emp$commonName == i, ]
+  sp_col <- renoir[as.numeric(factor(i, levels = levels(factor(emp$commonName))))]
+  
+  plot(sub$year, sub$coloredLeaves,
+       col = sp_col,
+       pch = 16,
+       cex = 1,
+       main = i,
+       xlab = "",
+       xaxt = "n",
+       ylab = "",
+       tck = -0.03,
+       bty = 'l')
+  
+  axis(1, at = seq(floor(min(sub$year)), floor(max(sub$year)), by = 2), tck = -0.03)
+  
+  for(sp in unique(sub$plantNickname)) {
+    sids <- sub[sub$plantNickname == sp, ]
+    sids <- sids[order(sids$year), ]
+    lines(sids$year, sids$coloredLeaves, col = sp_col, lwd = 0.8)
+  }
+}
+dev.off()
+# <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+# Map ####
+# <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 # --- Get the map data ---
 world <- ne_countries(scale = "medium", returnclass = "sf")
 
@@ -527,8 +534,4 @@ ggplot(data = world) +
   )
 ggsave("figures/mapSourcePop.jpeg", width = 9, height = 6, units = "in", dpi = 300)
 
-
-[1] "#FF0000" "#00A08A" "#F2AD00" "#F98400"
-
- # Fitting empirical data with stan_lmer ####
 
