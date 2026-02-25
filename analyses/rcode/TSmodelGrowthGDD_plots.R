@@ -31,6 +31,9 @@ util <- new.env()
 source('mcmc_analysis_tools_rstan.R', local=util)
 source('mcmc_visualization_tools.R', local=util)
 
+# flags
+makeggplot <- FALSE
+
 # specify colors
 renoir <- c("#17154f", "#2f357c", "#6c5d9e", "#9d9cd5", "#b0799a", "#f6b3b0", "#e48171", "#bf3729", "#e69b00", "#f5bb50", "#ada43b", "#355828")
 
@@ -188,9 +191,11 @@ colnames(aspp_df2)[colnames(aspp_df2) == "spp"] <- "spp_num"
 emp2 <- emp
 emp2 <- merge(emp2, aspp_df2[, c("spp_num", "a", "bsp", "a_asp")], 
               by = "spp_num")
+
+if (makeggplot) {
 # plot lines
 ggplot(emp2) +
-  geom_point(aes(x = pgsGDD/200, y = lengthMM, colour = symbol)) +
+  geom_point(aes(x = pgsGDD5/200, y = lengthMM, colour = symbol)) +
   geom_abline(aes(intercept = a_asp, slope = bsp, colour = symbol), 
               linewidth = 0.5) +
   labs(title = "", x = "pgsGDD", y = "ring width in mm") +
@@ -199,7 +204,7 @@ ggplot(emp2) +
   theme_minimal()
 ggsave("figures/empiricalData/slope_intercepts_varyingslopes.jpeg", 
        width = 8, height = 6, units = "in", dpi = 300)
-
+}
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 # Plot lines with quantiles ####
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
@@ -309,6 +314,7 @@ for (i in seq_along(treeidvecnum)) { # i = 1
   plot(emp$pgsGDD5, y, type = "n", 
        ylim = range(c(emp_treeid$lengthMM, y_low, y_high), na.rm = TRUE),
        xlab = "Primary growing season GDD", ylab = "Ring width (mm)",
+       frame = FALSE,
        main = tree_col_name) # set the name for each plot
   
   spp_id <- treeid_spp$spp_num[
@@ -415,6 +421,7 @@ for (i in seq_along(sppvecnum)) { # i = 1
        ylim = ylim_spp,
        xlab = "Primary growing season GDD",
        ylab = "Ring width (mm)",
+       frame = FALSE,
        main = spp_column_name)
   
   # color
