@@ -12,9 +12,7 @@ options(digits = 5)
 # Load library 
 library(ggplot2)
 library(rstan)
-library(rstanarm)
 library(future)
-library(shinystan)
 library(wesanderson)
 library(patchwork)
 library(dplyr)
@@ -146,11 +144,7 @@ allringwidths2$commonName <- emp$commonName[match(allringwidths2$id, emp$id)]
 allringwidths2$plantNickname <- emp$plantNickname[match(allringwidths2$id, emp$id)]
 
 # add 5 year gdd average
-allringwidths2$gdd <- longtermgdd5yr$GDD_avg[match(allringwidths2$yearCor, longtermgdd5yr$year)]
-
-allringwidths2$interval_idx <- findInterval(allringwidths2$yearCor, longtermgdd5yr$year_start)
-allringwidths2$gdd <- longtermgdd5yr$GDD_avg[allringwidths2$interval_idx]
-allringwidths2$interval_idx <- NULL
+allringwidths2$gdd <- longtermgdd5yr$GDD_moving_avg[match(allringwidths2$yearCor, longtermgdd5yr$year)]
 
 pdf("figures/empiricalData/ringwidthXyear_bySpeciesAllYrs.pdf", width = 10, height = 6)
 species_list <- unique(allringwidths2$commonName)
@@ -174,8 +168,11 @@ for (sp in species_list) {
     xlim <- range(d$yearCor, na.rm = TRUE)
     ylim_gdd <- range(d$gdd, na.rm = TRUE)  
     
+    d <- d[order(d$yearCor), ]
+    d$gdd_smooth <- rollmean(d$gdd, k = 5, fill = NA, align = "center")
+    
     plot(
-      d$yearCor, d$gdd,
+      d$yearCor, d$gdd_smooth,
       type = "l",
       col = adjustcolor("#B40F20", alpha.f = 0.3),
       lwd = 1,
@@ -192,9 +189,9 @@ for (sp in species_list) {
     legend("topleft", 
            legend = c("Ring width", "GDD"),
            col = c(renoir_named[sp], "#B40F20"),
-           lty = c(NA, 2),
-           pch = c(16, NA),
-           lwd = c(NA, 2),
+           lty = c(2, 2),
+           pch = c(NA, NA),
+           lwd = c(2, 2),
            cex = 0.7,
            bty = "n")
     
@@ -209,6 +206,7 @@ for (sp in species_list) {
     par(new = TRUE)
     plot(
       d$yearCor, d$lengthMM,
+      type = "l",
       pch = 16,
       cex = 0.9,
       col = renoir_named[sp],

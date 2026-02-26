@@ -75,19 +75,19 @@ str(logan2)
 gddperyear <- aggregate(GDD_5 ~ year, logan2, FUN = max)
 library(dplyr)
 
-gdd_5yr_intervals <- gddperyear %>%
-  mutate(interval = floor((year - min(year)) / 5)) %>%
-  group_by(interval) %>%
-  summarise(
-    year_start = min(year),
-    year_end = max(year),
-    GDD_avg = mean(GDD_5, na.rm = TRUE),
-    n_years = n()
-  ) %>%
-  select(-interval)
+library(zoo)  # for rollmean
 
+# Start from your gddperyear dataframe
+gdd_5yr_moving <- gddperyear %>%
+  arrange(year) %>%
+  mutate(
+    GDD_moving_avg = rollmean(GDD_5, k = 5, fill = NA, align = "center")
+  )
+
+# t <- subset(gdd_5yr_moving, year <=1950 & year >=1946)
+# mean(t$GDD_5)
 # write csv
 write.csv(gddperyear, "output/longTermGDDperYear.csv", row.names = FALSE)
-write.csv(gdd_5yr_intervals, "output/longTermGDD5YrAvg.csv", row.names = FALSE)
+write.csv(gdd_5yr_moving, "output/longTermGDD5YrAvg.csv", row.names = FALSE)
 
 
