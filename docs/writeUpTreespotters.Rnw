@@ -1,83 +1,120 @@
 \documentclass{article}
+\usepackage{pdfpages}
+\usepackage{graphicx}
 
 \begin{document}
 \SweaveOpts{concordance=TRUE}
 
+% <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 \title{Short write up of the tree ring data for the Treespotters}
 \author{Christophe}
 \date{\today}
 \maketitle
+% <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 
-<<fig=TRUE, width=6, height=4, echo=FALSE>>=
-allringwidths <- read.csv("../analyses/output/ringWidthTS.csv")
-emp <- read.csv("../analyses/output/empiricalDataMAIN.csv")
+% <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+\section{How we collected the cores, processed, scanned and measured them}
+% <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+\subsection{Tree coring at the Arboretum}
+At the end of April 2025, Lizzie, my PhD colleague, Mao and I went to the Arboretum to core the trees the Treespotters have been monitoring for the last nine years [ref:corearbor]. Despite the fact that coring has very little effect on the tree health, we couldn't core some trees which were mostly American beech. 50 trees were accepted in the proposal! \\
 
-renoir <- c("#17154f", "#2f357c", "#6c5d9e", "#9d9cd5", "#b0799a", "#f6b3b0", "#e48171", "#bf3729", "#e69b00", "#f5bb50", "#ada43b", "#355828")
+\begin{figure}[!ht]
+\includegraphics[width=0.8\textwidth]{photos/20250420-CRD09559lowres.jpeg}
+\caption{Mao extracting a core from a White oak}
+\label{fig:corearbor}
+\end{figure}
 
-emp$accessionYear <- as.numeric(substr(emp$accessionDate, 7,11))
-allringwidths2 <- allringwidths
-allringwidths2$accessionYear <- emp$accessionYear[match(allringwidths2$id, emp$id)]
-allringwidths2$commonName <- emp$commonName[match(allringwidths2$id, emp$id)]
-allringwidths2$lengthMM <- allringwidths2$lengthCM*10
-allringwidths2$treeAge <- allringwidths2$yearCor - allringwidths2$accessionYear
+During the 3 days coring the trees took, we had the change to present our work and objectives to the Treespotters [REFfig:coring]. This presentation was particularly great because the Trespotters shared their experience and anecdotes with their trees that they have been monitoring for years [Reffig:bud]!
 
-# remove the the negative ages:
-vec <- unique(allringwidths2$id[which(allringwidths2$treeAge < 0)])
-allringwidths2 <- subset(allringwidths2, !(id %in% vec))
+\begin{figure}[!ht]
+\includegraphics[width=0.8\textwidth]{photos/20250420-CRD09530_lowres.jpeg}
+\caption{Mao and Christophe coring a White oak during a short presentation with the Treespotters}
+\label{fig:coring}
+\end{figure}
 
-# mean age of tree
-age <- aggregate(treeAge ~ id, allringwidths2, FUN = mean)
-allringwidths2$meanAge <- age$treeAge[match(allringwidths2$id, age$id)]
+\begin{figure}[!ht]
+\includegraphics[width=0.8\textwidth]{photos/20250420-CRD09515lowres.jpeg}
+\caption{**Name looking at a early emerging bud}
+\label{fig:bud}
+\end{figure}
 
-allringwidths2 <- allringwidths2[order(allringwidths2$meanAge),]
+\subsection{Core mounting and sanding}
+Once all the cores were collected, they were left to dry at the Weld hill building. In July, I went to pick them up so I could proceed with mounting them. We mount the tree cores on a small wooden structure to straigten the core, and also to avoid breaking it. Then I proceeded to the sanding from a rough grit to a progressively finer one, which exposes the rings nicely [reffig:sanding]
+
+\begin{figure}[h!]
+\includegraphics[width=0.6\textwidth]{photos/sanding.png}
+\caption{Christophe sanding a core.}
+\label{fig:sanding}
+\end{figure}
+
+\subsection{Core scanning and ring measurements}
+Once all the cores were properly scanned, I scanned them at a very high resolution using our lab-made tree-ring imaging machine (TIM), that our past undergraduate student created. This device has a microscopic lens attached to it that allows us to zoom in a lot onto the core to measure the ring width [reffig:TINA]. 
+
+\begin{figure}[!ht]
+\includegraphics[width=0.6\textwidth]{photos/DSC01153lowres.jpeg}
+\caption{The lab-made tree-imaging machine that we used to scan the cores}
+\label{fig:tina}
+\end{figure}
+
+With these cores scanned, I was able to measure each ring width for each core on my computer [corescan]. 
+
+% \begin{figure}[!ht]
+% \includegraphics[width=\textwidth, height=2cm, keepaspectratio=false]{photos/CAOV_12907_D_ILarge2.jpeg}
+% \caption{An example of the scanned cores look like when I measured them. This is CAOV_12907_D.}
+% \label{fig:corescan}
+% \end{figure}
+
+\subsection{Crossdating}
+Dendrochronoly is the study of tree rings. In that field, crossdating is standard and consists of dating the tree rings to the exact calendar year by comparing a chronology to other chronologies. However, this requires having a sufficient number of trees of the same species and chronologies of more than 50 years old. These criteria were often not met and Neil Pederson and I chatted about this and decided it will be hard to perform statistical cross dating on those cores. We ended up only performing visually cross-dating which consists of visually matching the years within a chronology [refFig:spagTiam].
+
+\begin{figure}[!ht]
+\includegraphics[width=0.8\textwidth]{../analyses/figures/tiamspaghetti_plot.jpeg}
+\caption{Example of what visual crossdating looks like. This is all the Tilia americana chronologies that we had.}
+\label{fig:spagTiam}
+\end{figure}
+
+% <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+\section{Tree ring chronologies}
+% <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+We present the tree-ring width as a function of year, only for the years the Treespotters collected phenological data for
+
+\begin{figure}[!ht]
+\includegraphics[width=1.2\textwidth]{../analyses/figures/empiricalData/ringwidthXyearPhenoData1page.pdf}
+\caption{The ring width measurements as a function of each year, for individuals and years we have phenological observations for. The y axis represents the ring width of that individual.}
+\label{fig:rwPhenoyears}
+\end{figure}
+
+\section{Phenology plots}
+
+\begin{figure}[!ht]
+\includegraphics[width=1.2\textwidth]{../analyses/figures/empiricalData/leafoutXyear.pdf}
+\caption{All the leafout dates recorded over the years, for each inviduals. The y axis represents the day of year of that observation}
+\label{fig:leafout}
+\end{figure}
+
+\begin{figure}[!ht]
+\includegraphics[width=1.2\textwidth]{../analyses/figures/empiricalData/coloredLeavesXyear.pdf}
+\caption{All the leaf colouring dates recorded over the years, for each inviduals. The y axis represents the day of year of that observation}
+\label{fig:coloredleaves}
+\end{figure}
 
 
-# PLOT!
-species_list <- unique(allringwidths2$commonName)
-renoir_named <- setNames(renoir, species_list)
+\section{Preliminary results}
+Our results indicate that while some species, like maples, River birch and White oak appear to grow more growing degree days (a measure of heat accumulation), others like Yellow buckeye, Yellow birch, hickories and American basswood grew less. The growth of the other species was not affected by growing degree days.
 
-# here I loop over each page that fits 1 species at a time
-for (sp in species_list) {
-  df_sp <- allringwidths2[allringwidths2$commonName == sp, ]
-  ids   <- unique(df_sp$id)
-  par(
-    mfrow = n2mfrow(length(ids)),
-    mar = c(4, 4, 2, 1),
-    oma = c(2, 2, 2, 1)
-  )
-  
-  # shared limits across the individuals of a given species
-  xlim <- range(df_sp$treeAge, na.rm = TRUE)
-  ylim <- range(df_sp$lengthMM, na.rm = TRUE)
-  
-  # here I loop over each individuals of each species
-  for (id_i in ids) {
-    d <- df_sp[df_sp$id == id_i, ]
-    fit <- lm(lengthMM ~ treeAge, d)
-    plot(
-      d$treeAge, d$lengthMM,
-      pch = 16,
-      cex = 0.9,
-      col = renoir_named[sp],
-      xlim = xlim,
-      ylim = ylim,
-      xlab = "Tree age at ring",
-      ylab = "Ring width (mm)",
-      main = paste(id_i)
-    )
-    abline(fit, col = "black", lwd = 2)
-    mean_age <- mean(d$meanAge, na.rm = TRUE)
-    text(
-      x = xlim[2] - 0.05 * diff(xlim),   # right side
-      y = ylim[2] - 0.05 * diff(ylim),   # top
-      labels = paste("Mean age =", round(mean_age, 1)),
-      adj = c(1, 1),                     # right + top alignment
-      cex = 1
-    )
-  }
-  mtext(sp, side = 3, outer = TRUE, line = 0.5, cex = 1.4, font = 2)
-}
-@
+\begin{figure}[!ht]
+\includegraphics[width=1.2\textwidth]{../analyses/figures/empiricalData/growthModelSlopesperSppFacet.jpeg}
+\caption{Model estimates for each species. We ran a model to estimate the ring width as a function of growing degree days (a measure of heat accumulation) for the growing season defined between leaf color date and leafout.}
+\label{fig:coloredleaves}
+\end{figure}
+
+\section{Supplemental material}
+
+\subsection{All the tree chronologies with a five-year averaged growing degree days}
+
+% \includepdf[pages=-]{../analyses/figures/empiricalData/ringwidthXyear_bySpeciesAllYrs.pdf}
+
+
 
 
 \end{document}

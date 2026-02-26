@@ -1,15 +1,121 @@
 \documentclass{article}
+\usepackage{pdfpages}
+\usepackage{graphicx}
 
 \usepackage{Sweave}
 \begin{document}
 \input{writeUpTreespotters-concordance}
 
+% <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 \title{Short write up of the tree ring data for the Treespotters}
 \author{Christophe}
 \date{\today}
 \maketitle
+% <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 
-\includegraphics{writeUpTreespotters-001}
+% <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+\section{How we collected the cores, processed, scanned and measured them}
+% <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+\subsection{Tree coring at the Arboretum}
+At the end of April 2025, Lizzie, my PhD colleague, Mao and I went to the Arboretum to core the trees the Treespotters have been monitoring for the last nine years [ref:corearbor]. Despite the fact that coring has very little effect on the tree health, we couldn't core some trees which were mostly American beech. 50 trees were accepted in the proposal! \\
+
+\begin{figure}[!ht]
+\includegraphics[width=0.8\textwidth]{photos/20250420-CRD09559lowres.jpeg}
+\caption{Mao extracting a core from a White oak}
+\label{fig:corearbor}
+\end{figure}
+
+During the 3 days coring the trees took, we had the change to present our work and objectives to the Treespotters [REFfig:coring]. This presentation was particularly great because the Trespotters shared their experience and anecdotes with their trees that they have been monitoring for years [Reffig:bud]!
+
+\begin{figure}[!ht]
+\includegraphics[width=0.8\textwidth]{photos/20250420-CRD09530_lowres.jpeg}
+\caption{Mao and Christophe coring a White oak during a short presentation with the Treespotters}
+\label{fig:coring}
+\end{figure}
+
+\begin{figure}[!ht]
+\includegraphics[width=0.8\textwidth]{photos/20250420-CRD09515lowres.jpeg}
+\caption{**Name looking at a early emerging bud}
+\label{fig:bud}
+\end{figure}
+
+\subsection{Core mounting and sanding}
+Once all the cores were collected, they were left to dry at the Weld hill building. In July, I went to pick them up so I could proceed with mounting them. We mount the tree cores on a small wooden structure to straigten the core, and also to avoid breaking it. Then I proceeded to the sanding from a rough grit to a progressively finer one, which exposes the rings nicely [reffig:sanding]
+
+\begin{figure}[h!]
+\includegraphics[width=0.6\textwidth]{photos/sanding.png}
+\caption{Christophe sanding a core.}
+\label{fig:sanding}
+\end{figure}
+
+\subsection{Core scanning and ring measurements}
+Once all the cores were properly scanned, I scanned them at a very high resolution using our lab-made tree-ring imaging machine (TIM), that our past undergraduate student created. This device has a microscopic lens attached to it that allows us to zoom in a lot onto the core to measure the ring width [reffig:TINA]. 
+
+\begin{figure}[!ht]
+\includegraphics[width=0.6\textwidth]{photos/DSC01153lowres.jpeg}
+\caption{The lab-made tree-imaging machine that we used to scan the cores}
+\label{fig:tina}
+\end{figure}
+
+With these cores scanned, I was able to measure each ring width for each core on my computer [corescan]. 
+
+% \begin{figure}[!ht]
+% \includegraphics[width=\textwidth, height=2cm, keepaspectratio=false]{photos/CAOV_12907_D_ILarge2.jpeg}
+% \caption{An example of the scanned cores look like when I measured them. This is CAOV_12907_D.}
+% \label{fig:corescan}
+% \end{figure}
+
+\subsection{Crossdating}
+Dendrochronoly is the study of tree rings. In that field, crossdating is standard and consists of dating the tree rings to the exact calendar year by comparing a chronology to other chronologies. However, this requires having a sufficient number of trees of the same species and chronologies of more than 50 years old. These criteria were often not met and Neil Pederson and I chatted about this and decided it will be hard to perform statistical cross dating on those cores. We ended up only performing visually cross-dating which consists of visually matching the years within a chronology [refFig:spagTiam].
+
+\begin{figure}[!ht]
+\includegraphics[width=0.8\textwidth]{../analyses/figures/tiamspaghetti_plot.jpeg}
+\caption{Example of what visual crossdating looks like. This is all the Tilia americana chronologies that we had.}
+\label{fig:spagTiam}
+\end{figure}
+
+% <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+\section{Tree ring chronologies}
+% <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+We present the tree-ring width as a function of year, only for the years the Treespotters collected phenological data for
+
+\begin{figure}[!ht]
+\includegraphics[width=1.2\textwidth]{../analyses/figures/empiricalData/ringwidthXyearPhenoData1page.pdf}
+\caption{The ring width measurements as a function of each year, for individuals and years we have phenological observations for. The y axis represents the ring width of that individual.}
+\label{fig:rwPhenoyears}
+\end{figure}
+
+\section{Phenology plots}
+
+\begin{figure}[!ht]
+\includegraphics[width=1.2\textwidth]{../analyses/figures/empiricalData/leafoutXyear.pdf}
+\caption{All the leafout dates recorded over the years, for each inviduals. The y axis represents the day of year of that observation}
+\label{fig:leafout}
+\end{figure}
+
+\begin{figure}[!ht]
+\includegraphics[width=1.2\textwidth]{../analyses/figures/empiricalData/coloredLeavesXyear.pdf}
+\caption{All the leaf colouring dates recorded over the years, for each inviduals. The y axis represents the day of year of that observation}
+\label{fig:coloredleaves}
+\end{figure}
+
+
+\section{Preliminary results}
+Our results indicate that while some species, like maples, River birch and White oak appear to grow more growing degree days (a measure of heat accumulation), others like Yellow buckeye, Yellow birch, hickories and American basswood grew less. The growth of the other species was not affected by growing degree days.
+
+\begin{figure}[!ht]
+\includegraphics[width=1.2\textwidth]{../analyses/figures/empiricalData/growthModelSlopesperSppFacet.jpeg}
+\caption{Model estimates for each species. We ran a model to estimate the ring width as a function of growing degree days (a measure of heat accumulation) for the growing season defined between leaf color date and leafout.}
+\label{fig:coloredleaves}
+\end{figure}
+
+\section{Supplemental material}
+
+\subsection{All the tree chronologies with a five-year averaged growing degree days}
+
+% \includepdf[pages=-]{../analyses/figures/empiricalData/ringwidthXyear_bySpeciesAllYrs.pdf}
+
+
 
 
 \end{document}
