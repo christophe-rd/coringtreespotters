@@ -419,7 +419,7 @@ for (i in seq_along(sppvecnum)) { # i = 1
   plot(emp_spp$pgsGDD5, emp_spp$lengthMM,
        type = "n",
        ylim = ylim_spp,
-       xlab = "Primary growing season GDD",
+       xlab = "Growing season growing degree days (GDD)",
        ylab = "Ring width (mm)",
        frame = FALSE,
        main = spp_column_name)
