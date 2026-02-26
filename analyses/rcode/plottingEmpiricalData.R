@@ -50,6 +50,7 @@ allringwidths2$accessionYear <- emp$accessionYear[match(allringwidths2$id, emp$i
 
 allringwidths2$age <- allringwidths2$yearCor - allringwidths2$accessionYear
 
+emp$plantNickname <- paste(emp$commonName, emp$plantNickname, sep = " ")
 # ringwidth X GDD in PGS
 renoir <- c("#17154f", "#2f357c", "#6c5d9e", "#9d9cd5", "#b0799a", "#f6b3b0", "#e48171", "#bf3729", "#e69b00", "#f5bb50", "#ada43b", "#355828")
 
@@ -345,7 +346,7 @@ dev.off()
 # Plot all tree together in one page ####
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 pdf("figures/empiricalData/ringwidthXyearPhenoData1page.pdf", 
-    width = 10, height = 10)
+    width = 11, height = 10)
 ids <- unique(emp$plantNickname)
 par(mfrow = c(ceiling(length(ids)/5), 5), 
     mar = c(2, 2, 1.5, 0.5),
