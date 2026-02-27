@@ -373,9 +373,26 @@ spp_list <- list(
   "11" = spp11vec
 )
 
-# Average each entry of the 75 treeids according to their species 
-spp_post_list <- lapply(spp_list, function(tree_vec) {
-  Reduce("+", y_post_list[tree_vec]) / length(tree_vec)
+
+mean_post_list <- list()
+for (i in seq_along(treeidvecnum)) {
+  tree_col <- as.character(treeidvecnum[i])
+  mean_post_list[[tree_col]] <- sapply(1:nrow(df_fit), function(f) {
+    fullintercept[f, tree_col] + treeid_bspp[f, tree_col] * x
+    # no sigma_y yet
+  })
+}
+
+# average the mean predictions across trees within species
+spp_mean_list <- lapply(spp_list, function(tree_vec) {
+  Reduce("+", mean_post_list[as.character(tree_vec)]) / length(tree_vec)
+})
+
+# re-simulate sigma on the averaged mean
+spp_post_list <- lapply(spp_mean_list, function(mean_mat) {
+  sapply(1:nrow(df_fit), function(f) {
+    rnorm(length(x), mean_mat[, f], sigma_df$sigma_y[f])
+  })
 })
 
 sppvecnum <- 1:11
@@ -623,25 +640,28 @@ sub <- subset(emp, select = c("treeid_num", "spp_num"))
 sub <- sub[!duplicated(sub$treeid_num),]
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
 # sum atreeid, asp, asite
-fullintercept
-fullatreeid2 <- as.data.frame(fullintercept)
+fullintercept2 <-
+  atreeidsub +
+  treeid_aspp 
+fullintercept2
+fullatreeid2 <- as.data.frame(fullintercept2)
 
 # empty treeid dataframe
 treeid_df4 <- data.frame(
-  treeid = character(ncol(fullatreeid2)),
-  fit_atreeid = numeric(ncol(fullatreeid2)),  
+  treeid = character(ncol(fullintercept2)),
+  fit_atreeid = numeric(ncol(fullintercept2)),  
   fit_atreeid_per5 = NA, 
   fit_atreeid_per25 = NA,
   fit_atreeid_per75 = NA,
   fit_atreeid_per95 = NA
 )
-for (i in 1:ncol(fullatreeid2)) { # i = 1
-  treeid_df4$treeid[i] <- colnames(fullatreeid2)[i]         
-  treeid_df4$fit_atreeid[i] <- round(mean(fullatreeid2[[i]]),3)  
-  treeid_df4$fit_atreeid_per5[i] <- round(quantile(fullatreeid2[[i]], probs = 0.05), 3)
-  treeid_df4$fit_atreeid_per25[i] <- round(quantile(fullatreeid2[[i]], probs = 0.25), 3)
-  treeid_df4$fit_atreeid_per75[i] <- round(quantile(fullatreeid2[[i]], probs = 0.75), 3)
-  treeid_df4$fit_atreeid_per95[i] <- round(quantile(fullatreeid2[[i]], probs = 0.95), 3)
+for (i in 1:ncol(fullintercept2)) { # i = 1
+  treeid_df4$treeid[i] <- colnames(fullintercept2)[i]         
+  treeid_df4$fit_atreeid[i] <- round(mean(fullintercept2[[i]]),3)  
+  treeid_df4$fit_atreeid_per5[i] <- round(quantile(fullintercept2[[i]], probs = 0.05), 3)
+  treeid_df4$fit_atreeid_per25[i] <- round(quantile(fullintercept2[[i]], probs = 0.25), 3)
+  treeid_df4$fit_atreeid_per75[i] <- round(quantile(fullintercept2[[i]], probs = 0.75), 3)
+  treeid_df4$fit_atreeid_per95[i] <- round(quantile(fullintercept2[[i]], probs = 0.95), 3)
 }
 treeid_df4
 
@@ -726,7 +746,7 @@ segments(
   x0 = treeid_df4$fit_atreeid_per5,
   x1 = treeid_df4$fit_atreeid_per95,
   y0 = treeid_df4$y_pos,
-  col = adjustcolor(my_colors[treeid_df4$spp], alpha.f = 0.4),
+  col = adjustcolor(my_colors[treeid_df4$spp], alpha.f = 0.7),
   lwd = 1
 )
 
@@ -735,7 +755,7 @@ segments(
   x0 = treeid_df4$fit_atreeid_per25,
   x1 = treeid_df4$fit_atreeid_per75,
   y0 = treeid_df4$y_pos,
-  col = adjustcolor(my_colors[treeid_df4$spp], alpha.f = 0.4),
+  col = adjustcolor(my_colors[treeid_df4$spp], alpha.f = 0.7),
   lwd = 1.5
 )
 
@@ -745,7 +765,7 @@ points(
   treeid_df4$y_pos,
   cex = 0.8,
   pch = 16,
-  col = adjustcolor(my_colors[treeid_df4$spp], alpha.f = 0.4)
+  col = adjustcolor(my_colors[treeid_df4$spp], alpha.f = 0.7)
 )
 
 aspp_df2$spp <- aspp_df2$spp_name

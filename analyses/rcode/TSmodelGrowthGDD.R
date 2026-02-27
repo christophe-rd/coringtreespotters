@@ -165,8 +165,7 @@ fit <- stan("stan/TSmodelGrowthGDD.stan",
                            "Nspp","species",
                            "Ntreeid", "treeid", 
                            "gdd"),
-                    iter=4000, chains=4, cores=4,
-            save_dso = FALSE)
+                    warmup = 1000, iter = 2000, chains=4, save_dso = FALSE)
 
 saveRDS(fit, "output/stanOutput/fit")
 # fit <- readRDS("output/stanOutput/GDDleafout/fit")
@@ -603,7 +602,7 @@ fit <- stan("stan/TSmodelGrowthGDD.stan",
                    "Nspp","species",
                    "Ntreeid", "treeid", 
                    "gdd"),
-            warmup = 1000, iter = 2000, chains=4)
+            warmup = 1000, iter = 2000, chains=4, save_dso = FALSE)
 saveRDS(fit, "output/stanOutput/fit_modelGrowth")
 
 # diagnostics
@@ -780,8 +779,10 @@ sigma_long <- reshape(
 sigma_long
 
 sigma_long$prior <- NA
-sigma_long$prior[which(sigma_long$parameter == "sigma_atreeid")] <- rnorm(8e3, 0, 2)
-sigma_long$prior[which(sigma_long$parameter == "sigma_y")] <- rnorm(8e3, 0, 1)
+sigma_long$prior[which(sigma_long$parameter == "sigma_atreeid")] <- 
+  rnorm(nrow(sigma_df), 0, 2)
+sigma_long$prior[which(sigma_long$parameter == "sigma_y")] <- rnorm(
+  nrow(sigma_df), 0, 1)
 
 priorsigmas <- ggplot(sigma_long) +
   geom_density(aes(x = prior, colour = "Prior sigma_atreeid  at N(0, 2)

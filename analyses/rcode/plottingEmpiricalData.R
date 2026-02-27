@@ -19,6 +19,7 @@ library(dplyr)
 library(sf)
 library(rnaturalearth)
 library(rnaturalearthdata)
+library(zoo)
 
 setwd("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses")
 
@@ -145,13 +146,14 @@ allringwidths2$plantNickname <- emp$plantNickname[match(allringwidths2$id, emp$i
 
 # add 5 year gdd average
 allringwidths2$gdd <- longtermgdd5yr$GDD_moving_avg[match(allringwidths2$yearCor, longtermgdd5yr$year)]
+allringwidths2$gdd2 <- longtermgdd5yr$GDD_5[match(allringwidths2$yearCor, longtermgdd5yr$year)] # to remove potentially
 
 pdf("figures/empiricalData/ringwidthXyear_bySpeciesAllYrs.pdf", width = 10, height = 6)
 species_list <- unique(allringwidths2$commonName)
 renoir_named <- setNames(renoir, species_list)
 
 # Loop over each species
-for (sp in species_list) {
+for (sp in species_list) { # sp = "Sugar maple"
   df_sp <- allringwidths2[allringwidths2$commonName == sp, ]
   ids   <- unique(df_sp$plantNickname)
   par(
@@ -162,17 +164,17 @@ for (sp in species_list) {
   ylim <- range(df_sp$lengthMM, na.rm = TRUE)
   
   # Loop over each individual tree
-  for (id_i in ids) {
+  for (id_i in ids) { # id_i = "Sugar maple 187-2006*B"
     d <- df_sp[df_sp$plantNickname == id_i, ]
     fit <- lm(lengthMM ~ yearCor, d)
     xlim <- range(d$yearCor, na.rm = TRUE)
     ylim_gdd <- range(d$gdd, na.rm = TRUE)  
     
     d <- d[order(d$yearCor), ]
-    d$gdd_smooth <- rollmean(d$gdd, k = 5, fill = NA, align = "center")
+    d$gdd_smooth <- rollmean(d$gdd2, k = 5, fill = NA, align = "center")
     
     plot(
-      d$yearCor, d$gdd_smooth,
+      d$yearCor, d$gdd,
       type = "l",
       col = adjustcolor("#B40F20", alpha.f = 0.3),
       lwd = 1,
