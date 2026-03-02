@@ -10,7 +10,7 @@
 \SweaveOpts{concordance=TRUE}
 
 % <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
-\title{Short write up of the tree ring data for the Treespotters}
+\title{Short write up of the tree ring data for the Tree Spotters}
 \author{Christophe}
 \date{\today}
 \maketitle
@@ -20,7 +20,7 @@
 \section{How we collected the cores, processed, scanned and measured them}
 % <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 \subsection{Tree coring at the Arboretum}
-At the end of April 2025, Lizzie, my PhD colleague, Mao and I went to the Arboretum to core the trees the Treespotters have been monitoring for the last nine years (Figure \ref{fig:corearbor}). Despite the fact that coring has very little effect on the tree health, we couldn't core some trees which were mostly American beech. 50 trees were accepted in the proposal! \\
+At the end of April 2025, Lizzie, my PhD colleague, Mao and I went to the Arboretum to core the trees the Tree Spotters have been monitoring for the last nine years (Figure \ref{fig:corearbor}). Despite the fact that coring has very little effect on the tree health, we couldn't core some trees which were mostly American beech. Fifty trees were accepted in the proposal! \\
 
 \begin{figure}[H]
 \includegraphics[width=0.8\textwidth]{photos/20250420-CRD09559lowres.jpeg}
@@ -28,17 +28,17 @@ At the end of April 2025, Lizzie, my PhD colleague, Mao and I went to the Arbore
 \label{fig:corearbor}
 \end{figure}
 
-During the three days coring the trees took, we had the chance to present our work and project objectives to the Treespotters (Figure \ref{fig:coring}). This presentation was particularly great because the Trespotters shared their experience and anecdotes with their trees that they have been monitoring for years (Figure \ref{fig:bud})!
+During the three days coring the trees took, we had the chance to present our work and project objectives to the Tree Spotters (Figure \ref{fig:coring}). This presentation was particularly great because the Trespotters shared their experience and anecdotes with their trees that they have been monitoring for years (Figure \ref{fig:bud})!
 
 \begin{figure}[H]
 \includegraphics[width=0.9\textwidth]{photos/20250420-CRD09530_lowres.jpeg}
-\caption{Mao and Christophe coring a White oak during a short presentation with the Treespotters}
+\caption{Mao and Christophe coring a White oak during a short presentation with the Tree Spotters}
 \label{fig:coring}
 \end{figure}
 
 \begin{figure}[H]
 \includegraphics[width=0.6\textwidth]{photos/20250420-CRD09515lowres.jpeg}
-\caption{**Name looking at a early emerging bud}
+\caption{Shanon H. looking at an early emerging bud}
 \label{fig:bud}
 \end{figure}
 
@@ -71,46 +71,46 @@ Dendrochronoly is the study of tree rings. In that field, statistical crossdatin
 
 \begin{figure}[H]
 \includegraphics[width=0.9\textwidth]{../analyses/figures/tiamspaghetti_plot.jpeg}
-\caption{Example of what visual crossdating looks like. This is all the Tilia americana chronologies that we had. The dashed lines represent marker years, for which our trees did not appear to respond to.}
+\caption{Example of what visual crossdating looks like. This is all the American basswood (\textit{Tilia americana} chronologies that we had. The dashed lines represent marker years, for which our trees did not appear to respond to.}
 \label{fig:spagTiam}
 \end{figure}
 
 % <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
-\section{Tree ring chronologies}
+\section{Phenology and tree-ring results}
 % <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
-We present the tree-ring width as a function of year, only for the years the Treespotters collected phenological data for (Figure \ref{fig:rwPhenoyears}).
+With climate change, trees are shifting their phenology earlier in the spring and later in the autumn, thus extending the growing season. This is is widely expected to increase tree growth, with important effects on forest carbon sequestration dynamics. Multiple recent studies, however, have failed to find this relationship. Therefore, we will address this decoupling by using the data collected by the Tree Spotters which will allow us to investigate how the timing of phenological events affects growth across years for mature trees. We will do this by relating these observations to tree rings. We hope our results will provide a better understanding of the recently observed decoupling between growth increment and longer growing seasons.
 
-\begin{figure}[H]
-\includegraphics[width=1\textwidth]{../analyses/figures/empiricalData/ringwidthXyearPhenoData1page.pdf}
-\caption{The ring width measurements as a function of each year, for each individual tree and years we have phenological observations for. The y axis represents the ring width of that individual.}
-\label{fig:rwPhenoyears}
-\end{figure}
-
-% <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
-\section{Phenology plots}
-% <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
-We also plotted the two phenophases we used to calculate the growing season conditions: leafout (Figure \ref{fig:leafout}) and leaf colouring (Figure \ref{fig:coloredleaves}).
+\subsection{Phenology plots}
+We plotted the two phenophases we used to calculate the growing season conditions: leafout (Figure \ref{fig:leafout}) and leaf colouring (Figure \ref{fig:coloredleaves}).
 
 \begin{figure}[H]
 \includegraphics[width=1\textwidth]{../analyses/figures/empiricalData/leafoutXyear.pdf}
-\caption{All the leafout dates recorded over the years, for each individual tree. The y axis represents the day of year of that observation}
+\caption{All the leafout dates recorded over the years, for each individual tree. The vertical axes represents the day of year of that observation}
 \label{fig:leafout}
 \end{figure}
 
 \begin{figure}[H]
 \includegraphics[width=1\textwidth]{../analyses/figures/empiricalData/coloredLeavesXyear.pdf}
-\caption{All the leaf colouring dates recorded over the years, for each individual tree. The y axis represents the day of year of that observation}
+\caption{All the leaf colouring dates recorded over the years, for each individual tree. The vertical axes represents the day of year of that observation}
 \label{fig:coloredleaves}
-\end{figure} .
+\end{figure}
 
+\subsection{Tree ring chronologies}
+We present the tree-ring width as a function of year, only for the years the Tree Spotters collected phenological data for (Figure \ref{fig:rwPhenoyears}).
 
+\begin{figure}[H]
+\includegraphics[width=1\textwidth]{../analyses/figures/empiricalData/ringwidthXyearPhenoData1page.pdf}
+\caption{The ring width measurements as a function of each year, for each individual tree and years we have phenological observations for. The vertical axes represents the ring width of that individual.}
+\label{fig:rwPhenoyears}
+\end{figure}
 
-\section{Preliminary results}
-Our results indicate that while some species, like maples, River birch and White oak appear to grow more growing degree days (a measure of heat accumulation), others like Yellow buckeye, Yellow birch, hickories and American basswood grew less. The growth of the other species was not affected by growing degree days (Figure \ref{fig:model}).
+\subsection{Preliminary results}
+Our results indicate that while some species, like maples (\textit{Acer saccharum} and \textit{Acer rubrum}), River birch (\textit{Betula nigra}) and White oak (\textit{Quercus alba}) appear to grow more with increasing growing degree days (a measure of heat accumulation), others like Yellow buckeye (\textit{Aesculus flava}), Yellow birch (\textit{Betula alleghaniensis}), hickories (\textit{Carya ovata} and \textit{Carya glabra}) and American basswood (\textit{Tilia americana}) grew less. The growth of the other species was not affected by growing degree days (Figure \ref{fig:model}).
 
 \begin{figure}[H]
 \includegraphics[width=1\textwidth]{../analyses/figures/empiricalData/growthModelSlopesperSppFacet.jpeg}
-\caption{Model estimates for each species. We ran a model to estimate the ring width as a function of growing degree days (a measure of heat accumulation) for the growing season defined between leaf color date and leafout.}
+\caption{Model estimates for each species. We ran a model to estimate the ring width as a function of growing degree days (a measure of heat accumulation) for the growing season defined between leaf color date and leafout. The very low growing degree day values for Red maple (15350*A, 2022), Sugar maple (22834*B, 2022) and Yellow buckeye (12651*D
+, 2018) are the result of a very early leaf coloring observation in early June.}
 \label{fig:model}
 \end{figure}
 
