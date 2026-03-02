@@ -147,6 +147,7 @@ allringwidths2$plantNickname <- emp$plantNickname[match(allringwidths2$id, emp$i
 # add 5 year gdd average
 allringwidths2$gdd <- longtermgdd5yr$GDD_moving_avg[match(allringwidths2$yearCor, longtermgdd5yr$year)]
 allringwidths2$gdd2 <- longtermgdd5yr$GDD_5[match(allringwidths2$yearCor, longtermgdd5yr$year)] # to remove potentially
+allringwidths2$gdd_smooth <- rollmean(d$gdd2, k = 5, fill = NA, align = "center")
 
 pdf("figures/empiricalData/ringwidthXyear_bySpeciesAllYrs.pdf", width = 10, height = 6)
 species_list <- unique(allringwidths2$commonName)

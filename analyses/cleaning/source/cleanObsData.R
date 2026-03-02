@@ -36,6 +36,22 @@ coord <- read.csv("input/listTreesfromInteractiveMap.csv", header=TRUE) # from a
 indPheno$plantNickname <- sub(", Tree \\d+", "", indPheno$Plant_Nickname)
 unique(indPheno$plantNickname) 
 
+leafcolorchecks <- subset(indPheno, plantNickname %in% c("15350*A", "22834*B", "12651*D"))
+coloredleaves <- subset(leafcolorchecks, Phenophase_Description == "Colored leaves")
+leafcolorchecks$Phenophase_Description
+
+coloredleaves$Individual_ID <- as.numeric(coloredleaves$First_Yes_DOY)
+
+coloredleaves$sppname <- paste(coloredleaves$Genus, coloredleaves$Species, coloredleaves$plantNickname, sep = "_")
+ggplot(coloredleaves, aes(x = First_Yes_DOY)) + 
+  geom_histogram() + 
+  facet_wrap(~sppname) + 
+  labs(x="observed leaf colouring date")+
+  theme_minimal() 
+
+
+unique(leafcolorchecks$plantNickname)
+                          
 ### === === === === === === === ###
 # Clean approved list for coring #
 ### === === === === === === === ###

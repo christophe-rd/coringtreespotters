@@ -4,6 +4,7 @@
 \parindent=0pt
 \usepackage{float}
 \usepackage{geometry}
+\usepackage{amsmath}
 \geometry{margin=1in}
 
 \begin{document}
@@ -105,12 +106,11 @@ We present the tree-ring width as a function of year, only for the years the Tre
 \end{figure}
 
 \subsection{Preliminary results}
-Our results indicate that while some species, like maples (\textit{Acer saccharum} and \textit{Acer rubrum}), River birch (\textit{Betula nigra}) and White oak (\textit{Quercus alba}) appear to grow more with increasing growing degree days (a measure of heat accumulation), others like Yellow buckeye (\textit{Aesculus flava}), Yellow birch (\textit{Betula alleghaniensis}), hickories (\textit{Carya ovata} and \textit{Carya glabra}) and American basswood (\textit{Tilia americana}) grew less. The growth of the other species was not affected by growing degree days (Figure \ref{fig:model}).
+Our results indicate that while some species, like maples (\textit{Acer saccharum} and \textit{Acer rubrum}), River birch (\textit{Betula nigra}) and White oak (\textit{Quercus alba}) appear to grow more with increasing growing degree days which is a metric of heat accumulation that sums the mean daily temperature above some threshold (here: $5^\circ C$). Others, like Yellow buckeye (\textit{Aesculus flava}), Yellow birch (\textit{Betula alleghaniensis}), hickories (\textit{Carya ovata} and \textit{Carya glabra}) and American basswood (\textit{Tilia americana}) grew less. The growth of the other species was not affected by growing degree days (Figure \ref{fig:model}).
 
 \begin{figure}[H]
 \includegraphics[width=1\textwidth]{../analyses/figures/empiricalData/growthModelSlopesperSppFacet.jpeg}
-\caption{Model estimates for each species. We ran a model to estimate the ring width as a function of growing degree days (a measure of heat accumulation) for the growing season defined between leaf color date and leafout. The very low growing degree day values for Red maple (15350*A, 2022), Sugar maple (22834*B, 2022) and Yellow buckeye (12651*D
-, 2018) are the result of a very early leaf coloring observation in early June.}
+\caption{Model estimates for each species. We ran a model to estimate the ring width as a function of growing degree days (a metric of heat accumulation that sums the mean daily temperature above some threshold (here: $5^\circ C$)) for the growing season defined between leaf color date and leafout. The very low growing degree day values for Red maple (15350*A, 2022), Sugar maple (22834*B, 2022) and Yellow buckeye (12651*D, 2018) are the result of a very early leaf coloring observation in early June.}
 \label{fig:model}
 \end{figure}
 
