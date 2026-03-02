@@ -33,8 +33,6 @@ source('mcmc_visualization_tools.R', local=util)
 # my function to extract parameters
 source('rcode/utilExtractParam.R')
 
-# flags
-makeggplot <- FALSE
 
 # specify colors
 renoir <- c("#17154f", "#2f357c", "#6c5d9e", "#9d9cd5", "#b0799a", "#f6b3b0", "#e48171", "#bf3729", "#e69b00", "#f5bb50", "#ada43b", "#355828")
@@ -87,19 +85,6 @@ emp2 <- emp
 emp2 <- merge(emp2, aspp_df2[, c("spp_num", "a", "bsp", "a_asp")], 
               by = "spp_num")
 
-if (makeggplot) {
-# plot lines
-ggplot(emp2) +
-  geom_point(aes(x = pgsGDD5/200, y = lengthMM, colour = symbol)) +
-  geom_abline(aes(intercept = a_asp, slope = bsp, colour = symbol), 
-              linewidth = 0.5) +
-  labs(title = "", x = "pgsGDD", y = "ring width in mm") +
-  # scale_colour_manual(values = wes_palette("AsteroidCity1")) +
-  # facet_wrap(~ spp) +
-  theme_minimal()
-ggsave("figures/empiricalData/slope_intercepts_varyingslopes.jpeg", 
-       width = 8, height = 6, units = "in", dpi = 300)
-}
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 # Plot lines with quantiles ####
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
