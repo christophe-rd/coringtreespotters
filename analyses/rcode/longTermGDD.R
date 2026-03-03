@@ -81,7 +81,7 @@ library(zoo)  # for rollmean
 gdd_5yr_moving <- gddperyear %>%
   arrange(year) %>%
   mutate(
-    GDD_moving_avg = rollmean(GDD_5, k = 5, fill = NA, align = "center")
+    GDD_moving_avg = rollmean(GDD_5, k = 5, fill = NA, align = "right")
   )
 
 # t <- subset(gdd_5yr_moving, year <=1950 & year >=1946)
