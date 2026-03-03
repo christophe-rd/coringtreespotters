@@ -65,25 +65,27 @@ Ntreeid <- length(unique(treeid))
 # === === === === === === === === === === === === #
 fit <- readRDS("output/stanOutput/fit_modelGrowth")
 df_fit <- as.data.frame(fit)
+
+# full posterior
+columns <- colnames(df_fit)
+sigma_df <- df_fit[, columns[grepl("sigma", columns)]]
+bspp_df <- df_fit[, columns[grepl("bspp", columns)]]
+treeid_df <- df_fit[, grepl("treeid", columns) & 
+                      !grepl("z", columns) &
+                      !grepl("sigma", columns)]
+aspp_df <- df_fit[, columns[grepl("aspp", columns)]]
+
+# change colnames
+colnames(bspp_df) <- 1:ncol(bspp_df)
+colnames(treeid_df) <- 1:ncol(treeid_df)
+colnames(aspp_df) <- 1:ncol(aspp_df)
+
+# posterior summaries
 sigma_df2  <- extract_params(df_fit, "sigma", "mean", "sigma")
 bspp_df2   <- extract_params(df_fit, "bsp", "fit_bspp", "spp", "bsp\\[(\\d+)\\]")
 treeid_df2 <- extract_params(df_fit, "atreeid", "fit_atreeid", "treeid", "atreeid\\[(\\d+)\\]")
-treeid_df2 <- subset(treeid_df2, !grepl("z", treeid))
+treeid_df2 <- subset(treeid_df2, !grepl("z", treeid) & !grepl("sigma", treeid))
 aspp_df2   <- extract_params(df_fit, "aspp", "fit_aspp", "spp", "aspp\\[(\\d+)\\]")
-
-#### Plot lines ####
-# Gdd on the x axis and growth on y ####
-aspp_df2$a <- mean(df_fit[,"a"])
-aspp_df2$a_asp <- aspp_df2$a + aspp_df2$fit_aspp
-aspp_df2$bsp <- bspp_df2$fit_bspp
-
-aspp_df2$spp_name <- emp$symbol[match(aspp_df2$spp, emp$spp_num)]
-
-colnames(aspp_df2)[colnames(aspp_df2) == "spp"] <- "spp_num"
-
-emp2 <- emp
-emp2 <- merge(emp2, aspp_df2[, c("spp_num", "a", "bsp", "a_asp")], 
-              by = "spp_num")
 
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 # Plot lines with quantiles ####
@@ -168,6 +170,9 @@ for (i in seq_along(treeidvecnum)) { # i = 1
   y_post_list[[tree_col]] <- y_post
 }
 
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+##### Per treeid, facet #####
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
 # PDF output
 pdf(file = "figures/empiricalData/growthModelSlopesperTreeid.pdf", width = 10, height = 8)
 # Layout: 2 rows × 2 columns per page
