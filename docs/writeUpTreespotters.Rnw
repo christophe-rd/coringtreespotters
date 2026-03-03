@@ -44,7 +44,7 @@ During the three days coring the trees took, we had the chance to present our wo
 \end{figure}
 
 \subsection{Core mounting and sanding}
-Once all the cores were collected, they were left to dry at the Weld hill building. In July, I went to pick them up so I could proceed with mounting them. We mount the tree cores on a small wooden structure to straighten the core, and also to avoid breaking it. Then I sanded the cores from a rough to a progressively finer grit, which exposes the rings nicely (Figure \ref{fig:sanding})
+Once all the cores were collected, they were left to dry at the Weld hill building. In July, we went to pick them up so we could proceed with mounting them. We mount the tree cores on a small wooden structure to straighten the core, and also to avoid breaking it. Then we sanded the cores from a rough to a progressively finer grit, which exposes the rings nicely (Figure \ref{fig:sanding})
 
 \begin{figure}[h!]
 \includegraphics[width=0.4\textwidth]{photos/sanding.png}
@@ -53,7 +53,7 @@ Once all the cores were collected, they were left to dry at the Weld hill buildi
 \end{figure}
 
 \subsection{Core scanning and ring measurements}
-Once all the cores were properly sanded, I scanned them at a very high resolution using our lab-made tree-ring imaging machine (TIM), that our undergraduate students created. This device has a microscopic lens attached to it that allows us to zoom in a lot onto the core to measure the ring width (Figure \ref{fig:tina}). With these cores scanned, I was able to measure each ring width for each core on my computer (Figure \ref{fig:corescan}). 
+Once all the cores were properly sanded, we scanned them at a very high resolution using our lab-made tree-ring imaging machine (TIM), that our undergraduate students created. This device has a microscopic lens attached to it that allows us to zoom in a lot onto the core to measure the ring width (Figure \ref{fig:tina}). With these cores scanned, we were able to measure each ring width for each core on a computer (Figure \ref{fig:corescan}). 
 
 \begin{figure}[H]
 \includegraphics[width=0.6\textwidth]{photos/DSC01153lowres.jpeg}
@@ -68,7 +68,7 @@ Once all the cores were properly sanded, I scanned them at a very high resolutio
 \end{figure}
 
 \subsection{Crossdating}
-Dendrochronoly is the study of tree rings. In that field, statistical crossdating is standard and consists of dating the tree rings to the exact calendar year by comparing a chronology to other chronologies. Often, marker years are used because they represent a particularly narrow ring which can be the result of a severe drought or pest outbreak. However, statistical crossdating requires a sufficient number of trees of the same species, and a chronology at least 50 years old. These criteria were often not met with our cores. Thus, Neil Pederson and I chatted about this and decided it will be hard to perform statistical cross dating on those cores. We ended up only visually cross-dating which consists of visually matching the years across the cores of the same species (Figure \ref{fig:spagTiam}).
+Dendrochronoly is the study of tree rings. In that field, statistical crossdating is standard and consists of dating the tree rings to the exact calendar year by comparing a chronology to other chronologies. Often, marker years are used because they represent a particularly narrow ring which can be the result of a severe drought or pest outbreak. However, statistical crossdating requires a sufficient number of trees of the same species, and a chronology at least 50 years old. These criteria were often not met with our cores. Thus, after discussing with Neil Pederson about this, we decided it will be hard to perform statistical cross dating on those cores. We ended up only visually cross-dating which consists of visually matching the years across the cores of the same species (Figure \ref{fig:spagTiam}).
 
 \begin{figure}[H]
 \includegraphics[width=0.9\textwidth]{../analyses/figures/tiamspaghetti_plot.jpeg}
@@ -114,11 +114,12 @@ Our results indicate that while some species, like maples (\textit{Acer saccharu
 \label{fig:model}
 \end{figure}
 
+%<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 \section{Supplemental material}
-
+%<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 \subsection{All the tree chronologies with a five-year averaged growing degree days}
-
-\includepdf[pages=1-10]{../analyses/figures/empiricalData/ringwidthXyear_bySpeciesAllYrs.pdf}
+We present the whole ring width chronologies for each tree along with a five-year moving average of growing degree days.
+\includepdf[pages=1-11]{../analyses/figures/empiricalData/ringwidthXyear_bySpeciesAllYrs.pdf}
 % \includepdf[pages=6-11]{../analyses/figures/empiricalData/ringwidthXyear_bySpeciesAllYrs.pdf}
 
 \end{document}
