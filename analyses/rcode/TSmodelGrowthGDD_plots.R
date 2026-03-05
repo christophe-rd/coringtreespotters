@@ -44,6 +44,8 @@ emp <- read.csv("output/empiricalDataMAIN.csv")
 # remove NAs
 emp <- emp[!is.na(emp$pgsGDD5), ]
 
+emp$id2 <- paste(emp$id, emp$year)
+View(emp[duplicated(emp$id2),])
 # transform my groups to numeric values
 emp$spp_num <- match(emp$symbol, unique(emp$symbol))
 emp$treeid_num <- match(emp$id, unique(emp$id))

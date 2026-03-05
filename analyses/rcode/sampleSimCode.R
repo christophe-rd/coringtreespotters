@@ -321,3 +321,30 @@ combined <- (sigma_simXfit_plot + atreeid_simXfit_plot) /
   (bsp_simXfit_plot + asp_simXfit_plot)
 combined
 
+# Plot prior vs posterior for 1 parameter ####
+aspp_long <- reshape(
+  aspp_df,
+  direction = "long",
+  varying = list(names(aspp_df)),
+  v.names = "value",
+  timevar = "spp",
+  times = names(aspp_df),
+  idvar = "draw"
+)
+aspp_long
+
+# aspp prior
+# simulate your prior from the mu and sd in stan
+aspp_prior <- rnorm(1e4, 0, 1)
+
+ggplot() +
+  geom_density(data = data.frame(aspp_prior = aspp_prior),
+               aes(x = aspp_prior, colour = "Prior"),
+               linewidth = 0.8) +
+  geom_density(data = aspp_long,
+               aes(x = value, colour = "Posterior", group = spp),
+               linewidth = 0.5) +
+  # facet_wrap(~spp) + 
+  labs(title = "",
+       x = "aspp", y = "Density", color = "Curve") +
+  theme_minimal()

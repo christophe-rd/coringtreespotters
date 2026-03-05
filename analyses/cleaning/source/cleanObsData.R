@@ -1,7 +1,7 @@
 ## Started 17 April 2024 ##
 ## By Lizzie, but pulling from clean_TS.R (and clean_TS_multgardens.R for first lines) ##
 # updated by christophe on 4 march 2025 to adapt adapt the observations for coring the trees in april
-# re-updated by CRD on 29 April 2025 in the plane from Denver -- > Vancouver. Removed a bunch of lines I considered redundant
+# re-updated by CRD on 29 April 2025 in the plane from Denver -- > Vancouver. 
 
 ## How to download data (Apr 2024):
 # 1) Go to the NPN Data Downloader Tool: https://data.usanpn.org/observations
@@ -30,23 +30,25 @@ indPheno <- read.csv("input/individual_phenometrics_data2025.csv", header=TRUE) 
 trees2core <- read.csv("input/2025ApprovedPlantListforcoring.csv", header=TRUE) # from list of trees we can core
 coord <- read.csv("input/listTreesfromInteractiveMap.csv", header=TRUE) # from arboretum explorer map 
 
-
-
 # Remove tree number from the plant nickname column
 indPheno$plantNickname <- sub(", Tree \\d+", "", indPheno$Plant_Nickname)
 unique(indPheno$plantNickname) 
 
 leafcolorchecks <- subset(indPheno, plantNickname %in% c("15350*A", "22834*B", "12651*D"))
 coloredleaves <- subset(leafcolorchecks, Phenophase_Description == "Colored leaves")
+coloredleaves2 <- subset(indPheno, Phenophase_Description == "Colored leaves")
+hist(coloredleaves2$First_Yes_DOY)
 leafcolorchecks$Phenophase_Description
 
 coloredleaves$Individual_ID <- as.numeric(coloredleaves$First_Yes_DOY)
 
 coloredleaves$sppname <- paste(coloredleaves$Genus, coloredleaves$Species, coloredleaves$plantNickname, sep = "_")
-ggplot(coloredleaves, aes(x = First_Yes_DOY)) + 
+
+ggplot(coloredleaves, aes(x = First_Yes_DOY, fill = sppname)) + 
   geom_histogram() + 
-  facet_wrap(~sppname) + 
-  labs(x="observed leaf colouring date")+
+  facet_wrap(First_Yes_Year~sppname) + 
+  labs(x="observed leaf colouring date") +
+  geom_vline(xintercept=150) +
   theme_minimal() 
 
 
@@ -57,10 +59,33 @@ unique(leafcolorchecks$plantNickname)
 ### === === === === === === === ###
 # Select in the main df only the trees we can core
 d <- indPheno[indPheno$plantNickname %in% trees2core$ACC_NUM.QUAL,]
+coloredleaves3 <- subset(d, Phenophase_Description == "Colored leaves")
+hist(coloredleaves3$First_Yes_DOY)
 ### First let's do the obligatory cleaning checks with citizen science data
 d <- d[(d$Multiple_FirstY>=1 | d$Multiple_Observers>0),] ## This selects data where multiple people observed the same phenophase.
+coloredleaves3 <- subset(d, Phenophase_Description == "Colored leaves")
+hist(coloredleaves3$First_Yes_DOY)
+
 d <- d[(d$NumYs_in_Series>=3),] ## This selects data again where the same phenophase was seen 3 times in a row
+coloredleaves3 <- subset(d, Phenophase_Description == "Colored leaves")
+hist(coloredleaves3$First_Yes_DOY)
+
 d <- d[(d$NumDays_Since_Prior_No>=0 & d$NumDays_Since_Prior_No<=14),] ## And this limits to data where a no is followed by a yes, so that it is a new observation/new phenophase but has been detected within a reasonable timeframe
+
+
+coloredleaves3 <- subset(d, Phenophase_Description == "Colored leaves")
+hist(coloredleaves3$First_Yes_DOY)
+
+coloredleaves3$sppname <- paste(coloredleaves3$Genus, coloredleaves3$Species, coloredleaves3$plantNickname, sep = "_")
+
+coloredleaves3 <- subset(coloredleaves3, plantNickname %in% c("15350*A", "22834*B", "12651*D"))
+
+ggplot(coloredleaves3, aes(x = First_Yes_DOY, fill = sppname)) + 
+  geom_histogram() + 
+  facet_wrap(First_Yes_Year~sppname) + 
+  labs(x="observed leaf colouring date") +
+  geom_vline(xintercept=150, linewidth = 1, linetype = "dashed") +
+  theme_minimal() 
 
 ### === === === === === === === === ===###
 # Clean Arboretum tree coordinates file #
@@ -144,7 +169,7 @@ bb.pheno$phase<-ifelse(bb.pheno$phase=="Pollen release (flowers)", "pollenReleas
 bb.pheno <- filter(bb.pheno, numYs>0)
 
 # Below, I group each individual by phenophase and year to find the first observation (using the slice function), 
-## so first day of budburst for that individual for that year
+## so first day of phenophase for that individual for that year
 doy_pheno <- bb.pheno%>% 
   group_by(plantNickname, phase, year) %>% 
   slice(which.min(doy))

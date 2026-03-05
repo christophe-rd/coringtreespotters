@@ -573,6 +573,8 @@ ggplot(sigma_long_atreeid, aes(x = value, color = source, fill = source)) +
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 emp <- read.csv("output/empiricalDataMAIN.csv")
 
+nrow(emp[!is.na(emp$pgsGDD10AVG), ]) - nrow(emp[!is.na(emp$pgsGDD10), ])
+
 # transform my groups to numeric values
 emp$spp_num <- match(emp$symbol, unique(emp$symbol))
 emp$treeid_num <- match(emp$id, unique(emp$id))

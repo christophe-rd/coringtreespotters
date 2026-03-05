@@ -146,8 +146,6 @@ allringwidths2$plantNickname <- emp$plantNickname[match(allringwidths2$id, emp$i
 
 # add 5 year gdd average
 allringwidths2$gdd <- longtermgdd5yr$GDD_moving_avg[match(allringwidths2$yearCor, longtermgdd5yr$year)]
-allringwidths2$gdd2 <- longtermgdd5yr$GDD_5[match(allringwidths2$yearCor, longtermgdd5yr$year)] # to remove potentially
-allringwidths2$gdd_smooth <- rollmean(d$gdd2, k = 5, fill = NA, align = "center")
 
 pdf("figures/empiricalData/ringwidthXyear_bySpeciesAllYrs.pdf", width = 10, height = 6)
 species_list <- unique(allringwidths2$commonName)
@@ -172,12 +170,11 @@ for (sp in species_list) { # sp = "Sugar maple"
     ylim_gdd <- range(d$gdd, na.rm = TRUE)  
     
     d <- d[order(d$yearCor), ]
-    d$gdd_smooth <- rollmean(d$gdd2, k = 5, fill = NA, align = "center")
     
     plot(
       d$yearCor, d$gdd,
       type = "l",
-      col = adjustcolor("#B40F20", alpha.f = 0.3),
+      col = adjustcolor("#B40F20", alpha.f = 0.4),
       lwd = 1,
       lty = 1,
       xlim = xlim,
@@ -191,7 +188,7 @@ for (sp in species_list) { # sp = "Sugar maple"
     
     legend("topleft", 
            legend = c("Ring width", "GDD"),
-           col = c(renoir_named[sp], "#B40F20"),
+           col = c("black", "#B40F20"),
            lty = c(2, 2),
            pch = c(NA, NA),
            lwd = c(2, 2),
@@ -211,8 +208,9 @@ for (sp in species_list) { # sp = "Sugar maple"
       d$yearCor, d$lengthMM,
       type = "l",
       pch = 16,
-      cex = 0.9,
-      col = renoir_named[sp],
+      cex = 1.2,
+      lwd = 1.5,
+      col = "black",
       xlim = xlim,
       ylim = ylim,
       xlab = "Calendar year",
