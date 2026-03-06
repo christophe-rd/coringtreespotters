@@ -41,11 +41,12 @@ renoir <- c("#17154f", "#2f357c", "#6c5d9e", "#9d9cd5", "#b0799a", "#f6b3b0", "#
 # EMPIRICAL DATA ####
 # === === === === === === === === === === === === === === === === 
 emp <- read.csv("output/empiricalDataMAIN.csv")
+
 # remove NAs
 emp <- emp[!is.na(emp$pgsGDD5), ]
 
 emp$id2 <- paste(emp$id, emp$year)
-View(emp[duplicated(emp$id2),])
+
 # transform my groups to numeric values
 emp$spp_num <- match(emp$symbol, unique(emp$symbol))
 emp$treeid_num <- match(emp$id, unique(emp$id))
@@ -84,7 +85,7 @@ colnames(aspp_df) <- 1:ncol(aspp_df)
 
 # posterior summaries
 sigma_df2  <- extract_params(df_fit, "sigma", "mean", "sigma")
-bspp_df2   <- extract_params(df_fit, "bsp", "fit_bspp", "spp", "bsp\\[(\\d+)\\]")
+bspp_df2   <- extract_params(df_fit, "bsp", "fit_bspp", "spp", "bspp\\[(\\d+)\\]")
 treeid_df2 <- extract_params(df_fit, "atreeid", "fit_atreeid", "treeid", "atreeid\\[(\\d+)\\]")
 treeid_df2 <- subset(treeid_df2, !grepl("z", treeid) & !grepl("sigma", treeid))
 aspp_df2   <- extract_params(df_fit, "aspp", "fit_aspp", "spp", "aspp\\[(\\d+)\\]")
@@ -133,7 +134,7 @@ for (i in seq_len(ncol(treeid_a))) { # i = 1
 
 # sum all 3 dfs together to get the full intercept for each treeid
 fullintercept <-
-  treeid_a + # CHECK: convert to 75 cols
+  treeid_a + 
   atreeidsub +
   treeid_aspp 
 fullintercept
@@ -313,7 +314,7 @@ for (i in seq_along(sppvecnum)) { # i = 1
   y_post <- spp_post_list[[spp_column]]
   
   # summaries
-  y_mean <- apply(y_post, 1, mean)
+  y_mean <- apply(y_post, 1, median)
   y_low  <- apply(y_post, 1, quantile, 0.25)
   y_high <- apply(y_post, 1, quantile, 0.75)
   
@@ -422,6 +423,117 @@ for (i in seq_along(sppvecnum)) { # i = 1
 }
 dev.off()
 
+# Just TIAM#### 
+jpeg(
+  filename = "figures/empiricalData/growthModelSlopesTIAM.jpeg",
+  width = 3600,      # wider image (pixels) → more horizontal room
+  height = 2400,
+  res = 300          # good print-quality resolution
+)
+par(mfrow = c(1, 6))
+tiamvec <- 45:49
+# Loop over trees again to plot each tree individually
+for (i in tiamvec) { # i = 1
+  tree_col <- as.character(treeidvecnum[i])
+  tree_col_name <- as.character(treeidvecname[i])
+  y_post <- y_post_list[[tree_col]]
+  
+  # color line by spp
+  tree_id_num <- as.integer(tree_col)
+  
+  # index the dots per treeid
+  emp_treeid <- emp[emp$treeid_num == tree_id_num, ]
+  
+  # calculate mean and 50% credible interval (25%-75%)
+  y_mean <- apply(y_post, 1, mean)
+  y_low  <- apply(y_post, 1, quantile, 0.25)
+  y_high <- apply(y_post, 1, quantile, 0.75)
+  
+  # empty plot first
+  plot(emp$pgsGDD5, y, type = "n", 
+       ylim = range(c(0,12)),
+       xlab = "Primary growing season GDD", ylab = "Ring width (mm)",
+       frame = FALSE,
+       main = tree_col_name) # set the name for each plot
+  
+  spp_id <- treeid_spp$spp_num[
+    match(tree_id_num, treeid_spp$treeid_num)
+  ]
+  line_col <- renoir[spp_id]
+  
+  # shaded interval
+  polygon(c(x, rev(x)), 
+          c(y_low, # lower interval
+            rev(y_high)), # high interval
+          col = adjustcolor(line_col, alpha.f = 0.3), 
+          border = NA)
+  
+  # mean line
+  lines(x, y_mean,
+        col = line_col,
+        lwd = 2)
+  
+  points(
+    emp_treeid$pgsGDD5,
+    emp_treeid$lengthMM,
+    pch = 16,
+    cex = 2,
+    col = line_col)
+}
+
+for (i in 11) { # i = 1
+  
+  spp_column <- as.character(sppvecnum[i])
+  spp_column_name <- as.character(sppvecname[i])
+  
+  # define spp num
+  spp_num <- as.integer(spp_column)
+  
+  # subset empirical data correctly
+  emp_spp <- emp[emp$spp_num == spp_num, ]
+  
+  spp_column <- as.character(sppvecnum[i]) 
+  y_post <- spp_post_list[[spp_column]]
+  
+  # summaries
+  y_mean <- apply(y_post, 1, median)
+  y_low  <- apply(y_post, 1, quantile, 0.25)
+  y_high <- apply(y_post, 1, quantile, 0.75)
+  
+  # species-specific ylim
+  ylim_spp <- range(c(emp_spp$lengthMM, y_low, y_high), na.rm = TRUE)
+  
+  plot(emp_spp$pgsGDD5, emp_spp$lengthMM,
+       type = "n",
+       ylim = ylim_spp,
+       xlab = "Growing season growing degree days (GDD)",
+       ylab = "Ring width (mm)",
+       frame = FALSE,
+       main = spp_column_name)
+  
+  # color
+  line_col <- renoir[spp_num]
+  
+  polygon(
+    c(x, rev(x)),
+    c(y_low, rev(y_high)),
+    col = adjustcolor(line_col, alpha.f = 0.3),
+    border = NA
+  )
+  
+  lines(x, y_mean, col = line_col, lwd = 2)
+  
+  points(
+    emp_spp$pgsGDD5,
+    emp_spp$lengthMM,
+    pch = 16,
+    cex = 1,
+    col = line_col
+  )
+}
+dev.off()
+
+
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 # Mu plots #####
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
@@ -430,7 +542,7 @@ y_pos <- 1:n_spp
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 ###### asp ######
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
-aspp_df2$spp <- as.numeric(aspp_df2$spp_num)
+aspp_df2$spp <- as.numeric(aspp_df2$spp)
 aspp_df2$spp_name <- emp$commonName[match(aspp_df2$spp, emp$spp_num)]
 
 jpeg("figures/empiricalData/aspp_mean_plot.jpeg", width = 8, height = 6, units = "in", res = 300)
