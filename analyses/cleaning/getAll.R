@@ -95,7 +95,7 @@ temp <- temp[order(temp$idyear), ]
 temp <- subset(temp, select = !(names(temp) %in% "idyear"))
 
 # write csv
-write.csv(temp, "output/empiricalDataMAIN_max.csv")
+write.csv(temp, "output/empiricalDataMAIN.csv")
 # 
 # # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
 # # Now without tree rings!
