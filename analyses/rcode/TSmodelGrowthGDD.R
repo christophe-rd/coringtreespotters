@@ -571,9 +571,14 @@ ggplot(sigma_long_atreeid, aes(x = value, color = source, fill = source)) +
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 # EMPIRICAL DATA ####
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
-emp <- read.csv("output/empiricalDataMAIN.csv")
-
+# emp <- read.csv("output/empiricalDataMAIN.csv")
+# read empirical data with max phenology observations instead of min
+emp <- read.csv("output/empiricalDataMAIN_max.csv")
 nrow(emp[!is.na(emp$pgsGDD10AVG), ]) - nrow(emp[!is.na(emp$pgsGDD10), ])
+nrow(emp[!is.na(emp$pgsGDD5), ])
+
+# remove NAs
+emp <- emp[!is.na(emp$pgsGDD5), ]
 
 # transform my groups to numeric values
 emp$spp_num <- match(emp$symbol, unique(emp$symbol))
@@ -584,8 +589,6 @@ table(emp$symbol, emp$spp_num)
 table(emp$id, emp$symbol)
 table(emp$treeid_num, emp$spp_num)
 
-# remove NAs
-emp <- emp[!is.na(emp$pgsGDD5), ]
 
 # transform data in vectors
 y <- emp$lengthMM # ring width in mm
@@ -606,7 +609,7 @@ fit <- stan("stan/TSmodelGrowthGDD.stan",
                    "Nspp","species",
                    "Ntreeid", "treeid", 
                    "gdd"),
-            warmup = 1000, iter = 2000, chains=4, save_dso = FALSE)
+            warmup = 1000, iter = 2000, chains=4)
 saveRDS(fit, "output/stanOutput/fit_modelGrowth")
 
 # diagnostics
