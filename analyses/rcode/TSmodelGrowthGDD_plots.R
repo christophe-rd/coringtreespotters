@@ -41,6 +41,7 @@ renoir <- c("#17154f", "#2f357c", "#6c5d9e", "#9d9cd5", "#b0799a", "#f6b3b0", "#
 # EMPIRICAL DATA ####
 # === === === === === === === === === === === === === === === === 
 emp <- read.csv("output/empiricalDataMAIN.csv")
+empmax <- read.csv("output/empiricalDataMAIN_max.csv")
 
 # remove NAs
 emp <- emp[!is.na(emp$pgsGDD5), ]
@@ -823,3 +824,13 @@ legend(
   bty = "n"
 )
 dev.off()
+
+# <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+# Max vs min phenodates ####
+# <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+merged <- merge(emp, empmax, by="year")
+plot(merged$leafout.x ~ merged$leafout.y, xlab="max leafout", ylab="min leafout")
+abline(0, 1)
+
+plot(merged$coloredLeaves.x ~ merged$coloredLeaves.y, xlab="max leaf color date", ylab="min leaf color date")
+abline(0, 1)
