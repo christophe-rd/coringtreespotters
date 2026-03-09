@@ -112,7 +112,7 @@ colnames(atreeidsub) <- 1:length(subyvec)
 
 # get the spp and site identities for each tree id
 treeid_spp <- unique(emp[, c("treeid_num", "spp_num",
-                                  "id", "symbol", "commonName")])
+                                  "id", "symbol", "latbi")])
 
 # the spp values for each tree id
 treeid_aspp <- data.frame(matrix(ncol = ncol(atreeidsub), nrow = nrow(df_fit)))
@@ -285,22 +285,95 @@ spp_post_list <- lapply(spp_mean_list, function(mean_mat) {
 })
 
 sppvecnum <- 1:11
-sppvecname <- unique(treeid_spp$commonName)
+sppvecname <- unique(treeid_spp$latbi)
 
 x <- seq(min(emp$pgsGDD5), max(emp$pgsGDD5), length.out = 100)   
 
 # jpeg output
 jpeg(
   filename = "figures/empiricalData/growthModelSlopesperSppFacet.jpeg",
-  width = 2400,      # wider image (pixels) → more horizontal room
+  width = 2400,      
   height = 2400,
-  res = 300          # good print-quality resolution
+  res = 300          
 )
 # Layout: 4 cols x 3 rows
 par(mfrow = c(4, 3), mar = c(4, 4, 2, 1))
 
 # Loop over trees again to plot each tree individually
 for (i in seq_along(sppvecnum)) { # i = 1
+  
+  spp_column <- as.character(sppvecnum[i])
+  spp_column_name <- as.character(sppvecname[i])
+  
+  # define spp num
+  spp_num <- as.integer(spp_column)
+  
+  # subset empirical data correctly
+  emp_spp <- emp[emp$spp_num == spp_num, ]
+  
+  spp_column <- as.character(sppvecnum[i]) 
+  y_post <- spp_post_list[[spp_column]]
+  
+  # summaries
+  y_mean <- apply(y_post, 1, median)
+  y_low  <- apply(y_post, 1, quantile, 0.25)
+  y_high <- apply(y_post, 1, quantile, 0.75)
+  
+  # species-specific ylim
+  ylim_spp <- range(c(emp_spp$lengthMM, y_low, y_high), na.rm = TRUE)
+  
+  ylimfixed <- c(0, 12)
+  
+  plot(emp_spp$pgsGDD5, emp_spp$lengthMM,
+       type = "n",
+       # ylim = ylim_spp,
+       ylim = ylimfixed,
+       xlab = "Growing season growing degree days (GDD)",
+       ylab = "Ring width (mm)",
+       frame = FALSE,
+       main = spp_column_name)
+  
+  # color
+  line_col <- renoir[spp_num]
+  
+  polygon(
+    c(x, rev(x)),
+    c(y_low, rev(y_high)),
+    col = adjustcolor(line_col, alpha.f = 0.3),
+    border = NA
+  )
+  
+  lines(x, y_mean, col = line_col, lwd = 2)
+  
+  points(
+    emp_spp$pgsGDD5,
+    emp_spp$lengthMM,
+    pch = 16,
+    cex = 1,
+    col = line_col
+  )
+}
+
+dev.off()
+
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+##### Per spp, facetted with treeid slopes #####
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+# jpeg output
+# jpeg(
+#   filename = "figures/empiricalData/growthModelSlopesperSppFacet.jpeg",
+#   width = 2400,      
+#   height = 2400,
+#   res = 300          
+# )
+pdf(file = "figures/empiricalData/growthModelSlopesperSppTreeid.pdf", width = 10, height = 8)
+# Layout: 4 cols x 3 rows
+# par(mfrow = c(4, 3), mar = c(4, 4, 2, 1))
+
+par(mfrow = c(2, 2), mar = c(4, 4, 2, 1))
+
+# Loop over trees again to plot each tree individually
+for (i in seq(sppvecnum)) { # i = 11
   
   spp_column <- as.character(sppvecnum[i])
   spp_column_name <- as.character(sppvecname[i])
@@ -340,18 +413,46 @@ for (i in seq_along(sppvecnum)) { # i = 1
     border = NA
   )
   
-  lines(x, y_mean, col = line_col, lwd = 2)
+  lines(x, y_mean, col = line_col, lwd = 3)
   
-  points(
-    emp_spp$pgsGDD5,
-    emp_spp$lengthMM,
-    pch = 16,
-    cex = 1,
-    col = line_col
-  )
+  # add tree id variation
+  treeidspp <- treeid_spp$treeid_num[which(treeid_spp$spp_num == spp_num)]
+  
+  for (j in treeidspp) { # j = 15
+    tree_col <- as.character(treeidvecnum[j])
+    tree_col_name <- as.character(treeidvecname[j])
+    y_post <- y_post_list[[tree_col]]
+    
+    # color line by spp
+    tree_id_num <- as.integer(tree_col)
+    
+    # calculate mean and 50% credible interval (25%-75%)
+    y_mean <- apply(y_post, 1, mean)
+    y_low  <- apply(y_post, 1, quantile, 0.25)
+    y_high <- apply(y_post, 1, quantile, 0.75)
+    
+    # Add atreid lines
+    # spp_id <- treeid_spp$spp_num[
+    # match(tree_id_num, treeid_spp$treeid_num)]
+    
+    # line_col <- renoir[spp_id]
+    
+    # shaded interval
+    polygon(c(x, rev(x)),
+            c(y_low, # lower interval
+              rev(y_high)), # high interval
+            col = adjustcolor(line_col, alpha.f = 0.1),
+            border = NA)
+    
+    # mean line
+    lines(x, y_mean,
+          col = line_col,
+          lwd = 1)
+  }
 }
 
 dev.off()
+
 
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 ##### Per spp, non facetted #####
@@ -359,9 +460,9 @@ dev.off()
 # PDF output
 jpeg(
   filename = "figures/empiricalData/growthModelSlopesperSpp.jpeg",
-  width = 2400,      # wider image (pixels) → more horizontal room
+  width = 2400,      
   height = 2400,
-  res = 300          # good print-quality resolution
+  res = 300          
 )
 
 # Layout: 2 rows × 2 columns per page
@@ -427,9 +528,9 @@ dev.off()
 # Just TIAM#### 
 jpeg(
   filename = "figures/empiricalData/growthModelSlopesTIAM.jpeg",
-  width = 3600,      # wider image (pixels) → more horizontal room
+  width = 3600,      
   height = 2400,
-  res = 300          # good print-quality resolution
+  res = 300          
 )
 par(mfrow = c(1, 6))
 tiamvec <- 45:49
@@ -544,7 +645,7 @@ y_pos <- 1:n_spp
 ###### asp ######
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 aspp_df2$spp <- as.numeric(aspp_df2$spp)
-aspp_df2$spp_name <- emp$commonName[match(aspp_df2$spp, emp$spp_num)]
+aspp_df2$spp_name <- emp$latbi[match(aspp_df2$spp, emp$spp_num)]
 
 jpeg("figures/empiricalData/aspp_mean_plot.jpeg", width = 8, height = 6, units = "in", res = 300)
 
@@ -587,7 +688,7 @@ dev.off()
 ###### bsp ###### 
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 bspp_df2$spp <- as.numeric(bspp_df2$spp)
-bspp_df2$spp_name <- emp$commonName[match(bspp_df2$spp, emp$spp_num)]
+bspp_df2$spp_name <- emp$latbi[match(bspp_df2$spp, emp$spp_num)]
 
 jpeg("figures/empiricalData/bsp_mean_plot.jpeg", width = 8, height = 6, units = "in", res = 300)
 
@@ -634,7 +735,7 @@ treeid_df2$treeid <- as.numeric(treeid_df2$treeid)
 treeid_df2$treeid_name <- emp$id[match(treeid_df2$treeid, emp$treeid_num)]
 
 # now do the same, but for species
-treeid_df2$spp <- emp$commonName[match(treeid_df2$treeid, emp$treeid_num)]
+treeid_df2$spp <- emp$latbi[match(treeid_df2$treeid, emp$treeid_num)]
 
 sub <- subset(emp, select = c("treeid_num", "spp_num"))
 sub <- sub[!duplicated(sub$treeid_num),]
@@ -669,9 +770,9 @@ treeid_df4
 treeid_df4$treeid <- as.numeric(treeid_df4$treeid)
 treeid_df4$treeid_name <- emp$id[match(treeid_df4$treeid,
                                                     emp$treeid_num)]
-treeid_df4$spp_name <- emp$commonName[match(treeid_df4$treeid,
+treeid_df4$spp_name <- emp$latbi[match(treeid_df4$treeid,
                                               emp$treeid_num)]
-treeid_df4
+
 pdf(
   file = "figures/empiricalData/meanPlotGrowthGDD_treeidBYspp.pdf",
   width = 9,  
