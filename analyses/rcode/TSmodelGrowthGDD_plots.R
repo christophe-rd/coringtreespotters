@@ -929,9 +929,57 @@ dev.off()
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 # Max vs min phenodates ####
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
-merged <- merge(emp, empmax, by="year")
-plot(merged$leafout.x ~ merged$leafout.y, xlab="max leafout", ylab="min leafout")
-abline(0, 1)
+emp$idyear <- paste(emp$id, emp$year, sep = "_")
+empmax$idyear <- paste(empmax$id, empmax$year, sep = "_")
 
-plot(merged$coloredLeaves.x ~ merged$coloredLeaves.y, xlab="max leaf color date", ylab="min leaf color date")
-abline(0, 1)
+emp$leafoutMax <- empmax$leafout[match(emp$idyear, empmax$idyear)]
+emp$coloredLeavesMax <- empmax$coloredLeaves[match(emp$idyear, empmax$idyear)]
+
+empmax$coloredLeaves
+emp5 <- emp[order(emp$year),]
+
+jpeg(
+  filename = "figures/empiricalData/leafoutMinVSMax.jpeg",
+  width = 2400,      
+  height = 2400,
+  res = 300          
+)
+par(mfrow = c(3, 3))
+for (i in unique(emp5$year)) { # i = 2016
+  year <- emp[which(emp$year == i),]
+  
+  mainyear <- unique(year$year)
+  
+  plot(year$leafout ~ year$leafoutMax, 
+       xlab="max leafout", 
+       ylab="min leafout",
+       main = mainyear,
+       col = "#79ad41",
+       pch = 19,
+       frame = FALSE)
+  abline(0, 1)
+}
+dev.off()
+
+jpeg(
+  filename = "figures/empiricalData/leacolourMinVSMax.jpeg",
+  width = 2400,      
+  height = 2400,
+  res = 300          
+)
+par(mfrow = c(3, 3))
+for (i in unique(emp5$year)) { # i = 2016
+  year <- emp[which(emp$year == i),]
+  
+  mainyear <- unique(year$year)
+  
+  plot(year$coloredLeaves ~ year$coloredLeavesMax, 
+       xlab="max leafcolour", 
+       ylab="min leafcolour",
+       main = mainyear,
+       col = "#e67424",
+       pch = 19,
+       frame = FALSE)
+  abline(0, 1)
+}
+dev.off()
