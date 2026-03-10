@@ -289,12 +289,13 @@ sppvecname <- unique(treeid_spp$latbi)
 
 x <- seq(min(emp$pgsGDD5), max(emp$pgsGDD5), length.out = 100)   
 
+
 # jpeg output
 jpeg(
   filename = "figures/empiricalData/growthModelSlopesperSppFacet.jpeg",
-  width = 2400,      
+  width = 2400,
   height = 2400,
-  res = 300          
+  res = 300
 )
 # Layout: 4 cols x 3 rows
 par(mfrow = c(4, 3), mar = c(4, 4, 2, 1))
@@ -344,6 +345,15 @@ for (i in seq_along(sppvecnum)) { # i = 1
   )
   
   lines(x, y_mean, col = line_col, lwd = 2)
+  
+  # Add atreid symbols
+  unique_trees <- unique(emp_spp$treeid_num)
+  sym_per_row  <- treeidsymbol[match(emp_spp$treeid_num, unique_trees)]
+  
+  points(emp_spp$pgsGDD5, emp_spp$lengthMM,
+         pch = sym_per_row,
+         cex = 1,
+         col = line_col)
   
   points(
     emp_spp$pgsGDD5,
@@ -418,7 +428,7 @@ for (i in seq(sppvecnum)) { # i = 11
   # add tree id variation
   treeidspp <- treeid_spp$treeid_num[which(treeid_spp$spp_num == spp_num)]
   
-  for (j in treeidspp) { # j = 15
+  for (j in treeidspp) { # j = 46
     tree_col <- as.character(treeidvecnum[j])
     tree_col_name <- as.character(treeidvecname[j])
     y_post <- y_post_list[[tree_col]]
@@ -431,11 +441,16 @@ for (i in seq(sppvecnum)) { # i = 11
     y_low  <- apply(y_post, 1, quantile, 0.25)
     y_high <- apply(y_post, 1, quantile, 0.75)
     
-    # Add atreid lines
-    # spp_id <- treeid_spp$spp_num[
-    # match(tree_id_num, treeid_spp$treeid_num)]
+    # Add atreid symbols
+    treeidsymbol <- c(15, 16, 17, 8, 9)
+    tree_pos <- which(treeidspp == j) 
+    sym <- treeidsymbol[tree_pos]
     
-    # line_col <- renoir[spp_id]
+    treeidtempsymbol <- emp_spp[emp_spp$treeid_num == j,]
+    
+    points(treeidtempsymbol$pgsGDD5, treeidtempsymbol$lengthMM,
+           pch = sym,
+           col = line_col)
     
     # shaded interval
     polygon(c(x, rev(x)),
@@ -450,6 +465,7 @@ for (i in seq(sppvecnum)) { # i = 11
           lwd = 1)
   }
 }
+
 
 dev.off()
 
