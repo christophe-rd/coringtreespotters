@@ -291,12 +291,8 @@ x <- seq(min(emp$pgsGDD5), max(emp$pgsGDD5), length.out = 100)
 
 
 # jpeg output
-jpeg(
-  filename = "figures/empiricalData/growthModelSlopesperSppFacet.jpeg",
-  width = 2400,
-  height = 2400,
-  res = 300
-)
+jpeg(filename = "figures/empiricalData/growthModelSlopesperSppFacet.jpeg",
+  width = 2400, height = 2400, res = 300)
 # Layout: 4 cols x 3 rows
 par(mfrow = c(4, 3), mar = c(4, 4, 2, 1))
 
