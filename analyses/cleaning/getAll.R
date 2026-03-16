@@ -80,6 +80,7 @@ obsdataWithGDD <- obsdataWithGDD[!duplicated(obsdataWithGDD$idyear), c("id",
 )]
 
 obsdataWithGDD <- obsdataWithGDD[order(obsdataWithGDD$idyear), ]
+obsdataWithGDD$pgsGSL <- obsdataWithGDD$coloredLeaves - obsdataWithGDD$leafout
 nrow(obsdataWithGDD[!is.na(obsdataWithGDD$leafout), ])
 obsdataWithGDD$idyear <- NULL
 

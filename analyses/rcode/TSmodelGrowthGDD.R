@@ -38,35 +38,36 @@ source('mcmc_visualization_tools.R', local=util)
 source('rcode/utilExtractParam.R')
 
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
-# EMPIRICAL DATA ####
+# Most restricted amount of data ####
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
-# emp <- read.csv("output/empiricalDataMAIN.csv")
+# emp2 <- read.csv("output/empiricalDataMAIN.csv")
 # read empirical data with max phenology observations instead of min
 emp <- read.csv("output/empiricalDataMAIN.csv")
 # remove NAs
-emp <- emp[!is.na(emp$pgsGDD5) & !is.na(emp$lengthMM), ]
+emp2 <- emp[!is.na(emp$pgsGDD5) & !is.na(emp$lengthMM), ]
 
 # transform my groups to numeric values
-emp$spp_num <- match(emp$latbi, unique(emp$latbi))
-emp$treeid_num <- match(emp$id, unique(emp$id))
+emp2$spp_num <- match(emp2$latbi, unique(emp2$latbi))
+emp2$treeid_num <- match(emp2$id, unique(emp2$id))
 
 # some checks
-table(emp$latbi, emp$spp_num)
-table(emp$id, emp$latbi)
-table(emp$treeid_num, emp$spp_num)
-
+table(emp2$latbi, emp2$spp_num)
+table(emp2$id, emp2$latbi)
+table(emp2$treeid_num, emp2$spp_num)
 
 # transform data in vectors
-y <- emp$lengthMM # ring width in mm
-N <- nrow(emp)
-gdd <- emp$pgsGDD5/200
-Nspp <- length(unique(emp$spp_num))
-species <- as.numeric(as.character(emp$spp_num))
-treeid <- as.numeric(emp$treeid_num)
+y <- emp2$lengthMM # ring width in mm
+N <- nrow(emp2)
+Nspp <- length(unique(emp2$spp_num))
+species <- as.numeric(as.character(emp2$spp_num))
+treeid <- as.numeric(emp2$treeid_num)
 Ntreeid <- length(unique(treeid))
 
-# check that everything is fine
-table(treeid,species)
+# different response variables
+gdd <- emp2$pgsGDD5/200
+gsl <- as.numeric(emp2$pgsGSL/10)
+sos <- emp2$leafout/10
+eos <- emp2$budset/10
 
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 rstan_options(auto_write = TRUE)
