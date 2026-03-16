@@ -80,13 +80,6 @@ coloredleaves3$sppname <- paste(coloredleaves3$Genus, coloredleaves3$Species, co
 
 coloredleaves3 <- subset(coloredleaves3, plantNickname %in% c("15350*A", "22834*B", "12651*D"))
 
-ggplot(coloredleaves3, aes(x = First_Yes_DOY, fill = sppname)) + 
-  geom_histogram() + 
-  facet_wrap(First_Yes_Year~sppname) + 
-  labs(x="observed leaf colouring date") +
-  geom_vline(xintercept=150, linewidth = 1, linetype = "dashed") +
-  theme_minimal() 
-
 ### === === === === === === === === ===###
 # Clean Arboretum tree coordinates file #
 ### === === === === === === === === ===###
@@ -169,28 +162,40 @@ bb.pheno$phase<-ifelse(bb.pheno$phase=="Pollen release (flowers)", "pollenReleas
 bb.pheno <- filter(bb.pheno, numYs>0)
 
 # Below, I group each individual by phenophase and year to find the first observation (using the slice function), 
-## so first day of phenophase for that individual for that year
-doy_pheno <- bb.pheno%>% 
-  group_by(plantNickname, phase, year) %>% 
-  slice(which.min(doy))
+## so first day of phenophase for that individual for that year and max for leaf color as discussed here: https://github.com/christophe-rd/coringtreespotters/issues/14
+for(p in unique(bb.pheno$phase)) {
+  assign(p, bb.pheno[bb.pheno$phase == p, ])
+}
+# only 3 phenophases of interest for now, can add more later.
+budburstagg <- aggregate(doy ~ plantNickname + year, budburst, FUN = min)
+colnames(budburstagg) <- c("plantNickname", "year", "budburst")
+leafoutagg <-  aggregate(doy ~ plantNickname + year, leafout, FUN = min)
+colnames(leafoutagg) <- c("plantNickname", "year", "leafout")
+leafcolagg <-  aggregate(doy ~ plantNickname + year, coloredLeaves, FUN = max)
+colnames(leafcolagg) <- c("plantNickname", "year", "coloredLeaves")
 
-# spread this table so every phase gets its column!
-phenos <- doy_pheno %>% tidyr::spread(phase, doy)
+# merge all together while saving the max number of observations
+doy_pheno <- merge(budburstagg, leafoutagg, by = c("plantNickname", "year"), all = TRUE)
+doy_pheno <- merge(doy_pheno, leafcolagg, by = c("plantNickname", "year"), all = TRUE)
 
-# remove outliers e.g. when budburst is way to late in the summer
-phenos1 <- subset(phenos, budburst < 160)
-phenos2 <- subset(phenos1, leafout < 250) # redefine this to make sure its ok
+# add spp name back
+doy_pheno$latbi <- bb.pheno$latbi[match(doy_pheno$plantNickname, bb.pheno$plantNickname)]
+doy_pheno$genus <- bb.pheno$genus[match(doy_pheno$plantNickname, bb.pheno$plantNickname)]
+doy_pheno$species <- bb.pheno$species[match(doy_pheno$plantNickname, bb.pheno$plantNickname)]
+doy_pheno$commonName <- bb.pheno$commonName[match(doy_pheno$plantNickname, bb.pheno$plantNickname)]
+
+# remove outliers e.g. when budburst and leafout are way to late in the summer/fall
+doy_pheno$budburst[which(doy_pheno$budburst > 180)] <- NA
+doy_pheno$leafout[which(doy_pheno$leafout > 180)] <- NA
 
 # Add tree coordinates
-phenosCoord <- merge(phenos2, coordcut, by.x="plantNickname", by.y="PlantID", all.x=TRUE)
-
-head(phenosCoord)
+phenosCoord <- merge(doy_pheno, coordcut, by.x="plantNickname", by.y="PlantID", all.x=TRUE)
 
 # clean treeid names to fit my format
-
 phenosCoord$plantNicknamelatbi <- paste(phenosCoord$plantNickname, phenosCoord$latbi, sep = "_")
 
 phenosCoord$idnew <- NA
+
 phenosCoord$idnew[which(phenosCoord$plantNicknamelatbi == "11253*A_Quercus rubra")] <- "QURU_11253_A"
 phenosCoord$idnew[which(phenosCoord$plantNicknamelatbi == "11253*A_Quercus rubra")] <- "QURU_11253_A"
 phenosCoord$idnew[which(phenosCoord$plantNicknamelatbi == "1196-84*A_Acer rubrum")] <- "ACRU_1196-84_A"
@@ -201,6 +206,7 @@ phenosCoord$idnew[which(phenosCoord$plantNicknamelatbi == "1251-79*B_Betula nigr
 phenosCoord$idnew[which(phenosCoord$plantNicknamelatbi == "1251-79*E_Betula nigra")] <- "BENI_1251-79_E"
 phenosCoord$idnew[which(phenosCoord$plantNicknamelatbi == "12565*C_Acer saccharum")] <- "ACSA_12565_C"
 phenosCoord$idnew[which(phenosCoord$plantNicknamelatbi == "12651*C_Aesculus flava")] <- "AEFL_12651_C"
+
 phenosCoord$idnew[which(phenosCoord$plantNicknamelatbi == "12651*D_Aesculus flava")] <- "AEFL_12651_D"
 phenosCoord$idnew[which(phenosCoord$plantNicknamelatbi == "12651*H_Aesculus flava")] <- "AEFL_12651_H"
 phenosCoord$idnew[which(phenosCoord$plantNicknamelatbi == "12651*I_Aesculus flava")] <- "AEFL_12651_I"
@@ -248,22 +254,14 @@ phenosCoord$idnew[which(phenosCoord$plantNicknamelatbi == "925-79*B_Aesculus fla
 
 ts_cleaned <- phenosCoord[c(
   "idnew",
-  "genus",
-  "species", 
+  "genus", 
+  "species",
   "latbi",
   "commonName",
   "plantNickname",
-  "symbol",
   "year",
   "budburst",
-  "increasingLeafSize",
   "leafout",
-  "flowers",
-  "openFlowers",
-  "pollenRelease",
-  "fruits",
-  "ripeFruits",
-  "recentFruitOrSeedDrop",
   "coloredLeaves",
   "DBH",
   "AccessionDate",
@@ -278,17 +276,9 @@ colnames(ts_cleaned) <- c(
   "latbi",
   "commonName",
   "plantNickname",
-  "symbol",
   "year",
   "budburst",
-  "increasingLeafSize",
   "leafout",
-  "flowers",
-  "openFlowers",
-  "pollenRelease",
-  "fruits",
-  "ripeFruits",
-  "recentFruitorSeedDrop",
   "coloredLeaves",
   "DBH",
   "accessionDate",
