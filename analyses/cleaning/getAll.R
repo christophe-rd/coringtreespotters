@@ -26,18 +26,20 @@ source("cleaning/source/calculateGrowingSeasonGDD.R")
 
 # change some stuff so they match
 names(coressub)[which(names(coressub) == "yearCor")] <- "year"
-names(coressub)
-names(obsdataWithGDD)
 
-str(coressub)
-str(obsdataWithGDD)
-temp <- merge(coressub, obsdataWithGDD, by = c("id", "year"))
+# average 1 measurement per year
+coressub$lengthMM <- coressub$lengthCM*10
 
-# rename species and remove duplicated symbol col
-temp <- temp[ , !(names(temp) == "symbol")]
-names(temp)[which(names(temp) == "species.x")] <- "symbol"
-names(temp)[which(names(temp) == "species.y")] <- "species"
+# average each cores per id
+meancore <- aggregate(lengthMM ~ id + year, coressub, FUN = mean)
 
+# prep to add rw to obs data
+meancore$idyear <- paste(meancore$id, meancore$year)
+obsdataWithGDD$idyear <- paste(obsdataWithGDD$id, obsdataWithGDD$year)
+
+# add rw to obs data
+obsdataWithGDD$lengthMM <- meancore$lengthMM[match(obsdataWithGDD$idyear, 
+                                                   meancore$idyear)]
 # # make some checks
 # unique(temp3$sampleType)
 # # remove 2 samples for a given individuals
@@ -46,15 +48,9 @@ names(temp)[which(names(temp) == "species.y")] <- "species"
 # temp5$idyear <- paste(temp5$treeid, temp5$year, sep = "_")
 # temp6 <- temp5[!duplicated(temp5$idyear),] 
 # 
-temp$lengthMM <- temp$lengthCM*10
-
-# average each cores per id
-meancore <- aggregate(lengthMM ~ id + year, temp, FUN = mean)
-meancore$idyear <- paste(meancore$id, meancore$year)
-
-# reorganize and average the 2 cores per id
-temp$idyear <- paste(temp$id, temp$year)
-temp <- temp[!duplicated(temp$idyear), c("id", 
+nrow(obsdataWithGDD[!is.na(obsdataWithGDD$leafout), ])
+# reorganize 
+obsdataWithGDD <- obsdataWithGDD[!duplicated(obsdataWithGDD$idyear), c("id", 
                                       "year",
                                       "genus",
                                       "species",
@@ -65,6 +61,7 @@ temp <- temp[!duplicated(temp$idyear), c("id",
                                       "leafout",
                                       "coloredLeaves",
                                       "DBH",
+                                      "lengthMM",
                                       "accessionDate",
                                       "pgs",
                                       "fgs",
@@ -82,12 +79,12 @@ temp <- temp[!duplicated(temp$idyear), c("id",
                                       "idyear"
 )]
 
-temp$lengthMM <- meancore$lengthMM[match(temp$idyear, meancore$idyear)]
-temp <- temp[order(temp$idyear), ]
-temp$idyear <- NULL
+obsdataWithGDD <- obsdataWithGDD[order(obsdataWithGDD$idyear), ]
+nrow(obsdataWithGDD[!is.na(obsdataWithGDD$leafout), ])
+obsdataWithGDD$idyear <- NULL
 
 # write csv
-write.csv(temp, "output/empiricalDataMAIN.csv")
+write.csv(obsdataWithGDD, "output/empiricalDataMAIN.csv")
 # 
 # # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
 # # Now without tree rings!
