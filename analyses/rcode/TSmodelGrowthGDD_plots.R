@@ -44,12 +44,12 @@ emp <- read.csv("output/empiricalDataMAIN.csv")
 empmax <- read.csv("output/empiricalDataMAIN_max.csv")
 
 # remove NAs
-emp <- emp[!is.na(emp$pgsGDD5), ]
+emp <- emp[!is.na(emp$pgsGDD5) & !is.na(emp$lengthMM), ]
 
 emp$id2 <- paste(emp$id, emp$year)
 
 # transform my groups to numeric values
-emp$spp_num <- match(emp$symbol, unique(emp$symbol))
+emp$spp_num <- match(emp$latbi, unique(emp$latbi))
 emp$treeid_num <- match(emp$id, unique(emp$id))
 
 # transform data in vectors
@@ -112,7 +112,7 @@ colnames(atreeidsub) <- 1:length(subyvec)
 
 # get the spp and site identities for each tree id
 treeid_spp <- unique(emp[, c("treeid_num", "spp_num",
-                                  "id", "symbol", "latbi")])
+                                  "id", "latbi")])
 
 # the spp values for each tree id
 treeid_aspp <- data.frame(matrix(ncol = ncol(atreeidsub), nrow = nrow(df_fit)))
@@ -296,6 +296,7 @@ jpeg(filename = "figures/empiricalData/growthModelSlopesperSppFacet.jpeg",
 # Layout: 4 cols x 3 rows
 par(mfrow = c(4, 3), mar = c(4, 4, 2, 1))
 
+treeidsymbol <- c(15, 16, 17, 8, 9)
 # Loop over trees again to plot each tree individually
 for (i in seq_along(sppvecnum)) { # i = 1
   
@@ -438,7 +439,6 @@ for (i in seq(sppvecnum)) { # i = 11
     y_high <- apply(y_post, 1, quantile, 0.75)
     
     # Add atreid symbols
-    treeidsymbol <- c(15, 16, 17, 8, 9)
     tree_pos <- which(treeidspp == j) 
     sym <- treeidsymbol[tree_pos]
     
