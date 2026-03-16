@@ -56,21 +56,13 @@ meancore$idyear <- paste(meancore$id, meancore$year)
 temp$idyear <- paste(temp$id, temp$year)
 temp <- temp[!duplicated(temp$idyear), c("id", 
                                       "year",
-                                      "symbol",
                                       "genus",
                                       "species",
                                       "latbi",
                                       "commonName",
                                       "plantNickname",
                                       "budburst",
-                                      "increasingLeafSize",
                                       "leafout",
-                                      "flowers",
-                                      "openFlowers",
-                                      "pollenRelease",
-                                      "fruits",
-                                      "ripeFruits",
-                                      "recentFruitorSeedDrop",
                                       "coloredLeaves",
                                       "DBH",
                                       "accessionDate",
@@ -92,7 +84,7 @@ temp <- temp[!duplicated(temp$idyear), c("id",
 
 temp$lengthMM <- meancore$lengthMM[match(temp$idyear, meancore$idyear)]
 temp <- temp[order(temp$idyear), ]
-temp <- subset(temp, select = !(names(temp) %in% "idyear"))
+temp$idyear <- NULL
 
 # write csv
 write.csv(temp, "output/empiricalDataMAIN.csv")
