@@ -9,11 +9,6 @@ options(stringsAsFactors = FALSE)
 options(max.print = 150) 
 options(digits = 3)
 
-# stan options
-rstan_options(auto_write = TRUE)
-options(mc.cores = parallel::detectCores())
-parallel:::setDefaultClusterOptions(setup_strategy = "sequential")
-
 # Load library 
 library(ggplot2)
 library(rstan)
@@ -21,6 +16,12 @@ library(future)
 library(shinystan)
 library(wesanderson)
 library(patchwork)
+
+# stan options
+rstan_options(auto_write = TRUE)
+options(mc.cores = parallel::detectCores())
+parallel:::setDefaultClusterOptions(setup_strategy = "sequential")
+
 
 if (length(grep("christophe_rouleau-desrochers", getwd())) > 0) {
   setwd("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses")
@@ -41,20 +42,17 @@ source('rcode/utilExtractParam.R')
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 # emp <- read.csv("output/empiricalDataMAIN.csv")
 # read empirical data with max phenology observations instead of min
-emp <- read.csv("output/empiricalDataMAIN_max.csv")
-nrow(emp[!is.na(emp$pgsGDD10AVG), ]) - nrow(emp[!is.na(emp$pgsGDD10), ])
-nrow(emp[!is.na(emp$pgsGDD5), ])
-
+emp <- read.csv("output/empiricalDataMAIN.csv")
 # remove NAs
-emp <- emp[!is.na(emp$pgsGDD5), ]
+emp <- emp[!is.na(emp$pgsGDD5) & !is.na(emp$lengthMM), ]
 
 # transform my groups to numeric values
-emp$spp_num <- match(emp$symbol, unique(emp$symbol))
+emp$spp_num <- match(emp$latbi, unique(emp$latbi))
 emp$treeid_num <- match(emp$id, unique(emp$id))
 
 # some checks
-table(emp$symbol, emp$spp_num)
-table(emp$id, emp$symbol)
+table(emp$latbi, emp$spp_num)
+table(emp$id, emp$latbi)
 table(emp$treeid_num, emp$spp_num)
 
 
@@ -85,25 +83,24 @@ diagnostics <- util$extract_hmc_diagnostics(fit)
 util$check_all_hmc_diagnostics(diagnostics)
 samples <- util$extract_expectand_vals(fit)
 
-# check tree id parameterization
-if (FALSE) {
-  atreeid <- names(samples)[grepl("atreeid", names(samples))]
-  atreeid <- atreeid[!grepl("sigma", atreeid)]
-  # atreeid <- atreeid[sample(length(unique(atreeid)), 9)]
-pdf("figures/troubleshootingModelGrowthGDD/atreeidParameterization.pdf",
-    width = 14, height = 18)
-# jpeg("figures/atreeidParameterization.jpeg", 
-     # width = 2000, height = 3000,
-     # units = "px", res = 300)
-util$plot_div_pairs(atreeid, "sigma_atreeid", samples, diagnostics, transforms = list("sigma_atreeid" = 1))
-dev.off()
-}
-
 # === === === === === === === === === === === === #
 ##### Recover parameters from the posterior ##### 
 # === === === === === === === === === === === === #
 df_fit <- as.data.frame(fit)
 
+# full posterior
+columns <- colnames(df_fit)[!grepl("prior", colnames(df_fit))]
+sigma_df <- df_fit[, columns[grepl("sigma", columns)]]
+bspp_df <- df_fit[, columns[grepl("bsp", columns)]]
+treeid_df <- df_fit[, grepl("treeid", columns) & !grepl("z|sigma", columns)]
+aspp_df <- df_fit[, columns[grepl("aspp", columns)]]
+
+# change colnames
+colnames(bspp_df) <- 1:ncol(bspp_df)
+colnames(treeid_df) <- 1:ncol(treeid_df)
+colnames(aspp_df) <- 1:ncol(aspp_df)
+
+# summary of posteriors
 sigma_df2  <- extract_params(df_fit, "sigma", "mean", "sigma")
 bspp_df2   <- extract_params(df_fit, "bsp", "fit_bspp", "spp", "bsp\\[(\\d+)\\]")
 treeid_df2 <- extract_params(df_fit, "atreeid", "fit_atreeid", "treeid", "atreeid\\[(\\d+)\\]")
@@ -113,167 +110,59 @@ aspp_df2   <- extract_params(df_fit, "aspp", "fit_aspp", "spp", "aspp\\[(\\d+)\\
 # === === === === === === === === #
 ##### Plot posterior vs prior #####
 # === === === === === === === === #
+##### Plot posterior vs priors for gdd fit #####
+pdf(file = "figures/empiricalData/gddModelPriorVSPosterior.pdf", width = 8, height = 10)
 
-###### Plot a prior vs posterior ######
-a_posterior <- df_fit[, colnames(df_fit) %in% "a"]
+pal <- wes_palette("AsteroidCity1")[3:4]
 
-a_prior <- rnorm(1e4, 2, 3)
+par(mfrow = c(3, 2))
 
-priora <- ggplot() +
-  geom_density(data = data.frame(a = a_prior),
-               aes(x = a, colour = "Prior at N(2,3)"),
-               linewidth = 1) +
-  geom_density(data = data.frame(value = a_posterior),
-               aes(x = value, colour = "Posterior"),
-               linewidth = 1) +
-  labs(title = "priorVSposterior_a",
-       x = "a", y = "Density", color = "Curve") +
-  scale_color_manual(values = wes_palette("AsteroidCity1")[3:4]) +
-  theme_minimal()
-priora
-# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+# a
+plot(density(df_fit[, "a_prior"]), 
+     col = pal[1], lwd = 2, 
+     main = "priorVSposterior_a", 
+     xlab = "a", ylim = c(0,0.5))
+lines(density(df_fit[, "a"]), col = pal[2], lwd = 2)
+legend("topright", legend = c("Prior", "Posterior"), col = pal, lwd = 2)
 
-###### Plot sigmas prior vs posterior ######
-sigma_long <- reshape(
-  sigma_df,
-  direction = "long",
-  varying = list(names(sigma_df)),
-  v.names = "value",
-  timevar = "parameter",
-  times = names(sigma_df),
-  idvar = "draw"
-)
-sigma_long
+# sigma_atreeid
+plot(density(df_fit[, "sigma_atreeid_prior"]), 
+     col = pal[1], lwd = 2, 
+     main = "priorVSposterior_sigma_atreeid", 
+     xlab = "sigma_atreeid", ylim = c(0,2))
+lines(density(df_fit[, "sigma_atreeid"]), col = pal[2], lwd = 2)
+legend("topright", legend = c("Prior", "Posterior"), col = pal, lwd = 2)
 
-sigma_long$prior <- NA
-sigma_long$prior[which(sigma_long$parameter == "sigma_atreeid")] <- 
-  rnorm(nrow(sigma_df), 0, 2)
-sigma_long$prior[which(sigma_long$parameter == "sigma_y")] <- rnorm(
-  nrow(sigma_df), 0, 1)
+# sigma_y
+plot(density(df_fit[, "sigma_y_prior"]), 
+     col = pal[1], lwd = 2, 
+     main = "priorVSposterior_sigma_y", 
+     xlab = "sigma_y", ylim = c(0,2))
+lines(density(df_fit[, "sigma_y"]), col = pal[2], lwd = 2)
+legend("topright", legend = c("Prior", "Posterior"), col = pal, lwd = 2)
 
-priorsigmas <- ggplot(sigma_long) +
-  geom_density(aes(x = prior, colour = "Prior sigma_atreeid  at N(0, 2)
-Prior sigma_y at N(0, 1)"),
-               linewidth = 0.8) +
-  geom_density(aes(x = value, colour = "Posterior"),
-               linewidth = 0.8) +
-  facet_wrap(~parameter) + 
-  labs(title = "priorVSposterior_sigmas",
-       x = "", y = "Density", color = "Curve") +
-  scale_color_manual(values = wes_palette("AsteroidCity1")[3:4]) +
-  theme_minimal()
-priorsigmas
+# aspp
+plot(density(df_fit[, "aspp_prior"]), 
+     col = pal[1], lwd = 2, 
+     main = "priorVSposterior_aspp", 
+     xlab = "aspp", xlim = c(-20, 20), ylim = c(0, 0.15))
+for (col in colnames(aspp_df)) {
+  lines(density(aspp_df[, col]), col = pal[2], lwd = 1)
+} 
+legend("topright", legend = c("Prior", "Posterior"), col = pal, lwd = 2)
 
-# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
-###### Plot atreeid prior vs posterior ######
-treeid_long <- reshape(
-  treeid_df,
-  direction = "long",
-  varying = list(names(treeid_df)),
-  v.names = "value",
-  timevar = "treeid",
-  times = names(treeid_df),
-  idvar = "draw"
-)
-treeid_long
-
-# simulate priors
-hyperparameter_draws <- 8000
-parameter_draws <- 1000
-n_sigmatreeid <- 200
-
-# set to prior values
-sigmatreeid_vec <- abs(rnorm(n_sigmatreeid, 0, 1))
-
-prior_treeid <- rep(NA, parameter_draws*length(sigmatreeid_vec))
-
-for (i in 1: length(sigmatreeid_vec)) {
-  prior_treeid[((i - 1)*parameter_draws + 1):(i*parameter_draws)] <- rnorm(parameter_draws, 0, sigmatreeid_vec[i])
+# bsp
+plot(density(df_fit[, "bsp_prior"]), 
+     col = pal[1], lwd = 2, 
+     main = "priorVSposterior_bsp", 
+     xlab = "bsp", ylim = c(0, 1.8))
+for (col in colnames(bspp_df)) {
+  lines(density(bspp_df[, col]), col = pal[2], lwd = 1)
 }
-prior_treeid
+legend("topright", legend = c("Prior", "Posterior"), col = pal, lwd = 2)
 
-# sub of some treeids for plotting
-subtreeid <- subset(treeid_long, treeid %in% sample(treeid_long$treeid, 5))
+dev.off()
 
-prioratreeid <- ggplot() +
-  geom_density(data = data.frame(prior_treeid = prior_treeid),
-               aes(x = prior_treeid, colour = "Prior"),
-               linewidth = 0.8) +
-  geom_density(data = subtreeid,
-               aes(x = value, colour = "Posterior"),
-               linewidth = 0.8) +
-  facet_wrap(~treeid) + 
-  labs(title = "priorVSposterior_treeid",
-       x = "treeid", y = "Density", color = "Curve") +
-  scale_color_manual(values = wes_palette("AsteroidCity1")[3:4]) +
-  theme_minimal()
-prioratreeid
-
-###### Plot aspp prior vs posterior ######
-# convert posterior distribution to long format
-aspp_long <- reshape(
-  aspp_df,
-  direction = "long",
-  varying = list(names(aspp_df)),
-  v.names = "value",
-  timevar = "spp",
-  times = names(aspp_df),
-  idvar = "draw"
-)
-aspp_long
-
-# aspp prior
-aspp_prior <- rnorm(1e4, 0, 6)
-
-prioraspp <- ggplot() +
-  geom_density(data = data.frame(aspp_prior = aspp_prior),
-               aes(x = aspp_prior, colour = "Prior at N(0, 6)"),
-               linewidth = 0.8) +
-  geom_density(data = aspp_long,
-               aes(x = value, colour = "Posterior", group = spp),
-               linewidth = 0.5) +
-  # facet_wrap(~spp) + 
-  labs(title = "priorVSposterior_aspp",
-       x = "aspp", y = "Density", color = "Curve") +
-  scale_color_manual(values = wes_palette("AsteroidCity1")[3:4]) +
-  xlim(c(-20, 20)) +
-  theme_minimal()
-prioraspp
-
-###### Plot bsp prior vs posterior ######
-# convert posterior distribution to long format
-bsp_long <- reshape(
-  bspp_df,
-  direction = "long",
-  varying = list(names(bspp_df)),
-  v.names = "value",
-  timevar = "spp",
-  times = names(bspp_df),
-  idvar = "draw"
-)
-bsp_long
-
-# aspp prior
-bsp_prior <- rnorm(1e4, 0, 1)
-
-priorbsp <- ggplot() +
-  geom_density(data = data.frame(bsp_prior = bsp_prior),
-               aes(x = bsp_prior, colour = "Prior at N(0, 1)"),
-               linewidth = 0.8) +
-  geom_density(data = bsp_long,
-               aes(x = value, colour = "Posterior", group = spp),
-               linewidth = 0.5) +
-  # facet_wrap(~spp) + 
-  labs(title = "priorVSposterior_bsp",
-       x = "bsp", y = "Density", color = "Curve") +
-  scale_color_manual(values = wes_palette("AsteroidCity1")[3:4]) +
-  theme_minimal()
-priorbsp
-
-#  --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
-priorcombined <- (priorsigmas) / (priora) / (prioraspp)  / (priorbsp)
-ggsave("figures/troubleshootingModelGrowthGDD/priorVSposteriorCombined.jpeg", priorcombined, width = 8, height = 12, units = "in", dpi = 300)
-#  --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 # Retrodictive checks ####
