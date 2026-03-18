@@ -35,7 +35,7 @@ source('rcode/utilExtractParam.R')
 
 
 # specify colors
-renoir <- c("#17154f", "#2f357c", "#6c5d9e", "#9d9cd5", "#b0799a", "#f6b3b0", "#e48171", "#bf3729", "#e69b00", "#f5bb50", "#ada43b", "#355828")
+renoir <- c("#17154f", "#2f357c", "#6c5d9e", "#9d9cd5", "#b0799a", "#e48171", "#bf3729", "#e69b00", "#f5bb50", "#ada43b", "#355828")
 
 # === === === === === === === === === === === === === === === === 
 # EMPIRICAL DATA ####
@@ -64,9 +64,9 @@ treeid <- as.numeric(emp$treeid_num)
 Ntreeid <- length(unique(treeid))
 
 
-# === === === === === === === === === === === === #
-#### Recover parameters from the posterior ####
-# === === === === === === === === === === === === #
+# <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+# GDD posterior distribution recovery ####
+# <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 fit <- readRDS("output/stanOutput/fit_modelGrowth")
 df_fit <- as.data.frame(fit)
 
@@ -92,12 +92,184 @@ treeid_df2 <- subset(treeid_df2, !grepl("z", treeid) & !grepl("sigma", treeid))
 aspp_df2   <- extract_params(df_fit, "aspp", "fit_aspp", "spp", "aspp\\[(\\d+)\\]")
 
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+# GSL posterior distribution recovery ####
+# <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+fitgsl <- readRDS("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/output/stanOutput/fitGrowthGSL")
+
+df_fitgsl <- as.data.frame(fitgsl)
+
+# full posterior
+columns <- colnames(df_fitgsl)[!grepl("prior", colnames(df_fitgsl))]
+sigma_df_gsl <- df_fitgsl[, columns[grepl("sigma", columns)]]
+bspp_df_gsl <- df_fitgsl[, columns[grepl("bsp", columns)]]
+treeid_df_gsl <- df_fitgsl[, grepl("treeid", columns) & !grepl("z|sigma", columns)]
+aspp_df_gsl <- df_fitgsl[, columns[grepl("aspp", columns)]]
+
+# change colnames
+colnames(bspp_df) <- 1:ncol(bspp_df)
+colnames(treeid_df) <- 1:ncol(treeid_df)
+colnames(aspp_df) <- 1:ncol(aspp_df)
+
+# posterior summaries
+sigma_df2_gsl  <- extract_params(df_fitgsl, "sigma", "mean", "sigma")
+bspp_df2_gsl   <- extract_params(df_fitgsl, "bsp", "fit_bspp", 
+                                 "spp", "bsp\\[(\\d+)\\]")
+treeid_df2_gsl <- extract_params(df_fitgsl, "atreeid", "fit_atreeid", 
+                                 "treeid", "atreeid\\[(\\d+)\\]")
+treeid_df2_gsl <- subset(treeid_df2, !grepl("z|sigma", treeid))
+aspp_df2_gsl   <- extract_params(df_fitgsl, "aspp", "fit_aspp", 
+                                 "spp", "aspp\\[(\\d+)\\]")
+
+treeid_df2_gsl$treeid <- as.numeric(treeid_df2_gsl$treeid)
+treeid_df2_gsl$treeid_name <- emp$treeid[match(treeid_df2_gsl$treeid, emp$treeid_num)]
+bspp_df2_gsl$spp_name <- emp$latbi[match(bspp_df2_gsl$spp, emp$spp_num)]
+aspp_df2_gsl$spp_name <- emp$latbi[match(aspp_df2_gsl$spp, emp$spp_num)]
+
+# <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+# SOS posterior distribution recovery ####
+# <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+fitsos <- readRDS("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/output/stanOutput/fitGrowthSOS")
+
+df_fitsos <- as.data.frame(fitsos)
+
+# full posterior
+columns <- colnames(df_fitsos)[!grepl("prior", colnames(df_fitsos))]
+sigma_df_sos <- df_fitsos[, columns[grepl("sigma", columns)]]
+bspp_df_sos <- df_fitsos[, columns[grepl("bsp", columns)]]
+treeid_df_sos <- df_fitsos[, grepl("treeid", columns) & !grepl("z|sigma", columns)]
+aspp_df_sos <- df_fitsos[, columns[grepl("aspp", columns)]]
+
+# change colnames
+colnames(bspp_df_sos) <- 1:ncol(bspp_df_sos)
+colnames(treeid_df_sos) <- 1:ncol(treeid_df_sos)
+colnames(aspp_df_sos) <- 1:ncol(aspp_df_sos)
+
+# posterior summaries
+sigma_df2_sos  <- extract_params(df_fitsos, "sigma", "mean", "sigma")
+bspp_df2_sos   <- extract_params(df_fitsos, "bsp", "fit_bspp", 
+                                 "spp", "bsp\\[(\\d+)\\]")
+treeid_df2_sos <- extract_params(df_fitsos, "atreeid", "fit_atreeid", 
+                                 "treeid", "atreeid\\[(\\d+)\\]")
+treeid_df2_sos <- subset(treeid_df2_sos, !grepl("z|sigma", treeid))
+aspp_df2_sos   <- extract_params(df_fitsos, "aspp", "fit_aspp", 
+                                 "spp", "aspp\\[(\\d+)\\]")
+
+treeid_df2_sos$treeid <- as.numeric(treeid_df2_sos$treeid)
+treeid_df2_sos$treeid_name <- emp$treeid[match(treeid_df2_sos$treeid, emp$treeid_num)]
+bspp_df2_sos$spp_name <- emp$latbi[match(bspp_df2_sos$spp, emp$spp_num)]
+aspp_df2_sos$spp_name <- emp$latbi[match(aspp_df2_sos$spp, emp$spp_num)]
+
+# <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+# EOS posterior distribution recovery ####
+# <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+fiteos <- readRDS("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/output/stanOutput/fitGrowthEOS")
+
+df_fiteos <- as.data.frame(fiteos)
+
+# full posterior
+columns <- colnames(df_fiteos)[!grepl("prior", colnames(df_fiteos))]
+sigma_df_eos <- df_fiteos[, columns[grepl("sigma", columns)]]
+bspp_df_eos <- df_fiteos[, columns[grepl("bsp", columns)]]
+treeid_df_eos <- df_fiteos[, grepl("treeid", columns) & !grepl("z|sigma", columns)]
+aspp_df_eos <- df_fiteos[, columns[grepl("aspp", columns)]]
+
+# change colnames
+colnames(bspp_df_eos) <- 1:ncol(bspp_df_eos)
+colnames(treeid_df_eos) <- 1:ncol(treeid_df_eos)
+colnames(aspp_df_eos) <- 1:ncol(aspp_df_eos)
+
+# posterior summaries
+sigma_df2_eos  <- extract_params(df_fiteos, "sigma", "mean", "sigma")
+bspp_df2_eos   <- extract_params(df_fiteos, "bsp", "fit_bspp", 
+                                 "spp", "bsp\\[(\\d+)\\]")
+treeid_df2_eos <- extract_params(df_fiteos, "atreeid", "fit_atreeid", 
+                                 "treeid", "atreeid\\[(\\d+)\\]")
+treeid_df2_eos <- subset(treeid_df2_eos, !grepl("z|sigma", treeid))
+aspp_df2_eos   <- extract_params(df_fiteos, "aspp", "fit_aspp", 
+                                 "spp", "aspp\\[(\\d+)\\]")
+
+treeid_df2_eos$treeid <- as.numeric(treeid_df2_eos$treeid)
+treeid_df2_eos$treeid_name <- emp$treeid[match(treeid_df2_eos$treeid, emp$treeid_num)]
+bspp_df2_eos$spp_name <- emp$latbi[match(bspp_df2_eos$spp, emp$spp_num)]
+aspp_df2_eos$spp_name <- emp$latbi[match(aspp_df2_eos$spp, emp$spp_num)]
+
+# <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+# Define objects used throughout the models ####
+# <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+n_spp <- length(unique(emp$latbi))
+y_pos <- 1:n_spp 
+
+# get the spp and site identities for each tree id
+treeid_spp <- unique(emp[, c("treeid_num", "spp_num", "id", "latbi")])
+
+# get a vector for each treeid for each species
+spp1vec <- treeid_spp$treeid_num[treeid_spp$spp_num == 1]
+spp2vec <- treeid_spp$treeid_num[treeid_spp$spp_num == 2]
+spp3vec <- treeid_spp$treeid_num[treeid_spp$spp_num == 3]
+spp4vec <- treeid_spp$treeid_num[treeid_spp$spp_num == 4]
+spp5vec <- treeid_spp$treeid_num[treeid_spp$spp_num == 5]
+spp6vec <- treeid_spp$treeid_num[treeid_spp$spp_num == 6]
+spp7vec <- treeid_spp$treeid_num[treeid_spp$spp_num == 7]
+spp8vec <- treeid_spp$treeid_num[treeid_spp$spp_num == 8]
+spp9vec <- treeid_spp$treeid_num[treeid_spp$spp_num == 9]
+spp10vec <- treeid_spp$treeid_num[treeid_spp$spp_num == 10]
+spp11vec <- treeid_spp$treeid_num[treeid_spp$spp_num == 11]
+
+spp_list <- list(
+  "1" = spp1vec,
+  "2" = spp2vec,
+  "3" = spp3vec,
+  "4" = spp4vec,
+  "5" = spp5vec,
+  "6" = spp6vec,
+  "7" = spp7vec,
+  "8" = spp8vec,
+  "9" = spp9vec,
+  "10" = spp10vec,
+  "11" = spp11vec
+)
+
+sppvecnum <- 1:11
+sppvecname <- unique(treeid_spp$latbi)
+
+# for mu plots
+species_order <- unique(emp$latbi)
+
+colscommon <- c(
+  "Red maple"           = renoir[1],
+  "Sugar maple"         = renoir[2],
+  "Yellow buckeye"      = renoir[3],
+  "Yellow birch"        = renoir[4],
+  "River birch"         = renoir[5],
+  "Pignut hickory"      = renoir[6],
+  "Shagbark hickory"    = renoir[7],
+  "Eastern cottonwood"  = renoir[8],
+  "White oak"           = renoir[9],
+  "Northern red oak"    = renoir[10],
+  "American basswood"   = renoir[11]
+)
+
+colslatbi <- c(
+  "Acer rubrum"           = renoir[1],
+  "Acer saccharum"        = renoir[2],
+  "Aesculus flava"        = renoir[3],
+  "Betula alleghaniensis" = renoir[4],
+  "Betula nigra"          = renoir[5],
+  "Carya glabra"          = renoir[6],
+  "Carya ovata"           = renoir[7],
+  "Populus deltoides"     = renoir[8],
+  "Quercus alba"          = renoir[9],
+  "Quercus rubra"         = renoir[10],
+  "Tilia americana"       = renoir[11]
+)
+
+# <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 # Plot lines with quantiles ####
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
-
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
 ##### Per treeid #####
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+# start by filling a df with treeid intercepts only
 subyvec <- vector()
 for (i in 1:length(unique(emp$treeid_num))) {
   subyvec[i] <- paste("atreeid", "[",i,"]", sep = "")  
@@ -105,20 +277,13 @@ for (i in 1:length(unique(emp$treeid_num))) {
 subyvec
 
 atreeidsub <- subset(df_fit, select = subyvec)
-
 colnames(atreeidsub) <- 1:length(subyvec)
-
-# start by filling a df with treeid intercepts only
-
-# get the spp and site identities for each tree id
-treeid_spp <- unique(emp[, c("treeid_num", "spp_num",
-                                  "id", "latbi")])
 
 # the spp values for each tree id
 treeid_aspp <- data.frame(matrix(ncol = ncol(atreeidsub), nrow = nrow(df_fit)))
 colnames(treeid_aspp) <- colnames(atreeidsub)
 
-for (i in seq_len(ncol(treeid_aspp))) { # i = 1
+for (i in seq_len(ncol(treeid_aspp))) {
   tree_id <- as.integer(colnames(treeid_aspp)[i])
   spp_id <- treeid_spp$spp_num[match(tree_id, treeid_spp$treeid_num)]
   treeid_aspp[, i] <- aspp_df[, spp_id]
@@ -165,7 +330,6 @@ y_post_list <- list()  # store posterior predictions in a list where each tree i
 # below I create a list where each row is the posterior estimate for each value of gdd (so the first row correspond to the model estimate for the first gdd value stored in x) and each column is the iteration (from 1 to 8000)
 for (i in seq_along(treeidvecnum)) { # i = 1
   tree_col <- as.character(treeidvecnum[i]) 
-  # TO CHANGE: get the nrow(df_fit) samples back
   y_post <- sapply(1:nrow(df_fit), function(f) {
     rnorm(length(x), 
           fullintercept[f, tree_col] + treeid_bspp[f, tree_col] * x, 
@@ -206,10 +370,9 @@ for (i in seq_along(treeidvecnum)) { # i = 1
        frame = FALSE,
        main = tree_col_name) # set the name for each plot
   
-  spp_id <- treeid_spp$spp_num[
-    match(tree_id_num, treeid_spp$treeid_num)
-  ]
-  line_col <- renoir[spp_id]
+  spp_id <- treeid_spp$latbi[match(tree_id_num, treeid_spp$treeid_num)]
+  
+  line_col <- colslatbi[spp_id]
   
   # shaded interval
   polygon(c(x, rev(x)), 
@@ -235,34 +398,6 @@ dev.off()
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
 ##### Per Spp, facet #####
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
-# get a vector for each treeid for each species
-spp1vec <- treeid_spp$treeid_num[treeid_spp$spp_num == 1]
-spp2vec <- treeid_spp$treeid_num[treeid_spp$spp_num == 2]
-spp3vec <- treeid_spp$treeid_num[treeid_spp$spp_num == 3]
-spp4vec <- treeid_spp$treeid_num[treeid_spp$spp_num == 4]
-spp5vec <- treeid_spp$treeid_num[treeid_spp$spp_num == 5]
-spp6vec <- treeid_spp$treeid_num[treeid_spp$spp_num == 6]
-spp7vec <- treeid_spp$treeid_num[treeid_spp$spp_num == 7]
-spp8vec <- treeid_spp$treeid_num[treeid_spp$spp_num == 8]
-spp9vec <- treeid_spp$treeid_num[treeid_spp$spp_num == 9]
-spp10vec <- treeid_spp$treeid_num[treeid_spp$spp_num == 10]
-spp11vec <- treeid_spp$treeid_num[treeid_spp$spp_num == 11]
-
-spp_list <- list(
-  "1" = spp1vec,
-  "2" = spp2vec,
-  "3" = spp3vec,
-  "4" = spp4vec,
-  "5" = spp5vec,
-  "6" = spp6vec,
-  "7" = spp7vec,
-  "8" = spp8vec,
-  "9" = spp9vec,
-  "10" = spp10vec,
-  "11" = spp11vec
-)
-
-
 mean_post_list <- list()
 for (i in seq_along(treeidvecnum)) {
   tree_col <- as.character(treeidvecnum[i])
@@ -284,11 +419,7 @@ spp_post_list <- lapply(spp_mean_list, function(mean_mat) {
   })
 })
 
-sppvecnum <- 1:11
-sppvecname <- unique(treeid_spp$latbi)
-
 x <- seq(min(emp$pgsGDD5), max(emp$pgsGDD5), length.out = 100)   
-
 
 # jpeg output
 jpeg(filename = "figures/empiricalData/growthModelSlopesperSppFacet.jpeg",
@@ -366,7 +497,6 @@ dev.off()
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 ##### Per spp, facetted with treeid slopes #####
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
-# jpeg output
 # jpeg(
 #   filename = "figures/empiricalData/growthModelSlopesperSppFacet.jpeg",
 #   width = 2400,      
@@ -374,8 +504,6 @@ dev.off()
 #   res = 300          
 # )
 pdf(file = "figures/empiricalData/growthModelSlopesperSppTreeid.pdf", width = 10, height = 8)
-# Layout: 4 cols x 3 rows
-# par(mfrow = c(4, 3), mar = c(4, 4, 2, 1))
 
 par(mfrow = c(2, 2), mar = c(4, 4, 2, 1))
 
@@ -477,11 +605,6 @@ jpeg(
   res = 300          
 )
 
-# Layout: 2 rows × 2 columns per page
-
-
-# below I create a list where each row is the posterior estimate for each value of gdd (so the first row correspond to the model estimate for the first gdd value stored in x) and each column is the iteration (from 1 to 8000)
-
 plot(emp$pgsGDD5, y, type = "n", 
      ylim = range(min(emp$lengthMM), max(emp$lengthMM)), 
      xlab = "Primary growing season GDD", ylab = "Ring width (mm)",
@@ -537,7 +660,9 @@ for (i in seq_along(sppvecnum)) { # i = 1
 }
 dev.off()
 
-# Just TIAM#### 
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+##### Just TIAM #####
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 jpeg(
   filename = "figures/empiricalData/growthModelSlopesTIAM.jpeg",
   width = 3600,      
@@ -647,12 +772,10 @@ for (i in 11) { # i = 1
 }
 dev.off()
 
-
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 # Mu plots #####
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
-n_spp <- nrow(bspp_df2)
-y_pos <- 1:n_spp 
+
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 ###### asp ######
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
@@ -780,11 +903,10 @@ treeid_df4
 
 # get the og treeid names, spp and site back:
 treeid_df4$treeid <- as.numeric(treeid_df4$treeid)
-treeid_df4$treeid_name <- emp$id[match(treeid_df4$treeid,
-                                                    emp$treeid_num)]
-treeid_df4$spp_name <- emp$latbi[match(treeid_df4$treeid,
-                                              emp$treeid_num)]
+treeid_df4$treeid_name <- emp$id[match(treeid_df4$treeid, emp$treeid_num)]
+treeid_df4$spp_name <- emp$latbi[match(treeid_df4$treeid, emp$treeid_num)]
 
+# Plot!
 pdf(
   file = "figures/empiricalData/meanPlotGrowthGDD_treeidBYspp.pdf",
   width = 9,  
@@ -801,22 +923,6 @@ gap <- 2
 
 # y positions
 current_y <- 1
-
-species_order <- unique(treeid_df4$spp_name)
-
-my_colors <- c(
-  "Red maple"           = renoir[1],
-  "Sugar maple"         = renoir[2],
-  "Yellow buckeye"      = renoir[3],
-  "Yellow birch"        = renoir[4],
-  "River birch"         = renoir[5],
-  "Pignut hickory"      = renoir[6],
-  "Shagbark hickory"    = renoir[7],
-  "Eastern cottonwood"  = renoir[8],
-  "White oak"           = renoir[9],
-  "Northern red oak"    = renoir[10],
-  "American basswood"   = renoir[11]
-)
 
 treeid_df4$spp  <- factor(treeid_df4$spp_name, levels = species_order)
 
@@ -854,12 +960,12 @@ plot(
   yaxt = "n"  
 )
 
-# --- Add horizontal error bars (5–95%) ---
+# Add horizontal error bars (5–95%)
 segments(
   x0 = treeid_df4$fit_atreeid_per5,
   x1 = treeid_df4$fit_atreeid_per95,
   y0 = treeid_df4$y_pos,
-  col = adjustcolor(my_colors[treeid_df4$spp], alpha.f = 0.7),
+  col = adjustcolor(colslatbi[treeid_df4$spp], alpha.f = 0.7),
   lwd = 1
 )
 
@@ -868,7 +974,7 @@ segments(
   x0 = treeid_df4$fit_atreeid_per25,
   x1 = treeid_df4$fit_atreeid_per75,
   y0 = treeid_df4$y_pos,
-  col = adjustcolor(my_colors[treeid_df4$spp], alpha.f = 0.7),
+  col = adjustcolor(colslatbi[treeid_df4$spp], alpha.f = 0.7),
   lwd = 1.5
 )
 
@@ -878,7 +984,7 @@ points(
   treeid_df4$y_pos,
   cex = 0.8,
   pch = 16,
-  col = adjustcolor(my_colors[treeid_df4$spp], alpha.f = 0.7)
+  col = adjustcolor(colslatbi[treeid_df4$spp], alpha.f = 0.7)
 )
 
 aspp_df2$spp <- aspp_df2$spp_name
@@ -890,7 +996,7 @@ segments(
   x0 = aspp_df2$fit_aspp_per5,
   x1 = aspp_df2$fit_aspp_per95,
   y0 = aspp_df2$y_pos,
-  col = adjustcolor(my_colors[aspp_df2$spp], alpha.f = 0.9),
+  col = adjustcolor(colslatbi[aspp_df2$spp], alpha.f = 0.9),
   lwd = 2
 )
 
@@ -898,22 +1004,22 @@ segments(
   x0 = aspp_df2$fit_aspp_per25,
   x1 = aspp_df2$fit_aspp_per75,
   y0 = aspp_df2$y_pos,
-  col = my_colors[aspp_df2$spp],
+  col = colslatbi[aspp_df2$spp],
   lwd = 3
 )
 points(
   aspp_df2$fit_aspp,
   aspp_df2$y_pos,
   pch = 16,
-  col  = my_colors[aspp_df2$spp],
+  col  = colslatbi[aspp_df2$spp],
   # col = "black",
   cex = 1.5
 )
 
-# --- Add vertical line at 0 ---
+# Add vertical line at 0
 abline(v = 0, lty = 2)
 
-# --- Add custom y-axis labels (reverse order if needed) ---
+# Add custom y-axis labels (reverse order if needed)
 axis(
   side = 2,
   at = treeid_df4$y_pos,
@@ -930,7 +1036,7 @@ legend(
   x = max(treeid_df4$fit_atreeid_per95) - 5,
   y = max(treeid_df4$y_pos) -16,
   legend = species_legend_order,
-  col = my_colors[species_legend_order],    # index so colors match
+  col = colslatbi[species_legend_order],    # index so colors match
   pch = 16,
   pt.cex = 1.2,
   title = "Species",
