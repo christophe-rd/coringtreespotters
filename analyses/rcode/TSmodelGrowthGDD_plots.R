@@ -267,7 +267,7 @@ colslatbi <- c(
 # Plot lines with quantiles ####
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
-##### Per treeid #####
+##### GDD: per treeid #####
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
 # start by filling a df with treeid intercepts only
 subyvec <- vector()
@@ -339,7 +339,7 @@ for (i in seq_along(treeidvecnum)) { # i = 1
 }
 
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
-##### Per treeid, facet #####
+##### GDD: per treeid, facet #####
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
 # PDF output
 pdf(file = "figures/empiricalData/growthModelSlopesperTreeid.pdf", width = 10, height = 8)
@@ -396,7 +396,7 @@ for (i in seq_along(treeidvecnum)) { # i = 1
 dev.off()
 
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
-##### Per Spp, facet #####
+##### GDD: per Spp, facet #####
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
 mean_post_list <- list()
 for (i in seq_along(treeidvecnum)) {
@@ -495,7 +495,7 @@ for (i in seq_along(sppvecnum)) { # i = 1
 dev.off()
 
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
-##### Per spp, facetted with treeid slopes #####
+##### GDD: Per spp, facetted with treeid slopes #####
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 # jpeg(
 #   filename = "figures/empiricalData/growthModelSlopesperSppFacet.jpeg",
@@ -595,7 +595,7 @@ dev.off()
 
 
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
-##### Per spp, non facetted #####
+##### GDD: per spp, non facetted #####
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 # PDF output
 jpeg(
@@ -660,117 +660,6 @@ for (i in seq_along(sppvecnum)) { # i = 1
 }
 dev.off()
 
-# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
-##### Just TIAM #####
-# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
-jpeg(
-  filename = "figures/empiricalData/growthModelSlopesTIAM.jpeg",
-  width = 3600,      
-  height = 2400,
-  res = 300          
-)
-par(mfrow = c(1, 6))
-tiamvec <- 45:49
-# Loop over trees again to plot each tree individually
-for (i in tiamvec) { # i = 1
-  tree_col <- as.character(treeidvecnum[i])
-  tree_col_name <- as.character(treeidvecname[i])
-  y_post <- y_post_list[[tree_col]]
-  
-  # color line by spp
-  tree_id_num <- as.integer(tree_col)
-  
-  # index the dots per treeid
-  emp_treeid <- emp[emp$treeid_num == tree_id_num, ]
-  
-  # calculate mean and 50% credible interval (25%-75%)
-  y_mean <- apply(y_post, 1, mean)
-  y_low  <- apply(y_post, 1, quantile, 0.25)
-  y_high <- apply(y_post, 1, quantile, 0.75)
-  
-  # empty plot first
-  plot(emp$pgsGDD5, y, type = "n", 
-       ylim = range(c(0,12)),
-       xlab = "Primary growing season GDD", ylab = "Ring width (mm)",
-       frame = FALSE,
-       main = tree_col_name) # set the name for each plot
-  
-  spp_id <- treeid_spp$spp_num[
-    match(tree_id_num, treeid_spp$treeid_num)
-  ]
-  line_col <- renoir[spp_id]
-  
-  # shaded interval
-  polygon(c(x, rev(x)), 
-          c(y_low, # lower interval
-            rev(y_high)), # high interval
-          col = adjustcolor(line_col, alpha.f = 0.3), 
-          border = NA)
-  
-  # mean line
-  lines(x, y_mean,
-        col = line_col,
-        lwd = 2)
-  
-  points(
-    emp_treeid$pgsGDD5,
-    emp_treeid$lengthMM,
-    pch = 16,
-    cex = 2,
-    col = line_col)
-}
-
-for (i in 11) { # i = 1
-  
-  spp_column <- as.character(sppvecnum[i])
-  spp_column_name <- as.character(sppvecname[i])
-  
-  # define spp num
-  spp_num <- as.integer(spp_column)
-  
-  # subset empirical data correctly
-  emp_spp <- emp[emp$spp_num == spp_num, ]
-  
-  spp_column <- as.character(sppvecnum[i]) 
-  y_post <- spp_post_list[[spp_column]]
-  
-  # summaries
-  y_mean <- apply(y_post, 1, median)
-  y_low  <- apply(y_post, 1, quantile, 0.25)
-  y_high <- apply(y_post, 1, quantile, 0.75)
-  
-  # species-specific ylim
-  ylim_spp <- range(c(emp_spp$lengthMM, y_low, y_high), na.rm = TRUE)
-  
-  plot(emp_spp$pgsGDD5, emp_spp$lengthMM,
-       type = "n",
-       ylim = ylim_spp,
-       xlab = "Growing season growing degree days (GDD)",
-       ylab = "Ring width (mm)",
-       frame = FALSE,
-       main = spp_column_name)
-  
-  # color
-  line_col <- renoir[spp_num]
-  
-  polygon(
-    c(x, rev(x)),
-    c(y_low, rev(y_high)),
-    col = adjustcolor(line_col, alpha.f = 0.3),
-    border = NA
-  )
-  
-  lines(x, y_mean, col = line_col, lwd = 2)
-  
-  points(
-    emp_spp$pgsGDD5,
-    emp_spp$lengthMM,
-    pch = 16,
-    cex = 1,
-    col = line_col
-  )
-}
-dev.off()
 
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 # Mu plots #####
