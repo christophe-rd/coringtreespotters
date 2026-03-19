@@ -1,5 +1,5 @@
 # coringtreespotters model
-# CRD 6 Frebruary 2025
+# CRD 6 February 2025
 
 # Goal: Plot model TS
 
@@ -37,9 +37,9 @@ source('rcode/utilExtractParam.R')
 # specify colors
 renoir <- c("#17154f", "#2f357c", "#6c5d9e", "#9d9cd5", "#b0799a", "#e48171", "#bf3729", "#e69b00", "#f5bb50", "#ada43b", "#355828")
 
-# === === === === === === === === === === === === === === === === 
-# EMPIRICAL DATA ####
-# === === === === === === === === === === === === === === === === 
+# <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+# Recover objects from models ####
+# <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 emp <- read.csv("output/empiricalDataMAIN.csv")
 empmax <- read.csv("output/empiricalDataMAIN_max.csv")
 
@@ -57,15 +57,12 @@ y <- emp$lengthMM
 N <- nrow(emp)
 gdd <- emp$pgsGDD5/200
 Nspp <- length(unique(emp$spp_num))
-Nsite <- length(unique(emp$site_num))
-site <- as.numeric(as.character(emp$site_num))
 species <- as.numeric(as.character(emp$spp_num))
 treeid <- as.numeric(emp$treeid_num)
 Ntreeid <- length(unique(treeid))
 
-
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
-# GDD posterior distribution recovery ####
+# GDD posterior recovery ####
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 fit <- readRDS("output/stanOutput/fit_modelGrowth")
 df_fit <- as.data.frame(fit)
@@ -91,10 +88,14 @@ treeid_df2 <- extract_params(df_fit, "atreeid", "fit_atreeid", "treeid", "atreei
 treeid_df2 <- subset(treeid_df2, !grepl("z", treeid) & !grepl("sigma", treeid))
 aspp_df2   <- extract_params(df_fit, "aspp", "fit_aspp", "spp", "aspp\\[(\\d+)\\]")
 
+treeid_df2$treeid_name <- emp$id[match(treeid_df2$treeid, emp$treeid_num)]
+aspp_df2$spp_name <- emp$latbi[match(aspp_df2$spp, emp$spp_num)]
+bspp_df2$spp_name <- emp$latbi[match(bspp_df2$spp, emp$spp_num)]
+
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
-# GSL posterior distribution recovery ####
+# GSL posterior recovery ####
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
-fitgsl <- readRDS("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/output/stanOutput/fitGrowthGSL")
+fitgsl <- readRDS("output/stanOutput/fitGrowthGSL")
 
 df_fitgsl <- as.data.frame(fitgsl)
 
@@ -113,22 +114,21 @@ colnames(aspp_df) <- 1:ncol(aspp_df)
 # posterior summaries
 sigma_df2_gsl  <- extract_params(df_fitgsl, "sigma", "mean", "sigma")
 bspp_df2_gsl   <- extract_params(df_fitgsl, "bsp", "fit_bspp", 
-                                 "spp", "bsp\\[(\\d+)\\]")
+                                 "spp", "bspp\\[(\\d+)\\]")
 treeid_df2_gsl <- extract_params(df_fitgsl, "atreeid", "fit_atreeid", 
                                  "treeid", "atreeid\\[(\\d+)\\]")
 treeid_df2_gsl <- subset(treeid_df2, !grepl("z|sigma", treeid))
 aspp_df2_gsl   <- extract_params(df_fitgsl, "aspp", "fit_aspp", 
                                  "spp", "aspp\\[(\\d+)\\]")
 
-treeid_df2_gsl$treeid <- as.numeric(treeid_df2_gsl$treeid)
-treeid_df2_gsl$treeid_name <- emp$treeid[match(treeid_df2_gsl$treeid, emp$treeid_num)]
+treeid_df2_gsl$treeid_name <- emp$id[match(treeid_df2_gsl$treeid, emp$treeid_num)]
 bspp_df2_gsl$spp_name <- emp$latbi[match(bspp_df2_gsl$spp, emp$spp_num)]
 aspp_df2_gsl$spp_name <- emp$latbi[match(aspp_df2_gsl$spp, emp$spp_num)]
 
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
-# SOS posterior distribution recovery ####
+# SOS posterior recovery ####
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
-fitsos <- readRDS("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/output/stanOutput/fitGrowthSOS")
+fitsos <- readRDS("output/stanOutput/fitGrowthSOS")
 
 df_fitsos <- as.data.frame(fitsos)
 
@@ -147,22 +147,21 @@ colnames(aspp_df_sos) <- 1:ncol(aspp_df_sos)
 # posterior summaries
 sigma_df2_sos  <- extract_params(df_fitsos, "sigma", "mean", "sigma")
 bspp_df2_sos   <- extract_params(df_fitsos, "bsp", "fit_bspp", 
-                                 "spp", "bsp\\[(\\d+)\\]")
+                                 "spp", "bspp\\[(\\d+)\\]")
 treeid_df2_sos <- extract_params(df_fitsos, "atreeid", "fit_atreeid", 
                                  "treeid", "atreeid\\[(\\d+)\\]")
 treeid_df2_sos <- subset(treeid_df2_sos, !grepl("z|sigma", treeid))
 aspp_df2_sos   <- extract_params(df_fitsos, "aspp", "fit_aspp", 
                                  "spp", "aspp\\[(\\d+)\\]")
 
-treeid_df2_sos$treeid <- as.numeric(treeid_df2_sos$treeid)
-treeid_df2_sos$treeid_name <- emp$treeid[match(treeid_df2_sos$treeid, emp$treeid_num)]
+treeid_df2_sos$treeid_name <- emp$id[match(treeid_df2_sos$treeid, emp$treeid_num)]
 bspp_df2_sos$spp_name <- emp$latbi[match(bspp_df2_sos$spp, emp$spp_num)]
 aspp_df2_sos$spp_name <- emp$latbi[match(aspp_df2_sos$spp, emp$spp_num)]
 
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
-# EOS posterior distribution recovery ####
+# EOS posterior recovery ####
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
-fiteos <- readRDS("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/output/stanOutput/fitGrowthEOS")
+fiteos <- readRDS("output/stanOutput/fitGrowthEOS")
 
 df_fiteos <- as.data.frame(fiteos)
 
@@ -181,7 +180,7 @@ colnames(aspp_df_eos) <- 1:ncol(aspp_df_eos)
 # posterior summaries
 sigma_df2_eos  <- extract_params(df_fiteos, "sigma", "mean", "sigma")
 bspp_df2_eos   <- extract_params(df_fiteos, "bsp", "fit_bspp", 
-                                 "spp", "bsp\\[(\\d+)\\]")
+                                 "spp", "bspp\\[(\\d+)\\]")
 treeid_df2_eos <- extract_params(df_fiteos, "atreeid", "fit_atreeid", 
                                  "treeid", "atreeid\\[(\\d+)\\]")
 treeid_df2_eos <- subset(treeid_df2_eos, !grepl("z|sigma", treeid))
@@ -189,7 +188,7 @@ aspp_df2_eos   <- extract_params(df_fiteos, "aspp", "fit_aspp",
                                  "spp", "aspp\\[(\\d+)\\]")
 
 treeid_df2_eos$treeid <- as.numeric(treeid_df2_eos$treeid)
-treeid_df2_eos$treeid_name <- emp$treeid[match(treeid_df2_eos$treeid, emp$treeid_num)]
+treeid_df2_eos$treeid_name <- emp$id[match(treeid_df2_eos$treeid, emp$treeid_num)]
 bspp_df2_eos$spp_name <- emp$latbi[match(bspp_df2_eos$spp, emp$spp_num)]
 aspp_df2_eos$spp_name <- emp$latbi[match(aspp_df2_eos$spp, emp$spp_num)]
 
@@ -267,7 +266,7 @@ colslatbi <- c(
 # Plot lines with quantiles ####
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
-##### GDD: per treeid #####
+##### GDD: Prep posterior reconstruction #####
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
 # start by filling a df with treeid intercepts only
 subyvec <- vector()
@@ -660,6 +659,218 @@ for (i in seq_along(sppvecnum)) { # i = 1
 }
 dev.off()
 
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+##### GSL: Prep posterior reconstruction #####
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+# start by filling a df with treeid intercepts only
+atreeidsub_gsl <- subset(df_fitgsl, select = subyvec)
+colnames(atreeidsub_gsl) <- 1:length(subyvec)
+
+# the spp values for each tree id
+treeid_aspp_gsl <- data.frame(matrix(ncol = ncol(atreeidsub_gsl), nrow = nrow(df_fitgsl)))
+colnames(treeid_aspp_gsl) <- colnames(atreeidsub_gsl)
+
+for (i in seq_len(ncol(treeid_aspp_gsl))) {
+  tree_id <- as.integer(colnames(treeid_aspp_gsl)[i])
+  spp_id <- treeid_spp$spp_num[match(tree_id, treeid_spp$treeid_num)]
+  treeid_aspp_gsl[, i] <- aspp_df_gsl[, spp_id]
+}
+treeid_aspp_gsl
+
+# recover a
+treeid_a_gsl <- data.frame(matrix(ncol = ncol(atreeidsub_gsl), nrow = nrow(df_fitgsl)))
+colnames(treeid_a_gsl) <- colnames(atreeidsub_gsl)
+
+for (i in seq_len(ncol(treeid_a_gsl))) { # i = 1
+  treeid_a_gsl[, i] <- df_fitgsl[, "a"]
+}
+
+# sum all 3 dfs together to get the full intercept for each treeid
+fullintercept_gsl <-
+  treeid_a_gsl + 
+  atreeidsub_gsl +
+  treeid_aspp_gsl 
+fullintercept_gsl
+
+# now get the slope for each treeid
+treeid_bspp_gsl <- data.frame(matrix(ncol = ncol(atreeidsub_gsl), nrow = nrow(df_fitgsl)))
+colnames(treeid_bspp_gsl) <- colnames(atreeidsub_gsl)
+
+# back convert the slopes to their original scales
+bspp_df4_gsl <- bspp_df_gsl
+for (i in 1:ncol(bspp_df4_gsl)){
+  bspp_df4_gsl[[i]] <- bspp_df4_gsl[[i]] / 10
+}
+
+for (i in seq_len(ncol(treeid_bspp_gsl))) { # i = 30
+  tree_id <- as.integer(colnames(treeid_bspp_gsl)[i])
+  spp_id <- treeid_spp$spp_num[match(tree_id, treeid_spp$treeid_num)]
+  treeid_bspp_gsl[, i] <- bspp_df4_gsl[, spp_id]
+}
+treeid_bspp_gsl
+
+x <- seq(min(emp$pgsGSL), max(emp$pgsGSL), length.out = 100)  
+y_post_list_gsl <- list()  # store posterior predictions in a list where each tree id gets matrix
+
+# below I create a list where each row is the posterior estimate for each value of gdd (so the first row correspond to the model estimate for the first gdd value stored in x) and each column is the iteration (from 1 to 8000)
+for (i in seq_along(treeidvecnum)) { # i = 1
+  tree_col <- as.character(treeidvecnum[i]) 
+  y_post <- sapply(1:nrow(df_fitgsl), function(f) {
+    rnorm(length(x), 
+          fullintercept_gsl[f, tree_col] + treeid_bspp_gsl[f, tree_col] * x, 
+          sigma_df_gsl$sigma_y[f])
+  })
+  y_post_list_gsl[[tree_col]] <- y_post
+}
+
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+##### GSL: per treeid, facet #####
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+# PDF output
+pdf(file = "figures/empiricalData/growthModelSlopesperTreeidGSL.pdf", width = 10, height = 8)
+# Layout: 2 rows × 2 columns per page
+par(mfrow = c(2, 2), mar = c(4, 4, 2, 1))
+
+# Loop over trees again to plot each tree individually
+for (i in seq_along(treeidvecnum)) { # i = 1
+  tree_col <- as.character(treeidvecnum[i])
+  tree_col_name <- as.character(treeidvecname[i])
+  y_post <- y_post_list_gsl[[tree_col]]
+  
+  # color line by spp
+  tree_id_num <- as.integer(tree_col)
+  
+  # index the dots per treeid
+  emp_treeid <- emp[emp$treeid_num == tree_id_num, ]
+  
+  # calculate mean and 50% credible interval (25%-75%)
+  y_mean <- apply(y_post, 1, mean)
+  y_low  <- apply(y_post, 1, quantile, 0.25)
+  y_high <- apply(y_post, 1, quantile, 0.75)
+  
+  # empty plot first
+  plot(emp$pgsGSL, y, type = "n", 
+       ylim = range(c(emp_treeid$lengthMM, y_low, y_high), na.rm = TRUE),
+       xlab = "Growing season length (days)", ylab = "Ring width (mm)",
+       frame = FALSE,
+       main = tree_col_name) # set the name for each plot
+  
+  spp_id <- treeid_spp$latbi[match(tree_id_num, treeid_spp$treeid_num)]
+  
+  line_col <- colslatbi[spp_id]
+  
+  # shaded interval
+  polygon(c(x, rev(x)), 
+          c(y_low, rev(y_high)),
+          col = adjustcolor(line_col, alpha.f = 0.3), 
+          border = NA)
+  
+  # mean line
+  lines(x, y_mean, col = line_col, lwd = 2)
+  
+  points(emp_treeid$pgsGSL, emp_treeid$lengthMM,
+         pch = 16,
+         cex = 2,
+         col = line_col)
+}
+dev.off()
+
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+##### GSL: per Spp, facet #####
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+mean_post_list_gsl <- list()
+for (i in seq_along(treeidvecnum)) {
+  tree_col <- as.character(treeidvecnum[i])
+  mean_post_list_gsl[[tree_col]] <- sapply(1:nrow(df_fitgsl), function(f) {
+    fullintercept_gsl[f, tree_col] + treeid_bspp_gsl[f, tree_col] * x
+    # no sigma_y yet
+  })
+}
+
+# average the mean predictions across trees within species
+spp_mean_list_gsl <- lapply(spp_list, function(tree_vec) {
+  Reduce("+", mean_post_list_gsl[as.character(tree_vec)]) / length(tree_vec)
+})
+
+# re-simulate sigma on the averaged mean
+spp_post_list_gsl <- lapply(spp_mean_list_gsl, function(mean_mat) {
+  sapply(1:nrow(df_fitgsl), function(f) {
+    rnorm(length(x), mean_mat[, f], sigma_df_gsl$sigma_y[f])
+  })
+})
+
+# jpeg output
+jpeg(filename = "figures/empiricalData/growthModelSlopesperSppFacetGSL.jpeg",
+     width = 2400, height = 2400, res = 300)
+# Layout: 4 cols x 3 rows
+par(mfrow = c(4, 3), mar = c(4, 4, 2, 1))
+
+treeidsymbol <- c(15, 16, 17, 8, 9)
+# Loop over trees again to plot each tree individually
+for (i in seq_along(sppvecnum)) { # i = 1
+  
+  spp_column <- as.character(sppvecnum[i])
+  spp_column_name <- as.character(sppvecname[i])
+  
+  # define spp num
+  spp_num <- as.integer(spp_column)
+  
+  # subset empirical data correctly
+  emp_spp <- emp[emp$spp_num == spp_num, ]
+  
+  spp_column <- as.character(sppvecnum[i]) 
+  y_post <- spp_post_list_gsl[[spp_column]]
+  
+  # summaries
+  y_mean <- apply(y_post, 1, median)
+  y_low  <- apply(y_post, 1, quantile, 0.25)
+  y_high <- apply(y_post, 1, quantile, 0.75)
+  
+  # species-specific ylim
+  ylim_spp <- range(c(emp_spp$lengthMM, y_low, y_high), na.rm = TRUE)
+  
+  ylimfixed <- c(0, 12)
+  
+  plot(emp_spp$pgsGSL, emp_spp$lengthMM,
+       type = "n",
+       # ylim = ylim_spp,
+       ylim = ylimfixed,
+       xlab = "Growing season length (days)",
+       ylab = "Ring width (mm)",
+       frame = FALSE,
+       main = spp_column_name)
+  
+  # color
+  line_col <- renoir[spp_num]
+  
+  polygon(
+    c(x, rev(x)),
+    c(y_low, rev(y_high)),
+    col = adjustcolor(line_col, alpha.f = 0.3),
+    border = NA
+  )
+  
+  lines(x, y_mean, col = line_col, lwd = 2)
+  
+  # Add atreid symbols
+  unique_trees <- unique(emp_spp$treeid_num)
+  sym_per_row  <- treeidsymbol[match(emp_spp$treeid_num, unique_trees)]
+  
+  points(emp_spp$pgsGSL, emp_spp$lengthMM,
+         pch = sym_per_row,
+         cex = 1,
+         col = line_col)
+  
+  points(
+    emp_spp$pgsGSL,
+    emp_spp$lengthMM,
+    pch = 16,
+    cex = 1,
+    col = line_col
+  )
+}
+
+dev.off()
 
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 # Mu plots #####
@@ -668,9 +879,6 @@ dev.off()
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 ###### asp ######
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
-aspp_df2$spp <- as.numeric(aspp_df2$spp)
-aspp_df2$spp_name <- emp$latbi[match(aspp_df2$spp, emp$spp_num)]
-
 jpeg("figures/empiricalData/aspp_mean_plot.jpeg", width = 8, height = 6, units = "in", res = 300)
 
 par(mar = c(5, 10, 2, 2)) 
@@ -711,9 +919,6 @@ dev.off()
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
 ###### bsp ###### 
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
-bspp_df2$spp <- as.numeric(bspp_df2$spp)
-bspp_df2$spp_name <- emp$latbi[match(bspp_df2$spp, emp$spp_num)]
-
 jpeg("figures/empiricalData/bsp_mean_plot.jpeg", width = 8, height = 6, units = "in", res = 300)
 
 par(mar = c(5, 10, 2, 2)) 
@@ -754,7 +959,6 @@ dev.off()
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
 ###### full treeid mu plots intercept ###### 
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
-# Mean plots with atreeid ####
 treeid_df2$treeid <- as.numeric(treeid_df2$treeid)
 treeid_df2$treeid_name <- emp$id[match(treeid_df2$treeid, emp$treeid_num)]
 
@@ -876,8 +1080,6 @@ points(
   col = adjustcolor(colslatbi[treeid_df4$spp], alpha.f = 0.7)
 )
 
-aspp_df2$spp <- aspp_df2$spp_name
-
 spp_y_top <- tapply(treeid_df4$y_pos, treeid_df4$spp, max)
 aspp_df2$y_pos <- spp_y_top[aspp_df2$spp] + 1
 
@@ -885,7 +1087,7 @@ segments(
   x0 = aspp_df2$fit_aspp_per5,
   x1 = aspp_df2$fit_aspp_per95,
   y0 = aspp_df2$y_pos,
-  col = adjustcolor(colslatbi[aspp_df2$spp], alpha.f = 0.9),
+  col = adjustcolor(colslatbi[aspp_df2$spp_name], alpha.f = 0.9),
   lwd = 2
 )
 
@@ -933,4 +1135,98 @@ legend(
 )
 dev.off()
 
+# <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+# Combined mu plots (GDD / GSL / SOS / EOS) ####
+# <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+# Plot!
+jpeg(file = "figures/empiricalData/muALL.jpeg",
+     width = 3000, height = 4000, res = 300)
+
+layout(matrix(c(
+  1,  2, 9,
+  3,  4, 9,
+  5,  6, 9,
+  7,  8, 9
+), nrow = 4, byrow = TRUE),
+widths = c(1, 1, 
+           0.8)) # legend column
+sppcols <- renoir[sppvecnum]
+plot_row <- function(aspp_df2, bspp_df2,
+                     n_spp,  y_pos,
+                     sppcols, 
+                     bspp_xlab,
+                     row_label) {
+  # aspp  
+  par(mar = c(5, 2, 2, 2))
+  plot(aspp_df2$fit_aspp, y_pos,
+       xlim = c(-15, 15),
+       ylim = c(0.5, n_spp + 0.5),
+       xlab = "Ring width intercept values (mm)",
+       ylab = "",
+       yaxt = "n",
+       pch = 16, cex = 2, col = sppcols,
+       frame.plot = FALSE)
+  segments(aspp_df2$fit_aspp_per5,  y_pos, aspp_df2$fit_aspp_per95, y_pos,
+           col = sppcols, lwd = 1.5)
+  segments(aspp_df2$fit_aspp_per25, y_pos, aspp_df2$fit_aspp_per75, y_pos,
+           col = sppcols, lwd = 3)
+  abline(v = 0, lty = 2, col = "black")
+  mtext(row_label, side = 3, line = 0.5, adj = 0, font = 2, cex = 1.1)
+  
+  # bspp
+  par(mar = c(5, 2, 2, 2))
+  plot(bspp_df2$fit_bspp, y_pos,
+       xlim = range(c(bspp_df2$fit_bspp_per5, bspp_df2$fit_bspp_per95)),
+       ylim = c(0.5, n_spp + 0.5),
+       xlab = bspp_xlab,
+       ylab = "",
+       yaxt = "n",
+       pch = 16, cex = 2, col = sppcols,
+       frame.plot = FALSE)
+  segments(bspp_df2$fit_bspp_per5,  y_pos, bspp_df2$fit_bspp_per95, y_pos,
+           col = sppcols, lwd = 1.5)
+  segments(bspp_df2$fit_bspp_per25, y_pos, bspp_df2$fit_bspp_per75, y_pos,
+           col = sppcols, lwd = 3)
+  abline(v = 0, lty = 2, col = "black")
+  
+}
+
+# Row 1: GDD
+plot_row(aspp_df2, bspp_df2,
+         n_spp, y_pos,
+         sppcols, 
+         bspp_xlab = "Ring width (mm) change/200 GDD",
+         row_label = "GDD")
+
+# Row 2: GSL
+plot_row(aspp_df2_gsl, bspp_df2_gsl,
+         n_spp, y_pos,
+         sppcols, 
+         bspp_xlab = "Ring width (mm) change per GSL in days",
+         row_label = "GSL")
+
+# Row 3: SOS  (re-load objects as in your original SOS block first)
+plot_row(aspp_df2_sos, bspp_df2_sos,   # after the SOS extraction block
+         n_spp, y_pos,
+         sppcols, 
+         bspp_xlab = "Ring width (mm) change per days in leafout date",
+         row_label = "SOS")
+
+# Row 4: EOS  (re-load objects as in your original EOS block first)
+plot_row(aspp_df2_eos, bspp_df2_eos,   # after the EOS extraction block
+         n_spp, y_pos,
+         sppcols, 
+         bspp_xlab = "Ring width (mm) change per days in budset date",
+         row_label = "EOS")
+
+# slot 13 - species legend
+par(mar = c(1, 1, 1, 1))
+plot.new()
+legend("center",
+       legend = unique(aspp_df2$spp_name),
+       col    = unique(sppcols),
+       pch    = 16, pt.cex = 1.5, bty = "n", cex = 1.2,
+       title  = "Species", title.font = 2)
+
+dev.off()
 
