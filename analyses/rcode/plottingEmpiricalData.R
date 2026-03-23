@@ -24,7 +24,7 @@ library(zoo)
 setwd("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses")
 
 # flags
-makeggplots <- FALSE
+makeggplots <- TRUE
 
 emp <- read.csv("output/empiricalDataMAIN.csv")
 gdd <- read.csv("output/gddByYear.csv")
@@ -54,7 +54,7 @@ emp$plantNickname <- paste(emp$commonName, emp$plantNickname, sep = " ")
 renoir <- c("#17154f", "#2f357c", "#6c5d9e", "#9d9cd5", "#b0799a", "#f6b3b0", "#e48171", "#bf3729", "#e69b00", "#f5bb50", "#ada43b", "#355828")
 
 if (makeggplots) {
-subsetbass <- subset(emp, symbol == "TIAM")
+subsetbass <- subset(emp, latbi == "Tilia americana")
 subsetbass$DBH
 ggplot(emp, aes(x = pgsGDD10, y = lengthMM, 
                 color = commonName, 
@@ -72,7 +72,7 @@ ggplot(emp, aes(x = pgsGDD10, y = lengthMM,
 ggsave("figures/empiricalData/sppLinearRegressions_pgsGDD.jpeg", width = 8, height = 6, units = "in", dpi = 300)
 
 # plot just basswood
-subsetbass <- subset(emp, symbol == "TIAM")
+subsetbass <- subset(emp, latbi == "Tilia americana")
 ggplot(subsetbass, aes(x = pgsGDD10, y = lengthMM, 
                 color = id, 
                 fill = id)) +
@@ -223,7 +223,7 @@ for (sp in species_list) { # sp = "Sugar maple"
 } 
 dev.off()
 
- # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
 # FOR CHRONOLOGY THE STUDY PERIOD (9 YEARS)
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
 allringwidths3 <- subset(allringwidths2, yearCor >2015)
@@ -279,9 +279,9 @@ dev.off()
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
 # FOR CHRONOLOGY WITH PHENODATA
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
-emp2 <- emp
-emp2$treeAge <- emp2$year - emp2$accessionYear
+emp2 <- emp[!is.na(emp$lengthMM),]
 
+emp2$treeAge <- emp2$year - emp2$accessionYear
 # remove the the negative ages referencing the previous vector with negative ages ids
 emp2 <- subset(emp2, !(id %in% vec))
 
@@ -346,14 +346,14 @@ dev.off()
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 pdf("figures/empiricalData/ringwidthXyearPhenoData1page.pdf", 
     width = 11, height = 10)
-ids <- unique(emp$plantNickname)
+ids <- unique(emp2$plantNickname)
 par(mfrow = c(ceiling(length(ids)/5), 5), 
     mar = c(2, 2, 1.5, 0.5),
     mgp = c(1.5, 0.5, 0))
-emp$year <- as.integer(emp$year)
-for(i in ids) { # i = 
-  sub <- emp[emp$plantNickname == i, ]
-  col_vals <- renoir[as.numeric(factor(sub$commonName, levels = levels(factor(emp$commonName))))]
+emp2$year <- as.integer(emp2$year)
+for(i in ids) { # i = "White oak 21815*E"
+  sub <- emp2[emp2$plantNickname == i, ]
+  col_vals <- renoir[as.numeric(factor(sub$commonName, levels = levels(factor(emp2$commonName))))]
   
   plot(sub$year, sub$lengthMM,
        col = col_vals,
@@ -368,7 +368,7 @@ for(i in ids) { # i =
   
   axis(1, at = seq(floor(min(sub$year)), floor(max(sub$year)), by = 2), tck = -0.1)
   # regression line per species
-  for(sp in unique(sub$commonName)) {
+  for(sp in unique(sub$commonName)) { # sp = "River birch"
     ssp <- sub[sub$commonName == sp, ]
     fit <- lm(lengthMM ~ year, data = ssp)
     abline(fit, col = renoir[as.numeric(factor(sp, levels = levels(factor(emp$commonName))))], lwd =0.5) 
