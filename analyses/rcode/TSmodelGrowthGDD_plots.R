@@ -49,7 +49,7 @@ emp <- emp[!is.na(emp$pgsGDD5) & !is.na(emp$lengthMM), ]
 emp$id2 <- paste(emp$id, emp$year)
 
 # transform my groups to numeric values
-emp$spp_num <- match(emp$latbi, unique(emp$latbi))
+emp$spp_num <- match(emp$commonName, unique(emp$commonName))
 emp$treeid_num <- match(emp$id, unique(emp$id))
 
 # transform data in vectors
@@ -89,8 +89,8 @@ treeid_df2 <- subset(treeid_df2, !grepl("z", treeid) & !grepl("sigma", treeid))
 aspp_df2   <- extract_params(df_fit, "aspp", "fit_aspp", "spp", "aspp\\[(\\d+)\\]")
 
 treeid_df2$treeid_name <- emp$id[match(treeid_df2$treeid, emp$treeid_num)]
-aspp_df2$spp_name <- emp$latbi[match(aspp_df2$spp, emp$spp_num)]
-bspp_df2$spp_name <- emp$latbi[match(bspp_df2$spp, emp$spp_num)]
+aspp_df2$spp_name <- emp$commonName[match(aspp_df2$spp, emp$spp_num)]
+bspp_df2$spp_name <- emp$commonName[match(bspp_df2$spp, emp$spp_num)]
 
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 # GSL posterior recovery ####
@@ -122,8 +122,8 @@ aspp_df2_gsl   <- extract_params(df_fitgsl, "aspp", "fit_aspp",
                                  "spp", "aspp\\[(\\d+)\\]")
 
 treeid_df2_gsl$treeid_name <- emp$id[match(treeid_df2_gsl$treeid, emp$treeid_num)]
-bspp_df2_gsl$spp_name <- emp$latbi[match(bspp_df2_gsl$spp, emp$spp_num)]
-aspp_df2_gsl$spp_name <- emp$latbi[match(aspp_df2_gsl$spp, emp$spp_num)]
+bspp_df2_gsl$spp_name <- emp$commonName[match(bspp_df2_gsl$spp, emp$spp_num)]
+aspp_df2_gsl$spp_name <- emp$commonName[match(aspp_df2_gsl$spp, emp$spp_num)]
 
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 # SOS posterior recovery ####
@@ -155,8 +155,8 @@ aspp_df2_sos   <- extract_params(df_fitsos, "aspp", "fit_aspp",
                                  "spp", "aspp\\[(\\d+)\\]")
 
 treeid_df2_sos$treeid_name <- emp$id[match(treeid_df2_sos$treeid, emp$treeid_num)]
-bspp_df2_sos$spp_name <- emp$latbi[match(bspp_df2_sos$spp, emp$spp_num)]
-aspp_df2_sos$spp_name <- emp$latbi[match(aspp_df2_sos$spp, emp$spp_num)]
+bspp_df2_sos$spp_name <- emp$commonName[match(bspp_df2_sos$spp, emp$spp_num)]
+aspp_df2_sos$spp_name <- emp$commonName[match(aspp_df2_sos$spp, emp$spp_num)]
 
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 # EOS posterior recovery ####
@@ -189,17 +189,17 @@ aspp_df2_eos   <- extract_params(df_fiteos, "aspp", "fit_aspp",
 
 treeid_df2_eos$treeid <- as.numeric(treeid_df2_eos$treeid)
 treeid_df2_eos$treeid_name <- emp$id[match(treeid_df2_eos$treeid, emp$treeid_num)]
-bspp_df2_eos$spp_name <- emp$latbi[match(bspp_df2_eos$spp, emp$spp_num)]
-aspp_df2_eos$spp_name <- emp$latbi[match(aspp_df2_eos$spp, emp$spp_num)]
+bspp_df2_eos$spp_name <- emp$commonName[match(bspp_df2_eos$spp, emp$spp_num)]
+aspp_df2_eos$spp_name <- emp$commonName[match(aspp_df2_eos$spp, emp$spp_num)]
 
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 # Define objects used throughout the models ####
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
-n_spp <- length(unique(emp$latbi))
+n_spp <- length(unique(emp$commonName))
 y_pos <- 1:n_spp 
 
 # get the spp and site identities for each tree id
-treeid_spp <- unique(emp[, c("treeid_num", "spp_num", "id", "latbi")])
+treeid_spp <- unique(emp[, c("treeid_num", "spp_num", "id", "commonName")])
 
 # get a vector for each treeid for each species
 spp1vec <- treeid_spp$treeid_num[treeid_spp$spp_num == 1]
@@ -229,10 +229,10 @@ spp_list <- list(
 )
 
 sppvecnum <- 1:11
-sppvecname <- unique(treeid_spp$latbi)
+sppvecname <- unique(treeid_spp$commonName)
 
 # for mu plots
-species_order <- unique(emp$latbi)
+species_order <- unique(emp$commonName)
 
 colscommon <- c(
   "Red maple"           = renoir[1],
@@ -369,7 +369,7 @@ for (i in seq_along(treeidvecnum)) { # i = 1
        frame = FALSE,
        main = tree_col_name) # set the name for each plot
   
-  spp_id <- treeid_spp$latbi[match(tree_id_num, treeid_spp$treeid_num)]
+  spp_id <- treeid_spp$commonName[match(tree_id_num, treeid_spp$treeid_num)]
   
   line_col <- colslatbi[spp_id]
   
@@ -755,7 +755,7 @@ for (i in seq_along(treeidvecnum)) { # i = 1
        frame = FALSE,
        main = tree_col_name) # set the name for each plot
   
-  spp_id <- treeid_spp$latbi[match(tree_id_num, treeid_spp$treeid_num)]
+  spp_id <- treeid_spp$commonName[match(tree_id_num, treeid_spp$treeid_num)]
   
   line_col <- colslatbi[spp_id]
   
@@ -963,7 +963,7 @@ treeid_df2$treeid <- as.numeric(treeid_df2$treeid)
 treeid_df2$treeid_name <- emp$id[match(treeid_df2$treeid, emp$treeid_num)]
 
 # now do the same, but for species
-treeid_df2$spp <- emp$latbi[match(treeid_df2$treeid, emp$treeid_num)]
+treeid_df2$spp <- emp$commonName[match(treeid_df2$treeid, emp$treeid_num)]
 
 sub <- subset(emp, select = c("treeid_num", "spp_num"))
 sub <- sub[!duplicated(sub$treeid_num),]
@@ -997,7 +997,7 @@ treeid_df4
 # get the og treeid names, spp and site back:
 treeid_df4$treeid <- as.numeric(treeid_df4$treeid)
 treeid_df4$treeid_name <- emp$id[match(treeid_df4$treeid, emp$treeid_num)]
-treeid_df4$spp_name <- emp$latbi[match(treeid_df4$treeid, emp$treeid_num)]
+treeid_df4$spp_name <- emp$commonName[match(treeid_df4$treeid, emp$treeid_num)]
 
 # Plot!
 pdf(
