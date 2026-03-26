@@ -8,7 +8,7 @@
 \geometry{margin=1in}
 
 \begin{document}
-\SweaveOpts{concordance=TRUE}
+% \SweaveOpts{concordance=TRUE}
 
 % <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 \title{Short report on the tree-ring and phenology data for the Tree Spotters}
@@ -74,6 +74,18 @@ Dendrochronology is the study of tree rings. In that field, statistical crossdat
 \includegraphics[width=0.9\textwidth]{../analyses/figures/tiamspaghetti_plot.jpeg}
 \caption{Example of what visual crossdating looks like. This is all the American basswood (\textit{Tilia americana} chronologies that we had. The dashed lines represent marker years, for which our trees did not appear to respond.}
 \label{fig:spagTiam}
+\end{figure}
+
+\begin{figure}[H]
+\includegraphics[width=0.9\textwidth]{../analyses/figures/qualspaghetti_plot.jpeg}
+\caption{Cross dating, for two cores per tree for all the white oak individuals.}
+\label{fig:spagQual}
+\end{figure}
+
+\begin{figure}[H]
+\includegraphics[width=0.9\textwidth]{../analyses/figures/betulaspaghetti_plot.jpeg}
+\caption{Cross dating, for two cores per tree for all Yellow birch (BEAL) and the River birch (BENI)}
+\label{fig:spagBetulas}
 \end{figure}
 
 % <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
