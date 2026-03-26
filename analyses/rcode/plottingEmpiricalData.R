@@ -24,13 +24,16 @@ library(zoo)
 setwd("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses")
 
 # flags
-makeggplots <- TRUE
+makeggplots <- FALSE
 
 emp <- read.csv("output/empiricalDataMAIN.csv")
 gdd <- read.csv("output/gddByYear.csv")
 allringwidths <- read.csv("output/ringWidthTS.csv")
 longtermgdd <- read.csv("output/longTermGDDperYear.csv")
 longtermgdd5yr <- read.csv("output/longTermGDD5YrAvg.csv")
+
+# from arboretum website most of the info is in the above dfs, just in case I want to look at other stuff
+coord <- read.csv("input/listTreesfromInteractiveMap.csv", header=TRUE)
 
 emp$accessionYear <- as.numeric(substr(emp$accessionDate, 7,11))
 
@@ -49,7 +52,7 @@ allringwidths2$accessionYear <- emp$accessionYear[match(allringwidths2$id, emp$i
 
 allringwidths2$age <- allringwidths2$yearCor - allringwidths2$accessionYear
 
-emp$plantNickname <- paste(emp$commonName, emp$plantNickname, sep = " ")
+emp$plantNickname <- paste(emp$latbi, emp$plantNickname, sep = " ")
 # ringwidth X GDD in PGS
 renoir <- c("#17154f", "#2f357c", "#6c5d9e", "#9d9cd5", "#b0799a", "#f6b3b0", "#e48171", "#bf3729", "#e69b00", "#f5bb50", "#ada43b", "#355828")
 
@@ -57,13 +60,13 @@ if (makeggplots) {
 subsetbass <- subset(emp, latbi == "Tilia americana")
 subsetbass$DBH
 ggplot(emp, aes(x = pgsGDD10, y = lengthMM, 
-                color = commonName, 
-                fill = commonName)) +
+                color = latbi, 
+                fill = latbi)) +
   geom_point(size = 2, alpha = 0.7) + 
   geom_smooth(method = "lm", se = TRUE, alpha = 0.2) +
   scale_color_manual(values = renoir) +
   scale_fill_manual(values = renoir) +
-  facet_wrap(~commonName) +
+  facet_wrap(~latbi) +
   labs(y = "Ring width (mm)", x = "Growing degree days (GDD)", color = "Tree Species") +
   theme_bw() +
   theme(legend.key.height = unit(1.5, "lines"),
@@ -80,7 +83,7 @@ ggplot(subsetbass, aes(x = pgsGDD10, y = lengthMM,
   geom_smooth(method = "lm", se = TRUE, alpha = 0.2) +
   scale_color_manual(values = renoir) +
   scale_fill_manual(values = renoir) +
-  facet_wrap(~commonName) +
+  facet_wrap(~latbi) +
   labs(y = "Ring width (mm)", x = "Growing degree days (GDD)", color = "Tree Species") +
   theme_bw() +
   theme(legend.key.height = unit(1.5, "lines"),
@@ -98,7 +101,7 @@ ggplot(emp, aes(x = pgsGDD10, y = lengthMM)) +
   # scale_color_manual(values = wes_palette("AsteroidCity1")) +
   # scale_fill_manual(values = wes_palette("AsteroidCity1")) +
   # scale_shape_manual(values = c(21, 22, 23, 24, 25)) +  
-  facet_wrap(~commonName, nrow = 4, ncol = 3) +
+  facet_wrap(~latbi, nrow = 4, ncol = 3) +
   labs(y = "Ring width (mm)", 
        x = "Growing degree days (GDD)", 
        color = "Year",
@@ -108,8 +111,8 @@ ggplot(emp, aes(x = pgsGDD10, y = lengthMM)) +
 ggsave("figures/empiricalData/sppLinearRegressions_pgsGDD.jpeg", width = 6, height = 8, units = "in", dpi = 300)
 
 ggplot(emp, aes(x = year, y = lengthMM, 
-                color = commonName, 
-                fill = commonName)) +
+                color = latbi, 
+                fill = latbi)) +
   geom_point(size = 2, alpha = 0.7) + 
   geom_smooth(method = "lm", se = TRUE, alpha = 0) +
   scale_color_manual(values = renoir) +
@@ -129,31 +132,36 @@ ggplot(emp, aes(x = year, y = lengthMM,
 # FOR WHOLE CHRONOLOGY
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
 emp2 <- emp
-str(emp2)
 emp2$treeAge <- emp2$year - emp2$accessionYear
 allringwidths2$treeAge <- allringwidths2$yearCor - allringwidths2$accessionYear
 
 # remove the negative ages:
 vec <- unique(allringwidths2$id[which(allringwidths2$treeAge < 0)])
+negativesages <- subset(allringwidths2, (id %in% vec))
+negativesages
+coord$accessionyear <-  substr(coord$Accession.Date,7,10)
+coord$Received.How[which(coord$accessionyear %in% unique(negativesages$accessionYear))]
+coord$Received.As[which(coord$accessionyear %in% unique(negativesages$accessionYear))]
+
 allringwidths2 <- subset(allringwidths2, !(id %in% vec))
 
 # mean age of tree
 age <- aggregate(treeAge ~ id, allringwidths2, FUN = mean)
 allringwidths2$meanAge <- age$treeAge[match(allringwidths2$id, age$id)]
 allringwidths2 <- allringwidths2[order(allringwidths2$meanAge),]
-allringwidths2$commonName <- emp$commonName[match(allringwidths2$id, emp$id)]
+allringwidths2$latbi <- emp$latbi[match(allringwidths2$id, emp$id)]
 allringwidths2$plantNickname <- emp$plantNickname[match(allringwidths2$id, emp$id)]
 
 # add 5 year gdd average
 allringwidths2$gdd <- longtermgdd5yr$GDD_moving_avg[match(allringwidths2$yearCor, longtermgdd5yr$year)]
 
 pdf("figures/empiricalData/ringwidthXyear_bySpeciesAllYrs.pdf", width = 10, height = 6)
-species_list <- unique(allringwidths2$commonName)
+species_list <- unique(allringwidths2$latbi)
 renoir_named <- setNames(renoir, species_list)
 
 # Loop over each species
 for (sp in species_list) { # sp = "Sugar maple"
-  df_sp <- allringwidths2[allringwidths2$commonName == sp, ]
+  df_sp <- allringwidths2[allringwidths2$latbi == sp, ]
   ids   <- unique(df_sp$plantNickname)
   par(
     mfrow = n2mfrow(length(ids)),
@@ -227,15 +235,16 @@ dev.off()
 # FOR CHRONOLOGY THE STUDY PERIOD (9 YEARS)
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
 allringwidths3 <- subset(allringwidths2, yearCor >2015)
+
 # PLOT!.
 pdf("figures/empiricalData/ringwidthXage_bySpecies9Yrs.pdf", width = 10, height = 6)
 
-species_list <- unique(allringwidths3$commonName)
+species_list <- unique(allringwidths3$latbi)
 renoir_named <- setNames(renoir, species_list)
 
 # here I loop over each page that fits 1 species at a time
 for (sp in species_list) {
-  df_sp <- allringwidths3[allringwidths3$commonName == sp, ]
+  df_sp <- allringwidths3[allringwidths3$latbi == sp, ]
   ids   <- unique(df_sp$id)
   par(
     mfrow = n2mfrow(length(ids)),
@@ -275,6 +284,41 @@ for (sp in species_list) {
 
 dev.off()
 
+# Fill in the regression coefficients
+rwagecoef <- data.frame(id = unique(allringwidths3$id), 
+                        latbi = NA, 
+                        intercept = NA,
+                        slope = NA)
+rwagecoef$latbi <- allringwidths3$latbi[match(rwagecoef$id, allringwidths3$id)]
+
+for (i in unique(rwagecoef$id)) { # i = "BEAL_12843_A"
+  d <- allringwidths3[allringwidths3$id == i, ]
+  fit <- lm(lengthMM ~ treeAge, d)
+  rwagecoef$intercept[rwagecoef$id == i] <- fit$coefficients[1]
+  rwagecoef$slope[rwagecoef$id == i] <- fit$coefficients[2]
+}
+
+# count how many have slopes lower than 0 and >0
+nrow(rwagecoef[which(rwagecoef$slope < 0),])
+nrow(rwagecoef[which(rwagecoef$slope > 0),])
+
+# Fill in the regression coefficients FOR ALL YEARS
+rwagecoefAll <- data.frame(id = unique(allringwidths2$id), 
+                        latbi = NA, 
+                        intercept = NA,
+                        slope = NA)
+rwagecoefAll$latbi <- allringwidths2$latbi[match(rwagecoefAll$id, allringwidths2$id)]
+
+for (i in unique(rwagecoefAll$id)) { # i = "BEAL_12843_A"
+  d <- allringwidths2[allringwidths2$id == i, ]
+  fit <- lm(lengthMM ~ treeAge, d)
+  rwagecoefAll$intercept[rwagecoefAll$id == i] <- fit$coefficients[1]
+  rwagecoefAll$slope[rwagecoefAll$id == i] <- fit$coefficients[2]
+}
+
+# count how many have slopes lower than 0 and >0
+nrow(rwagecoefAll[which(rwagecoefAll$slope < 0),])
+nrow(rwagecoefAll[which(rwagecoefAll$slope > 0),])
 
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
 # FOR CHRONOLOGY WITH PHENODATA
@@ -291,17 +335,17 @@ emp2$meanAge <- age$treeAge[match(emp2$id, age$id)]
 
 emp2 <- emp2[order(emp2$meanAge),]
 
-emp2$commonName <- emp$commonName[match(emp2$id, emp$id)]
+emp2$latbi <- emp$latbi[match(emp2$id, emp$id)]
 
 # PLOT!.
 pdf("figures/empiricalData/ringwidthXage_bySpeciesOnlyLeafout.pdf", width = 10, height = 6)
 
-species_list <- unique(emp2$commonName)
+species_list <- unique(emp2$latbi)
 renoir_named <- setNames(renoir, species_list)
 
 # here I loop over each page that fits 1 species at a time
 for (sp in species_list) {
-  df_sp <- emp2[emp2$commonName == sp, ]
+  df_sp <- emp2[emp2$latbi == sp, ]
   ids   <- unique(df_sp$id)
   par(
     mfrow = n2mfrow(length(ids)),
@@ -353,7 +397,7 @@ par(mfrow = c(ceiling(length(ids)/5), 5),
 emp2$year <- as.integer(emp2$year)
 for(i in ids) { # i = "White oak 21815*E"
   sub <- emp2[emp2$plantNickname == i, ]
-  col_vals <- renoir[as.numeric(factor(sub$commonName, levels = levels(factor(emp2$commonName))))]
+  col_vals <- renoir[as.numeric(factor(sub$latbi, levels = levels(factor(emp2$latbi))))]
   
   plot(sub$year, sub$lengthMM,
        col = col_vals,
@@ -368,10 +412,10 @@ for(i in ids) { # i = "White oak 21815*E"
   
   axis(1, at = seq(floor(min(sub$year)), floor(max(sub$year)), by = 2), tck = -0.1)
   # regression line per species
-  for(sp in unique(sub$commonName)) { # sp = "River birch"
-    ssp <- sub[sub$commonName == sp, ]
+  for(sp in unique(sub$latbi)) { # sp = "River birch"
+    ssp <- sub[sub$latbi == sp, ]
     fit <- lm(lengthMM ~ year, data = ssp)
-    abline(fit, col = renoir[as.numeric(factor(sp, levels = levels(factor(emp$commonName))))], lwd =0.5) 
+    abline(fit, col = renoir[as.numeric(factor(sp, levels = levels(factor(emp$latbi))))], lwd =0.5) 
   }
 }
 dev.off()
@@ -416,12 +460,12 @@ ggsave("figures/tiamspaghetti_plot.jpeg", width = 10, height = 6,
 # Leafout 
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
 pdf("figures/empiricalData/leafoutXyear.pdf", width = 8, height = 6)
-spp <- unique(emp$commonName)
+spp <- unique(emp$latbi)
 emp$year <- as.integer(emp$year)
 par(mfrow = c(4, 3), mar = c(2, 2, 1.5, 0.5), mgp = c(1.5, 0.5, 0))
 for(i in spp) {
-  sub <- emp[emp$commonName == i, ]
-  sp_col <- renoir[as.numeric(factor(i, levels = levels(factor(emp$commonName))))]
+  sub <- emp[emp$latbi == i, ]
+  sp_col <- renoir[as.numeric(factor(i, levels = levels(factor(emp$latbi))))]
   
   plot(sub$year, sub$leafout,
        col = sp_col,
@@ -449,8 +493,8 @@ dev.off()
 pdf("figures/empiricalData/coloredLeavesXyear.pdf", width = 8, height = 6)
 par(mfrow = c(4, 3), mar = c(2, 2, 1.5, 0.5), mgp = c(1.5, 0.5, 0))
 for(i in spp) {
-  sub <- emp[emp$commonName == i, ]
-  sp_col <- renoir[as.numeric(factor(i, levels = levels(factor(emp$commonName))))]
+  sub <- emp[emp$latbi == i, ]
+  sp_col <- renoir[as.numeric(factor(i, levels = levels(factor(emp$latbi))))]
   
   plot(sub$year, sub$coloredLeaves,
        col = sp_col,
