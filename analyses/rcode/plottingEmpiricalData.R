@@ -54,7 +54,7 @@ allringwidths2$age <- allringwidths2$yearCor - allringwidths2$accessionYear
 
 emp$plantNickname <- paste(emp$latbi, emp$plantNickname, sep = " ")
 # ringwidth X GDD in PGS
-renoir <- c("#17154f", "#2f357c", "#6c5d9e", "#9d9cd5", "#b0799a", "#f6b3b0", "#e48171", "#bf3729", "#e69b00", "#f5bb50", "#ada43b", "#355828")
+renoir <- c("#17154f", "#2f357c", "#6c5d9e", "#9d9cd5", "#b0799a", "#e48171", "#bf3729", "#e69b00", "#f5bb50", "#ada43b", "#355828")
 
 if (makeggplots) {
 subsetbass <- subset(emp, latbi == "Tilia americana")
@@ -92,37 +92,8 @@ ggplot(subsetbass, aes(x = pgsGDD10, y = lengthMM,
 ggsave("figures/empiricalData/sppLinearRegressions_pgsGDD_TIAM.jpeg", width = 8, height = 6, units = "in", dpi = 300)
 
 emp$year2 <- as.factor(emp$year)
-# new symbols and stuff
-ggplot(emp, aes(x = pgsGDD10, y = lengthMM)) +
-  geom_point(size = 2, alpha = 0.9,
-             aes(color = year2, 
-                 fill = year2)) + 
-  geom_smooth(method = "lm", se = TRUE, alpha = 0.2, color = "black") +
-  # scale_color_manual(values = wes_palette("AsteroidCity1")) +
-  # scale_fill_manual(values = wes_palette("AsteroidCity1")) +
-  # scale_shape_manual(values = c(21, 22, 23, 24, 25)) +  
-  facet_wrap(~latbi, nrow = 4, ncol = 3) +
-  labs(y = "Ring width (mm)", 
-       x = "Growing degree days (GDD)", 
-       color = "Year",
-       fill = "Year",
-       shape = "Site") +  
-  theme_bw() 
-ggsave("figures/empiricalData/sppLinearRegressions_pgsGDD.jpeg", width = 6, height = 8, units = "in", dpi = 300)
 
-ggplot(emp, aes(x = year, y = lengthMM, 
-                color = latbi, 
-                fill = latbi)) +
-  geom_point(size = 2, alpha = 0.7) + 
-  geom_smooth(method = "lm", se = TRUE, alpha = 0) +
-  scale_color_manual(values = renoir) +
-  scale_fill_manual(values = renoir) +
-  facet_wrap(~id) +
-  labs(y = "Ring width (mm)", x = "Growing degree days (GDD)", color = "Tree Species") +
-  theme_minimal() +
-  theme(legend.key.height = unit(1.5, "lines"),
-        strip.text = element_text(face = "bold.italic", size = 10)) +
-  guides(fill = "none", color = "none") 
+
 }
 
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
@@ -142,13 +113,14 @@ negativesages
 coord$accessionyear <-  substr(coord$Accession.Date,7,10)
 coord$Received.How[which(coord$accessionyear %in% unique(negativesages$accessionYear))]
 coord$Received.As[which(coord$accessionyear %in% unique(negativesages$accessionYear))]
-
+coord$Plant.ID[which(coord$accessionyear %in% unique(negativesages$accessionYear))]
 allringwidths2 <- subset(allringwidths2, !(id %in% vec))
 
 # mean age of tree
 age <- aggregate(treeAge ~ id, allringwidths2, FUN = mean)
 allringwidths2$meanAge <- age$treeAge[match(allringwidths2$id, age$id)]
 allringwidths2 <- allringwidths2[order(allringwidths2$meanAge),]
+allringwidths2 <- allringwidths2[order(allringwidths2$id),]
 allringwidths2$latbi <- emp$latbi[match(allringwidths2$id, emp$id)]
 allringwidths2$plantNickname <- emp$plantNickname[match(allringwidths2$id, emp$id)]
 
@@ -284,6 +256,51 @@ for (sp in species_list) {
 
 dev.off()
 
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+# FOR CHRONOLOGY THE STUDY PERIOD (9 YEARS) 1 PAGE
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+allringwidths3 <- subset(allringwidths2, yearCor >2015)
+pdf("figures/empiricalData/RWXage_bySpp9Yrs1page.pdf", width = 10, height = 10)
+
+ids   <- unique(allringwidths3$id)
+par(mfrow = c(7,7),
+    cex.main = 0.7,      
+    mar = c(2, 2, 2, 0.5))
+for (id_i in ids) {
+  d <- allringwidths3[allringwidths3$id == id_i, ]
+  fit <- lm(lengthMM ~ treeAge, d)
+  xlim <- range(d$treeAge, na.rm = TRUE)
+  ylim <- range(d$lengthMM, na.rm = TRUE)
+  
+  sp <- d$latbi[1]
+  spp_col <- renoir_named[sp]
+  
+  plot(
+    d$treeAge, d$lengthMM,
+    pch = 16,
+    cex = 0.9,
+    col = spp_col,
+    xlim = xlim,
+    ylim = ylim,
+    frame = FALSE,
+    # xlab = "Tree age at ring",
+    # ylab = "Ring width (mm)",
+    xlab = "",
+    ylab = "",
+    main = paste(id_i)
+  )
+  abline(fit, col = "black", lwd = 1)
+  mean_age <- mean(d$meanAge, na.rm = TRUE)
+  text(
+    x = xlim[2] - 0.05 * diff(xlim),   # right side
+    y = ylim[2] - 0.05 * diff(ylim),   # top
+    labels = paste("Mean age =", round(mean_age, 1)),
+    adj = c(1, 1),                     # right + top alignment
+    cex = 0.7
+  )
+}
+dev.off()
+
 # Fill in the regression coefficients
 rwagecoef <- data.frame(id = unique(allringwidths3$id), 
                         latbi = NA, 
@@ -386,7 +403,7 @@ for (sp in species_list) {
 dev.off()
 
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
-# Plot all tree together in one page ####
+# Plot all tree together in one page by year ####
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 pdf("figures/empiricalData/ringwidthXyearPhenoData1page.pdf", 
     width = 11, height = 10)
