@@ -43,8 +43,21 @@ source('rcode/utilExtractParam.R')
 # emp2 <- read.csv("output/empiricalDataMAIN.csv")
 # read empirical data with max phenology observations instead of min
 emp <- read.csv("output/empiricalDataMAIN.csv")
+gddyr <- read.csv("output/gddByYear.csv")
+
 # remove NAs
 emp2 <- emp[!is.na(emp$pgsGDD5) & !is.na(emp$lengthMM), ]
+
+# scale gdd to how many gdd are in 10 average spring days
+temp<- subset(gddyr, doy <151 & doy > 120)
+temp$mingddperiod <- ave(temp$GDD_5, temp$year, FUN = min)
+temp$gdddiff <- temp$GDD_5 - temp$mingddperiod
+
+temp <- temp[order(temp$year, temp$doy), ]
+
+temp$bin10 <- ave(temp$doy, temp$year, FUN = function(x) ceiling((x - min(x) + 1) / 10))
+gdd_10day <- aggregate(gdddiff ~ year + bin10, data = temp, max)
+gddscale <- mean(gdd_10day$gdddiff)
 
 # transform my groups to numeric values
 emp2$spp_num <- match(emp2$latbi, unique(emp2$latbi))
@@ -56,7 +69,8 @@ table(emp2$id, emp2$latbi)
 table(emp2$treeid_num, emp2$spp_num)
 
 # transform data in vectors
-y <- emp2$lengthMM # ring width in mm
+emp2$loglength <- log(emp2$lengthMM)
+y <- emp2$loglength # ring width in mm
 N <- nrow(emp2)
 Nspp <- length(unique(emp2$spp_num))
 species <- as.numeric(as.character(emp2$spp_num))
@@ -64,10 +78,10 @@ treeid <- as.numeric(emp2$treeid_num)
 Ntreeid <- length(unique(treeid))
 
 # different response variables
-gdd <- emp2$pgsGDD5/200
-gsl <- as.numeric(emp2$pgsGSL)/10
-sos <- emp2$leafout/10
-eos <- emp2$coloredLeaves/10
+gdd <- emp2$pgsGDD5 / gddscale
+gsl <- as.numeric(emp2$pgsGSL) / 10
+sos <- emp2$leafout / 5
+eos <- emp2$coloredLeaves / 10
 
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 # Fit model GDD
@@ -77,8 +91,7 @@ fitgdd <- sampling(gddmodel, data = c("N","y",
                                       "Nspp","species",
                                       "Ntreeid", "treeid", 
                                       "gdd"),
-                   warmup = 1000, iter=2000, 
-                   chains=4)
+                   warmup = 1000, iter=2000, chains=4)
 saveRDS(fitgdd, "output/stanOutput/fitGrowthGDD")
 
 # Fit model GSL
@@ -88,8 +101,7 @@ fitgsl <- sampling(gslmodel, data = c("N","y",
                                       "Nspp","species",
                                       "Ntreeid", "treeid", 
                                       "gsl"),
-                   warmup = 1000, iter = 2000, 
-                   chains = 4)
+                   warmup = 1000, iter = 2000, chains = 4)
 saveRDS(fitgsl, "output/stanOutput/fitGrowthGSL")
 
 # Fit model SOS
@@ -99,8 +111,7 @@ fitsos <- sampling(sosmodel, data = c("N","y",
                                       "Nspp","species",
                                       "Ntreeid", "treeid",
                                       "sos"),
-                   warmup = 1000, iter = 2000,
-                   chains=4)
+                   warmup = 1000, iter = 2000, chains=4)
 saveRDS(fitsos, "output/stanOutput/fitGrowthSOS")
 
 # Fit model EOS
@@ -110,8 +121,7 @@ fiteos <- sampling(eosmodel, data = c("N","y",
                                       "Nspp","species",
                                       "Ntreeid", "treeid",
                                       "eos"),
-                   warmup = 1000, iter = 2000,
-                   chains=4)
+                   warmup = 1000, iter = 2000, chains=4)
 saveRDS(fiteos, "output/stanOutput/fitGrowthEOS")
 
 # diagnostics
@@ -183,7 +193,7 @@ legend("topright", legend = c("Prior", "Posterior"), col = pal, lwd = 2)
 plot(density(df_fitgdd[, "aspp_prior"]), 
      col = pal[1], lwd = 2, 
      main = "priorVSposterior_aspp", 
-     xlab = "aspp", xlim = c(-20, 20), ylim = c(0, 0.15))
+     xlab = "aspp", xlim = c(-20, 20))
 for (col in colnames(aspp_df)) {
   lines(density(aspp_df[, col]), col = pal[2], lwd = 1)
 } 
