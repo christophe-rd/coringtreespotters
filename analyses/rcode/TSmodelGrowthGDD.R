@@ -88,7 +88,10 @@ gsl <- as.numeric(emp$pgsGSL) / 10
 sos <- emp$leafout / 5
 eos <- emp$coloredLeaves / 10
 
+runmodels <- FALSE
+
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+if(runmodels){
 # Fit model GDD
 gddmodel <- stan_model("stan/TSmodelGrowthGDD.stan")
 fitgdd <- sampling(gddmodel, data = c("N","y",
@@ -664,7 +667,7 @@ dev.off()
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 # Retrodictive checks ####
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
-samples <- util$extract_expectand_vals(fitgdd)
+samples <- util$extract_expectand_vals(fitsos)
 jpeg(
   filename = "figures/growthModelsMain/diagnostics/retrodictiveCheckHist.jpeg",
   width = 2400, height = 2400, res = 300          
@@ -676,3 +679,5 @@ util$plot_hist_quantiles(samples, "y_rep",
                          baseline_values = y,
                          xlab = "Ring width (mm)")
 dev.off()
+
+}

@@ -6,18 +6,6 @@
 # housekeeping
 rm(list=ls())  
 options(stringsAsFactors = FALSE)
-options(max.print = 150) 
-options(mc.cores = parallel::detectCores())
-
-options(digits = 3)
-# quartz()
-
-# Load library 
-library(ggplot2)
-library(rstan)
-library(future)
-library(wesanderson)
-library(patchwork)
 
 if (length(grep("christophe_rouleau-desrochers", getwd())) > 0) {
   setwd("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses")
@@ -27,45 +15,21 @@ if (length(grep("christophe_rouleau-desrochers", getwd())) > 0) {
   setwd("/home/crouleau/coringtreespotters/analyses")
 }
 
-util <- new.env()
-source('mcmc_analysis_tools_rstan.R', local=util)
-source('mcmc_visualization_tools.R', local=util)
-# my function to extract parameters
-source('rcode/utilExtractParam.R')
-
-
-# specify colors
-renoir <- c("#17154f", "#2f357c", "#6c5d9e", "#9d9cd5", "#b0799a", "#e48171", "#bf3729", "#e69b00", "#f5bb50", "#ada43b", "#355828")
-
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 # Recover objects from models ####
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
-emp <- read.csv("output/empiricalDataMAIN.csv")
-empmax <- read.csv("output/empiricalDataMAIN_max.csv")
+source("rcode/TSmodelGrowthGDD.R")
 
-# remove NAs
-emp <- emp[!is.na(emp$pgsGDD5) & !is.na(emp$lengthMM), ]
+makeplots <- TRUE
 
-emp$id2 <- paste(emp$id, emp$year)
-
-# transform my groups to numeric values
-emp$spp_num <- match(emp$latbi, unique(emp$latbi))
-emp$treeid_num <- match(emp$id, unique(emp$id))
-
-# transform data in vectors
-emp$loglength <- log(emp$lengthMM)
-y <- emp$lengthMM
-N <- nrow(emp)
-gdd <- emp$pgsGDD5/200
-Nspp <- length(unique(emp$spp_num))
-species <- as.numeric(as.character(emp$spp_num))
-treeid <- as.numeric(emp$treeid_num)
-Ntreeid <- length(unique(treeid))
+# specify colors
+renoir <- c("#17154f", "#2f357c", "#6c5d9e", "#9d9cd5", "#b0799a", "#e48171", 
+            "#bf3729", "#e69b00", "#f5bb50", "#ada43b", "#355828")
 
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 # GDD posterior recovery ####
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
-fit <- readRDS("output/stanOutput/fit_modelGrowth")
+fit <- readRDS("output/stanOutput/fitGrowthGDD")
 df_fit <- as.data.frame(fit)
 
 # full posterior
@@ -268,7 +232,6 @@ subyvec <- vector()
 for (i in 1:length(unique(emp$treeid_num))) {
   subyvec[i] <- paste("atreeid", "[",i,"]", sep = "")  
 }
-
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 # Plot lines with quantiles ####
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
@@ -342,7 +305,7 @@ for (i in seq_along(treeidvecnum)) { # i = 1
 ##### GDD: per treeid, facet #####
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
 # PDF output
-pdf(file = "figures/empiricalData/growthModelSlopesperTreeid.pdf", width = 10, height = 8)
+pdf(file = "figures/growthModelsMain/growthModelSlopesperTreeid.pdf", width = 10, height = 8)
 # Layout: 2 rows × 2 columns per page
 par(mfrow = c(2, 2), mar = c(4, 4, 2, 1))
 
@@ -366,7 +329,7 @@ for (i in seq_along(treeidvecnum)) { # i = 1
   # empty plot first
   plot(emp$pgsGDD5, y, type = "n", 
        ylim = range(c(emp_treeid$loglength, y_low, y_high), na.rm = TRUE),
-       xlab = "Primary growing season GDD", ylab = "Ring width (mm)",
+       xlab = "Primary growing season GDD", ylab = "Log ring width (mm)",
        frame = FALSE,
        main = tree_col_name) # set the name for each plot
   
@@ -420,7 +383,7 @@ spp_post_list <- lapply(spp_mean_list, function(mean_mat) {
 })
 
 # jpeg output
-jpeg(filename = "figures/empiricalData/growthModelSlopesperSppFacet.jpeg",
+jpeg(filename = "figures/growthModelsMain/growthModelSlopesperSppFacetGDD.jpeg",
   width = 2400, height = 2400, res = 300)
 # Layout: 4 cols x 3 rows
 par(mfrow = c(4, 3), mar = c(4, 4, 2, 1))
@@ -449,16 +412,18 @@ for (i in seq_along(sppvecnum)) { # i = 1
   # species-specific ylim
   ylim_spp <- range(c(emp_spp$loglength, y_low, y_high), na.rm = TRUE)
   
-  ylimfixed <- c(0, 12)
-  
   plot(emp_spp$pgsGDD5, emp_spp$loglength,
        type = "n",
        # ylim = ylim_spp,
-       ylim = ylimfixed,
+       ylim = c(-1, 3),
        xlab = "Growing season growing degree days (GDD)",
-       ylab = "Ring width (mm)",
+       ylab = "Log ring width (mm)",
        frame = FALSE,
        main = spp_column_name)
+  
+  # add panel letter 
+  mtext(paste0("(", letters[i], ")"), 
+        side = 3, adj = 0, line = 0.3, font = 2, cex = 1)
   
   # color
   line_col <- renoir[spp_num]
@@ -495,13 +460,7 @@ dev.off()
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 ##### GDD: Per spp, facetted with treeid slopes #####
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
-# jpeg(
-#   filename = "figures/empiricalData/growthModelSlopesperSppFacet.jpeg",
-#   width = 2400,      
-#   height = 2400,
-#   res = 300          
-# )
-pdf(file = "figures/empiricalData/growthModelSlopesperSppTreeid.pdf", width = 10, height = 8)
+pdf(file = "figures/growthModelsMain/growthModelSlopesperSppTreeidGDD.pdf", width = 10, height = 8)
 
 par(mfrow = c(2, 2), mar = c(4, 4, 2, 1))
 
@@ -532,7 +491,7 @@ for (i in seq(sppvecnum)) { # i = 11
        type = "n",
        ylim = ylim_spp,
        xlab = "Growing season growing degree days (GDD)",
-       ylab = "Ring width (mm)",
+       ylab = "Log ring width (mm)",
        frame = FALSE,
        main = spp_column_name)
   
@@ -587,17 +546,14 @@ for (i in seq(sppvecnum)) { # i = 11
           lwd = 1)
   }
 }
-
-
 dev.off()
-
 
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 ##### GDD: per spp, non facetted #####
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 # PDF output
 jpeg(
-  filename = "figures/empiricalData/growthModelSlopesperSpp.jpeg",
+  filename = "figures/growthModelsMain/growthModelSlopesperSppGDD.jpeg",
   width = 2400,      
   height = 2400,
   res = 300          
@@ -605,7 +561,7 @@ jpeg(
 
 plot(emp$pgsGDD5, y, type = "n", 
      ylim = range(min(emp$loglength), max(emp$loglength)), 
-     xlab = "Primary growing season GDD", ylab = "Ring width (mm)",
+     xlab = "Primary growing season GDD", ylab = "Log ring width (mm)",
      main = "species growth responses")
 
 # Loop over trees again to plot each tree individually
@@ -625,12 +581,12 @@ for (i in seq_along(sppvecnum)) { # i = 1
   line_col <- renoir[spp_num]
   
   # # shaded interval
-  # polygon(c(gddseq, rev(gddseq), 
+  # polygon(c(gddseq, rev(gddseq),
   #         c(y_low, # lower interval
   #           rev(y_high)), # high interval
-  #         col = adjustcolor(line_col, alpha.f = 0.2), 
-  #         border = NA)
-  
+  #         col = adjustcolor(line_col, alpha.f = 0.1),
+  #         border = NA))
+
   # mean line
   lines(gddseq, y_mean,
         col = line_col,
@@ -645,15 +601,15 @@ for (i in seq_along(sppvecnum)) { # i = 1
   #   cex = 1,
   #   col = line_col)
   
-  legend(
-    "topleft",
-    legend = sppvecname,
-    col = renoir[as.integer(sppvecnum)],
-    lwd = 2,
-    pch = 16,
-    bty = "n",
-    cex = 1.5
-  )
+  # legend(
+  #   "topleft",
+  #   legend = sppvecname,
+  #   col = renoir[as.integer(sppvecnum)],
+  #   lwd = 2,
+  #   pch = 16,
+  #   bty = "n",
+  #   cex = 1.5
+  # )
   
 }
 dev.off()
@@ -746,7 +702,7 @@ spp_post_list_gsl <- lapply(spp_mean_list_gsl, function(mean_mat) {
 })
 
 # jpeg output
-jpeg(filename = "figures/empiricalData/growthModelSlopesperSppFacetGSL.jpeg",
+jpeg(filename = "figures/growthModelsMain/growthModelSlopesperSppFacetGSL.jpeg",
      width = 2400, height = 2400, res = 300)
 # Layout: 4 cols x 3 rows
 par(mfrow = c(4, 3), mar = c(4, 4, 2, 1))
@@ -775,16 +731,18 @@ for (i in seq_along(sppvecnum)) { # i = 1
   # species-specific ylim
   ylim_spp <- range(c(emp_spp$loglength, y_low, y_high), na.rm = TRUE)
   
-  ylimfixed <- c(0, 12)
-  
   plot(emp_spp$pgsGSL, emp_spp$loglength,
        type = "n",
        # ylim = ylim_spp,
-       ylim = ylimfixed,
+       ylim = c(-1, 3),
        xlab = "Growing season length (days)",
-       ylab = "Ring width (mm)",
+       ylab = "Log ring width (mm)",
        frame = FALSE,
-       main = spp_column_name)
+       main = spp_column_name) 
+  
+  # add panel letter 
+  mtext(paste0("(", letters[i], ")"), 
+        side = 3, adj = 0, line = 0.3, font = 2, cex = 1)
   
   # color
   line_col <- renoir[spp_num]
@@ -858,7 +816,7 @@ colnames(treeid_bspp_sos) <- colnames(atreeidsub_sos)
 # back convert the slopes to their original scales
 bspp_df4_sos <- bspp_df_sos
 for (i in 1:ncol(bspp_df4_sos)){
-  bspp_df4_sos[[i]] <- bspp_df4_sos[[i]] / 10
+  bspp_df4_sos[[i]] <- bspp_df4_sos[[i]] / 5
 }
 
 for (i in seq_len(ncol(treeid_bspp_sos))) { # i = 30
@@ -907,7 +865,7 @@ spp_post_list_sos <- lapply(spp_mean_list_sos, function(mean_mat) {
 })
 
 # jpeg output
-jpeg(filename = "figures/empiricalData/growthModelSlopesperSppFacetsos.jpeg",
+jpeg(filename = "figures/growthModelsMain/growthModelSlopesperSppFacetSOS.jpeg",
      width = 2400, height = 2400, res = 300)
 # Layout: 4 cols x 3 rows
 par(mfrow = c(4, 3), mar = c(4, 4, 2, 1))
@@ -936,16 +894,18 @@ for (i in seq_along(sppvecnum)) { # i = 1
   # species-specific ylim
   ylim_spp <- range(c(emp_spp$loglength, y_low, y_high), na.rm = TRUE)
   
-  ylimfixed <- c(0, 12)
-  
   plot(emp_spp$leafout, emp_spp$loglength,
        type = "n",
        # ylim = ylim_spp,
-       ylim = ylimfixed,
-       xlab = "Growing season length (days)",
+       ylim = c(-1, 3),
+       xlab = "Leafout day of year",
        ylab = "Log ring width (mm)",
        frame = FALSE,
        main = spp_column_name)
+  
+  # add panel letter 
+  mtext(paste0("(", letters[i], ")"), 
+        side = 3, adj = 0, line = 0.3, font = 2, cex = 1)
   
   # color
   line_col <- renoir[spp_num]
@@ -1068,7 +1028,7 @@ spp_post_list_eos <- lapply(spp_mean_list_eos, function(mean_mat) {
 })
 
 # jpeg output
-jpeg(filename = "figures/empiricalData/growthModelSlopesperSppFaceteos.jpeg",
+jpeg(filename = "figures/growthModelsMain/growthModelSlopesperSppFacetEOS.jpeg",
      width = 2400, height = 2400, res = 300)
 # Layout: 4 cols x 3 rows
 par(mfrow = c(4, 3), mar = c(4, 4, 2, 1))
@@ -1097,16 +1057,17 @@ for (i in seq_along(sppvecnum)) { # i = 1
   # species-specific ylim
   ylim_spp <- range(c(emp_spp$loglength, y_low, y_high), na.rm = TRUE)
   
-  ylimfixed <- c(0, 12)
-  
   plot(emp_spp$coloredLeaves, emp_spp$loglength,
        type = "n",
        # ylim = ylim_spp,
-       ylim = ylimfixed,
+       ylim = c(-1, 3),
        xlab = "Growing season length (days)",
        ylab = "Log ring width (mm)",
        frame = FALSE,
        main = spp_column_name)
+  # add panel letter 
+  mtext(paste0("(", letters[i], ")"), 
+        side = 3, adj = 0, line = 0.3, font = 2, cex = 1)
   
   # color
   line_col <- renoir[spp_num]
@@ -1143,86 +1104,387 @@ dev.off()
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 # Mu plots #####
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+###### bsp ###### 
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+jpeg(file = "figures/growthModelsMain/muALLbspp.jpeg",
+     width = 1800, height = 2500, res = 300)
+
+layout(matrix(c(
+  1, 5,
+  2, 5,
+  3, 5,
+  4, 5
+), nrow = 4, byrow = TRUE),
+widths = c(0.7, 0.4))
+
+# set margins throught
+custommar <- c(5, 8, 3, 2)
+
+# Row 1: GDD
+par(mar = custommar)
+plot(bspp_df2$fit_bspp, y_pos,
+     xlim = c(-0.8, 0.8), ylim = c(0.5, n_spp + 0.5),
+     xlab = "Log ring width (mm) change in averaged GDD of 10 spring days", ylab = "",
+     yaxt = "n", pch = 16, cex = 2, col = colslatbi, frame.plot = FALSE,
+     panel.first = abline(v = 0, lty = 2, col = "black"))
+segments(bspp_df2$fit_bspp_per5,  y_pos, bspp_df2$fit_bspp_per95, y_pos,
+         col = colslatbi, lwd = 1.5)
+segments(bspp_df2$fit_bspp_per25, y_pos, bspp_df2$fit_bspp_per75, y_pos,
+         col = colslatbi, lwd = 3)
+mtext("Growing degree days", side = 3, adj = 0, font = 2, cex = 0.9)
+
+# Row 2: GSL
+par(mar = custommar)
+plot(bspp_df2_gsl$fit_bspp, y_pos,
+     xlim = c(-0.8, 0.8), ylim = c(0.5, n_spp + 0.5),
+     xlab = "Log ring width (mm) change per 10 days of growing season length", ylab = "",
+     yaxt = "n", pch = 16, cex = 2, col = colslatbi, frame.plot = FALSE,      
+     panel.first = abline(v = 0, lty = 2, col = "black"))
+segments(bspp_df2_gsl$fit_bspp_per5,  y_pos, bspp_df2_gsl$fit_bspp_per95, y_pos,
+         col = colslatbi, lwd = 1.5)
+segments(bspp_df2_gsl$fit_bspp_per25, y_pos, bspp_df2_gsl$fit_bspp_per75, y_pos,
+         col = colslatbi, lwd = 3)
+mtext("Growing season length", side = 3, adj = 0, font = 2, cex = 0.9)
+
+# Row 3: SOS
+par(mar = custommar)
+plot(bspp_df2_sos$fit_bspp, y_pos,
+     xlim = c(-0.8, 0.8), ylim = c(0.5, n_spp + 0.5),
+     xlab = "Log ring width (mm) change per 5 days of leafout", ylab = "",
+     yaxt = "n", pch = 16, cex = 2, col = colslatbi, frame.plot = FALSE,      
+     panel.first = abline(v = 0, lty = 2, col = "black"))
+segments(bspp_df2_sos$fit_bspp_per5,  y_pos, bspp_df2_sos$fit_bspp_per95, y_pos,
+         col = colslatbi, lwd = 1.5)
+segments(bspp_df2_sos$fit_bspp_per25, y_pos, bspp_df2_sos$fit_bspp_per75, y_pos,
+         col = colslatbi, lwd = 3)
+mtext("Start of season", side = 3, adj = 0, font = 2, cex = 0.9)
+
+# Row 4: EOS
+par(mar = custommar)
+plot(bspp_df2_eos$fit_bspp, y_pos,
+     xlim = c(-0.8, 0.8), ylim = c(0.5, n_spp + 0.5),
+     xlab = "Log ring width (mm) change per 10 days of budset", ylab = "",
+     yaxt = "n", pch = 16, cex = 2, col = colslatbi, frame.plot = FALSE,      panel.first = abline(v = 0, lty = 2, col = "black"))
+segments(bspp_df2_eos$fit_bspp_per5,  y_pos, bspp_df2_eos$fit_bspp_per95, y_pos,
+         col = colslatbi, lwd = 1.5)
+segments(bspp_df2_eos$fit_bspp_per25, y_pos, bspp_df2_eos$fit_bspp_per75, y_pos,
+         col = colslatbi, lwd = 3)
+mtext("End of season", side = 3, adj = 0, font = 2, cex = 0.9)
+
+# Slot 5: species legend
+par(mar = c(1, 1, 1, 1))
+plot.new()
+legend("center",
+       legend = sapply(unique(bspp_df2$spp_name), 
+                       function(x) parse(text = paste0("italic('", x, "')"))),
+       col    = unique(colslatbi),
+       pch    = 16, pt.cex = 1.5, bty = "n", cex = 1.2,
+       title  = "Species", title.font = 2)
+
+dev.off()
+
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+##### bspp with lines #####
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+jpeg(file = "figures/growthModelsMain/muALLbsppWlines.jpeg",
+     width = 2800, height = 2800, res = 300)
+
+layout(matrix(c(
+  1, 5, 9,
+  2, 6, 9,
+  3, 7, 9,
+  4, 8, 9
+), nrow = 4, byrow = TRUE),
+widths = c(1.3, 1, 0.5)) 
+
+# Row 1, Col 1, Slot 5 : GDD
+par(mar = custommar)
+plot(bspp_df2$fit_bspp, y_pos,
+     xlim = c(-0.8, 0.8), ylim = c(0.5, n_spp + 0.5),
+     xlab = "Log ring width (mm) change in averaged GDD of 10 spring days", ylab = "",
+     yaxt = "n", pch = 16, cex = 2, col = colslatbi, frame.plot = FALSE,      
+     panel.first = abline(v = 0, lty = 2, col = "black"))
+segments(bspp_df2$fit_bspp_per5,  y_pos, bspp_df2$fit_bspp_per95, y_pos,
+         col = colslatbi, lwd = 1.5)
+segments(bspp_df2$fit_bspp_per25, y_pos, bspp_df2$fit_bspp_per75, y_pos,
+         col = colslatbi, lwd = 3)
+mtext("(a) Growing degree days", side = 3, adj = 0, font = 2, cex = 0.9)
+
+# Row 2, Col 1, Slot 6 : GSL
+par(mar = custommar)
+plot(bspp_df2_gsl$fit_bspp, y_pos,
+     xlim = c(-0.8, 0.8), ylim = c(0.5, n_spp + 0.5),
+     xlab = "Log ring width (mm) change per 10 days of GSL", ylab = "",
+     yaxt = "n", pch = 16, cex = 2, col = colslatbi, frame.plot = FALSE,      
+     panel.first = abline(v = 0, lty = 2, col = "black"))
+segments(bspp_df2_gsl$fit_bspp_per5,  y_pos, bspp_df2_gsl$fit_bspp_per95, y_pos,
+         col = colslatbi, lwd = 1.5)
+segments(bspp_df2_gsl$fit_bspp_per25, y_pos, bspp_df2_gsl$fit_bspp_per75, y_pos,
+         col = colslatbi, lwd = 3)
+mtext("(b) Growing season length", side = 3, adj = 0, font = 2, cex = 0.9)
+
+# Row 3, Col 1, Slot 7 : SOS
+par(mar = custommar)
+plot(bspp_df2_sos$fit_bspp, y_pos,
+     xlim = c(-0.8, 0.8), ylim = c(0.5, n_spp + 0.5),
+     xlab = "Log ring width (mm) change per 5 days of leafout", ylab = "",
+     yaxt = "n", pch = 16, cex = 2, col = colslatbi, frame.plot = FALSE,      
+     panel.first = abline(v = 0, lty = 2, col = "black"))
+segments(bspp_df2_sos$fit_bspp_per5,  y_pos, bspp_df2_sos$fit_bspp_per95, y_pos,
+         col = colslatbi, lwd = 1.5)
+segments(bspp_df2_sos$fit_bspp_per25, y_pos, bspp_df2_sos$fit_bspp_per75, y_pos,
+         col = colslatbi, lwd = 3)
+mtext("(c) Start of season", side = 3, adj = 0, font = 2, cex = 0.9)
+
+# Row 4, Col 1, Slot 8 : EOS
+par(mar = custommar)
+plot(bspp_df2_eos$fit_bspp, y_pos,
+     xlim = c(-0.8, 0.8), ylim = c(0.5, n_spp + 0.5),
+     xlab = "Log ring width (mm) change per 10 days of coloredLeaves", ylab = "",
+     yaxt = "n", pch = 16, cex = 2, col = colslatbi, frame.plot = FALSE,      
+     
+     panel.first = abline(v = 0, lty = 2, col = "black"))
+segments(bspp_df2_eos$fit_bspp_per5,  y_pos, bspp_df2_eos$fit_bspp_per95, y_pos,
+         col = colslatbi, lwd = 1.5)
+segments(bspp_df2_eos$fit_bspp_per25, y_pos, bspp_df2_eos$fit_bspp_per75, y_pos,
+         col = colslatbi, lwd = 3)
+mtext("(d) End of season", side = 3, adj = 0, font = 2, cex = 0.9)
+
+# Row 1, Col 2, Slot 5 : GDD
+par(mar = custommar)
+plot(emp$pgsGDD5, y, type = "n", frame = FALSE,
+     ylim = range(min(emp$loglength), max(emp$loglength)), 
+     xlab = "Growing season growing degree days (GDD)", ylab = "Log ring width (mm)",
+     main = "")
+mtext("(e)", side = 3, adj = 0, font = 2, cex = 0.9)
+
+# Loop over trees again to plot each tree individually
+for (i in seq_along(sppvecnum)) { # i = 1
+  spp_column <- as.character(sppvecnum[i])
+  spp_column_name <- as.character(sppvecname[i])
+  y_post <- spp_post_list[[spp_column]]
+  
+  # color line by spp
+  spp_num <- as.integer(spp_column)
+  
+  # calculate mean and 50% credible interval (25%-75%)
+  y_mean <- apply(y_post, 1, mean)
+  y_low  <- apply(y_post, 1, quantile, 0.25)
+  y_high <- apply(y_post, 1, quantile, 0.75)
+  
+  line_col <- colslatbi[spp_num]
+  
+  polygon(c(gddseq, rev(gddseq)),
+          c(y_low, rev(y_high)), # low and high interval
+          col = adjustcolor(line_col, alpha.f = 0.1), border = NA)
+  
+  lines(gddseq, y_mean,
+        col = line_col,
+        lwd = 2)
+  
+  emp_spp <- emp[emp$spp_num == spp_num, ]
+}
+
+# Row 2, Col 2, Slot 6 : GSL
+par(mar = custommar)
+plot(emp$pgsGSL, y, type = "n", frame = FALSE,
+     ylim = range(min(emp$loglength), max(emp$loglength)), 
+     xlab = "Growing season length (days)", ylab = "Log ring width (mm)",
+     main = "")
+mtext("(f)", side = 3, adj = 0, font = 2, cex = 0.9)
+
+# Loop over trees again to plot each tree individually
+for (i in seq_along(sppvecnum)) { # i = 1
+  spp_column <- as.character(sppvecnum[i])
+  spp_column_name <- as.character(sppvecname[i])
+  y_post_gsl <- spp_post_list_gsl[[spp_column]]
+  
+  # color line by spp
+  spp_num <- as.integer(spp_column)
+  
+  # calculate mean and 50% credible interval (25%-75%)
+  y_mean <- apply(y_post_gsl, 1, mean)
+  y_low  <- apply(y_post_gsl, 1, quantile, 0.25)
+  y_high <- apply(y_post_gsl, 1, quantile, 0.75)
+  
+  line_col <- colslatbi[spp_num]
+  
+  polygon(c(gslseq, rev(gslseq)),
+          c(y_low, rev(y_high)), # low and high interval
+          col = adjustcolor(line_col, alpha.f = 0.1), border = NA)
+  
+  lines(gslseq, y_mean,
+        col = line_col,
+        lwd = 2)
+  
+  emp_spp <- emp[emp$spp_num == spp_num, ]
+}
+
+# Row 3, Col 2, Slot 7 : SOS
+par(mar = custommar)
+plot(emp$leafout, y, type = "n", frame = FALSE,
+     ylim = range(min(emp$loglength), max(emp$loglength)), 
+     xlab = "Leafout day of year", ylab = "Log ring width (mm)",
+     main = "")
+mtext("(g)", side = 3, adj = 0, font = 2, cex = 0.9)
+
+# Loop over trees again to plot each tree individually
+for (i in seq_along(sppvecnum)) { # i = 1
+  spp_column <- as.character(sppvecnum[i])
+  spp_column_name <- as.character(sppvecname[i])
+  y_post_sos <- spp_post_list_sos[[spp_column]]
+  
+  # color line by spp
+  spp_num <- as.integer(spp_column)
+  
+  # calculate mean and 50% credible interval (25%-75%)
+  y_mean <- apply(y_post_sos, 1, mean)
+  y_low  <- apply(y_post_sos, 1, quantile, 0.25)
+  y_high <- apply(y_post_sos, 1, quantile, 0.75)
+  
+  line_col <- colslatbi[spp_num]
+  
+  polygon(c(sosseq, rev(sosseq)),
+          c(y_low, rev(y_high)), # low and high interval
+          col = adjustcolor(line_col, alpha.f = 0.1), border = NA)
+  
+  lines(sosseq, y_mean,
+        col = line_col,
+        lwd = 2)
+  
+  emp_spp <- emp[emp$spp_num == spp_num, ]
+}
+
+# Row 4, Col 2, Slot 8 : EOS
+par(mar = custommar)
+plot(emp$coloredLeaves, y, type = "n", frame = FALSE,
+     ylim = range(min(emp$loglength), max(emp$loglength)), 
+     xlab = "coloredLeaves day of year", ylab = "Log ring width (mm)",
+     main = "")
+mtext("(h)", side = 3, adj = 0, font = 2, cex = 0.9)
+
+# Loop over trees again to plot each tree individually
+for (i in seq_along(sppvecnum)) { # i = 1
+  spp_column <- as.character(sppvecnum[i])
+  spp_column_name <- as.character(sppvecname[i])
+  y_post_eos <- spp_post_list_eos[[spp_column]]
+  
+  # color line by spp
+  spp_num <- as.integer(spp_column)
+  
+  # calculate mean and 50% credible interval (25%-75%)
+  y_mean <- apply(y_post_eos, 1, mean)
+  y_low  <- apply(y_post_eos, 1, quantile, 0.25)
+  y_high <- apply(y_post_eos, 1, quantile, 0.75)
+  
+  line_col <- colslatbi[spp_num]
+  
+  polygon(c(eosseq, rev(eosseq)),
+          c(y_low, rev(y_high)), # low and high interval
+          col = adjustcolor(line_col, alpha.f = 0.1), border = NA)
+  
+  lines(eosseq, y_mean,
+        col = line_col,
+        lwd = 2)
+  
+  emp_spp <- emp[emp$spp_num == spp_num, ]
+}
+
+# Slot 9: species legend
+par(mar = c(1, 1, 1, 1))
+plot.new()
+legend("center",
+       legend = sapply(unique(bspp_df2$spp_name), 
+                       function(x) parse(text = paste0("italic('", x, "')"))),
+       col    = unique(colslatbi),
+       pch    = 16, pt.cex = 1.5, bty = "n", cex = 1.2,
+       title  = "Species", title.font = 2)
+
+dev.off()
 
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 ###### asp ######
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
-jpeg("figures/empiricalData/aspp_mean_plot.jpeg", width = 8, height = 6, units = "in", res = 300)
+jpeg(file = "figures/growthModelsMain/muALLaspp.jpeg",
+     width = 1800, height = 2200, res = 300)
 
-par(mar = c(5, 10, 2, 2)) 
+layout(matrix(c(
+  1, 5,
+  2, 5,
+  3, 5,
+  4, 5
+), nrow = 4, byrow = TRUE),
+widths = c(0.7, 0.4))
 
+# Row 1: GDD
+par(mar = custommar)
 plot(aspp_df2$fit_aspp, y_pos,
-     xlim = range(c(aspp_df2$fit_aspp_per5, aspp_df2$fit_aspp_per95)),
-     ylim = c(0.5, n_spp + 0.5),
-     xlab = "Ring width intercept values (mm)",
-     ylab = "",
-     yaxt = "n",
-     pch = 16,
-     cex = 2,
-     col = renoir,
-     frame.plot = FALSE)
-
-# color labels
-for (i in seq_along(y_pos)) {
-  axis(2, at = y_pos[i],
-       labels = aspp_df2$spp_name[i],
-       las = 2,
-       col.axis = renoir[i],
-       tick = FALSE,
-       cex.axis = 1)
-}
-
-# error bars and dashed line
-segments(aspp_df2$fit_aspp_per5,  y_pos,
-         aspp_df2$fit_aspp_per95, y_pos,
-         col = renoir, lwd = 1.5)
-segments(aspp_df2$fit_aspp_per25, y_pos,
-         aspp_df2$fit_aspp_per75, y_pos,
-         col = renoir, lwd = 3)
-
+     xlim = c(-10, 10), ylim = c(0.5, n_spp + 0.5),
+     xlab = "Log ring width intercept values (mm)", ylab = "",
+     yaxt = "n", pch = 16, cex = 2, col = colslatbi, frame.plot = FALSE,      
+     panel.first = abline(v = 0, lty = 2, col = "black"))
+segments(aspp_df2$fit_aspp_per5,  y_pos, aspp_df2$fit_aspp_per95, y_pos,
+         col = colslatbi, lwd = 1.5)
+segments(aspp_df2$fit_aspp_per25, y_pos, aspp_df2$fit_aspp_per75, y_pos,
+         col = colslatbi, lwd = 3)
 abline(v = 0, lty = 2, col = "black")
+mtext("Growing degree days", side = 3, adj = 0, font = 2, cex = 0.9)
+
+# Row 2: GSL
+par(mar = custommar)
+plot(aspp_df2_gsl$fit_aspp, y_pos,
+     xlim = c(-10, 10), ylim = c(0.5, n_spp + 0.5),
+     xlab = "Log ring width intercept values (mm)", ylab = "",
+     yaxt = "n", pch = 16, cex = 2, col = colslatbi, frame.plot = FALSE,      
+     panel.first = abline(v = 0, lty = 2, col = "black"))
+segments(aspp_df2_gsl$fit_aspp_per5,  y_pos, aspp_df2_gsl$fit_aspp_per95, y_pos,
+         col = colslatbi, lwd = 1.5)
+segments(aspp_df2_gsl$fit_aspp_per25, y_pos, aspp_df2_gsl$fit_aspp_per75, y_pos,
+         col = colslatbi, lwd = 3)
+abline(v = 0, lty = 2, col = "black")
+mtext("Growing season length", side = 3, adj = 0, font = 2, cex = 0.9)
+
+# Row 3: SOS
+par(mar = custommar)
+plot(aspp_df2_sos$fit_aspp, y_pos,
+     xlim = c(-10, 10),ylim = c(0.5, n_spp + 0.5),
+     xlab = "Log ring width intercept values (mm)", ylab = "", 
+     yaxt = "n", pch = 16, cex = 2, col = colslatbi, frame.plot = FALSE,      
+     panel.first = abline(v = 0, lty = 2, col = "black"))
+segments(aspp_df2_sos$fit_aspp_per5,  y_pos, aspp_df2_sos$fit_aspp_per95, y_pos,
+         col = colslatbi, lwd = 1.5)
+segments(aspp_df2_sos$fit_aspp_per25, y_pos, aspp_df2_sos$fit_aspp_per75, y_pos,
+         col = colslatbi, lwd = 3)
+abline(v = 0, lty = 2, col = "black")
+mtext("Start of season", side = 3, adj = 0, font = 2, cex = 0.9)
+
+# Row 4: EOS
+par(mar = custommar)
+plot(aspp_df2_eos$fit_aspp, y_pos,
+     xlim = c(-10, 10), ylim = c(0.5, n_spp + 0.5), 
+     xlab = "Log ring width intercept values (mm)", ylab = "", 
+     yaxt = "n", pch = 16, cex = 2, col = colslatbi, frame.plot = FALSE,      
+     panel.first = abline(v = 0, lty = 2, col = "black"))
+segments(aspp_df2_eos$fit_aspp_per5,  y_pos, aspp_df2_eos$fit_aspp_per95, y_pos,
+         col = colslatbi, lwd = 1.5)
+segments(aspp_df2_eos$fit_aspp_per25, y_pos, aspp_df2_eos$fit_aspp_per75, y_pos,
+         col = colslatbi, lwd = 3)
+abline(v = 0, lty = 2, col = "black")
+mtext("End of season", side = 3, adj = 0, font = 2, cex = 0.9)
+
+# Slot 5: species legend
+par(mar = c(1, 1, 1, 1))
+plot.new()
+legend("center",
+       legend = sapply(unique(aspp_df2$spp_name), 
+                       function(x) parse(text = paste0("italic('", x, "')"))),
+       col    = unique(colslatbi),
+       pch    = 16, pt.cex = 1.5, bty = "n", cex = 1.2,
+       title  = "Species", title.font = 2)
 
 dev.off()
 
-# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
-###### bsp ###### 
-# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
-jpeg("figures/empiricalData/bsp_mean_plot.jpeg", width = 8, height = 6, units = "in", res = 300)
-
-par(mar = c(5, 10, 2, 2)) 
-
-plot(bspp_df2$fit_bspp, y_pos,
-     xlim = range(c(bspp_df2$fit_bspp_per5, bspp_df2$fit_bspp_per95)),
-     ylim = c(0.5, n_spp + 0.5),
-     xlab = "Ring width (mm) change/200 GDD",
-     ylab = "",
-     yaxt = "n",
-     pch = 16,
-     cex = 2,
-     col = renoir,
-     frame.plot = FALSE)
-
-# color labels
-for (i in seq_along(y_pos)) {
-  axis(2, at = y_pos[i],
-       labels = bspp_df2$spp_name[i],
-       las = 2,
-       col.axis = renoir[i],
-       tick = FALSE,
-       cex.axis = 1)
-}
-
-# error bars and dashed line
-segments(bspp_df2$fit_bspp_per5,  y_pos,
-         bspp_df2$fit_bspp_per95, y_pos,
-         col = renoir, lwd = 1.5)
-segments(bspp_df2$fit_bspp_per25, y_pos,
-         bspp_df2$fit_bspp_per75, y_pos,
-         col = renoir, lwd = 3)
-
-abline(v = 0, lty = 2, col = "black")
-
-dev.off()
 
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
 ###### full treeid mu plots intercept ###### 
@@ -1269,7 +1531,7 @@ treeid_df4$spp_name <- emp$latbi[match(treeid_df4$treeid, emp$treeid_num)]
 
 # Plot!
 pdf(
-  file = "figures/empiricalData/meanPlotGrowthGDD_treeidBYspp.pdf",
+  file = "figures/growthModelsMain/meanPlotGrowthGDD_treeidBYspp.pdf",
   width = 9,  
   height = 10
 )
@@ -1401,100 +1663,5 @@ legend(
   title = "Species",
   bty = "n"
 )
-dev.off()
-
-# <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
-# Combined mu plots (GDD / GSL / SOS / EOS) ####
-# <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
-# Plot!
-jpeg(file = "figures/empiricalData/muALL.jpeg",
-     width = 3000, height = 4000, res = 300)
-
-layout(matrix(c(
-  1,  2, 9,
-  3,  4, 9,
-  5,  6, 9,
-  7,  8, 9
-), nrow = 4, byrow = TRUE),
-widths = c(1, 1, 
-           0.8)) # legend column
-sppcols <- renoir[sppvecnum]
-plot_row <- function(aspp_df2, bspp_df2,
-                     n_spp,  y_pos,
-                     sppcols, 
-                     bspp_xlab,
-                     row_label) {
-  # aspp  
-  par(mar = c(5, 2, 2, 2))
-  plot(aspp_df2$fit_aspp, y_pos,
-       xlim = c(-15, 15),
-       ylim = c(0.5, n_spp + 0.5),
-       xlab = "Ring width intercept values (mm)",
-       ylab = "",
-       yaxt = "n",
-       pch = 16, cex = 2, col = sppcols,
-       frame.plot = FALSE)
-  segments(aspp_df2$fit_aspp_per5,  y_pos, aspp_df2$fit_aspp_per95, y_pos,
-           col = sppcols, lwd = 1.5)
-  segments(aspp_df2$fit_aspp_per25, y_pos, aspp_df2$fit_aspp_per75, y_pos,
-           col = sppcols, lwd = 3)
-  abline(v = 0, lty = 2, col = "black")
-  mtext(row_label, side = 3, line = 0.5, adj = 0, font = 2, cex = 1.1)
-  
-  # bspp
-  par(mar = c(5, 2, 2, 2))
-  plot(bspp_df2$fit_bspp, y_pos,
-       xlim = range(c(bspp_df2$fit_bspp_per5, bspp_df2$fit_bspp_per95)),
-       ylim = c(0.5, n_spp + 0.5),
-       xlab = bspp_xlab,
-       ylab = "",
-       yaxt = "n",
-       pch = 16, cex = 2, col = sppcols,
-       frame.plot = FALSE)
-  segments(bspp_df2$fit_bspp_per5,  y_pos, bspp_df2$fit_bspp_per95, y_pos,
-           col = sppcols, lwd = 1.5)
-  segments(bspp_df2$fit_bspp_per25, y_pos, bspp_df2$fit_bspp_per75, y_pos,
-           col = sppcols, lwd = 3)
-  abline(v = 0, lty = 2, col = "black")
-  
-}
-
-# Row 1: GDD
-plot_row(aspp_df2, bspp_df2,
-         n_spp, y_pos,
-         sppcols, 
-         bspp_xlab = "Ring width (mm) change/200 GDD",
-         row_label = "GDD")
-
-# Row 2: GSL
-plot_row(aspp_df2_gsl, bspp_df2_gsl,
-         n_spp, y_pos,
-         sppcols, 
-         bspp_xlab = "Ring width (mm) change per GSL in days",
-         row_label = "GSL")
-
-# Row 3: SOS  (re-load objects as in your original SOS block first)
-plot_row(aspp_df2_sos, bspp_df2_sos,   # after the SOS extraction block
-         n_spp, y_pos,
-         sppcols, 
-         bspp_xlab = "Ring width (mm) change per days in leafout date",
-         row_label = "SOS")
-
-# Row 4: EOS  (re-load objects as in your original EOS block first)
-plot_row(aspp_df2_eos, bspp_df2_eos,   # after the EOS extraction block
-         n_spp, y_pos,
-         sppcols, 
-         bspp_xlab = "Ring width (mm) change per days in budset date",
-         row_label = "EOS")
-
-# slot 13 - species legend
-par(mar = c(1, 1, 1, 1))
-plot.new()
-legend("center",
-       legend = unique(aspp_df2$spp_name),
-       col    = unique(sppcols),
-       pch    = 16, pt.cex = 1.5, bty = "n", cex = 1.2,
-       title  = "Species", title.font = 2)
-
 dev.off()
 
