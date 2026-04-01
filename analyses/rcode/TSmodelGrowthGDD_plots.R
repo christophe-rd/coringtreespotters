@@ -53,6 +53,7 @@ emp$spp_num <- match(emp$commonName, unique(emp$commonName))
 emp$treeid_num <- match(emp$id, unique(emp$id))
 
 # transform data in vectors
+emp$loglength <- log(emp$lengthMM)
 y <- emp$lengthMM
 N <- nrow(emp)
 gdd <- emp$pgsGDD5/200
@@ -323,15 +324,15 @@ treeid_bspp
 
 treeidvecnum <- 1:ncol(fullintercept)
 treeidvecname <- treeid_spp$id
-x <- seq(min(emp$pgsGDD5), max(emp$pgsGDD5), length.out = 100)  
+gddseq <- seq(min(emp$pgsGDD5), max(emp$pgsGDD5), length.out = 100)  
 y_post_list <- list()  # store posterior predictions in a list where each tree id gets matrix
 
 # below I create a list where each row is the posterior estimate for each value of gdd (so the first row correspond to the model estimate for the first gdd value stored in x) and each column is the iteration (from 1 to 8000)
 for (i in seq_along(treeidvecnum)) { # i = 1
   tree_col <- as.character(treeidvecnum[i]) 
   y_post <- sapply(1:nrow(df_fit), function(f) {
-    rnorm(length(x), 
-          fullintercept[f, tree_col] + treeid_bspp[f, tree_col] * x, 
+    rnorm(length(gddseq), 
+          fullintercept[f, tree_col] + treeid_bspp[f, tree_col] * gddseq, 
           sigma_df$sigma_y[f])
   })
   y_post_list[[tree_col]] <- y_post
@@ -364,7 +365,7 @@ for (i in seq_along(treeidvecnum)) { # i = 1
   
   # empty plot first
   plot(emp$pgsGDD5, y, type = "n", 
-       ylim = range(c(emp_treeid$lengthMM, y_low, y_high), na.rm = TRUE),
+       ylim = range(c(emp_treeid$loglength, y_low, y_high), na.rm = TRUE),
        xlab = "Primary growing season GDD", ylab = "Ring width (mm)",
        frame = FALSE,
        main = tree_col_name) # set the name for each plot
@@ -374,20 +375,20 @@ for (i in seq_along(treeidvecnum)) { # i = 1
   line_col <- colslatbi[spp_id]
   
   # shaded interval
-  polygon(c(x, rev(x)), 
+  polygon(c(gddseq, rev(gddseq)), 
           c(y_low, # lower interval
             rev(y_high)), # high interval
           col = adjustcolor(line_col, alpha.f = 0.3), 
           border = NA)
   
   # mean line
-  lines(x, y_mean,
+  lines(gddseq, y_mean,
         col = line_col,
         lwd = 2)
   
   points(
     emp_treeid$pgsGDD5,
-    emp_treeid$lengthMM,
+    emp_treeid$loglength,
     pch = 16,
     cex = 2,
     col = line_col)
@@ -401,7 +402,7 @@ mean_post_list <- list()
 for (i in seq_along(treeidvecnum)) {
   tree_col <- as.character(treeidvecnum[i])
   mean_post_list[[tree_col]] <- sapply(1:nrow(df_fit), function(f) {
-    fullintercept[f, tree_col] + treeid_bspp[f, tree_col] * x
+    fullintercept[f, tree_col] + treeid_bspp[f, tree_col] * gddseq
     # no sigma_y yet
   })
 }
@@ -414,11 +415,9 @@ spp_mean_list <- lapply(spp_list, function(tree_vec) {
 # re-simulate sigma on the averaged mean
 spp_post_list <- lapply(spp_mean_list, function(mean_mat) {
   sapply(1:nrow(df_fit), function(f) {
-    rnorm(length(x), mean_mat[, f], sigma_df$sigma_y[f])
+    rnorm(length(gddseq), mean_mat[, f], sigma_df$sigma_y[f])
   })
 })
-
-x <- seq(min(emp$pgsGDD5), max(emp$pgsGDD5), length.out = 100)   
 
 # jpeg output
 jpeg(filename = "figures/empiricalData/growthModelSlopesperSppFacet.jpeg",
@@ -448,11 +447,11 @@ for (i in seq_along(sppvecnum)) { # i = 1
   y_high <- apply(y_post, 1, quantile, 0.75)
   
   # species-specific ylim
-  ylim_spp <- range(c(emp_spp$lengthMM, y_low, y_high), na.rm = TRUE)
+  ylim_spp <- range(c(emp_spp$loglength, y_low, y_high), na.rm = TRUE)
   
   ylimfixed <- c(0, 12)
   
-  plot(emp_spp$pgsGDD5, emp_spp$lengthMM,
+  plot(emp_spp$pgsGDD5, emp_spp$loglength,
        type = "n",
        # ylim = ylim_spp,
        ylim = ylimfixed,
@@ -465,26 +464,26 @@ for (i in seq_along(sppvecnum)) { # i = 1
   line_col <- renoir[spp_num]
   
   polygon(
-    c(x, rev(x)),
+    c(gddseq, rev(gddseq)),
     c(y_low, rev(y_high)),
     col = adjustcolor(line_col, alpha.f = 0.3),
     border = NA
   )
   
-  lines(x, y_mean, col = line_col, lwd = 2)
+  lines(gddseq, y_mean, col = line_col, lwd = 2)
   
   # Add atreid symbols
   unique_trees <- unique(emp_spp$treeid_num)
   sym_per_row  <- treeidsymbol[match(emp_spp$treeid_num, unique_trees)]
   
-  points(emp_spp$pgsGDD5, emp_spp$lengthMM,
+  points(emp_spp$pgsGDD5, emp_spp$loglength,
          pch = sym_per_row,
          cex = 1,
          col = line_col)
   
   points(
     emp_spp$pgsGDD5,
-    emp_spp$lengthMM,
+    emp_spp$loglength,
     pch = 16,
     cex = 1,
     col = line_col
@@ -527,9 +526,9 @@ for (i in seq(sppvecnum)) { # i = 11
   y_high <- apply(y_post, 1, quantile, 0.75)
   
   # species-specific ylim
-  ylim_spp <- range(c(emp_spp$lengthMM, y_low, y_high), na.rm = TRUE)
+  ylim_spp <- range(c(emp_spp$loglength, y_low, y_high), na.rm = TRUE)
   
-  plot(emp_spp$pgsGDD5, emp_spp$lengthMM,
+  plot(emp_spp$pgsGDD5, emp_spp$loglength,
        type = "n",
        ylim = ylim_spp,
        xlab = "Growing season growing degree days (GDD)",
@@ -541,13 +540,13 @@ for (i in seq(sppvecnum)) { # i = 11
   line_col <- renoir[spp_num]
   
   polygon(
-    c(x, rev(x)),
+    c(gddseq, rev(gddseq)),
     c(y_low, rev(y_high)),
     col = adjustcolor(line_col, alpha.f = 0.3),
     border = NA
   )
   
-  lines(x, y_mean, col = line_col, lwd = 3)
+  lines(gddseq, y_mean, col = line_col, lwd = 3)
   
   # add tree id variation
   treeidspp <- treeid_spp$treeid_num[which(treeid_spp$spp_num == spp_num)]
@@ -571,19 +570,19 @@ for (i in seq(sppvecnum)) { # i = 11
     
     treeidtempsymbol <- emp_spp[emp_spp$treeid_num == j,]
     
-    points(treeidtempsymbol$pgsGDD5, treeidtempsymbol$lengthMM,
+    points(treeidtempsymbol$pgsGDD5, treeidtempsymbol$loglength,
            pch = sym,
            col = line_col)
     
     # shaded interval
-    polygon(c(x, rev(x)),
+    polygon(c(gddseq, rev(gddseq)),
             c(y_low, # lower interval
               rev(y_high)), # high interval
             col = adjustcolor(line_col, alpha.f = 0.1),
             border = NA)
     
     # mean line
-    lines(x, y_mean,
+    lines(gddseq, y_mean,
           col = line_col,
           lwd = 1)
   }
@@ -605,7 +604,7 @@ jpeg(
 )
 
 plot(emp$pgsGDD5, y, type = "n", 
-     ylim = range(min(emp$lengthMM), max(emp$lengthMM)), 
+     ylim = range(min(emp$loglength), max(emp$loglength)), 
      xlab = "Primary growing season GDD", ylab = "Ring width (mm)",
      main = "species growth responses")
 
@@ -626,14 +625,14 @@ for (i in seq_along(sppvecnum)) { # i = 1
   line_col <- renoir[spp_num]
   
   # # shaded interval
-  # polygon(c(x, rev(x)), 
+  # polygon(c(gddseq, rev(gddseq), 
   #         c(y_low, # lower interval
   #           rev(y_high)), # high interval
   #         col = adjustcolor(line_col, alpha.f = 0.2), 
   #         border = NA)
   
   # mean line
-  lines(x, y_mean,
+  lines(gddseq, y_mean,
         col = line_col,
         lwd = 2)
   
@@ -641,7 +640,7 @@ for (i in seq_along(sppvecnum)) { # i = 1
 
   # points(
   #   emp_spp$pgsGDD5,
-  #   emp_spp$lengthMM,
+  #   emp_spp$loglength,
   #   pch = 16,
   #   cex = 1,
   #   col = line_col)
@@ -708,16 +707,15 @@ for (i in seq_len(ncol(treeid_bspp_gsl))) { # i = 30
   treeid_bspp_gsl[, i] <- bspp_df4_gsl[, spp_id]
 }
 treeid_bspp_gsl
-
-x <- seq(min(emp$pgsGSL), max(emp$pgsGSL), length.out = 100)  
+gslseq <- seq(min(emp$pgsGSL), max(emp$pgsGSL), length.out = 100)  
 y_post_list_gsl <- list()  # store posterior predictions in a list where each tree id gets matrix
 
 # below I create a list where each row is the posterior estimate for each value of gdd (so the first row correspond to the model estimate for the first gdd value stored in x) and each column is the iteration (from 1 to 8000)
 for (i in seq_along(treeidvecnum)) { # i = 1
   tree_col <- as.character(treeidvecnum[i]) 
   y_post <- sapply(1:nrow(df_fitgsl), function(f) {
-    rnorm(length(x), 
-          fullintercept_gsl[f, tree_col] + treeid_bspp_gsl[f, tree_col] * x, 
+    rnorm(length(gslseq), 
+          fullintercept_gsl[f, tree_col] + treeid_bspp_gsl[f, tree_col] * gslseq, 
           sigma_df_gsl$sigma_y[f])
   })
   y_post_list_gsl[[tree_col]] <- y_post
@@ -750,7 +748,7 @@ for (i in seq_along(treeidvecnum)) { # i = 1
   
   # empty plot first
   plot(emp$pgsGSL, y, type = "n", 
-       ylim = range(c(emp_treeid$lengthMM, y_low, y_high), na.rm = TRUE),
+       ylim = range(c(emp_treeid$loglength, y_low, y_high), na.rm = TRUE),
        xlab = "Growing season length (days)", ylab = "Ring width (mm)",
        frame = FALSE,
        main = tree_col_name) # set the name for each plot
@@ -760,15 +758,15 @@ for (i in seq_along(treeidvecnum)) { # i = 1
   line_col <- colslatbi[spp_id]
   
   # shaded interval
-  polygon(c(x, rev(x)), 
+  polygon(c(gslseq, rev(gslseq)), 
           c(y_low, rev(y_high)),
           col = adjustcolor(line_col, alpha.f = 0.3), 
           border = NA)
   
   # mean line
-  lines(x, y_mean, col = line_col, lwd = 2)
+  lines(gslseq, y_mean, col = line_col, lwd = 2)
   
-  points(emp_treeid$pgsGSL, emp_treeid$lengthMM,
+  points(emp_treeid$pgsGSL, emp_treeid$loglength,
          pch = 16,
          cex = 2,
          col = line_col)
@@ -782,7 +780,7 @@ mean_post_list_gsl <- list()
 for (i in seq_along(treeidvecnum)) {
   tree_col <- as.character(treeidvecnum[i])
   mean_post_list_gsl[[tree_col]] <- sapply(1:nrow(df_fitgsl), function(f) {
-    fullintercept_gsl[f, tree_col] + treeid_bspp_gsl[f, tree_col] * x
+    fullintercept_gsl[f, tree_col] + treeid_bspp_gsl[f, tree_col] * gslseq
     # no sigma_y yet
   })
 }
@@ -795,7 +793,7 @@ spp_mean_list_gsl <- lapply(spp_list, function(tree_vec) {
 # re-simulate sigma on the averaged mean
 spp_post_list_gsl <- lapply(spp_mean_list_gsl, function(mean_mat) {
   sapply(1:nrow(df_fitgsl), function(f) {
-    rnorm(length(x), mean_mat[, f], sigma_df_gsl$sigma_y[f])
+    rnorm(length(gslseq), mean_mat[, f], sigma_df_gsl$sigma_y[f])
   })
 })
 
@@ -827,11 +825,11 @@ for (i in seq_along(sppvecnum)) { # i = 1
   y_high <- apply(y_post, 1, quantile, 0.75)
   
   # species-specific ylim
-  ylim_spp <- range(c(emp_spp$lengthMM, y_low, y_high), na.rm = TRUE)
+  ylim_spp <- range(c(emp_spp$loglength, y_low, y_high), na.rm = TRUE)
   
   ylimfixed <- c(0, 12)
   
-  plot(emp_spp$pgsGSL, emp_spp$lengthMM,
+  plot(emp_spp$pgsGSL, emp_spp$loglength,
        type = "n",
        # ylim = ylim_spp,
        ylim = ylimfixed,
@@ -844,26 +842,452 @@ for (i in seq_along(sppvecnum)) { # i = 1
   line_col <- renoir[spp_num]
   
   polygon(
-    c(x, rev(x)),
+    c(gslseq, rev(gslseq)),
     c(y_low, rev(y_high)),
     col = adjustcolor(line_col, alpha.f = 0.3),
     border = NA
   )
   
-  lines(x, y_mean, col = line_col, lwd = 2)
+  lines(gslseq, y_mean, col = line_col, lwd = 2)
   
   # Add atreid symbols
   unique_trees <- unique(emp_spp$treeid_num)
   sym_per_row  <- treeidsymbol[match(emp_spp$treeid_num, unique_trees)]
   
-  points(emp_spp$pgsGSL, emp_spp$lengthMM,
+  points(emp_spp$pgsGSL, emp_spp$loglength,
          pch = sym_per_row,
          cex = 1,
          col = line_col)
   
   points(
     emp_spp$pgsGSL,
-    emp_spp$lengthMM,
+    emp_spp$loglength,
+    pch = 16,
+    cex = 1,
+    col = line_col
+  )
+}
+
+dev.off()
+
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+##### SOS: Prep posterior reconstruction #####
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+# start by filling a df with treeid intercepts only
+atreeidsub_sos <- subset(df_fitsos, select = subyvec)
+colnames(atreeidsub_sos) <- 1:length(subyvec)
+
+# the spp values for each tree id
+treeid_aspp_sos <- data.frame(matrix(ncol = ncol(atreeidsub_sos), nrow = nrow(df_fitsos)))
+colnames(treeid_aspp_sos) <- colnames(atreeidsub_sos)
+
+for (i in seq_len(ncol(treeid_aspp_sos))) {
+  tree_id <- as.integer(colnames(treeid_aspp_sos)[i])
+  spp_id <- treeid_spp$spp_num[match(tree_id, treeid_spp$treeid_num)]
+  treeid_aspp_sos[, i] <- aspp_df_sos[, spp_id]
+}
+treeid_aspp_sos
+
+# recover a
+treeid_a_sos <- data.frame(matrix(ncol = ncol(atreeidsub_sos), nrow = nrow(df_fitsos)))
+colnames(treeid_a_sos) <- colnames(atreeidsub_sos)
+
+for (i in seq_len(ncol(treeid_a_sos))) { # i = 1
+  treeid_a_sos[, i] <- df_fitsos[, "a"]
+}
+
+# sum all 3 dfs together to get the full intercept for each treeid
+fullintercept_sos <-
+  treeid_a_sos + 
+  atreeidsub_sos +
+  treeid_aspp_sos 
+fullintercept_sos
+
+# now get the slope for each treeid
+treeid_bspp_sos <- data.frame(matrix(ncol = ncol(atreeidsub_sos), nrow = nrow(df_fitsos)))
+colnames(treeid_bspp_sos) <- colnames(atreeidsub_sos)
+
+# back convert the slopes to their original scales
+bspp_df4_sos <- bspp_df_sos
+for (i in 1:ncol(bspp_df4_sos)){
+  bspp_df4_sos[[i]] <- bspp_df4_sos[[i]] / 10
+}
+
+for (i in seq_len(ncol(treeid_bspp_sos))) { # i = 30
+  tree_id <- as.integer(colnames(treeid_bspp_sos)[i])
+  spp_id <- treeid_spp$spp_num[match(tree_id, treeid_spp$treeid_num)]
+  treeid_bspp_sos[, i] <- bspp_df4_sos[, spp_id]
+}
+treeid_bspp_sos
+
+sosseq <- seq(min(emp$leafout), max(emp$leafout), length.out = 100)  
+y_post_list_sos <- list()  # store posterior predictions in a list where each tree id gets matrix
+
+# below I create a list where each row is the posterior estimate for each value of gdd (so the first row correspond to the model estimate for the first gdd value stored in x) and each column is the iteration (from 1 to 8000)
+for (i in seq_along(treeidvecnum)) { # i = 1
+  tree_col <- as.character(treeidvecnum[i]) 
+  y_post <- sapply(1:nrow(df_fitsos), function(f) {
+    rnorm(length(sosseq), 
+          fullintercept_sos[f, tree_col] + treeid_bspp_sos[f, tree_col] * sosseq, 
+          sigma_df_sos$sigma_y[f])
+  })
+  y_post_list_sos[[tree_col]] <- y_post
+}
+
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+##### SOS: per treeid, facet #####
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+# PDF output
+pdf(file = "figures/empiricalData/growthModelSlopesperTreeidSOS.pdf", width = 10, height = 8)
+# Layout: 2 rows × 2 columns per page
+par(mfrow = c(2, 2), mar = c(4, 4, 2, 1))
+
+# Loop over trees again to plot each tree individually
+for (i in seq_along(treeidvecnum)) { # i = 1
+  tree_col <- as.character(treeidvecnum[i])
+  tree_col_name <- as.character(treeidvecname[i])
+  y_post <- y_post_list_sos[[tree_col]]
+  
+  # color line by spp
+  tree_id_num <- as.integer(tree_col)
+  
+  # index the dots per treeid
+  emp_treeid <- emp[emp$treeid_num == tree_id_num, ]
+  
+  # calculate mean and 50% credible interval (25%-75%)
+  y_mean <- apply(y_post, 1, mean)
+  y_low  <- apply(y_post, 1, quantile, 0.25)
+  y_high <- apply(y_post, 1, quantile, 0.75)
+  
+  # empty plot first
+  plot(emp$leafout, y, type = "n", 
+       ylim = range(c(emp_treeid$loglength, y_low, y_high), na.rm = TRUE),
+       xlab = "Growing season length (days)", ylab = "Log ring width (mm)",
+       frame = FALSE,
+       main = tree_col_name) # set the name for each plot
+  
+  spp_id <- treeid_spp$commonName[match(tree_id_num, treeid_spp$treeid_num)]
+  
+  line_col <- colslatbi[spp_id]
+  
+  # shaded interval
+  polygon(c(sosseq, rev(sosseq)), 
+          c(y_low, rev(y_high)),
+          col = adjustcolor(line_col, alpha.f = 0.3), 
+          border = NA)
+  
+  # mean line
+  lines(sosseq, y_mean, col = line_col, lwd = 2)
+  
+  points(emp_treeid$leafout, emp_treeid$loglength,
+         pch = 16,
+         cex = 2,
+         col = line_col)
+}
+dev.off()
+
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+##### SOS: per Spp, facet #####
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+mean_post_list_sos <- list()
+for (i in seq_along(treeidvecnum)) {
+  tree_col <- as.character(treeidvecnum[i])
+  mean_post_list_sos[[tree_col]] <- sapply(1:nrow(df_fitsos), function(f) {
+    fullintercept_sos[f, tree_col] + treeid_bspp_sos[f, tree_col] * sosseq
+    # no sigma_y yet
+  })
+}
+
+# average the mean predictions across trees within species
+spp_mean_list_sos <- lapply(spp_list, function(tree_vec) {
+  Reduce("+", mean_post_list_sos[as.character(tree_vec)]) / length(tree_vec)
+})
+
+# re-simulate sigma on the averaged mean
+spp_post_list_sos <- lapply(spp_mean_list_sos, function(mean_mat) {
+  sapply(1:nrow(df_fitsos), function(f) {
+    rnorm(length(sosseq), mean_mat[, f], sigma_df_sos$sigma_y[f])
+  })
+})
+
+# jpeg output
+jpeg(filename = "figures/empiricalData/growthModelSlopesperSppFacetsos.jpeg",
+     width = 2400, height = 2400, res = 300)
+# Layout: 4 cols x 3 rows
+par(mfrow = c(4, 3), mar = c(4, 4, 2, 1))
+
+treeidsymbol <- c(15, 16, 17, 8, 9)
+# Loop over trees again to plot each tree individually
+for (i in seq_along(sppvecnum)) { # i = 1
+  
+  spp_column <- as.character(sppvecnum[i])
+  spp_column_name <- as.character(sppvecname[i])
+  
+  # define spp num
+  spp_num <- as.integer(spp_column)
+  
+  # subset empirical data correctly
+  emp_spp <- emp[emp$spp_num == spp_num, ]
+  
+  spp_column <- as.character(sppvecnum[i]) 
+  y_post <- spp_post_list_sos[[spp_column]]
+  
+  # summaries
+  y_mean <- apply(y_post, 1, median)
+  y_low  <- apply(y_post, 1, quantile, 0.25)
+  y_high <- apply(y_post, 1, quantile, 0.75)
+  
+  # species-specific ylim
+  ylim_spp <- range(c(emp_spp$loglength, y_low, y_high), na.rm = TRUE)
+  
+  ylimfixed <- c(0, 12)
+  
+  plot(emp_spp$leafout, emp_spp$loglength,
+       type = "n",
+       # ylim = ylim_spp,
+       ylim = ylimfixed,
+       xlab = "Growing season length (days)",
+       ylab = "Log ring width (mm)",
+       frame = FALSE,
+       main = spp_column_name)
+  
+  # color
+  line_col <- renoir[spp_num]
+  
+  polygon(
+    c(sosseq, rev(sosseq)),
+    c(y_low, rev(y_high)),
+    col = adjustcolor(line_col, alpha.f = 0.3),
+    border = NA
+  )
+  
+  lines(sosseq, y_mean, col = line_col, lwd = 2)
+  
+  # Add atreid symbols
+  unique_trees <- unique(emp_spp$treeid_num)
+  sym_per_row  <- treeidsymbol[match(emp_spp$treeid_num, unique_trees)]
+  
+  points(emp_spp$leafout, emp_spp$loglength,
+         pch = sym_per_row,
+         cex = 1,
+         col = line_col)
+  
+  points(
+    emp_spp$leafout,
+    emp_spp$loglength,
+    pch = 16,
+    cex = 1,
+    col = line_col
+  )
+}
+
+dev.off()
+
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+##### EOS: Prep posterior reconstruction #####
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+# start by filling a df with treeid intercepts only
+atreeidsub_eos <- subset(df_fiteos, select = subyvec)
+colnames(atreeidsub_eos) <- 1:length(subyvec)
+
+# the spp values for each tree id
+treeid_aspp_eos <- data.frame(matrix(ncol = ncol(atreeidsub_eos), nrow = nrow(df_fiteos)))
+colnames(treeid_aspp_eos) <- colnames(atreeidsub_eos)
+
+for (i in seq_len(ncol(treeid_aspp_eos))) {
+  tree_id <- as.integer(colnames(treeid_aspp_eos)[i])
+  spp_id <- treeid_spp$spp_num[match(tree_id, treeid_spp$treeid_num)]
+  treeid_aspp_eos[, i] <- aspp_df_eos[, spp_id]
+}
+treeid_aspp_eos
+
+# recover a
+treeid_a_eos <- data.frame(matrix(ncol = ncol(atreeidsub_eos), nrow = nrow(df_fiteos)))
+colnames(treeid_a_eos) <- colnames(atreeidsub_eos)
+
+for (i in seq_len(ncol(treeid_a_eos))) { # i = 1
+  treeid_a_eos[, i] <- df_fiteos[, "a"]
+}
+
+# sum all 3 dfs together to get the full intercept for each treeid
+fullintercept_eos <-
+  treeid_a_eos + 
+  atreeidsub_eos +
+  treeid_aspp_eos 
+fullintercept_eos
+
+# now get the slope for each treeid
+treeid_bspp_eos <- data.frame(matrix(ncol = ncol(atreeidsub_eos), nrow = nrow(df_fiteos)))
+colnames(treeid_bspp_eos) <- colnames(atreeidsub_eos)
+
+# back convert the slopes to their original scales
+bspp_df4_eos <- bspp_df_eos
+for (i in 1:ncol(bspp_df4_eos)){
+  bspp_df4_eos[[i]] <- bspp_df4_eos[[i]] / 10
+}
+
+for (i in seq_len(ncol(treeid_bspp_eos))) { # i = 30
+  tree_id <- as.integer(colnames(treeid_bspp_eos)[i])
+  spp_id <- treeid_spp$spp_num[match(tree_id, treeid_spp$treeid_num)]
+  treeid_bspp_eos[, i] <- bspp_df4_eos[, spp_id]
+}
+treeid_bspp_eos
+
+eosseq <- seq(min(emp$coloredLeaves), max(emp$coloredLeaves), length.out = 100)  
+y_post_list_eos <- list()  # store posterior predictions in a list where each tree id gets matrix
+
+# below I create a list where each row is the posterior estimate for each value of gdd (so the first row correspond to the model estimate for the first gdd value stored in x) and each column is the iteration (from 1 to 8000)
+for (i in seq_along(treeidvecnum)) { # i = 1
+  tree_col <- as.character(treeidvecnum[i]) 
+  y_post <- sapply(1:nrow(df_fiteos), function(f) {
+    rnorm(length(eosseq), 
+          fullintercept_eos[f, tree_col] + treeid_bspp_eos[f, tree_col] * eosseq, 
+          sigma_df_eos$sigma_y[f])
+  })
+  y_post_list_eos[[tree_col]] <- y_post
+}
+
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+##### EOS: per treeid, facet #####
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+# PDF output
+pdf(file = "figures/empiricalData/growthModelSlopesperTreeidEOS.pdf", width = 10, height = 8)
+# Layout: 2 rows × 2 columns per page
+par(mfrow = c(2, 2), mar = c(4, 4, 2, 1))
+
+# Loop over trees again to plot each tree individually
+for (i in seq_along(treeidvecnum)) { # i = 1
+  tree_col <- as.character(treeidvecnum[i])
+  tree_col_name <- as.character(treeidvecname[i])
+  y_post <- y_post_list_eos[[tree_col]]
+  
+  # color line by spp
+  tree_id_num <- as.integer(tree_col)
+  
+  # index the dots per treeid
+  emp_treeid <- emp[emp$treeid_num == tree_id_num, ]
+  
+  # calculate mean and 50% credible interval (25%-75%)
+  y_mean <- apply(y_post, 1, mean)
+  y_low  <- apply(y_post, 1, quantile, 0.25)
+  y_high <- apply(y_post, 1, quantile, 0.75)
+  
+  # empty plot first
+  plot(emp$coloredLeaves, y, type = "n", 
+       ylim = range(c(emp_treeid$loglength, y_low, y_high), na.rm = TRUE),
+       xlab = "Growing season length (days)", ylab = "Log ring width (mm)",
+       frame = FALSE,
+       main = tree_col_name) # set the name for each plot
+  
+  spp_id <- treeid_spp$commonName[match(tree_id_num, treeid_spp$treeid_num)]
+  
+  line_col <- colslatbi[spp_id]
+  
+  # shaded interval
+  polygon(c(eosseq, rev(eosseq)), 
+          c(y_low, rev(y_high)),
+          col = adjustcolor(line_col, alpha.f = 0.3), 
+          border = NA)
+  
+  # mean line
+  lines(eosseq, y_mean, col = line_col, lwd = 2)
+  
+  points(emp_treeid$coloredLeaves, emp_treeid$loglength,
+         pch = 16,
+         cex = 2,
+         col = line_col)
+}
+dev.off()
+
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+##### EOS: per Spp, facet #####
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+mean_post_list_eos <- list()
+for (i in seq_along(treeidvecnum)) {
+  tree_col <- as.character(treeidvecnum[i])
+  mean_post_list_eos[[tree_col]] <- sapply(1:nrow(df_fiteos), function(f) {
+    fullintercept_eos[f, tree_col] + treeid_bspp_eos[f, tree_col] * eosseq
+    # no sigma_y yet
+  })
+}
+
+# average the mean predictions across trees within species
+spp_mean_list_eos <- lapply(spp_list, function(tree_vec) {
+  Reduce("+", mean_post_list_eos[as.character(tree_vec)]) / length(tree_vec)
+})
+
+# re-simulate sigma on the averaged mean
+spp_post_list_eos <- lapply(spp_mean_list_eos, function(mean_mat) {
+  sapply(1:nrow(df_fiteos), function(f) {
+    rnorm(length(eosseq), mean_mat[, f], sigma_df_eos$sigma_y[f])
+  })
+})
+
+# jpeg output
+jpeg(filename = "figures/empiricalData/growthModelSlopesperSppFaceteos.jpeg",
+     width = 2400, height = 2400, res = 300)
+# Layout: 4 cols x 3 rows
+par(mfrow = c(4, 3), mar = c(4, 4, 2, 1))
+
+treeidsymbol <- c(15, 16, 17, 8, 9)
+# Loop over trees again to plot each tree individually
+for (i in seq_along(sppvecnum)) { # i = 1
+  
+  spp_column <- as.character(sppvecnum[i])
+  spp_column_name <- as.character(sppvecname[i])
+  
+  # define spp num
+  spp_num <- as.integer(spp_column)
+  
+  # subset empirical data correctly
+  emp_spp <- emp[emp$spp_num == spp_num, ]
+  
+  spp_column <- as.character(sppvecnum[i]) 
+  y_post <- spp_post_list_eos[[spp_column]]
+  
+  # summaries
+  y_mean <- apply(y_post, 1, median)
+  y_low  <- apply(y_post, 1, quantile, 0.25)
+  y_high <- apply(y_post, 1, quantile, 0.75)
+  
+  # species-specific ylim
+  ylim_spp <- range(c(emp_spp$loglength, y_low, y_high), na.rm = TRUE)
+  
+  ylimfixed <- c(0, 12)
+  
+  plot(emp_spp$coloredLeaves, emp_spp$loglength,
+       type = "n",
+       # ylim = ylim_spp,
+       ylim = ylimfixed,
+       xlab = "Growing season length (days)",
+       ylab = "Log ring width (mm)",
+       frame = FALSE,
+       main = spp_column_name)
+  
+  # color
+  line_col <- renoir[spp_num]
+  
+  polygon(
+    c(eosseq, rev(eosseq)),
+    c(y_low, rev(y_high)),
+    col = adjustcolor(line_col, alpha.f = 0.3),
+    border = NA
+  )
+  
+  lines(eosseq, y_mean, col = line_col, lwd = 2)
+  
+  # Add atreid symbols
+  unique_trees <- unique(emp_spp$treeid_num)
+  sym_per_row  <- treeidsymbol[match(emp_spp$treeid_num, unique_trees)]
+  
+  points(emp_spp$coloredLeaves, emp_spp$loglength,
+         pch = sym_per_row,
+         cex = 1,
+         col = line_col)
+  
+  points(
+    emp_spp$coloredLeaves,
+    emp_spp$loglength,
     pch = 16,
     cex = 1,
     col = line_col

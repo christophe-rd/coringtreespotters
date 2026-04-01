@@ -40,13 +40,16 @@ source('rcode/utilExtractParam.R')
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 # Most restricted amount of data ####
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
-# emp2 <- read.csv("output/empiricalDataMAIN.csv")
+# emp <- read.csv("output/empiricalDataMAIN.csv")
 # read empirical data with max phenology observations instead of min
 emp <- read.csv("output/empiricalDataMAIN.csv")
+empsos <- emp[!is.na(emp$leafout) & !is.na(emp$lengthMM),]
+empeos <- emp[!is.na(emp$coloredLeaves) & !is.na(emp$lengthMM),]
+
 gddyr <- read.csv("output/gddByYear.csv")
 
 # remove NAs
-emp2 <- emp[!is.na(emp$pgsGDD5) & !is.na(emp$lengthMM), ]
+emp <- emp[!is.na(emp$pgsGDD5) & !is.na(emp$lengthMM), ]
 
 # scale gdd to how many gdd are in 10 average spring days
 temp<- subset(gddyr, doy <151 & doy > 120)
@@ -60,28 +63,28 @@ gdd_10day <- aggregate(gdddiff ~ year + bin10, data = temp, max)
 gddscale <- mean(gdd_10day$gdddiff)
 
 # transform my groups to numeric values
-emp2$spp_num <- match(emp2$latbi, unique(emp2$latbi))
-emp2$treeid_num <- match(emp2$id, unique(emp2$id))
+emp$spp_num <- match(emp$latbi, unique(emp$latbi))
+emp$treeid_num <- match(emp$id, unique(emp$id))
 
 # some checks
-table(emp2$latbi, emp2$spp_num)
-table(emp2$id, emp2$latbi)
-table(emp2$treeid_num, emp2$spp_num)
+table(emp$latbi, emp$spp_num)
+table(emp$id, emp$latbi)
+table(emp$treeid_num, emp$spp_num)
 
 # transform data in vectors
-emp2$loglength <- log(emp2$lengthMM)
-y <- emp2$loglength # ring width in mm
-N <- nrow(emp2)
-Nspp <- length(unique(emp2$spp_num))
-species <- as.numeric(as.character(emp2$spp_num))
-treeid <- as.numeric(emp2$treeid_num)
+emp$loglength <- log(emp$lengthMM)
+y <- emp$loglength # ring width in mm
+N <- nrow(emp)
+Nspp <- length(unique(emp$spp_num))
+species <- as.numeric(as.character(emp$spp_num))
+treeid <- as.numeric(emp$treeid_num)
 Ntreeid <- length(unique(treeid))
 
 # different response variables
-gdd <- emp2$pgsGDD5 / gddscale
-gsl <- as.numeric(emp2$pgsGSL) / 10
-sos <- emp2$leafout / 5
-eos <- emp2$coloredLeaves / 10
+gdd <- emp$pgsGDD5 / gddscale
+gsl <- as.numeric(emp$pgsGSL) / 10
+sos <- emp$leafout / 5
+eos <- emp$coloredLeaves / 10
 
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 # Fit model GDD
@@ -455,8 +458,7 @@ dev.off()
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 # FULL DATA ####
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
-# Fit model SOS --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
-empsos <- emp[!is.na(emp$leafout) & !is.na(emp$lengthMM),]
+# Fit model SOS 
 
 # transform my groups to numeric values
 empsos$spp_num <- match(empsos$latbi, unique(empsos$latbi))
@@ -480,8 +482,7 @@ fitsosfull <- sampling(sosmodel, data = c("N","y",
                        warmup = 1000, iter = 2000, chains=4)
 saveRDS(fitsos, "output/stanOutput/fitGrowthSOSFull")
 
-# Fit model EOS --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
-empeos <- emp[!is.na(emp$coloredLeaves) & !is.na(emp$lengthMM),]
+# Fit model EOS
 
 # transform my groups to numeric values
 empeos$spp_num <- match(empeos$latbi, unique(empeos$latbi))
@@ -605,7 +606,7 @@ dev.off()
 
 # check the outlier for aspp
 spp1full <- subset(empsos, spp_num == 1)
-spp1rest <- subset(emp2, spp_num == 1)
+spp1rest <- subset(emp, spp_num == 1)
 fulleosleafout <- aggregate(leafout ~ treeid_num, spp1full, FUN = length)
 
 restreosleafout <- aggregate(leafout ~ treeid_num, spp1rest, FUN = length)
