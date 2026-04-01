@@ -57,11 +57,9 @@ generated quantities {
   }
     // prior predictive samples
   real a_prior = normal_rng(2, 3);
-  real sigma_atreeid_prior = abs(normal_rng(0, 2));  
-  real sigma_y_prior = abs(normal_rng(0, 1));    
   real aspp_prior = normal_rng(0, 4);
   real bsp_prior = normal_rng(0, 0.7);
-
-  // real zatreeid_prior = normal_rng(0, 1);
+  real sigma_atreeid_prior = abs(normal_rng(0, 1));  
   real atreeid_prior = normal_rng(0, sigma_atreeid_prior);
+  real sigma_y_prior = abs(normal_rng(0, 1));    
 }
