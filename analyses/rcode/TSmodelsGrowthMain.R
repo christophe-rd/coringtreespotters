@@ -4,17 +4,13 @@
 # Goal: build a model to understand the relationship between growth and growing degree days using the tree cores collected in at the Arnold Arboretum in the spring of 2025
 
 # housekeeping
-# rm(list=ls()) 
-# options(stringsAsFactors = FALSE)
-# options(max.print = 150) 
-# options(digits = 3)
+rm(list=ls())
+options(stringsAsFactors = FALSE)
+options(max.print = 150)
+options(digits = 3)
 
 # Load library 
-library(ggplot2)
 library(rstan)
-library(future)
-library(shinystan)
-library(wesanderson)
 library(patchwork)
 
 # stan options
@@ -36,13 +32,14 @@ source('mcmc_visualization_tools.R', local=util)
 # my function to extract parameters
 source('rcode/utilExtractParam.R')
 
+runmodels <- FALSE
+runzscoredmodels <- FALSE
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 # Most restricted amount of data ####
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 # emp <- read.csv("output/empiricalDataMAIN.csv")
-# read empirical data with max phenology observations instead of min
+# read empirical data with max phenology observations instead of mingit status
 emp <- read.csv("output/empiricalDataMAIN.csv")
-
 # log ring width
 emp$loglength <- log(emp$lengthMM)
 
@@ -87,8 +84,6 @@ gdd <- emp$pgsGDD5 / gddscale
 gsl <- as.numeric(emp$pgsGSL) / 10
 sos <- emp$leafout / 5
 eos <- emp$coloredLeaves / 10
-
-runmodels <- FALSE
 
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 if(runmodels){
@@ -679,5 +674,59 @@ util$plot_hist_quantiles(samples, "y_rep",
                          baseline_values = y,
                          xlab = "Ring width (mm)")
 dev.off()
+
+}
+
+
+# === === === === === === === === === === === === === === === === === === === #
+# === === === === === === === === === === === === === === === === === === === #
+
+# <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+# Z-SCORED ####
+# <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+if (runzscoredmodels) {
+gdd <- (emp$pgsGDD5 - mean(emp$pgsGDD5)) / sd(emp$pgsGDD5)
+gsl <- (emp$pgsGSL - mean(emp$pgsGSL)) / sd(emp$pgsGSL)
+sos <- (emp$leafout - mean(emp$leafout)) / sd(emp$leafout)
+eos <- (emp$coloredLeaves - mean(emp$coloredLeaves)) / sd(emp$coloredLeaves)
+
+# Fit model GDD
+gddmodel <- stan_model("stan/TSmodelGrowthGDD.stan")
+fitgdd <- sampling(gddmodel, data = c("N","y",
+                                      "Nspp","species",
+                                      "Ntreeid", "treeid", 
+                                      "gdd"),
+                   warmup = 1000, iter=2000, chains=4)
+saveRDS(fitgdd, "output/stanOutput/fitGrowthGDDZscored")
+
+diagnostics <- util$extract_hmc_diagnostics(fitgdd)
+util$check_all_hmc_diagnostics(diagnostics)
+
+# Fit model GSL
+gslmodel <- stan_model("stan/TSmodelGrowthGSL.stan")
+fitgsl <- sampling(gslmodel, data = c("N","y",
+                                      "Nspp","species",
+                                      "Ntreeid", "treeid", 
+                                      "gsl"),
+                   warmup = 1000, iter = 2000, chains = 4)
+saveRDS(fitgsl, "output/stanOutput/fitGrowthGSLZscored")
+
+# Fit model SOS
+sosmodel <- stan_model("stan/TSmodelGrowthSOS.stan")
+fitsos <- sampling(sosmodel, data = c("N","y",
+                                      "Nspp","species",
+                                      "Ntreeid", "treeid",
+                                      "sos"),
+                   warmup = 1000, iter = 2000, chains=4)
+saveRDS(fitsos, "output/stanOutput/fitGrowthSOSZscored")
+
+# Fit model EOS
+eosmodel <- stan_model("stan/TSmodelGrowthEOS.stan")
+fiteos <- sampling(eosmodel, data = c("N","y",
+                                      "Nspp","species",
+                                      "Ntreeid", "treeid",
+                                      "eos"),
+                   warmup = 1000, iter = 2000, chains=4)
+saveRDS(fiteos, "output/stanOutput/fitGrowthEOSZscored")
 
 }
