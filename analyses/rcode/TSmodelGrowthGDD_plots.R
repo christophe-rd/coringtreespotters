@@ -4,8 +4,8 @@
 # Goal: Plot model TS
 
 # housekeeping
-rm(list=ls())  
-options(stringsAsFactors = FALSE)
+# rm(list=ls())  
+# options(stringsAsFactors = FALSE)
 
 if (length(grep("christophe_rouleau-desrochers", getwd())) > 0) {
   setwd("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses")
@@ -20,7 +20,7 @@ if (length(grep("christophe_rouleau-desrochers", getwd())) > 0) {
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 source("rcode/TSmodelGrowthGDD.R")
 
-makeplots <- TRUE
+makeplots <- FALSE
 
 # specify colors
 renoir <- c("#17154f", "#2f357c", "#6c5d9e", "#9d9cd5", "#b0799a", "#e48171", 
@@ -232,6 +232,9 @@ subyvec <- vector()
 for (i in 1:length(unique(emp$treeid_num))) {
   subyvec[i] <- paste("atreeid", "[",i,"]", sep = "")  
 }
+
+if(makeplots) {
+
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 # Plot lines with quantiles ####
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
@@ -1119,12 +1122,12 @@ layout(matrix(c(
 widths = c(0.7, 0.4))
 
 # set margins throught
-custommar <- c(5, 8, 3, 2)
+custommar <- c(4, 2, 2, 1)
 
 # Row 1: GDD
 par(mar = custommar)
 plot(bspp_df2$fit_bspp, y_pos,
-     xlim = c(-0.8, 0.8), ylim = c(0.5, n_spp + 0.5),
+     xlim = c(-0.8, 0.8), ylim = c(0.5, n_spp + 0.5), 
      xlab = "Log ring width (mm) change in averaged GDD of 10 spring days", ylab = "",
      yaxt = "n", pch = 16, cex = 2, col = colslatbi, frame.plot = FALSE,
      panel.first = abline(v = 0, lty = 2, col = "black"))
@@ -1665,3 +1668,5 @@ legend(
 )
 dev.off()
 
+
+}

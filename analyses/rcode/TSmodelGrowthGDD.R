@@ -4,10 +4,10 @@
 # Goal: build a model to understand the relationship between growth and growing degree days using the tree cores collected in at the Arnold Arboretum in the spring of 2025
 
 # housekeeping
-rm(list=ls()) 
-options(stringsAsFactors = FALSE)
-options(max.print = 150) 
-options(digits = 3)
+# rm(list=ls()) 
+# options(stringsAsFactors = FALSE)
+# options(max.print = 150) 
+# options(digits = 3)
 
 # Load library 
 library(ggplot2)
