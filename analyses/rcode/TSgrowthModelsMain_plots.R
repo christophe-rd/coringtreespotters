@@ -18,7 +18,7 @@ if (length(grep("christophe_rouleau-desrochers", getwd())) > 0) {
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 # Recover objects from models ####
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
-source("rcode/TSmodelGrowthGDD.R")
+source("rcode/TSgrowthModelsDD.R")
 
 makeplots <- FALSE
 
@@ -72,9 +72,9 @@ treeid_df_gsl <- df_fitgsl[, grepl("treeid", columns) & !grepl("z|sigma", column
 aspp_df_gsl <- df_fitgsl[, columns[grepl("aspp", columns)]]
 
 # change colnames
-colnames(bspp_df) <- 1:ncol(bspp_df)
-colnames(treeid_df) <- 1:ncol(treeid_df)
-colnames(aspp_df) <- 1:ncol(aspp_df)
+colnames(bspp_df_gsl) <- 1:ncol(bspp_df_gsl)
+colnames(treeid_df_gsl) <- 1:ncol(treeid_df_gsl)
+colnames(aspp_df_gsl) <- 1:ncol(aspp_df_gsl)
 
 # posterior summaries
 sigma_df2_gsl  <- extract_params(df_fitgsl, "sigma", "mean", "sigma")
@@ -82,7 +82,7 @@ bspp_df2_gsl   <- extract_params(df_fitgsl, "bsp", "fit_bspp",
                                  "spp", "bspp\\[(\\d+)\\]")
 treeid_df2_gsl <- extract_params(df_fitgsl, "atreeid", "fit_atreeid", 
                                  "treeid", "atreeid\\[(\\d+)\\]")
-treeid_df2_gsl <- subset(treeid_df2, !grepl("z|sigma", treeid))
+treeid_df2_gsl <- subset(treeid_df2_gsl, !grepl("z|sigma", treeid))
 aspp_df2_gsl   <- extract_params(df_fitgsl, "aspp", "fit_aspp", 
                                  "spp", "aspp\\[(\\d+)\\]")
 

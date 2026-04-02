@@ -18,7 +18,7 @@ if (length(grep("christophe_rouleau-desrochers", getwd())) > 0) {
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 # Recover objects from models ####
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
-source("rcode/TSmodelsGrowthMain.R")
+source("rcode/TSgrowthModels.R")
 
 makeplots <- TRUE
 
