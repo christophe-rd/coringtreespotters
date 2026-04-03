@@ -53,9 +53,9 @@ treeid_df2 <- extract_params(df_fit, "atreeid", "fit_atreeid", "treeid", "atreei
 treeid_df2 <- subset(treeid_df2, !grepl("z", treeid) & !grepl("sigma", treeid))
 aspp_df2   <- extract_params(df_fit, "aspp", "fit_aspp", "spp", "aspp\\[(\\d+)\\]")
 
-treeid_df2$treeid_name <- emp$id[match(treeid_df2$treeid, emp$treeid_num)]
-aspp_df2$spp_name <- emp$latbi[match(aspp_df2$spp, emp$spp_num)]
-bspp_df2$spp_name <- emp$latbi[match(bspp_df2$spp, emp$spp_num)]
+treeid_df2$treeid_name <- empts$id[match(treeid_df2$treeid, empts$treeid_num)]
+aspp_df2$spp_name <- empts$latbi[match(aspp_df2$spp, empts$spp_num)]
+bspp_df2$spp_name <- empts$latbi[match(bspp_df2$spp, empts$spp_num)]
 
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 # GSL posterior recovery ####
@@ -86,9 +86,9 @@ treeid_df2_gsl <- subset(treeid_df2_gsl, !grepl("z|sigma", treeid))
 aspp_df2_gsl   <- extract_params(df_fitgsl, "aspp", "fit_aspp", 
                                  "spp", "aspp\\[(\\d+)\\]")
 
-treeid_df2_gsl$treeid_name <- emp$id[match(treeid_df2_gsl$treeid, emp$treeid_num)]
-bspp_df2_gsl$spp_name <- emp$latbi[match(bspp_df2_gsl$spp, emp$spp_num)]
-aspp_df2_gsl$spp_name <- emp$latbi[match(aspp_df2_gsl$spp, emp$spp_num)]
+treeid_df2_gsl$treeid_name <- empts$id[match(treeid_df2_gsl$treeid, empts$treeid_num)]
+bspp_df2_gsl$spp_name <- empts$latbi[match(bspp_df2_gsl$spp, empts$spp_num)]
+aspp_df2_gsl$spp_name <- empts$latbi[match(aspp_df2_gsl$spp, empts$spp_num)]
 
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 # SOS posterior recovery ####
@@ -119,9 +119,9 @@ treeid_df2_sos <- subset(treeid_df2_sos, !grepl("z|sigma", treeid))
 aspp_df2_sos   <- extract_params(df_fitsos, "aspp", "fit_aspp", 
                                  "spp", "aspp\\[(\\d+)\\]")
 
-treeid_df2_sos$treeid_name <- emp$id[match(treeid_df2_sos$treeid, emp$treeid_num)]
-bspp_df2_sos$spp_name <- emp$latbi[match(bspp_df2_sos$spp, emp$spp_num)]
-aspp_df2_sos$spp_name <- emp$latbi[match(aspp_df2_sos$spp, emp$spp_num)]
+treeid_df2_sos$treeid_name <- empts$id[match(treeid_df2_sos$treeid, empts$treeid_num)]
+bspp_df2_sos$spp_name <- empts$latbi[match(bspp_df2_sos$spp, empts$spp_num)]
+aspp_df2_sos$spp_name <- empts$latbi[match(aspp_df2_sos$spp, empts$spp_num)]
 
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 # EOS posterior recovery ####
@@ -153,18 +153,18 @@ aspp_df2_eos   <- extract_params(df_fiteos, "aspp", "fit_aspp",
                                  "spp", "aspp\\[(\\d+)\\]")
 
 treeid_df2_eos$treeid <- as.numeric(treeid_df2_eos$treeid)
-treeid_df2_eos$treeid_name <- emp$id[match(treeid_df2_eos$treeid, emp$treeid_num)]
-bspp_df2_eos$spp_name <- emp$latbi[match(bspp_df2_eos$spp, emp$spp_num)]
-aspp_df2_eos$spp_name <- emp$latbi[match(aspp_df2_eos$spp, emp$spp_num)]
+treeid_df2_eos$treeid_name <- empts$id[match(treeid_df2_eos$treeid, empts$treeid_num)]
+bspp_df2_eos$spp_name <- empts$latbi[match(bspp_df2_eos$spp, empts$spp_num)]
+aspp_df2_eos$spp_name <- empts$latbi[match(aspp_df2_eos$spp, empts$spp_num)]
 
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 # Define objects used throughout the models ####
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
-n_spp <- length(unique(emp$latbi))
+n_spp <- length(unique(empts$latbi))
 y_pos <- rev(1:n_spp)
 
 # get the spp and site identities for each tree id
-treeid_spp <- unique(emp[, c("treeid_num", "spp_num", "id", "latbi")])
+treeid_spp <- unique(empts[, c("treeid_num", "spp_num", "id", "latbi")])
 
 # get a vector for each treeid for each species
 spp1vec <- treeid_spp$treeid_num[treeid_spp$spp_num == 1]
@@ -197,7 +197,7 @@ sppvecnum <- 1:11
 sppvecname <- unique(treeid_spp$latbi)
 
 # for mu plots
-species_order <- rev(unique(emp$latbi))
+species_order <- rev(unique(empts$latbi))
 
 colscommon <- c(
   "Red maple"           = renoir[1],
@@ -229,7 +229,7 @@ colslatbi <- c(
 
 # vector of treeids
 subyvec <- vector()
-for (i in 1:length(unique(emp$treeid_num))) {
+for (i in 1:length(unique(empts$treeid_num))) {
   subyvec[i] <- paste("atreeid", "[",i,"]", sep = "")  
 }
 
@@ -290,7 +290,7 @@ treeid_bspp
 
 treeidvecnum <- 1:ncol(fullintercept)
 treeidvecname <- treeid_spp$id
-gddseq <- seq(min(emp$pgsGDD5), max(emp$pgsGDD5), length.out = 100)  
+gddseq <- seq(min(empts$pgsGDD5), max(empts$pgsGDD5), length.out = 100)  
 y_post_list <- list()  # store posterior predictions in a list where each tree id gets matrix
 
 # below I create a list where each row is the posterior estimate for each value of gdd (so the first row correspond to the model estimate for the first gdd value stored in x) and each column is the iteration (from 1 to 8000)
@@ -322,7 +322,7 @@ for (i in seq_along(treeidvecnum)) { # i = 1
   tree_id_num <- as.integer(tree_col)
   
   # index the dots per treeid
-  emp_treeid <- emp[emp$treeid_num == tree_id_num, ]
+  emp_treeid <- empts[empts$treeid_num == tree_id_num, ]
   
   # calculate mean and 50% credible interval (25%-75%)
   y_mean <- apply(y_post, 1, mean)
@@ -330,7 +330,7 @@ for (i in seq_along(treeidvecnum)) { # i = 1
   y_high <- apply(y_post, 1, quantile, 0.75)
   
   # empty plot first
-  plot(emp$pgsGDD5, y, type = "n", 
+  plot(empts$pgsGDD5, y, type = "n", 
        ylim = range(c(emp_treeid$loglength, y_low, y_high), na.rm = TRUE),
        xlab = "Primary growing season GDD", ylab = "Log ring width (mm)",
        frame = FALSE,
@@ -402,7 +402,7 @@ for (i in seq_along(sppvecnum)) { # i = 1
   spp_num <- as.integer(spp_column)
   
   # subset empirical data correctly
-  emp_spp <- emp[emp$spp_num == spp_num, ]
+  emp_spp <- empts[empts$spp_num == spp_num, ]
   
   spp_column <- as.character(sppvecnum[i]) 
   y_post <- spp_post_list[[spp_column]]
@@ -477,7 +477,7 @@ for (i in seq(sppvecnum)) { # i = 11
   spp_num <- as.integer(spp_column)
   
   # subset empirical data correctly
-  emp_spp <- emp[emp$spp_num == spp_num, ]
+  emp_spp <- empts[empts$spp_num == spp_num, ]
   
   spp_column <- as.character(sppvecnum[i]) 
   y_post <- spp_post_list[[spp_column]]
@@ -562,8 +562,8 @@ jpeg(
   res = 300          
 )
 
-plot(emp$pgsGDD5, y, type = "n", 
-     ylim = range(min(emp$loglength), max(emp$loglength)), 
+plot(empts$pgsGDD5, y, type = "n", 
+     ylim = range(min(empts$loglength), max(empts$loglength)), 
      xlab = "Primary growing season GDD", ylab = "Log ring width (mm)",
      main = "species growth responses")
 
@@ -595,7 +595,7 @@ for (i in seq_along(sppvecnum)) { # i = 1
         col = line_col,
         lwd = 2)
   
-  emp_spp <- emp[emp$spp_num == spp_num, ]
+  emp_spp <- empts[empts$spp_num == spp_num, ]
 
   # points(
   #   emp_spp$pgsGDD5,
@@ -666,7 +666,7 @@ for (i in seq_len(ncol(treeid_bspp_gsl))) { # i = 30
   treeid_bspp_gsl[, i] <- bspp_df4_gsl[, spp_id]
 }
 treeid_bspp_gsl
-gslseq <- seq(min(emp$pgsGSL), max(emp$pgsGSL), length.out = 100)  
+gslseq <- seq(min(empts$pgsGSL), max(empts$pgsGSL), length.out = 100)  
 y_post_list_gsl <- list()  # store posterior predictions in a list where each tree id gets matrix
 
 # below I create a list where each row is the posterior estimate for each value of gdd (so the first row correspond to the model estimate for the first gdd value stored in x) and each column is the iteration (from 1 to 8000)
@@ -721,7 +721,7 @@ for (i in seq_along(sppvecnum)) { # i = 1
   spp_num <- as.integer(spp_column)
   
   # subset empirical data correctly
-  emp_spp <- emp[emp$spp_num == spp_num, ]
+  emp_spp <- empts[empts$spp_num == spp_num, ]
   
   spp_column <- as.character(sppvecnum[i]) 
   y_post <- spp_post_list_gsl[[spp_column]]
@@ -829,7 +829,7 @@ for (i in seq_len(ncol(treeid_bspp_sos))) { # i = 30
 }
 treeid_bspp_sos
 
-sosseq <- seq(min(emp$leafout), max(emp$leafout), length.out = 100)  
+sosseq <- seq(min(empts$leafout), max(empts$leafout), length.out = 100)  
 y_post_list_sos <- list()  # store posterior predictions in a list where each tree id gets matrix
 
 # below I create a list where each row is the posterior estimate for each value of gdd (so the first row correspond to the model estimate for the first gdd value stored in x) and each column is the iteration (from 1 to 8000)
@@ -884,7 +884,7 @@ for (i in seq_along(sppvecnum)) { # i = 1
   spp_num <- as.integer(spp_column)
   
   # subset empirical data correctly
-  emp_spp <- emp[emp$spp_num == spp_num, ]
+  emp_spp <- empts[empts$spp_num == spp_num, ]
   
   spp_column <- as.character(sppvecnum[i]) 
   y_post <- spp_post_list_sos[[spp_column]]
@@ -992,7 +992,7 @@ for (i in seq_len(ncol(treeid_bspp_eos))) { # i = 30
 }
 treeid_bspp_eos
 
-eosseq <- seq(min(emp$coloredLeaves), max(emp$coloredLeaves), length.out = 100)  
+eosseq <- seq(min(empts$coloredLeaves), max(empts$coloredLeaves), length.out = 100)  
 y_post_list_eos <- list()  # store posterior predictions in a list where each tree id gets matrix
 
 # below I create a list where each row is the posterior estimate for each value of gdd (so the first row correspond to the model estimate for the first gdd value stored in x) and each column is the iteration (from 1 to 8000)
@@ -1047,7 +1047,7 @@ for (i in seq_along(sppvecnum)) { # i = 1
   spp_num <- as.integer(spp_column)
   
   # subset empirical data correctly
-  emp_spp <- emp[emp$spp_num == spp_num, ]
+  emp_spp <- empts[empts$spp_num == spp_num, ]
   
   spp_column <- as.character(sppvecnum[i]) 
   y_post <- spp_post_list_eos[[spp_column]]
@@ -1256,8 +1256,8 @@ mtext("(d) End of season", side = 3, adj = 0, font = 2, cex = 0.9)
 
 # Row 1, Col 2, Slot 5 : GDD
 par(mar = custommar)
-plot(emp$pgsGDD5, y, type = "n", frame = FALSE,
-     ylim = range(min(emp$loglength), max(emp$loglength)), 
+plot(empts$pgsGDD5, y, type = "n", frame = FALSE,
+     ylim = range(min(empts$loglength), max(empts$loglength)), 
      xlab = "Growing season growing degree days (GDD)", ylab = "Log ring width (mm)",
      main = "")
 mtext("(e)", side = 3, adj = 0, font = 2, cex = 0.9)
@@ -1286,13 +1286,13 @@ for (i in seq_along(sppvecnum)) { # i = 1
         col = line_col,
         lwd = 2)
   
-  emp_spp <- emp[emp$spp_num == spp_num, ]
+  emp_spp <- empts[empts$spp_num == spp_num, ]
 }
 
 # Row 2, Col 2, Slot 6 : GSL
 par(mar = custommar)
-plot(emp$pgsGSL, y, type = "n", frame = FALSE,
-     ylim = range(min(emp$loglength), max(emp$loglength)), 
+plot(empts$pgsGSL, y, type = "n", frame = FALSE,
+     ylim = range(min(empts$loglength), max(empts$loglength)), 
      xlab = "Growing season length (days)", ylab = "Log ring width (mm)",
      main = "")
 mtext("(f)", side = 3, adj = 0, font = 2, cex = 0.9)
@@ -1321,13 +1321,13 @@ for (i in seq_along(sppvecnum)) { # i = 1
         col = line_col,
         lwd = 2)
   
-  emp_spp <- emp[emp$spp_num == spp_num, ]
+  emp_spp <- empts[empts$spp_num == spp_num, ]
 }
 
 # Row 3, Col 2, Slot 7 : SOS
 par(mar = custommar)
-plot(emp$leafout, y, type = "n", frame = FALSE,
-     ylim = range(min(emp$loglength), max(emp$loglength)), 
+plot(empts$leafout, y, type = "n", frame = FALSE,
+     ylim = range(min(empts$loglength), max(empts$loglength)), 
      xlab = "Leafout day of year", ylab = "Log ring width (mm)",
      main = "")
 mtext("(g)", side = 3, adj = 0, font = 2, cex = 0.9)
@@ -1356,13 +1356,13 @@ for (i in seq_along(sppvecnum)) { # i = 1
         col = line_col,
         lwd = 2)
   
-  emp_spp <- emp[emp$spp_num == spp_num, ]
+  emp_spp <- empts[empts$spp_num == spp_num, ]
 }
 
 # Row 4, Col 2, Slot 8 : EOS
 par(mar = custommar)
-plot(emp$coloredLeaves, y, type = "n", frame = FALSE,
-     ylim = range(min(emp$loglength), max(emp$loglength)), 
+plot(empts$coloredLeaves, y, type = "n", frame = FALSE,
+     ylim = range(min(empts$loglength), max(empts$loglength)), 
      xlab = "coloredLeaves day of year", ylab = "Log ring width (mm)",
      main = "")
 mtext("(h)", side = 3, adj = 0, font = 2, cex = 0.9)
@@ -1391,7 +1391,7 @@ for (i in seq_along(sppvecnum)) { # i = 1
         col = line_col,
         lwd = 2)
   
-  emp_spp <- emp[emp$spp_num == spp_num, ]
+  emp_spp <- empts[empts$spp_num == spp_num, ]
 }
 
 # Slot 9: species legend
@@ -1493,12 +1493,12 @@ dev.off()
 ###### full treeid mu plots intercept ###### 
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 treeid_df2$treeid <- as.numeric(treeid_df2$treeid)
-treeid_df2$treeid_name <- emp$id[match(treeid_df2$treeid, emp$treeid_num)]
+treeid_df2$treeid_name <- empts$id[match(treeid_df2$treeid, empts$treeid_num)]
 
 # now do the same, but for species
-treeid_df2$spp <- emp$latbi[match(treeid_df2$treeid, emp$treeid_num)]
+treeid_df2$spp <- empts$latbi[match(treeid_df2$treeid, empts$treeid_num)]
 
-sub <- subset(emp, select = c("treeid_num", "spp_num"))
+sub <- subset(empts, select = c("treeid_num", "spp_num"))
 sub <- sub[!duplicated(sub$treeid_num),]
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
 # sum atreeid, asp, asite
@@ -1529,8 +1529,8 @@ treeid_df4
 
 # get the og treeid names, spp and site back:
 treeid_df4$treeid <- as.numeric(treeid_df4$treeid)
-treeid_df4$treeid_name <- emp$id[match(treeid_df4$treeid, emp$treeid_num)]
-treeid_df4$spp_name <- emp$latbi[match(treeid_df4$treeid, emp$treeid_num)]
+treeid_df4$treeid_name <- empts$id[match(treeid_df4$treeid, empts$treeid_num)]
+treeid_df4$spp_name <- empts$latbi[match(treeid_df4$treeid, empts$treeid_num)]
 
 # Plot!
 pdf(
@@ -1670,3 +1670,11 @@ dev.off()
 
 
 }
+
+# <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+# Ring width summaries ####
+# <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+rwmin <- aggregate(lengthMM ~ spp, emp, FUN = min)
+rwmax <- aggregate(lengthMM ~ spp, emp, FUN = max)
+rwsum <- merge(rwmin, rwmax, by = "spp")
+colnames(rwsum) <- c("spp","min", "max")

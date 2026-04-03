@@ -4,10 +4,10 @@
 # Goal: build a model to understand the relationship between growth and growing degree days using the tree cores collected in at the Arnold Arboretum in the spring of 2025
 
 # housekeeping
-rm(list=ls())
-options(stringsAsFactors = FALSE)
-options(max.print = 150)
-options(digits = 3)
+# rm(list=ls())
+# options(stringsAsFactors = FALSE)
+# options(max.print = 150)
+# options(digits = 3)
 
 # Load library 
 library(rstan)
@@ -37,19 +37,19 @@ runzscoredmodels <- FALSE
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 # Most restricted amount of data ####
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
-# emp <- read.csv("output/empiricalDataMAIN.csv")
+# empts <- read.csv("output/empiricalDataMAIN.csv")
 # read empirical data with max phenology observations instead of mingit status
-emp <- read.csv("output/empiricalDataMAIN.csv")
+empts <- read.csv("output/empiricalDataMAIN.csv")
 # log ring width
-emp$loglength <- log(emp$lengthMM)
+empts$loglength <- log(empts$lengthMM)
 
-empfullsos <- emp[!is.na(emp$leafout) & !is.na(emp$lengthMM),]
-empfulleos <- emp[!is.na(emp$coloredLeaves) & !is.na(emp$lengthMM),]
+empfullsos <- empts[!is.na(empts$leafout) & !is.na(empts$lengthMM),]
+empfulleos <- empts[!is.na(empts$coloredLeaves) & !is.na(empts$lengthMM),]
 
 gddyr <- read.csv("output/gddByYear.csv")
 
 # remove NAs
-emp <- emp[!is.na(emp$pgsGDD5) & !is.na(emp$lengthMM), ]
+empts <- empts[!is.na(empts$pgsGDD5) & !is.na(empts$lengthMM), ]
 
 # scale gdd to how many gdd are in 10 average spring days
 temp<- subset(gddyr, doy <151 & doy > 120)
@@ -63,27 +63,27 @@ gdd_10day <- aggregate(gdddiff ~ year + bin10, data = temp, max)
 gddscale <- mean(gdd_10day$gdddiff)
 
 # transform my groups to numeric values
-emp$spp_num <- match(emp$latbi, unique(emp$latbi))
-emp$treeid_num <- match(emp$id, unique(emp$id))
+empts$spp_num <- match(empts$latbi, unique(empts$latbi))
+empts$treeid_num <- match(empts$id, unique(empts$id))
 
 # some checks
-table(emp$latbi, emp$spp_num)
-table(emp$id, emp$latbi)
-table(emp$treeid_num, emp$spp_num)
+table(empts$latbi, empts$spp_num)
+table(empts$id, empts$latbi)
+table(empts$treeid_num, empts$spp_num)
 
 # transform data in vectors
-y <- emp$loglength # ring width in mm
-N <- nrow(emp)
-Nspp <- length(unique(emp$spp_num))
-species <- as.numeric(as.character(emp$spp_num))
-treeid <- as.numeric(emp$treeid_num)
+y <- empts$loglength # ring width in mm
+N <- nrow(empts)
+Nspp <- length(unique(empts$spp_num))
+species <- as.numeric(as.character(empts$spp_num))
+treeid <- as.numeric(empts$treeid_num)
 Ntreeid <- length(unique(treeid))
 
 # different response variables
-gdd <- emp$pgsGDD5 / gddscale
-gsl <- as.numeric(emp$pgsGSL) / 10
-sos <- emp$leafout / 5
-eos <- emp$coloredLeaves / 10
+gdd <- empts$pgsGDD5 / gddscale
+gsl <- as.numeric(empts$pgsGSL) / 10
+sos <- empts$leafout / 5
+eos <- empts$coloredLeaves / 10
 
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 if(runmodels){
@@ -521,7 +521,7 @@ aspp_df2_sos_full   <- extract_params(df_fitsos, "aspp", "fit_aspp", "spp", "asp
 
 # check the outlier for aspp
 spp1full <- subset(empfullsos, spp_num == 1)
-spp1rest <- subset(emp, spp_num == 1)
+spp1rest <- subset(empts, spp_num == 1)
 fulleosleafout <- aggregate(leafout ~ treeid_num, spp1full, FUN = length)
 
 restreosleafout <- aggregate(leafout ~ treeid_num, spp1rest, FUN = length)
@@ -685,10 +685,10 @@ dev.off()
 # Z-SCORED ####
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 if (runzscoredmodels) {
-gdd <- (emp$pgsGDD5 - mean(emp$pgsGDD5)) / sd(emp$pgsGDD5)
-gsl <- (emp$pgsGSL - mean(emp$pgsGSL)) / sd(emp$pgsGSL)
-sos <- (emp$leafout - mean(emp$leafout)) / sd(emp$leafout)
-eos <- (emp$coloredLeaves - mean(emp$coloredLeaves)) / sd(emp$coloredLeaves)
+gdd <- (empts$pgsGDD5 - mean(empts$pgsGDD5)) / sd(empts$pgsGDD5)
+gsl <- (empts$pgsGSL - mean(empts$pgsGSL)) / sd(empts$pgsGSL)
+sos <- (empts$leafout - mean(empts$leafout)) / sd(empts$leafout)
+eos <- (empts$coloredLeaves - mean(empts$coloredLeaves)) / sd(empts$coloredLeaves)
 
 # Fit model GDD
 gddmodel <- stan_model("stan/TSmodelGrowthGDD.stan")
