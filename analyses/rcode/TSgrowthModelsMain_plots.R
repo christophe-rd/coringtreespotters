@@ -1674,7 +1674,10 @@ dev.off()
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 # Ring width summaries ####
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
-rwmin <- aggregate(lengthMM ~ latbi, empts, FUN = min)
-rwmax <- aggregate(lengthMM ~ latbi, empts, FUN = max)
-rwsum <- merge(rwmin, rwmax, by = "latbi")
-colnames(rwsum) <- c("latbi","min", "max")
+rwmints <- aggregate(lengthMM ~ latbi, empts, FUN = min)
+rwmeannts <- aggregate(lengthMM ~ latbi, empts, FUN = mean)
+rwmaxts <- aggregate(lengthMM ~ latbi, empts, FUN = max)
+
+rwsumts <- merge(rwmints, rwmaxts, by = "latbi")
+colnames(rwsumts) <- c("latbi","min", "max")
+rwsumts$mean <- rwmeannts$lengthMM[match(rwsumts$latbi, rwmeannts$latbi)]
