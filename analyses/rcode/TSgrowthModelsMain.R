@@ -12,7 +12,7 @@
 # Load library 
 library(rstan)
 library(patchwork)
-
+library(wesanderson)
 # stan options
 options(mc.cores = parallel::detectCores())
 parallel:::setDefaultClusterOptions(setup_strategy = "sequential")
@@ -43,13 +43,12 @@ empts <- read.csv("output/empiricalDataMAIN.csv")
 # log ring width
 empts$loglength <- log(empts$lengthMM)
 
-empfullsos <- empts[!is.na(empts$leafout) & !is.na(empts$lengthMM),]
-empfulleos <- empts[!is.na(empts$coloredLeaves) & !is.na(empts$lengthMM),]
-
+empfullsosts <- empts[!is.na(empts$leafout) & !is.na(empts$lengthMM) & empts$year != 2015,]
+empfulleosts <- empts[!is.na(empts$coloredLeaves) & !is.na(empts$lengthMM) & empts$year != 2015,]
 gddyr <- read.csv("output/gddByYear.csv")
 
 # remove NAs
-empts <- empts[!is.na(empts$pgsGDD5) & !is.na(empts$lengthMM), ]
+empts <- empts[!is.na(empts$pgsGDD5) & !is.na(empts$lengthMM) & empts$year != 2015, ]
 
 # scale gdd to how many gdd are in 10 average spring days
 temp<- subset(gddyr, doy <151 & doy > 120)
@@ -228,12 +227,12 @@ colnames(treeid_df) <- 1:ncol(treeid_df)
 colnames(aspp_df) <- 1:ncol(aspp_df)
 
 # posterior summaries
-sigma_df2  <- extract_params(df_fitgsl, "sigma", "mean", "sigma")
-bspp_df2   <- extract_params(df_fitgsl, "bsp", "fit_bspp", "spp", "bsp\\[(\\d+)\\]")
-treeid_df2 <- extract_params(df_fitgsl, "atreeid", "fit_atreeid", "treeid", "atreeid\\[(\\d+)\\]")
-treeid_df2 <- subset(treeid_df2, !grepl("z|sigma", treeid))
-aspp_df2   <- extract_params(df_fitgsl, "aspp", "fit_aspp", "spp", "aspp\\[(\\d+)\\]")
-treeid_df2 <- subset(treeid_df2, !grepl("prior", treeid))
+sigma_df2_gsl  <- extract_params(df_fitgsl, "sigma", "mean", "sigma")
+bspp_df2_gsl   <- extract_params(df_fitgsl, "bsp", "fit_bspp", "spp", "bsp\\[(\\d+)\\]")
+treeid_df2_gsl <- extract_params(df_fitgsl, "atreeid", "fit_atreeid", "treeid", "atreeid\\[(\\d+)\\]")
+treeid_df2_gsl <- subset(treeid_df2_gsl, !grepl("z|sigma", treeid))
+aspp_df2_gsl   <- extract_params(df_fitgsl, "aspp", "fit_aspp", "spp", "aspp\\[(\\d+)\\]")
+treeid_df2_gsl <- subset(treeid_df2_gsl, !grepl("prior", treeid))
 
 ##### Plot posterior vs priors for GSL fit #####
 pdf(file = "figures/growthModelsMain/diagnostics/gslModelPriorVSPosterior.pdf", width = 8, height = 10)
@@ -389,7 +388,7 @@ bspp_df2_eos   <- extract_params(df_fiteos, "bsp", "fit_bspp", "spp", "bsp\\[(\\
 treeid_df2_eos <- extract_params(df_fiteos, "atreeid", "fit_atreeid", "treeid", "atreeid\\[(\\d+)\\]")
 treeid_df2_eos <- subset(treeid_df2_eos, !grepl("z|sigma", treeid))
 aspp_df2_eos   <- extract_params(df_fiteos, "aspp", "fit_aspp", "spp", "aspp\\[(\\d+)\\]")
-treeid_df2_eos <- subset(treeid_df2, !grepl("prior", treeid))
+treeid_df2_eos <- subset(treeid_df2_eos, !grepl("prior", treeid))
 
 ##### Plot posterior vs priors for eos fit #####
 pdf(file = "figures/growthModelsMain/diagnostics/eosModelPriorVSPosterior.pdf", width = 8, height = 10)
@@ -448,17 +447,17 @@ dev.off()
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 # Fit model SOS 
 # transform my groups to numeric values
-empfullsos$spp_num <- match(empfullsos$latbi, unique(empfullsos$latbi))
-empfullsos$treeid_num <- match(empfullsos$id, unique(empfullsos$id))
+empfullsosts$spp_num <- match(empfullsosts$latbi, unique(empfullsosts$latbi))
+empfullsosts$treeid_num <- match(empfullsosts$id, unique(empfullsosts$id))
 
 # transform data in vectors for gsl
-y <- empfullsos$loglength # ring width in mm
-N <- nrow(empfullsos)
-Nspp <- length(unique(empfullsos$spp_num))
-species <- as.numeric(as.character(empfullsos$spp_num))
-treeid <- as.numeric(empfullsos$treeid_num)
+y <- empfullsosts$loglength # ring width in mm
+N <- nrow(empfullsosts)
+Nspp <- length(unique(empfullsosts$spp_num))
+species <- as.numeric(as.character(empfullsosts$spp_num))
+treeid <- as.numeric(empfullsosts$treeid_num)
 Ntreeid <- length(unique(treeid))
-sos <- empfullsos$leafout / 5
+sos <- empfullsosts$leafout / 5
 
 
 sosmodel <- stan_model("stan/TSmodelGrowthSOS.stan")
@@ -471,17 +470,17 @@ saveRDS(fitsos, "output/stanOutput/fitGrowthSOSFull")
 
 # Fit model EOS
 # transform my groups to numeric values
-empfulleos$spp_num <- match(empfulleos$latbi, unique(empfulleos$latbi))
-empfulleos$treeid_num <- match(empfulleos$id, unique(empfulleos$id))
+empfulleosts$spp_num <- match(empfulleosts$latbi, unique(empfulleosts$latbi))
+empfulleosts$treeid_num <- match(empfulleosts$id, unique(empfulleosts$id))
 
 # transform data in vectors for gsl
-y <- empfulleos$loglength # ring width in mm
-N <- nrow(empfulleos)
-Nspp <- length(unique(empfulleos$spp_num))
-species <- as.numeric(as.character(empfulleos$spp_num))
-treeid <- as.numeric(empfulleos$treeid_num)
+y <- empfulleosts$loglength # ring width in mm
+N <- nrow(empfulleosts)
+Nspp <- length(unique(empfulleosts$spp_num))
+species <- as.numeric(as.character(empfulleosts$spp_num))
+treeid <- as.numeric(empfulleosts$treeid_num)
 Ntreeid <- length(unique(treeid))
-eos <- empfulleos$coloredLeaves/10
+eos <- empfulleosts$coloredLeaves/10
 
 eosmodel <- stan_model("stan/TSmodelGrowthEOS.stan")
 fiteosfull <- sampling(eosmodel, data = c("N","y",
@@ -520,7 +519,7 @@ treeid_df2_sos_full <- subset(treeid_df2_sos_full, !grepl("prior", treeid))
 aspp_df2_sos_full   <- extract_params(df_fitsos, "aspp", "fit_aspp", "spp", "aspp\\[(\\d+)\\]")
 
 # check the outlier for aspp
-spp1full <- subset(empfullsos, spp_num == 1)
+spp1full <- subset(empfullsosts, spp_num == 1)
 spp1rest <- subset(empts, spp_num == 1)
 fulleosleafout <- aggregate(leafout ~ treeid_num, spp1full, FUN = length)
 
@@ -605,7 +604,7 @@ abline(0, 1, lty = 2, col = "black", lwd = 2)
 
 
 # add label
-mtext("a)", side = 2, outer = TRUE, at = 0.95, font = 2, las = 1, line = 0.5)
+mtext("(a)", side = 2, outer = TRUE, at = 0.95, font = 2, las = 1, line = 0.5)
 
 # EOS
 plot(sigma_df2_eos$mean, sigma_df2_eos_full$mean,
@@ -655,7 +654,7 @@ points(aspp_df2_eos$fit_aspp, aspp_df2_eos_full$fit_aspp,
 abline(0, 1, lty = 2, col = "black", lwd = 2)
 
 # add label
-mtext("b)", side = 2, outer = TRUE, at = 0.42, font = 2, las = 1, line = 0.5)
+mtext("(b)", side = 2, outer = TRUE, at = 0.42, font = 2, las = 1, line = 0.5)
 
 dev.off()
 

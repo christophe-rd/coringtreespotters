@@ -47,15 +47,15 @@ colnames(treeid_df) <- 1:ncol(treeid_df)
 colnames(aspp_df) <- 1:ncol(aspp_df)
 
 # posterior summaries
-sigma_df2  <- extract_params(df_fit, "sigma", "mean", "sigma")
-bspp_df2   <- extract_params(df_fit, "bsp", "fit_bspp", "spp", "bspp\\[(\\d+)\\]")
-treeid_df2 <- extract_params(df_fit, "atreeid", "fit_atreeid", "treeid", "atreeid\\[(\\d+)\\]")
-treeid_df2 <- subset(treeid_df2, !grepl("z", treeid) & !grepl("sigma", treeid))
-aspp_df2   <- extract_params(df_fit, "aspp", "fit_aspp", "spp", "aspp\\[(\\d+)\\]")
+sigma_df2_ts  <- extract_params(df_fit, "sigma", "mean", "sigma")
+bspp_df2_ts   <- extract_params(df_fit, "bsp", "fit_bspp", "spp", "bspp\\[(\\d+)\\]")
+treeid_df2_ts <- extract_params(df_fit, "atreeid", "fit_atreeid", "treeid", "atreeid\\[(\\d+)\\]")
+treeid_df2_ts <- subset(treeid_df2_ts, !grepl("z", treeid) & !grepl("sigma", treeid))
+aspp_df2_ts   <- extract_params(df_fit, "aspp", "fit_aspp", "spp", "aspp\\[(\\d+)\\]")
 
-treeid_df2$treeid_name <- empts$id[match(treeid_df2$treeid, empts$treeid_num)]
-aspp_df2$spp_name <- empts$latbi[match(aspp_df2$spp, empts$spp_num)]
-bspp_df2$spp_name <- empts$latbi[match(bspp_df2$spp, empts$spp_num)]
+treeid_df2_ts$treeid_name <- empts$id[match(treeid_df2_ts$treeid, empts$treeid_num)]
+aspp_df2_ts$spp_name <- empts$latbi[match(aspp_df2_ts$spp, empts$spp_num)]
+bspp_df2_ts$spp_name <- empts$latbi[match(bspp_df2_ts$spp, empts$spp_num)]
 
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 # GSL posterior recovery ####
@@ -77,18 +77,18 @@ colnames(treeid_df_gsl) <- 1:ncol(treeid_df_gsl)
 colnames(aspp_df_gsl) <- 1:ncol(aspp_df_gsl)
 
 # posterior summaries
-sigma_df2_gsl  <- extract_params(df_fitgsl, "sigma", "mean", "sigma")
-bspp_df2_gsl   <- extract_params(df_fitgsl, "bsp", "fit_bspp", 
+sigma_df2_ts_gsl  <- extract_params(df_fitgsl, "sigma", "mean", "sigma")
+bspp_df2_ts_gsl   <- extract_params(df_fitgsl, "bsp", "fit_bspp", 
                                  "spp", "bspp\\[(\\d+)\\]")
-treeid_df2_gsl <- extract_params(df_fitgsl, "atreeid", "fit_atreeid", 
+treeid_df2_ts_gsl <- extract_params(df_fitgsl, "atreeid", "fit_atreeid", 
                                  "treeid", "atreeid\\[(\\d+)\\]")
-treeid_df2_gsl <- subset(treeid_df2_gsl, !grepl("z|sigma", treeid))
-aspp_df2_gsl   <- extract_params(df_fitgsl, "aspp", "fit_aspp", 
+treeid_df2_ts_gsl <- subset(treeid_df2_ts_gsl, !grepl("z|sigma", treeid))
+aspp_df2_ts_gsl   <- extract_params(df_fitgsl, "aspp", "fit_aspp", 
                                  "spp", "aspp\\[(\\d+)\\]")
 
-treeid_df2_gsl$treeid_name <- empts$id[match(treeid_df2_gsl$treeid, empts$treeid_num)]
-bspp_df2_gsl$spp_name <- empts$latbi[match(bspp_df2_gsl$spp, empts$spp_num)]
-aspp_df2_gsl$spp_name <- empts$latbi[match(aspp_df2_gsl$spp, empts$spp_num)]
+treeid_df2_ts_gsl$treeid_name <- empts$id[match(treeid_df2_ts_gsl$treeid, empts$treeid_num)]
+bspp_df2_ts_gsl$spp_name <- empts$latbi[match(bspp_df2_ts_gsl$spp, empts$spp_num)]
+aspp_df2_ts_gsl$spp_name <- empts$latbi[match(aspp_df2_ts_gsl$spp, empts$spp_num)]
 
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 # SOS posterior recovery ####
@@ -110,18 +110,18 @@ colnames(treeid_df_sos) <- 1:ncol(treeid_df_sos)
 colnames(aspp_df_sos) <- 1:ncol(aspp_df_sos)
 
 # posterior summaries
-sigma_df2_sos  <- extract_params(df_fitsos, "sigma", "mean", "sigma")
-bspp_df2_sos   <- extract_params(df_fitsos, "bsp", "fit_bspp", 
+sigma_df2_ts_sos  <- extract_params(df_fitsos, "sigma", "mean", "sigma")
+bspp_df2_ts_sos   <- extract_params(df_fitsos, "bsp", "fit_bspp", 
                                  "spp", "bspp\\[(\\d+)\\]")
-treeid_df2_sos <- extract_params(df_fitsos, "atreeid", "fit_atreeid", 
+treeid_df2_ts_sos <- extract_params(df_fitsos, "atreeid", "fit_atreeid", 
                                  "treeid", "atreeid\\[(\\d+)\\]")
-treeid_df2_sos <- subset(treeid_df2_sos, !grepl("z|sigma", treeid))
-aspp_df2_sos   <- extract_params(df_fitsos, "aspp", "fit_aspp", 
+treeid_df2_ts_sos <- subset(treeid_df2_ts_sos, !grepl("z|sigma", treeid))
+aspp_df2_ts_sos   <- extract_params(df_fitsos, "aspp", "fit_aspp", 
                                  "spp", "aspp\\[(\\d+)\\]")
 
-treeid_df2_sos$treeid_name <- empts$id[match(treeid_df2_sos$treeid, empts$treeid_num)]
-bspp_df2_sos$spp_name <- empts$latbi[match(bspp_df2_sos$spp, empts$spp_num)]
-aspp_df2_sos$spp_name <- empts$latbi[match(aspp_df2_sos$spp, empts$spp_num)]
+treeid_df2_ts_sos$treeid_name <- empts$id[match(treeid_df2_ts_sos$treeid, empts$treeid_num)]
+bspp_df2_ts_sos$spp_name <- empts$latbi[match(bspp_df2_ts_sos$spp, empts$spp_num)]
+aspp_df2_ts_sos$spp_name <- empts$latbi[match(aspp_df2_ts_sos$spp, empts$spp_num)]
 
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 # EOS posterior recovery ####
@@ -143,19 +143,19 @@ colnames(treeid_df_eos) <- 1:ncol(treeid_df_eos)
 colnames(aspp_df_eos) <- 1:ncol(aspp_df_eos)
 
 # posterior summaries
-sigma_df2_eos  <- extract_params(df_fiteos, "sigma", "mean", "sigma")
-bspp_df2_eos   <- extract_params(df_fiteos, "bsp", "fit_bspp", 
+sigma_df2_ts_eos  <- extract_params(df_fiteos, "sigma", "mean", "sigma")
+bspp_df2_ts_eos   <- extract_params(df_fiteos, "bsp", "fit_bspp", 
                                  "spp", "bspp\\[(\\d+)\\]")
-treeid_df2_eos <- extract_params(df_fiteos, "atreeid", "fit_atreeid", 
+treeid_df2_ts_eos <- extract_params(df_fiteos, "atreeid", "fit_atreeid", 
                                  "treeid", "atreeid\\[(\\d+)\\]")
-treeid_df2_eos <- subset(treeid_df2_eos, !grepl("z|sigma", treeid))
-aspp_df2_eos   <- extract_params(df_fiteos, "aspp", "fit_aspp", 
+treeid_df2_ts_eos <- subset(treeid_df2_ts_eos, !grepl("z|sigma", treeid))
+aspp_df2_ts_eos   <- extract_params(df_fiteos, "aspp", "fit_aspp", 
                                  "spp", "aspp\\[(\\d+)\\]")
 
-treeid_df2_eos$treeid <- as.numeric(treeid_df2_eos$treeid)
-treeid_df2_eos$treeid_name <- empts$id[match(treeid_df2_eos$treeid, empts$treeid_num)]
-bspp_df2_eos$spp_name <- empts$latbi[match(bspp_df2_eos$spp, empts$spp_num)]
-aspp_df2_eos$spp_name <- empts$latbi[match(aspp_df2_eos$spp, empts$spp_num)]
+treeid_df2_ts_eos$treeid <- as.numeric(treeid_df2_ts_eos$treeid)
+treeid_df2_ts_eos$treeid_name <- empts$id[match(treeid_df2_ts_eos$treeid, empts$treeid_num)]
+bspp_df2_ts_eos$spp_name <- empts$latbi[match(bspp_df2_ts_eos$spp, empts$spp_num)]
+aspp_df2_ts_eos$spp_name <- empts$latbi[match(aspp_df2_ts_eos$spp, empts$spp_num)]
 
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 # Define objects used throughout the models ####
@@ -1126,52 +1126,52 @@ custommar <- c(4, 2, 2, 1)
 
 # Row 1: GDD
 par(mar = custommar)
-plot(bspp_df2$fit_bspp, y_pos,
+plot(bspp_df2_ts$fit_bspp, y_pos,
      xlim = c(-0.8, 0.8), ylim = c(0.5, n_spp + 0.5), 
      xlab = "Log ring width (mm) change in averaged GDD of 10 spring days", ylab = "",
      yaxt = "n", pch = 16, cex = 2, col = colslatbi, frame.plot = FALSE,
      panel.first = abline(v = 0, lty = 2, col = "black"))
-segments(bspp_df2$fit_bspp_per5,  y_pos, bspp_df2$fit_bspp_per95, y_pos,
+segments(bspp_df2_ts$fit_bspp_per5,  y_pos, bspp_df2_ts$fit_bspp_per95, y_pos,
          col = colslatbi, lwd = 1.5)
-segments(bspp_df2$fit_bspp_per25, y_pos, bspp_df2$fit_bspp_per75, y_pos,
+segments(bspp_df2_ts$fit_bspp_per25, y_pos, bspp_df2_ts$fit_bspp_per75, y_pos,
          col = colslatbi, lwd = 3)
 mtext("Growing degree days", side = 3, adj = 0, font = 2, cex = 0.9)
 
 # Row 2: GSL
 par(mar = custommar)
-plot(bspp_df2_gsl$fit_bspp, y_pos,
+plot(bspp_df2_ts_gsl$fit_bspp, y_pos,
      xlim = c(-0.8, 0.8), ylim = c(0.5, n_spp + 0.5),
      xlab = "Log ring width (mm) change per 10 days of growing season length", ylab = "",
      yaxt = "n", pch = 16, cex = 2, col = colslatbi, frame.plot = FALSE,      
      panel.first = abline(v = 0, lty = 2, col = "black"))
-segments(bspp_df2_gsl$fit_bspp_per5,  y_pos, bspp_df2_gsl$fit_bspp_per95, y_pos,
+segments(bspp_df2_ts_gsl$fit_bspp_per5,  y_pos, bspp_df2_ts_gsl$fit_bspp_per95, y_pos,
          col = colslatbi, lwd = 1.5)
-segments(bspp_df2_gsl$fit_bspp_per25, y_pos, bspp_df2_gsl$fit_bspp_per75, y_pos,
+segments(bspp_df2_ts_gsl$fit_bspp_per25, y_pos, bspp_df2_ts_gsl$fit_bspp_per75, y_pos,
          col = colslatbi, lwd = 3)
 mtext("Growing season length", side = 3, adj = 0, font = 2, cex = 0.9)
 
 # Row 3: SOS
 par(mar = custommar)
-plot(bspp_df2_sos$fit_bspp, y_pos,
+plot(bspp_df2_ts_sos$fit_bspp, y_pos,
      xlim = c(-0.8, 0.8), ylim = c(0.5, n_spp + 0.5),
      xlab = "Log ring width (mm) change per 5 days of leafout", ylab = "",
      yaxt = "n", pch = 16, cex = 2, col = colslatbi, frame.plot = FALSE,      
      panel.first = abline(v = 0, lty = 2, col = "black"))
-segments(bspp_df2_sos$fit_bspp_per5,  y_pos, bspp_df2_sos$fit_bspp_per95, y_pos,
+segments(bspp_df2_ts_sos$fit_bspp_per5,  y_pos, bspp_df2_ts_sos$fit_bspp_per95, y_pos,
          col = colslatbi, lwd = 1.5)
-segments(bspp_df2_sos$fit_bspp_per25, y_pos, bspp_df2_sos$fit_bspp_per75, y_pos,
+segments(bspp_df2_ts_sos$fit_bspp_per25, y_pos, bspp_df2_ts_sos$fit_bspp_per75, y_pos,
          col = colslatbi, lwd = 3)
 mtext("Start of season", side = 3, adj = 0, font = 2, cex = 0.9)
 
 # Row 4: EOS
 par(mar = custommar)
-plot(bspp_df2_eos$fit_bspp, y_pos,
+plot(bspp_df2_ts_eos$fit_bspp, y_pos,
      xlim = c(-0.8, 0.8), ylim = c(0.5, n_spp + 0.5),
      xlab = "Log ring width (mm) change per 10 days of budset", ylab = "",
      yaxt = "n", pch = 16, cex = 2, col = colslatbi, frame.plot = FALSE,      panel.first = abline(v = 0, lty = 2, col = "black"))
-segments(bspp_df2_eos$fit_bspp_per5,  y_pos, bspp_df2_eos$fit_bspp_per95, y_pos,
+segments(bspp_df2_ts_eos$fit_bspp_per5,  y_pos, bspp_df2_ts_eos$fit_bspp_per95, y_pos,
          col = colslatbi, lwd = 1.5)
-segments(bspp_df2_eos$fit_bspp_per25, y_pos, bspp_df2_eos$fit_bspp_per75, y_pos,
+segments(bspp_df2_ts_eos$fit_bspp_per25, y_pos, bspp_df2_ts_eos$fit_bspp_per75, y_pos,
          col = colslatbi, lwd = 3)
 mtext("End of season", side = 3, adj = 0, font = 2, cex = 0.9)
 
@@ -1179,7 +1179,7 @@ mtext("End of season", side = 3, adj = 0, font = 2, cex = 0.9)
 par(mar = c(1, 1, 1, 1))
 plot.new()
 legend("center",
-       legend = sapply(unique(bspp_df2$spp_name), 
+       legend = sapply(unique(bspp_df2_ts$spp_name), 
                        function(x) parse(text = paste0("italic('", x, "')"))),
        col    = unique(colslatbi),
        pch    = 16, pt.cex = 1.5, bty = "n", cex = 1.2,
@@ -1203,54 +1203,54 @@ widths = c(1.3, 1, 0.5))
 
 # Row 1, Col 1, Slot 5 : GDD
 par(mar = custommar)
-plot(bspp_df2$fit_bspp, y_pos,
+plot(bspp_df2_ts$fit_bspp, y_pos,
      xlim = c(-0.8, 0.8), ylim = c(0.5, n_spp + 0.5),
      xlab = "Log ring width (mm) change in averaged GDD of 10 spring days", ylab = "",
      yaxt = "n", pch = 16, cex = 2, col = colslatbi, frame.plot = FALSE,      
      panel.first = abline(v = 0, lty = 2, col = "black"))
-segments(bspp_df2$fit_bspp_per5,  y_pos, bspp_df2$fit_bspp_per95, y_pos,
+segments(bspp_df2_ts$fit_bspp_per5,  y_pos, bspp_df2_ts$fit_bspp_per95, y_pos,
          col = colslatbi, lwd = 1.5)
-segments(bspp_df2$fit_bspp_per25, y_pos, bspp_df2$fit_bspp_per75, y_pos,
+segments(bspp_df2_ts$fit_bspp_per25, y_pos, bspp_df2_ts$fit_bspp_per75, y_pos,
          col = colslatbi, lwd = 3)
 mtext("(a) Growing degree days", side = 3, adj = 0, font = 2, cex = 0.9)
 
 # Row 2, Col 1, Slot 6 : GSL
 par(mar = custommar)
-plot(bspp_df2_gsl$fit_bspp, y_pos,
+plot(bspp_df2_ts_gsl$fit_bspp, y_pos,
      xlim = c(-0.8, 0.8), ylim = c(0.5, n_spp + 0.5),
      xlab = "Log ring width (mm) change per 10 days of GSL", ylab = "",
      yaxt = "n", pch = 16, cex = 2, col = colslatbi, frame.plot = FALSE,      
      panel.first = abline(v = 0, lty = 2, col = "black"))
-segments(bspp_df2_gsl$fit_bspp_per5,  y_pos, bspp_df2_gsl$fit_bspp_per95, y_pos,
+segments(bspp_df2_ts_gsl$fit_bspp_per5,  y_pos, bspp_df2_ts_gsl$fit_bspp_per95, y_pos,
          col = colslatbi, lwd = 1.5)
-segments(bspp_df2_gsl$fit_bspp_per25, y_pos, bspp_df2_gsl$fit_bspp_per75, y_pos,
+segments(bspp_df2_ts_gsl$fit_bspp_per25, y_pos, bspp_df2_ts_gsl$fit_bspp_per75, y_pos,
          col = colslatbi, lwd = 3)
 mtext("(b) Growing season length", side = 3, adj = 0, font = 2, cex = 0.9)
 
 # Row 3, Col 1, Slot 7 : SOS
 par(mar = custommar)
-plot(bspp_df2_sos$fit_bspp, y_pos,
+plot(bspp_df2_ts_sos$fit_bspp, y_pos,
      xlim = c(-0.8, 0.8), ylim = c(0.5, n_spp + 0.5),
      xlab = "Log ring width (mm) change per 5 days of leafout", ylab = "",
      yaxt = "n", pch = 16, cex = 2, col = colslatbi, frame.plot = FALSE,      
      panel.first = abline(v = 0, lty = 2, col = "black"))
-segments(bspp_df2_sos$fit_bspp_per5,  y_pos, bspp_df2_sos$fit_bspp_per95, y_pos,
+segments(bspp_df2_ts_sos$fit_bspp_per5,  y_pos, bspp_df2_ts_sos$fit_bspp_per95, y_pos,
          col = colslatbi, lwd = 1.5)
-segments(bspp_df2_sos$fit_bspp_per25, y_pos, bspp_df2_sos$fit_bspp_per75, y_pos,
+segments(bspp_df2_ts_sos$fit_bspp_per25, y_pos, bspp_df2_ts_sos$fit_bspp_per75, y_pos,
          col = colslatbi, lwd = 3)
 mtext("(c) Start of season", side = 3, adj = 0, font = 2, cex = 0.9)
 
 # Row 4, Col 1, Slot 8 : EOS
 par(mar = custommar)
-plot(bspp_df2_eos$fit_bspp, y_pos,
+plot(bspp_df2_ts_eos$fit_bspp, y_pos,
      xlim = c(-0.8, 0.8), ylim = c(0.5, n_spp + 0.5),
      xlab = "Log ring width (mm) change per 10 days of coloredLeaves", ylab = "",
      yaxt = "n", pch = 16, cex = 2, col = colslatbi, frame.plot = FALSE,      
      
      panel.first = abline(v = 0, lty = 2, col = "black"))
-segments(bspp_df2_eos$fit_bspp_per5,  y_pos, bspp_df2_eos$fit_bspp_per95, y_pos,
+segments(bspp_df2_ts_eos$fit_bspp_per5,  y_pos, bspp_df2_ts_eos$fit_bspp_per95, y_pos,
          col = colslatbi, lwd = 1.5)
-segments(bspp_df2_eos$fit_bspp_per25, y_pos, bspp_df2_eos$fit_bspp_per75, y_pos,
+segments(bspp_df2_ts_eos$fit_bspp_per25, y_pos, bspp_df2_ts_eos$fit_bspp_per75, y_pos,
          col = colslatbi, lwd = 3)
 mtext("(d) End of season", side = 3, adj = 0, font = 2, cex = 0.9)
 
@@ -1398,7 +1398,7 @@ for (i in seq_along(sppvecnum)) { # i = 1
 par(mar = c(1, 1, 1, 1))
 plot.new()
 legend("center",
-       legend = sapply(unique(bspp_df2$spp_name), 
+       legend = sapply(unique(bspp_df2_ts$spp_name), 
                        function(x) parse(text = paste0("italic('", x, "')"))),
        col    = unique(colslatbi),
        pch    = 16, pt.cex = 1.5, bty = "n", cex = 1.2,
@@ -1422,56 +1422,56 @@ widths = c(0.7, 0.4))
 
 # Row 1: GDD
 par(mar = custommar)
-plot(aspp_df2$fit_aspp, y_pos,
+plot(aspp_df2_ts$fit_aspp, y_pos,
      xlim = c(-10, 10), ylim = c(0.5, n_spp + 0.5),
      xlab = "Log ring width intercept values (mm)", ylab = "",
      yaxt = "n", pch = 16, cex = 2, col = colslatbi, frame.plot = FALSE,      
      panel.first = abline(v = 0, lty = 2, col = "black"))
-segments(aspp_df2$fit_aspp_per5,  y_pos, aspp_df2$fit_aspp_per95, y_pos,
+segments(aspp_df2_ts$fit_aspp_per5,  y_pos, aspp_df2_ts$fit_aspp_per95, y_pos,
          col = colslatbi, lwd = 1.5)
-segments(aspp_df2$fit_aspp_per25, y_pos, aspp_df2$fit_aspp_per75, y_pos,
+segments(aspp_df2_ts$fit_aspp_per25, y_pos, aspp_df2_ts$fit_aspp_per75, y_pos,
          col = colslatbi, lwd = 3)
 abline(v = 0, lty = 2, col = "black")
 mtext("Growing degree days", side = 3, adj = 0, font = 2, cex = 0.9)
 
 # Row 2: GSL
 par(mar = custommar)
-plot(aspp_df2_gsl$fit_aspp, y_pos,
+plot(aspp_df2_ts_gsl$fit_aspp, y_pos,
      xlim = c(-10, 10), ylim = c(0.5, n_spp + 0.5),
      xlab = "Log ring width intercept values (mm)", ylab = "",
      yaxt = "n", pch = 16, cex = 2, col = colslatbi, frame.plot = FALSE,      
      panel.first = abline(v = 0, lty = 2, col = "black"))
-segments(aspp_df2_gsl$fit_aspp_per5,  y_pos, aspp_df2_gsl$fit_aspp_per95, y_pos,
+segments(aspp_df2_ts_gsl$fit_aspp_per5,  y_pos, aspp_df2_ts_gsl$fit_aspp_per95, y_pos,
          col = colslatbi, lwd = 1.5)
-segments(aspp_df2_gsl$fit_aspp_per25, y_pos, aspp_df2_gsl$fit_aspp_per75, y_pos,
+segments(aspp_df2_ts_gsl$fit_aspp_per25, y_pos, aspp_df2_ts_gsl$fit_aspp_per75, y_pos,
          col = colslatbi, lwd = 3)
 abline(v = 0, lty = 2, col = "black")
 mtext("Growing season length", side = 3, adj = 0, font = 2, cex = 0.9)
 
 # Row 3: SOS
 par(mar = custommar)
-plot(aspp_df2_sos$fit_aspp, y_pos,
+plot(aspp_df2_ts_sos$fit_aspp, y_pos,
      xlim = c(-10, 10),ylim = c(0.5, n_spp + 0.5),
      xlab = "Log ring width intercept values (mm)", ylab = "", 
      yaxt = "n", pch = 16, cex = 2, col = colslatbi, frame.plot = FALSE,      
      panel.first = abline(v = 0, lty = 2, col = "black"))
-segments(aspp_df2_sos$fit_aspp_per5,  y_pos, aspp_df2_sos$fit_aspp_per95, y_pos,
+segments(aspp_df2_ts_sos$fit_aspp_per5,  y_pos, aspp_df2_ts_sos$fit_aspp_per95, y_pos,
          col = colslatbi, lwd = 1.5)
-segments(aspp_df2_sos$fit_aspp_per25, y_pos, aspp_df2_sos$fit_aspp_per75, y_pos,
+segments(aspp_df2_ts_sos$fit_aspp_per25, y_pos, aspp_df2_ts_sos$fit_aspp_per75, y_pos,
          col = colslatbi, lwd = 3)
 abline(v = 0, lty = 2, col = "black")
 mtext("Start of season", side = 3, adj = 0, font = 2, cex = 0.9)
 
 # Row 4: EOS
 par(mar = custommar)
-plot(aspp_df2_eos$fit_aspp, y_pos,
+plot(aspp_df2_ts_eos$fit_aspp, y_pos,
      xlim = c(-10, 10), ylim = c(0.5, n_spp + 0.5), 
      xlab = "Log ring width intercept values (mm)", ylab = "", 
      yaxt = "n", pch = 16, cex = 2, col = colslatbi, frame.plot = FALSE,      
      panel.first = abline(v = 0, lty = 2, col = "black"))
-segments(aspp_df2_eos$fit_aspp_per5,  y_pos, aspp_df2_eos$fit_aspp_per95, y_pos,
+segments(aspp_df2_ts_eos$fit_aspp_per5,  y_pos, aspp_df2_ts_eos$fit_aspp_per95, y_pos,
          col = colslatbi, lwd = 1.5)
-segments(aspp_df2_eos$fit_aspp_per25, y_pos, aspp_df2_eos$fit_aspp_per75, y_pos,
+segments(aspp_df2_ts_eos$fit_aspp_per25, y_pos, aspp_df2_ts_eos$fit_aspp_per75, y_pos,
          col = colslatbi, lwd = 3)
 abline(v = 0, lty = 2, col = "black")
 mtext("End of season", side = 3, adj = 0, font = 2, cex = 0.9)
@@ -1480,7 +1480,7 @@ mtext("End of season", side = 3, adj = 0, font = 2, cex = 0.9)
 par(mar = c(1, 1, 1, 1))
 plot.new()
 legend("center",
-       legend = sapply(unique(aspp_df2$spp_name), 
+       legend = sapply(unique(aspp_df2_ts$spp_name), 
                        function(x) parse(text = paste0("italic('", x, "')"))),
        col    = unique(colslatbi),
        pch    = 16, pt.cex = 1.5, bty = "n", cex = 1.2,
@@ -1492,11 +1492,11 @@ dev.off()
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
 ###### full treeid mu plots intercept ###### 
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
-treeid_df2$treeid <- as.numeric(treeid_df2$treeid)
-treeid_df2$treeid_name <- empts$id[match(treeid_df2$treeid, empts$treeid_num)]
+treeid_df2_ts$treeid <- as.numeric(treeid_df2_ts$treeid)
+treeid_df2_ts$treeid_name <- empts$id[match(treeid_df2_ts$treeid, empts$treeid_num)]
 
 # now do the same, but for species
-treeid_df2$spp <- empts$latbi[match(treeid_df2$treeid, empts$treeid_num)]
+treeid_df2_ts$spp <- empts$latbi[match(treeid_df2_ts$treeid, empts$treeid_num)]
 
 sub <- subset(empts, select = c("treeid_num", "spp_num"))
 sub <- sub[!duplicated(sub$treeid_num),]
@@ -1614,28 +1614,28 @@ points(
 )
 
 spp_y_top <- tapply(treeid_df4$y_pos, treeid_df4$spp, max)
-aspp_df2$y_pos <- spp_y_top[aspp_df2$spp] + 1
+aspp_df2_ts$y_pos <- spp_y_top[aspp_df2_ts$spp] + 1
 
 segments(
-  x0 = aspp_df2$fit_aspp_per5,
-  x1 = aspp_df2$fit_aspp_per95,
-  y0 = aspp_df2$y_pos,
-  col = adjustcolor(colslatbi[aspp_df2$spp_name], alpha.f = 0.9),
+  x0 = aspp_df2_ts$fit_aspp_per5,
+  x1 = aspp_df2_ts$fit_aspp_per95,
+  y0 = aspp_df2_ts$y_pos,
+  col = adjustcolor(colslatbi[aspp_df2_ts$spp_name], alpha.f = 0.9),
   lwd = 2
 )
 
 segments(
-  x0 = aspp_df2$fit_aspp_per25,
-  x1 = aspp_df2$fit_aspp_per75,
-  y0 = aspp_df2$y_pos,
-  col = colslatbi[aspp_df2$spp],
+  x0 = aspp_df2_ts$fit_aspp_per25,
+  x1 = aspp_df2_ts$fit_aspp_per75,
+  y0 = aspp_df2_ts$y_pos,
+  col = colslatbi[aspp_df2_ts$spp],
   lwd = 3
 )
 points(
-  aspp_df2$fit_aspp,
-  aspp_df2$y_pos,
+  aspp_df2_ts$fit_aspp,
+  aspp_df2_ts$y_pos,
   pch = 16,
-  col  = colslatbi[aspp_df2$spp],
+  col  = colslatbi[aspp_df2_ts$spp],
   # col = "black",
   cex = 1.5
 )
@@ -1674,7 +1674,7 @@ dev.off()
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 # Ring width summaries ####
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
-rwmin <- aggregate(lengthMM ~ spp, emp, FUN = min)
-rwmax <- aggregate(lengthMM ~ spp, emp, FUN = max)
-rwsum <- merge(rwmin, rwmax, by = "spp")
-colnames(rwsum) <- c("spp","min", "max")
+rwmin <- aggregate(lengthMM ~ latbi, empts, FUN = min)
+rwmax <- aggregate(lengthMM ~ latbi, empts, FUN = max)
+rwsum <- merge(rwmin, rwmax, by = "latbi")
+colnames(rwsum) <- c("latbi","min", "max")
