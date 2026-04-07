@@ -18,7 +18,7 @@ if (length(grep("christophe_rouleau-desrochers", getwd())) > 0) {
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 # Recover objects from models ####
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
-source("rcode/TSgrowthModels.R")
+source("rcode/TSgrowthModelsMain.R")
 
 makeplots <- TRUE
 
@@ -53,9 +53,9 @@ treeid_df2_z <- extract_params(df_fit, "atreeid", "fit_atreeid", "treeid", "atre
 treeid_df2_z <- subset(treeid_df2_z, !grepl("z", treeid) & !grepl("sigma", treeid))
 aspp_df2_z   <- extract_params(df_fit, "aspp", "fit_aspp", "spp", "aspp\\[(\\d+)\\]")
 
-treeid_df2_z$treeid_name <- emp$id[match(treeid_df2_z$treeid, emp$treeid_num)]
-aspp_df2_z$spp_name <- emp$latbi[match(aspp_df2_z$spp, emp$spp_num)]
-bspp_df2_z$spp_name <- emp$latbi[match(bspp_df2_z$spp, emp$spp_num)]
+treeid_df2_z$treeid_name <- empts$id[match(treeid_df2_z$treeid, empts$treeid_num)]
+aspp_df2_z$spp_name <- empts$latbi[match(aspp_df2_z$spp, empts$spp_num)]
+bspp_df2_z$spp_name <- empts$latbi[match(bspp_df2_z$spp, empts$spp_num)]
 
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 # GSL posterior recovery ####
@@ -86,9 +86,9 @@ treeid_df2_z_gsl <- subset(treeid_df2_z, !grepl("z|sigma", treeid))
 aspp_df2_z_gsl   <- extract_params(df_fitgsl, "aspp", "fit_aspp", 
                                  "spp", "aspp\\[(\\d+)\\]")
 
-treeid_df2_z_gsl$treeid_name <- emp$id[match(treeid_df2_z_gsl$treeid, emp$treeid_num)]
-bspp_df2_z_gsl$spp_name <- emp$latbi[match(bspp_df2_z_gsl$spp, emp$spp_num)]
-aspp_df2_z_gsl$spp_name <- emp$latbi[match(aspp_df2_z_gsl$spp, emp$spp_num)]
+treeid_df2_z_gsl$treeid_name <- empts$id[match(treeid_df2_z_gsl$treeid, empts$treeid_num)]
+bspp_df2_z_gsl$spp_name <- empts$latbi[match(bspp_df2_z_gsl$spp, empts$spp_num)]
+aspp_df2_z_gsl$spp_name <- empts$latbi[match(aspp_df2_z_gsl$spp, empts$spp_num)]
 
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 # SOS posterior recovery ####
@@ -119,9 +119,9 @@ treeid_df2_z_sos <- subset(treeid_df2_z_sos, !grepl("z|sigma", treeid))
 aspp_df2_z_sos   <- extract_params(df_fitsos, "aspp", "fit_aspp", 
                                  "spp", "aspp\\[(\\d+)\\]")
 
-treeid_df2_z_sos$treeid_name <- emp$id[match(treeid_df2_z_sos$treeid, emp$treeid_num)]
-bspp_df2_z_sos$spp_name <- emp$latbi[match(bspp_df2_z_sos$spp, emp$spp_num)]
-aspp_df2_z_sos$spp_name <- emp$latbi[match(aspp_df2_z_sos$spp, emp$spp_num)]
+treeid_df2_z_sos$treeid_name <- empts$id[match(treeid_df2_z_sos$treeid, empts$treeid_num)]
+bspp_df2_z_sos$spp_name <- empts$latbi[match(bspp_df2_z_sos$spp, empts$spp_num)]
+aspp_df2_z_sos$spp_name <- empts$latbi[match(aspp_df2_z_sos$spp, empts$spp_num)]
 
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 # EOS posterior recovery ####
@@ -153,18 +153,18 @@ aspp_df2_z_eos   <- extract_params(df_fiteos, "aspp", "fit_aspp",
                                  "spp", "aspp\\[(\\d+)\\]")
 
 treeid_df2_z_eos$treeid <- as.numeric(treeid_df2_z_eos$treeid)
-treeid_df2_z_eos$treeid_name <- emp$id[match(treeid_df2_z_eos$treeid, emp$treeid_num)]
-bspp_df2_z_eos$spp_name <- emp$latbi[match(bspp_df2_z_eos$spp, emp$spp_num)]
-aspp_df2_z_eos$spp_name <- emp$latbi[match(aspp_df2_z_eos$spp, emp$spp_num)]
+treeid_df2_z_eos$treeid_name <- empts$id[match(treeid_df2_z_eos$treeid, empts$treeid_num)]
+bspp_df2_z_eos$spp_name <- empts$latbi[match(bspp_df2_z_eos$spp, empts$spp_num)]
+aspp_df2_z_eos$spp_name <- empts$latbi[match(aspp_df2_z_eos$spp, empts$spp_num)]
 
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 # Define objects used throughout the models ####
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
-n_spp <- length(unique(emp$latbi))
+n_spp <- length(unique(empts$latbi))
 y_pos <- rev(1:n_spp)
 
 # get the spp and site identities for each tree id
-treeid_spp <- unique(emp[, c("treeid_num", "spp_num", "id", "latbi")])
+treeid_spp <- unique(empts[, c("treeid_num", "spp_num", "id", "latbi")])
 
 # get a vector for each treeid for each species
 spp1vec <- treeid_spp$treeid_num[treeid_spp$spp_num == 1]
@@ -197,7 +197,7 @@ sppvecnum <- 1:11
 sppvecname <- unique(treeid_spp$latbi)
 
 # for mu plots
-species_order <- rev(unique(emp$latbi))
+species_order <- rev(unique(empts$latbi))
 
 colscommon <- c(
   "Red maple"           = renoir[1],
@@ -229,7 +229,7 @@ colslatbi <- c(
 
 # vector of treeids
 subyvec <- vector()
-for (i in 1:length(unique(emp$treeid_num))) {
+for (i in 1:length(unique(empts$treeid_num))) {
   subyvec[i] <- paste("atreeid", "[",i,"]", sep = "")  
 }
 
@@ -266,7 +266,7 @@ segments(bspp_df2_z$fit_bspp_per5,  y_pos, bspp_df2_z$fit_bspp_per95, y_pos,
          col = colslatbi, lwd = 1.5)
 segments(bspp_df2_z$fit_bspp_per25, y_pos, bspp_df2_z$fit_bspp_per75, y_pos,
          col = colslatbi, lwd = 3)
-mtext("Growing degree days", side = 3, adj = 0, font = 2, cex = 0.9)
+mtext("(a) Growing degree days", side = 3, adj = 0, font = 2, cex = 0.9)
 
 # Row 2: GSL
 par(mar = custommar)
@@ -279,7 +279,7 @@ segments(bspp_df2_z_gsl$fit_bspp_per5,  y_pos, bspp_df2_z_gsl$fit_bspp_per95, y_
          col = colslatbi, lwd = 1.5)
 segments(bspp_df2_z_gsl$fit_bspp_per25, y_pos, bspp_df2_z_gsl$fit_bspp_per75, y_pos,
          col = colslatbi, lwd = 3)
-mtext("Growing season length", side = 3, adj = 0, font = 2, cex = 0.9)
+mtext("(b) Growing season length", side = 3, adj = 0, font = 2, cex = 0.9)
 
 # Row 3: SOS
 par(mar = custommar)
@@ -292,7 +292,7 @@ segments(bspp_df2_z_sos$fit_bspp_per5,  y_pos, bspp_df2_z_sos$fit_bspp_per95, y_
          col = colslatbi, lwd = 1.5)
 segments(bspp_df2_z_sos$fit_bspp_per25, y_pos, bspp_df2_z_sos$fit_bspp_per75, y_pos,
          col = colslatbi, lwd = 3)
-mtext("Start of season", side = 3, adj = 0, font = 2, cex = 0.9)
+mtext("(c) Start of season", side = 3, adj = 0, font = 2, cex = 0.9)
 
 # Row 4: EOS
 par(mar = custommar)
@@ -304,7 +304,7 @@ segments(bspp_df2_z_eos$fit_bspp_per5,  y_pos, bspp_df2_z_eos$fit_bspp_per95, y_
          col = colslatbi, lwd = 1.5)
 segments(bspp_df2_z_eos$fit_bspp_per25, y_pos, bspp_df2_z_eos$fit_bspp_per75, y_pos,
          col = colslatbi, lwd = 3)
-mtext("End of season", side = 3, adj = 0, font = 2, cex = 0.9)
+mtext("(d) End of season", side = 3, adj = 0, font = 2, cex = 0.9)
 
 # Slot 5: species legend
 par(mar = c(1, 1, 1, 1))

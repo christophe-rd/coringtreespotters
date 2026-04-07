@@ -1694,21 +1694,17 @@ df_fitgdd <- as.data.frame(fitgdd)
 
 # posterior summaries
 sigma_df2_z  <- extract_params(df_fitgdd, "sigma", "mean", "sigma")
-bspp_df2_z   <- extract_params(df_fitgdd, "bsp", "fit_bspp", 
-                               "spp", "bsp\\[(\\d+)\\]")
+bspp_df2_z   <- extract_params(df_fitgdd, "bspp", "fit_bspp", 
+                               "spp", "bspp\\[(\\d+)\\]")
 treeid_df2_z <- extract_params(df_fitgdd, "atreeid", "fit_atreeid", 
                                "treeid", "atreeid\\[(\\d+)\\]")
 treeid_df2_z <- subset(treeid_df2_z, !grepl("z|sigma", treeid))
 aspp_df2_z   <- extract_params(df_fitgdd, "aspp", "fit_aspp", 
                                "spp", "aspp\\[(\\d+)\\]")
-site_df2_z   <- extract_params(df_fitgdd, "asite", "fit_a_site", 
-                               "site", "asite\\[(\\d+)\\]")
 
-
-treeid_df2_z$treeid_name <- emp$treeid[match(treeid_df2_z$treeid, emp$treeid_num)]
-bspp_df2_z$spp_name <- emp$latbi[match(bspp_df2_z$spp, emp$spp_num)]
-site_df2_z$site_name <- emp$site[match(site_df2_z$site, emp$site_num)]
-aspp_df2_z$spp_name <- emp$latbi[match(aspp_df2_z$spp, emp$spp_num)]
+treeid_df2_z$treeid_name <- empts$treeid[match(treeid_df2_z$treeid, empts$treeid_num)]
+bspp_df2_z$spp_name <- empts$latbi[match(bspp_df2_z$spp, empts$spp_num)]
+aspp_df2_z$spp_name <- empts$latbi[match(aspp_df2_z$spp, empts$spp_num)]
 
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 ##### GSL posterior recovery #####
@@ -1719,21 +1715,18 @@ df_fitgsl <- as.data.frame(fitgsl)
 
 # posterior summaries
 sigma_df2_z_gsl  <- extract_params(df_fitgsl, "sigma", "mean", "sigma")
-bspp_df2_z_gsl   <- extract_params(df_fitgsl, "bsp", "fit_bspp", 
-                                   "spp", "bsp\\[(\\d+)\\]")
+bspp_df2_z_gsl   <- extract_params(df_fitgsl, "bspp", "fit_bspp", 
+                                   "spp", "bspp\\[(\\d+)\\]")
 treeid_df2_z_gsl <- extract_params(df_fitgsl, "atreeid", "fit_atreeid", 
                                    "treeid", "atreeid\\[(\\d+)\\]")
 treeid_df2_z_gsl <- subset(treeid_df2_z, !grepl("z|sigma", treeid))
 aspp_df2_z_gsl   <- extract_params(df_fitgsl, "aspp", "fit_aspp", 
                                    "spp", "aspp\\[(\\d+)\\]")
-site_df2_z_gsl   <- extract_params(df_fitgsl, "asite", "fit_a_site", 
-                                   "site", "asite\\[(\\d+)\\]")
 
 treeid_df2_z_gsl$treeid <- as.numeric(treeid_df2_z_gsl$treeid)
-treeid_df2_z_gsl$treeid_name <- emp$treeid[match(treeid_df2_z_gsl$treeid, emp$treeid_num)]
-bspp_df2_z_gsl$spp_name <- emp$latbi[match(bspp_df2_z_gsl$spp, emp$spp_num)]
-site_df2_z_gsl$site_name <- emp$site[match(site_df2_z_gsl$site, emp$site_num)]
-aspp_df2_z_gsl$spp_name <- emp$latbi[match(aspp_df2_z_gsl$spp, emp$spp_num)]
+treeid_df2_z_gsl$treeid_name <- empts$treeid[match(treeid_df2_z_gsl$treeid, empts$treeid_num)]
+bspp_df2_z_gsl$spp_name <- empts$latbi[match(bspp_df2_z_gsl$spp, empts$spp_num)]
+aspp_df2_z_gsl$spp_name <- empts$latbi[match(aspp_df2_z_gsl$spp, empts$spp_num)]
 
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 ##### SOS posterior recovery #####
@@ -1742,24 +1735,20 @@ fitsos <- readRDS("output/stanOutput/fitGrowthSOSZscored")
 
 df_fitsos <- as.data.frame(fitsos)
 
-
 # posterior summaries
 sigma_df2_z_sos  <- extract_params(df_fitsos, "sigma", "mean", "sigma")
-bspp_df2_z_sos   <- extract_params(df_fitsos, "bsp", "fit_bspp", 
-                                   "spp", "bsp\\[(\\d+)\\]")
+bspp_df2_z_sos   <- extract_params(df_fitsos, "bspp", "fit_bspp", 
+                                   "spp", "bspp\\[(\\d+)\\]")
 treeid_df2_z_sos <- extract_params(df_fitsos, "atreeid", "fit_atreeid", 
                                    "treeid", "atreeid\\[(\\d+)\\]")
 treeid_df2_z_sos <- subset(treeid_df2_z_sos, !grepl("z|sigma", treeid))
 aspp_df2_z_sos   <- extract_params(df_fitsos, "aspp", "fit_aspp", 
                                    "spp", "aspp\\[(\\d+)\\]")
-site_df2_z_sos   <- extract_params(df_fitsos, "asite", "fit_a_site", 
-                                   "site", "asite\\[(\\d+)\\]")
 
 treeid_df2_z_sos$treeid <- as.numeric(treeid_df2_z_sos$treeid)
-treeid_df2_z_sos$treeid_name <- emp$treeid[match(treeid_df2_z_sos$treeid, emp$treeid_num)]
-bspp_df2_z_sos$spp_name <- emp$latbi[match(bspp_df2_z_sos$spp, emp$spp_num)]
-site_df2_z_sos$site_name <- emp$site[match(site_df2_z_sos$site, emp$site_num)]
-aspp_df2_z_sos$spp_name <- emp$latbi[match(aspp_df2_z_sos$spp, emp$spp_num)]
+treeid_df2_z_sos$treeid_name <- empts$treeid[match(treeid_df2_z_sos$treeid, empts$treeid_num)]
+bspp_df2_z_sos$spp_name <- empts$latbi[match(bspp_df2_z_sos$spp, empts$spp_num)]
+aspp_df2_z_sos$spp_name <- empts$latbi[match(aspp_df2_z_sos$spp, empts$spp_num)]
 
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 ##### EOS posterior recovery #####
@@ -1770,49 +1759,45 @@ df_fiteos <- as.data.frame(fiteos)
 
 # posterior summaries
 sigma_df2_z_eos  <- extract_params(df_fiteos, "sigma", "mean", "sigma")
-bspp_df2_z_eos   <- extract_params(df_fiteos, "bsp", "fit_bspp", 
-                                   "spp", "bsp\\[(\\d+)\\]")
+bspp_df2_z_eos   <- extract_params(df_fiteos, "bspp", "fit_bspp", 
+                                   "spp", "bspp\\[(\\d+)\\]")
 treeid_df2_z_eos <- extract_params(df_fiteos, "atreeid", "fit_atreeid", 
                                    "treeid", "atreeid\\[(\\d+)\\]")
 treeid_df2_z_eos <- subset(treeid_df2_z_eos, !grepl("z|sigma", treeid))
 aspp_df2_z_eos   <- extract_params(df_fiteos, "aspp", "fit_aspp", 
                                    "spp", "aspp\\[(\\d+)\\]")
-site_df2_z_eos   <- extract_params(df_fiteos, "asite", "fit_a_site", 
-                                   "site", "asite\\[(\\d+)\\]")
-
 treeid_df2_z_eos$treeid <- as.numeric(treeid_df2_z_eos$treeid)
-treeid_df2_z_eos$treeid_name <- emp$treeid[match(treeid_df2_z_eos$treeid, emp$treeid_num)]
-bspp_df2_z_eos$spp_name <- emp$latbi[match(bspp_df2_z_eos$spp, emp$spp_num)]
-site_df2_z_eos$site_name <- emp$site[match(site_df2_z_eos$site, emp$site_num)]
-aspp_df2_z_eos$spp_name <- emp$latbi[match(aspp_df2_z_eos$spp, emp$spp_num)]
+treeid_df2_z_eos$treeid_name <- empts$treeid[match(treeid_df2_z_eos$treeid, empts$treeid_num)]
+bspp_df2_z_eos$spp_name <- empts$latbi[match(bspp_df2_z_eos$spp, empts$spp_num)]
+aspp_df2_z_eos$spp_name <- empts$latbi[match(aspp_df2_z_eos$spp, empts$spp_num)]
 
 # Add predictors and bind
 bspp_df2_z$pred <- "GDD"
 bspp_df2_z_gsl$pred <- "GSL"
 bspp_df2_z_sos$pred <- "SOS"
 bspp_df2_z_eos$pred <- "EOS"
-bspp_z_binded <- rbind(bspp_df2_z, bspp_df2_z_gsl, bspp_df2_z_sos, bspp_df2_z_eos)
+bspp_z_binded_ts <- rbind(bspp_df2_z, bspp_df2_z_gsl, bspp_df2_z_sos, bspp_df2_z_eos)
 
-arub <- subset(bspp_z_binded, spp_name %in% "Acer rubrum")
-asac <- subset(bspp_z_binded, spp_name %in% "Acer saccharum")
-afla <- subset(bspp_z_binded, spp_name %in% "Aesculus flava")
-ball <- subset(bspp_z_binded, spp_name %in% "Betula alleghaniensis")
-bnig <- subset(bspp_z_binded, spp_name %in% "Betula nigra")
-cgla <- subset(bspp_z_binded, spp_name %in% "Carya glabra")
-cova <- subset(bspp_z_binded, spp_name %in% "Carya ovata")
-pdel <- subset(bspp_z_binded, spp_name %in% "Populus deltoide")
-qalb <- subset(bspp_z_binded, spp_name %in% "Quercus alba")
-qrub <- subset(bspp_z_binded, spp_name %in% "Quercus rubra")
-tame <- subset(bspp_z_binded, spp_name %in% "Tilia americana")
+arub_ts <- subset(bspp_z_binded_ts, spp_name %in% "Acer rubrum")
+asac_ts <- subset(bspp_z_binded_ts, spp_name %in% "Acer saccharum")
+afla_ts <- subset(bspp_z_binded_ts, spp_name %in% "Aesculus flava")
+ball_ts <- subset(bspp_z_binded_ts, spp_name %in% "Betula alleghaniensis")
+bnig_ts <- subset(bspp_z_binded_ts, spp_name %in% "Betula nigra")
+cgla_ts <- subset(bspp_z_binded_ts, spp_name %in% "Carya glabra")
+cova_ts <- subset(bspp_z_binded_ts, spp_name %in% "Carya ovata")
+pdel_ts <- subset(bspp_z_binded_ts, spp_name %in% "Populus deltoide")
+qalb_ts <- subset(bspp_z_binded_ts, spp_name %in% "Quercus alba")
+qrub_ts <- subset(bspp_z_binded_ts, spp_name %in% "Quercus rubra")
+tame_ts <- subset(bspp_z_binded_ts, spp_name %in% "Tilia americana")
 
-"Acer rubrum"
-"Acer saccharum"
-"Aesculus flava"
-"Betula alleghaniensis"
-"Betula nigra"
-"Carya glabra"
-"Carya ovata"
-"Populus deltoide"
-"Quercus alba"
-"Quercus rubra"
-"Tilia americana"
+bspp_z_binded_ts$fit_bspp_abs <- abs(bspp_z_binded_ts$fit_bspp)
+
+agg_z_ts <- aggregate(fit_bspp_abs ~ spp_name, bspp_z_binded_ts, function(f) max(f))
+
+# Aggregate to get only the max effect size for each species
+max_ES_ts <- merge(agg_z_ts, bspp_z_binded_ts[, c("fit_bspp", "fit_bspp_per5", "fit_bspp_per95", "pred", "fit_bspp_abs", "spp_name")], 
+                   by = c("spp_name", "fit_bspp_abs"))
+
+max_ES_ts$fit_bspp_abs <- NULL
+
+max_ES_ts <- max_ES_ts[order(max_ES_ts$pred),]
