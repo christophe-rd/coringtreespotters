@@ -524,7 +524,7 @@ points(sigma_df2_bb$mean, sigma_df2$mean, pch = 16,
        col = wood_colors[sigma_df2$wood], cex = 1.2)
 text(sigma_df2_bb$mean_per75, sigma_df2$mean_per25, labels = sigma_df2_bb$sigma, pos = c(3,3), cex = 0.75)
 
-mtext("a) GDD", side = 3, adj = -0.5, font = 2, cex = 0.9)
+mtext("(a) GDD", side = 3, adj = -0.5, font = 2, cex = 0.9)
 
 # bspp
 plot(bspp_df2_bb$fit_bspp, bspp_df2$fit_bspp,
@@ -573,7 +573,7 @@ abline(0, 1, lty = 2, col = "black", lwd = 2)
 points(sigma_df2_bb_gsl$mean, sigma_df2_gsl$mean, pch = 16, col = wood_colors[sigma_df2_gsl$wood], cex = 1.2)
 text(sigma_df2_bb_gsl$mean_per75, sigma_df2_gsl$mean_per25, labels = sigma_df2_bb_gsl$sigma, pos = c(3,3), cex = 0.75)
 
-mtext("b) GSL", side = 3, adj = -0.5, font = 2, cex = 0.9)
+mtext("(b) GSL", side = 3, adj = -0.5, font = 2, cex = 0.9)
 
 # bspp
 plot(bspp_df2_bb_gsl$fit_bspp, bspp_df2_gsl$fit_bspp,
@@ -622,7 +622,7 @@ abline(0, 1, lty = 2, col = "black", lwd = 2)
 points(sigma_df2_bb_sos$mean, sigma_df2_sos$mean, pch = 16, col = wood_colors[sigma_df2_sos$wood], cex = 1.2)
 text(sigma_df2_bb_sos$mean_per75, sigma_df2_sos$mean_per25, labels = sigma_df2_bb_sos$sigma, pos = c(3,3), cex = 0.75)
 
-mtext("c) SOS", side = 3, adj = -0.5, font = 2, cex = 0.9)
+mtext("(c) SOS", side = 3, adj = -0.5, font = 2, cex = 0.9)
 
 # bspp
 plot(bspp_df2_bb_sos$fit_bspp, bspp_df2_sos$fit_bspp,

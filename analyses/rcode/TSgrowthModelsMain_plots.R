@@ -278,7 +278,7 @@ colnames(treeid_bspp) <- colnames(atreeid_gdd)
 # back convert the slopes to their original scales
 bspp_df4 <- bspp_df
 for (i in 1:ncol(bspp_df4)){
-  bspp_df4[[i]] <- bspp_df4[[i]] / gddscale
+  bspp_df4[[i]] <- bspp_df4[[i]] / tsgddscale
 }
 
 for (i in seq_len(ncol(treeid_bspp))) { # i = 30
@@ -1212,7 +1212,7 @@ segments(bspp_df2_ts$fit_bspp_per5,  y_pos, bspp_df2_ts$fit_bspp_per95, y_pos,
          col = colslatbi, lwd = 1.5)
 segments(bspp_df2_ts$fit_bspp_per25, y_pos, bspp_df2_ts$fit_bspp_per75, y_pos,
          col = colslatbi, lwd = 3)
-mtext("(a) Growing degree days", side = 3, adj = 0, font = 2, cex = 0.9)
+mtext("(a) Growing degree days", side = 3, adj = 0, font = 2, cex = 0.9) 
 
 # Row 2, Col 1, Slot 6 : GSL
 par(mar = custommar)
@@ -1425,56 +1425,56 @@ par(mar = custommar)
 plot(aspp_df2_ts$fit_aspp, y_pos,
      xlim = c(-10, 10), ylim = c(0.5, n_spp + 0.5),
      xlab = "Log ring width intercept values (mm)", ylab = "",
-     yaxt = "n", pch = 16, cex = 2, col = colslatbi, frame.plot = FALSE,      
+     yaxt = "n", pch = 15, cex = 2, col = colslatbi, frame.plot = FALSE,      
      panel.first = abline(v = 0, lty = 2, col = "black"))
 segments(aspp_df2_ts$fit_aspp_per5,  y_pos, aspp_df2_ts$fit_aspp_per95, y_pos,
          col = colslatbi, lwd = 1.5)
 segments(aspp_df2_ts$fit_aspp_per25, y_pos, aspp_df2_ts$fit_aspp_per75, y_pos,
          col = colslatbi, lwd = 3)
 abline(v = 0, lty = 2, col = "black")
-mtext("Growing degree days", side = 3, adj = 0, font = 2, cex = 0.9)
+mtext("(a) Growing degree days", side = 3, adj = 0, font = 2, cex = 0.9) 
 
 # Row 2: GSL
 par(mar = custommar)
 plot(aspp_df2_ts_gsl$fit_aspp, y_pos,
      xlim = c(-10, 10), ylim = c(0.5, n_spp + 0.5),
      xlab = "Log ring width intercept values (mm)", ylab = "",
-     yaxt = "n", pch = 16, cex = 2, col = colslatbi, frame.plot = FALSE,      
+     yaxt = "n", pch = 15, cex = 2, col = colslatbi, frame.plot = FALSE,      
      panel.first = abline(v = 0, lty = 2, col = "black"))
 segments(aspp_df2_ts_gsl$fit_aspp_per5,  y_pos, aspp_df2_ts_gsl$fit_aspp_per95, y_pos,
          col = colslatbi, lwd = 1.5)
 segments(aspp_df2_ts_gsl$fit_aspp_per25, y_pos, aspp_df2_ts_gsl$fit_aspp_per75, y_pos,
          col = colslatbi, lwd = 3)
 abline(v = 0, lty = 2, col = "black")
-mtext("Growing season length", side = 3, adj = 0, font = 2, cex = 0.9)
+mtext("(b) Growing season length", side = 3, adj = 0, font = 2, cex = 0.9)
 
 # Row 3: SOS
 par(mar = custommar)
 plot(aspp_df2_ts_sos$fit_aspp, y_pos,
      xlim = c(-10, 10),ylim = c(0.5, n_spp + 0.5),
      xlab = "Log ring width intercept values (mm)", ylab = "", 
-     yaxt = "n", pch = 16, cex = 2, col = colslatbi, frame.plot = FALSE,      
+     yaxt = "n", pch = 15, cex = 2, col = colslatbi, frame.plot = FALSE,      
      panel.first = abline(v = 0, lty = 2, col = "black"))
 segments(aspp_df2_ts_sos$fit_aspp_per5,  y_pos, aspp_df2_ts_sos$fit_aspp_per95, y_pos,
          col = colslatbi, lwd = 1.5)
 segments(aspp_df2_ts_sos$fit_aspp_per25, y_pos, aspp_df2_ts_sos$fit_aspp_per75, y_pos,
          col = colslatbi, lwd = 3)
 abline(v = 0, lty = 2, col = "black")
-mtext("Start of season", side = 3, adj = 0, font = 2, cex = 0.9)
+mtext("(c) Start of season", side = 3, adj = 0, font = 2, cex = 0.9)
 
 # Row 4: EOS
 par(mar = custommar)
 plot(aspp_df2_ts_eos$fit_aspp, y_pos,
      xlim = c(-10, 10), ylim = c(0.5, n_spp + 0.5), 
      xlab = "Log ring width intercept values (mm)", ylab = "", 
-     yaxt = "n", pch = 16, cex = 2, col = colslatbi, frame.plot = FALSE,      
+     yaxt = "n", pch = 15, cex = 2, col = colslatbi, frame.plot = FALSE,      
      panel.first = abline(v = 0, lty = 2, col = "black"))
 segments(aspp_df2_ts_eos$fit_aspp_per5,  y_pos, aspp_df2_ts_eos$fit_aspp_per95, y_pos,
          col = colslatbi, lwd = 1.5)
 segments(aspp_df2_ts_eos$fit_aspp_per25, y_pos, aspp_df2_ts_eos$fit_aspp_per75, y_pos,
          col = colslatbi, lwd = 3)
 abline(v = 0, lty = 2, col = "black")
-mtext("End of season", side = 3, adj = 0, font = 2, cex = 0.9)
+mtext("(d) End of season", side = 3, adj = 0, font = 2, cex = 0.9)
 
 # Slot 5: species legend
 par(mar = c(1, 1, 1, 1))

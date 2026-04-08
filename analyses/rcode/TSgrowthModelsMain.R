@@ -79,7 +79,7 @@ treeid <- as.numeric(empts$treeid_num)
 Ntreeid <- length(unique(treeid))
 
 # different response variables
-gdd <- empts$pgsGDD5 / gddscale
+gdd <- empts$pgsGDD5 / tsgddscale
 gsl <- as.numeric(empts$pgsGSL) / 10
 sos <- empts$leafout / 5
 eos <- empts$coloredLeaves / 10
