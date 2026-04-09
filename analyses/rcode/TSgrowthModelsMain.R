@@ -59,7 +59,7 @@ temp <- temp[order(temp$year, temp$doy), ]
 
 temp$bin10 <- ave(temp$doy, temp$year, FUN = function(x) ceiling((x - min(x) + 1) / 10))
 gdd_10day <- aggregate(gdddiff ~ year + bin10, data = temp, max)
-gddscale <- mean(gdd_10day$gdddiff)
+tsgddscale <- mean(gdd_10day$gdddiff)
 
 # transform my groups to numeric values
 empts$spp_num <- match(empts$latbi, unique(empts$latbi))
