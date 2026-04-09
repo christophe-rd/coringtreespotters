@@ -1122,7 +1122,7 @@ layout(matrix(c(
 widths = c(0.7, 0.4))
 
 # set margins throught
-custommar <- c(4, 2, 2, 1)
+custommar <- c(4, 4, 2, 1.2)
 
 # Row 1: GDD
 par(mar = custommar)
@@ -1191,7 +1191,7 @@ dev.off()
 ##### bspp with lines #####
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 jpeg(file = "figures/growthModelsMain/muALLbsppWlines.jpeg",
-     width = 2800, height = 2800, res = 300)
+     width = 3000, height = 2800, res = 300)
 
 layout(matrix(c(
   1, 5, 9,
@@ -1199,7 +1199,7 @@ layout(matrix(c(
   3, 7, 9,
   4, 8, 9
 ), nrow = 4, byrow = TRUE),
-widths = c(1.3, 1, 0.5)) 
+widths = c(1.3, 1.2, 0.5)) 
 
 # Row 1, Col 1, Slot 5 : GDD
 par(mar = custommar)
@@ -1399,6 +1399,88 @@ par(mar = c(1, 1, 1, 1))
 plot.new()
 legend("center",
        legend = sapply(unique(bspp_df2_ts$spp_name), 
+                       function(x) parse(text = paste0("italic('", x, "')"))),
+       col    = unique(colslatbi),
+       pch    = 16, pt.cex = 1.5, bty = "n", cex = 1.2,
+       title  = "Species", title.font = 2)
+
+dev.off()
+
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+###### asp ######
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+jpeg(file = "figures/growthModelsMain/muALLaspp.jpeg",
+     width = 1800, height = 2200, res = 300)
+
+layout(matrix(c(
+  1, 5,
+  2, 5,
+  3, 5,
+  4, 5
+), nrow = 4, byrow = TRUE),
+widths = c(0.7, 0.4))
+
+# Row 1: GDD
+par(mar = custommar)
+plot(aspp_df2_ts$fit_aspp, y_pos,
+     xlim = c(-10, 10), ylim = c(0.5, n_spp + 0.5),
+     xlab = "Log ring width intercept values (mm)", ylab = "",
+     yaxt = "n", pch = 15, cex = 2, col = colslatbi, frame.plot = FALSE,      
+     panel.first = abline(v = 0, lty = 2, col = "black"))
+segments(aspp_df2_ts$fit_aspp_per5,  y_pos, aspp_df2_ts$fit_aspp_per95, y_pos,
+         col = colslatbi, lwd = 1.5)
+segments(aspp_df2_ts$fit_aspp_per25, y_pos, aspp_df2_ts$fit_aspp_per75, y_pos,
+         col = colslatbi, lwd = 3)
+abline(v = 0, lty = 2, col = "black")
+mtext("(a) Growing degree days", side = 3, adj = 0, font = 2, cex = 0.9) 
+
+# Row 2: GSL
+par(mar = custommar)
+plot(aspp_df2_ts_gsl$fit_aspp, y_pos,
+     xlim = c(-10, 10), ylim = c(0.5, n_spp + 0.5),
+     xlab = "Log ring width intercept values (mm)", ylab = "",
+     yaxt = "n", pch = 15, cex = 2, col = colslatbi, frame.plot = FALSE,      
+     panel.first = abline(v = 0, lty = 2, col = "black"))
+segments(aspp_df2_ts_gsl$fit_aspp_per5,  y_pos, aspp_df2_ts_gsl$fit_aspp_per95, y_pos,
+         col = colslatbi, lwd = 1.5)
+segments(aspp_df2_ts_gsl$fit_aspp_per25, y_pos, aspp_df2_ts_gsl$fit_aspp_per75, y_pos,
+         col = colslatbi, lwd = 3)
+abline(v = 0, lty = 2, col = "black")
+mtext("(b) Growing season length", side = 3, adj = 0, font = 2, cex = 0.9)
+
+# Row 3: SOS
+par(mar = custommar)
+plot(aspp_df2_ts_sos$fit_aspp, y_pos,
+     xlim = c(-10, 10),ylim = c(0.5, n_spp + 0.5),
+     xlab = "Log ring width intercept values (mm)", ylab = "", 
+     yaxt = "n", pch = 15, cex = 2, col = colslatbi, frame.plot = FALSE,      
+     panel.first = abline(v = 0, lty = 2, col = "black"))
+segments(aspp_df2_ts_sos$fit_aspp_per5,  y_pos, aspp_df2_ts_sos$fit_aspp_per95, y_pos,
+         col = colslatbi, lwd = 1.5)
+segments(aspp_df2_ts_sos$fit_aspp_per25, y_pos, aspp_df2_ts_sos$fit_aspp_per75, y_pos,
+         col = colslatbi, lwd = 3)
+abline(v = 0, lty = 2, col = "black")
+mtext("(c) Start of season", side = 3, adj = 0, font = 2, cex = 0.9)
+
+# Row 4: EOS
+par(mar = custommar)
+plot(aspp_df2_ts_eos$fit_aspp, y_pos,
+     xlim = c(-10, 10), ylim = c(0.5, n_spp + 0.5), 
+     xlab = "Log ring width intercept values (mm)", ylab = "", 
+     yaxt = "n", pch = 15, cex = 2, col = colslatbi, frame.plot = FALSE,      
+     panel.first = abline(v = 0, lty = 2, col = "black"))
+segments(aspp_df2_ts_eos$fit_aspp_per5,  y_pos, aspp_df2_ts_eos$fit_aspp_per95, y_pos,
+         col = colslatbi, lwd = 1.5)
+segments(aspp_df2_ts_eos$fit_aspp_per25, y_pos, aspp_df2_ts_eos$fit_aspp_per75, y_pos,
+         col = colslatbi, lwd = 3)
+abline(v = 0, lty = 2, col = "black")
+mtext("(d) End of season", side = 3, adj = 0, font = 2, cex = 0.9)
+
+# Slot 5: species legend
+par(mar = c(1, 1, 1, 1))
+plot.new()
+legend("center",
+       legend = sapply(unique(aspp_df2_ts$spp_name), 
                        function(x) parse(text = paste0("italic('", x, "')"))),
        col    = unique(colslatbi),
        pch    = 16, pt.cex = 1.5, bty = "n", cex = 1.2,
