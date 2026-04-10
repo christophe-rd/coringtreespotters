@@ -20,11 +20,7 @@ if (length(grep("christophe_rouleau-desrochers", getwd())) > 0) {
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 source("rcode/TSgrowthModelsMain.R")
 
-makeplots <- TRUE
-
-# specify colors
-renoir <- c("#17154f", "#2f357c", "#6c5d9e", "#9d9cd5", "#b0799a", "#e48171", 
-            "#bf3729", "#e69b00", "#f5bb50", "#ada43b", "#355828")
+makeplots <- FALSE
 
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 # GDD posterior recovery ####
@@ -199,34 +195,6 @@ sppvecname <- unique(treeid_spp$latbi)
 # for mu plots
 species_order <- rev(unique(empts$latbi))
 
-colscommon <- c(
-  "Red maple"           = renoir[1],
-  "Sugar maple"         = renoir[2],
-  "Yellow buckeye"      = renoir[3],
-  "Yellow birch"        = renoir[4],
-  "River birch"         = renoir[5],
-  "Pignut hickory"      = renoir[6],
-  "Shagbark hickory"    = renoir[7],
-  "Eastern cottonwood"  = renoir[8],
-  "White oak"           = renoir[9],
-  "Northern red oak"    = renoir[10],
-  "American basswood"   = renoir[11]
-)
-
-colslatbi <- c(
-  "Acer rubrum"           = renoir[1],
-  "Acer saccharum"        = renoir[2],
-  "Aesculus flava"        = renoir[3],
-  "Betula alleghaniensis" = renoir[4],
-  "Betula nigra"          = renoir[5],
-  "Carya glabra"          = renoir[6],
-  "Carya ovata"           = renoir[7],
-  "Populus deltoides"     = renoir[8],
-  "Quercus alba"          = renoir[9],
-  "Quercus rubra"         = renoir[10],
-  "Tilia americana"       = renoir[11]
-)
-
 # vector of treeids
 subyvec <- vector()
 for (i in 1:length(unique(empts$treeid_num))) {
@@ -332,13 +300,13 @@ for (i in seq_along(treeidvecnum)) { # i = 1
   # empty plot first
   plot(empts$pgsGDD5, y, type = "n", 
        ylim = range(c(emp_treeid$loglength, y_low, y_high), na.rm = TRUE),
-       xlab = "Primary growing season GDD", ylab = "Log ring width (mm)",
+       xlab = "Primary growing season GDD", ylab = "log(ring width)",
        frame = FALSE,
        main = tree_col_name) # set the name for each plot
   
   spp_id <- treeid_spp$latbi[match(tree_id_num, treeid_spp$treeid_num)]
   
-  line_col <- colslatbi[spp_id]
+  line_col <- tscolslatbi[spp_id]
   
   # shaded interval
   polygon(c(gddseq, rev(gddseq)), 
@@ -402,7 +370,7 @@ for (i in seq_along(sppvecnum)) { # i = 1
   spp_num <- as.integer(spp_column)
   
   # subset empirical data correctly
-  emp_spp <- empts[empts$spp_num == spp_num, ]
+  emp_spp <- empts[empts$latbi == spp_column_name, ]
   
   spp_column <- as.character(sppvecnum[i]) 
   y_post <- spp_post_list[[spp_column]]
@@ -420,7 +388,7 @@ for (i in seq_along(sppvecnum)) { # i = 1
        # ylim = ylim_spp,
        ylim = c(-1, 3),
        xlab = "Growing season growing degree days (GDD)",
-       ylab = "Log ring width (mm)",
+       ylab = "log(ring width)",
        frame = FALSE,
        main = spp_column_name)
   
@@ -477,7 +445,7 @@ for (i in seq(sppvecnum)) { # i = 11
   spp_num <- as.integer(spp_column)
   
   # subset empirical data correctly
-  emp_spp <- empts[empts$spp_num == spp_num, ]
+  emp_spp <- empts[empts$latbi == spp_column_name, ]
   
   spp_column <- as.character(sppvecnum[i]) 
   y_post <- spp_post_list[[spp_column]]
@@ -494,7 +462,7 @@ for (i in seq(sppvecnum)) { # i = 11
        type = "n",
        ylim = ylim_spp,
        xlab = "Growing season growing degree days (GDD)",
-       ylab = "Log ring width (mm)",
+       ylab = "log(ring width)",
        frame = FALSE,
        main = spp_column_name)
   
@@ -564,7 +532,7 @@ jpeg(
 
 plot(empts$pgsGDD5, y, type = "n", 
      ylim = range(min(empts$loglength), max(empts$loglength)), 
-     xlab = "Primary growing season GDD", ylab = "Log ring width (mm)",
+     xlab = "Primary growing season GDD", ylab = "log(ring width)",
      main = "species growth responses")
 
 # Loop over trees again to plot each tree individually
@@ -595,7 +563,7 @@ for (i in seq_along(sppvecnum)) { # i = 1
         col = line_col,
         lwd = 2)
   
-  emp_spp <- empts[empts$spp_num == spp_num, ]
+  emp_spp <- empts[empts$latbi == spp_column_name, ]
 
   # points(
   #   emp_spp$pgsGDD5,
@@ -721,7 +689,7 @@ for (i in seq_along(sppvecnum)) { # i = 1
   spp_num <- as.integer(spp_column)
   
   # subset empirical data correctly
-  emp_spp <- empts[empts$spp_num == spp_num, ]
+  emp_spp <- empts[empts$latbi == spp_column_name, ]
   
   spp_column <- as.character(sppvecnum[i]) 
   y_post <- spp_post_list_gsl[[spp_column]]
@@ -739,7 +707,7 @@ for (i in seq_along(sppvecnum)) { # i = 1
        # ylim = ylim_spp,
        ylim = c(-1, 3),
        xlab = "Growing season length (days)",
-       ylab = "Log ring width (mm)",
+       ylab = "log(ring width)",
        frame = FALSE,
        main = spp_column_name) 
   
@@ -884,7 +852,7 @@ for (i in seq_along(sppvecnum)) { # i = 1
   spp_num <- as.integer(spp_column)
   
   # subset empirical data correctly
-  emp_spp <- empts[empts$spp_num == spp_num, ]
+  emp_spp <- empts[empts$latbi == spp_column_name, ]
   
   spp_column <- as.character(sppvecnum[i]) 
   y_post <- spp_post_list_sos[[spp_column]]
@@ -902,7 +870,7 @@ for (i in seq_along(sppvecnum)) { # i = 1
        # ylim = ylim_spp,
        ylim = c(-1, 3),
        xlab = "Leafout day of year",
-       ylab = "Log ring width (mm)",
+       ylab = "log(ring width)",
        frame = FALSE,
        main = spp_column_name)
   
@@ -1047,7 +1015,7 @@ for (i in seq_along(sppvecnum)) { # i = 1
   spp_num <- as.integer(spp_column)
   
   # subset empirical data correctly
-  emp_spp <- empts[empts$spp_num == spp_num, ]
+  emp_spp <- empts[empts$latbi == spp_column_name, ]
   
   spp_column <- as.character(sppvecnum[i]) 
   y_post <- spp_post_list_eos[[spp_column]]
@@ -1065,7 +1033,7 @@ for (i in seq_along(sppvecnum)) { # i = 1
        # ylim = ylim_spp,
        ylim = c(-1, 3),
        xlab = "Growing season length (days)",
-       ylab = "Log ring width (mm)",
+       ylab = "log(ring width)",
        frame = FALSE,
        main = spp_column_name)
   # add panel letter 
@@ -1119,7 +1087,7 @@ layout(matrix(c(
   3, 5,
   4, 5
 ), nrow = 4, byrow = TRUE),
-widths = c(0.7, 0.4))
+widths = c(1.3, 1.2))
 
 # set margins throught
 custommar <- c(4, 4, 2, 1.2)
@@ -1128,51 +1096,51 @@ custommar <- c(4, 4, 2, 1.2)
 par(mar = custommar)
 plot(bspp_df2_ts$fit_bspp, y_pos,
      xlim = c(-0.8, 0.8), ylim = c(0.5, n_spp + 0.5), 
-     xlab = "Log ring width (mm) change in averaged GDD of 10 spring days", ylab = "",
-     yaxt = "n", pch = 16, cex = 2, col = colslatbi, frame.plot = FALSE,
+     xlab = "log(ring width) change in averaged GDD of 10 spring days", ylab = "",
+     yaxt = "n", pch = 16, cex = 2, col = tscolslatbi, frame.plot = FALSE,
      panel.first = abline(v = 0, lty = 2, col = "black"))
 segments(bspp_df2_ts$fit_bspp_per5,  y_pos, bspp_df2_ts$fit_bspp_per95, y_pos,
-         col = colslatbi, lwd = 1.5)
+         col = tscolslatbi, lwd = 1.5)
 segments(bspp_df2_ts$fit_bspp_per25, y_pos, bspp_df2_ts$fit_bspp_per75, y_pos,
-         col = colslatbi, lwd = 3)
+         col = tscolslatbi, lwd = 3)
 mtext("Growing degree days", side = 3, adj = 0, font = 2, cex = 0.9)
 
 # Row 2: GSL
 par(mar = custommar)
 plot(bspp_df2_ts_gsl$fit_bspp, y_pos,
      xlim = c(-0.8, 0.8), ylim = c(0.5, n_spp + 0.5),
-     xlab = "Log ring width (mm) change per 10 days of growing season length", ylab = "",
-     yaxt = "n", pch = 16, cex = 2, col = colslatbi, frame.plot = FALSE,      
+     xlab = "log(ring width) change per 10 days of growing season length", ylab = "",
+     yaxt = "n", pch = 16, cex = 2, col = tscolslatbi, frame.plot = FALSE,      
      panel.first = abline(v = 0, lty = 2, col = "black"))
 segments(bspp_df2_ts_gsl$fit_bspp_per5,  y_pos, bspp_df2_ts_gsl$fit_bspp_per95, y_pos,
-         col = colslatbi, lwd = 1.5)
+         col = tscolslatbi, lwd = 1.5)
 segments(bspp_df2_ts_gsl$fit_bspp_per25, y_pos, bspp_df2_ts_gsl$fit_bspp_per75, y_pos,
-         col = colslatbi, lwd = 3)
+         col = tscolslatbi, lwd = 3)
 mtext("Growing season length", side = 3, adj = 0, font = 2, cex = 0.9)
 
 # Row 3: SOS
 par(mar = custommar)
 plot(bspp_df2_ts_sos$fit_bspp, y_pos,
      xlim = c(-0.8, 0.8), ylim = c(0.5, n_spp + 0.5),
-     xlab = "Log ring width (mm) change per 5 days of leafout", ylab = "",
-     yaxt = "n", pch = 16, cex = 2, col = colslatbi, frame.plot = FALSE,      
+     xlab = "log(ring width) change per 5 days of leafout", ylab = "",
+     yaxt = "n", pch = 16, cex = 2, col = tscolslatbi, frame.plot = FALSE,      
      panel.first = abline(v = 0, lty = 2, col = "black"))
 segments(bspp_df2_ts_sos$fit_bspp_per5,  y_pos, bspp_df2_ts_sos$fit_bspp_per95, y_pos,
-         col = colslatbi, lwd = 1.5)
+         col = tscolslatbi, lwd = 1.5)
 segments(bspp_df2_ts_sos$fit_bspp_per25, y_pos, bspp_df2_ts_sos$fit_bspp_per75, y_pos,
-         col = colslatbi, lwd = 3)
+         col = tscolslatbi, lwd = 3)
 mtext("Start of season", side = 3, adj = 0, font = 2, cex = 0.9)
 
 # Row 4: EOS
 par(mar = custommar)
 plot(bspp_df2_ts_eos$fit_bspp, y_pos,
      xlim = c(-0.8, 0.8), ylim = c(0.5, n_spp + 0.5),
-     xlab = "Log ring width (mm) change per 10 days of budset", ylab = "",
-     yaxt = "n", pch = 16, cex = 2, col = colslatbi, frame.plot = FALSE,      panel.first = abline(v = 0, lty = 2, col = "black"))
+     xlab = "log(ring width) change per 10 days of budset", ylab = "",
+     yaxt = "n", pch = 16, cex = 2, col = tscolslatbi, frame.plot = FALSE,      panel.first = abline(v = 0, lty = 2, col = "black"))
 segments(bspp_df2_ts_eos$fit_bspp_per5,  y_pos, bspp_df2_ts_eos$fit_bspp_per95, y_pos,
-         col = colslatbi, lwd = 1.5)
+         col = tscolslatbi, lwd = 1.5)
 segments(bspp_df2_ts_eos$fit_bspp_per25, y_pos, bspp_df2_ts_eos$fit_bspp_per75, y_pos,
-         col = colslatbi, lwd = 3)
+         col = tscolslatbi, lwd = 3)
 mtext("End of season", side = 3, adj = 0, font = 2, cex = 0.9)
 
 # Slot 5: species legend
@@ -1181,7 +1149,7 @@ plot.new()
 legend("center",
        legend = sapply(unique(bspp_df2_ts$spp_name), 
                        function(x) parse(text = paste0("italic('", x, "')"))),
-       col    = unique(colslatbi),
+       col    = unique(tscolslatbi),
        pch    = 16, pt.cex = 1.5, bty = "n", cex = 1.2,
        title  = "Species", title.font = 2)
 
@@ -1205,60 +1173,60 @@ widths = c(1.3, 1.2, 0.5))
 par(mar = custommar)
 plot(bspp_df2_ts$fit_bspp, y_pos,
      xlim = c(-0.8, 0.8), ylim = c(0.5, n_spp + 0.5),
-     xlab = "Log ring width (mm) change in averaged GDD of 10 spring days", ylab = "",
-     yaxt = "n", pch = 16, cex = 2, col = colslatbi, frame.plot = FALSE,      
+     xlab = "log(ring width) change in averaged GDD of 10 spring days", ylab = "",
+     yaxt = "n", pch = 16, cex = 2, col = tscolslatbi, frame.plot = FALSE,      
      panel.first = abline(v = 0, lty = 2, col = "black"))
 segments(bspp_df2_ts$fit_bspp_per5,  y_pos, bspp_df2_ts$fit_bspp_per95, y_pos,
-         col = colslatbi, lwd = 1.5)
+         col = tscolslatbi, lwd = 1.5)
 segments(bspp_df2_ts$fit_bspp_per25, y_pos, bspp_df2_ts$fit_bspp_per75, y_pos,
-         col = colslatbi, lwd = 3)
+         col = tscolslatbi, lwd = 3)
 mtext("(a) Growing degree days", side = 3, adj = 0, font = 2, cex = 0.9) 
 
 # Row 2, Col 1, Slot 6 : GSL
 par(mar = custommar)
 plot(bspp_df2_ts_gsl$fit_bspp, y_pos,
      xlim = c(-0.8, 0.8), ylim = c(0.5, n_spp + 0.5),
-     xlab = "Log ring width (mm) change per 10 days of GSL", ylab = "",
-     yaxt = "n", pch = 16, cex = 2, col = colslatbi, frame.plot = FALSE,      
+     xlab = "log(ring width) change per 10 days of GSL", ylab = "",
+     yaxt = "n", pch = 16, cex = 2, col = tscolslatbi, frame.plot = FALSE,      
      panel.first = abline(v = 0, lty = 2, col = "black"))
 segments(bspp_df2_ts_gsl$fit_bspp_per5,  y_pos, bspp_df2_ts_gsl$fit_bspp_per95, y_pos,
-         col = colslatbi, lwd = 1.5)
+         col = tscolslatbi, lwd = 1.5)
 segments(bspp_df2_ts_gsl$fit_bspp_per25, y_pos, bspp_df2_ts_gsl$fit_bspp_per75, y_pos,
-         col = colslatbi, lwd = 3)
+         col = tscolslatbi, lwd = 3)
 mtext("(b) Growing season length", side = 3, adj = 0, font = 2, cex = 0.9)
 
 # Row 3, Col 1, Slot 7 : SOS
 par(mar = custommar)
 plot(bspp_df2_ts_sos$fit_bspp, y_pos,
      xlim = c(-0.8, 0.8), ylim = c(0.5, n_spp + 0.5),
-     xlab = "Log ring width (mm) change per 5 days of leafout", ylab = "",
-     yaxt = "n", pch = 16, cex = 2, col = colslatbi, frame.plot = FALSE,      
+     xlab = "log(ring width) change per 5 days of leafout", ylab = "",
+     yaxt = "n", pch = 16, cex = 2, col = tscolslatbi, frame.plot = FALSE,      
      panel.first = abline(v = 0, lty = 2, col = "black"))
 segments(bspp_df2_ts_sos$fit_bspp_per5,  y_pos, bspp_df2_ts_sos$fit_bspp_per95, y_pos,
-         col = colslatbi, lwd = 1.5)
+         col = tscolslatbi, lwd = 1.5)
 segments(bspp_df2_ts_sos$fit_bspp_per25, y_pos, bspp_df2_ts_sos$fit_bspp_per75, y_pos,
-         col = colslatbi, lwd = 3)
+         col = tscolslatbi, lwd = 3)
 mtext("(c) Start of season", side = 3, adj = 0, font = 2, cex = 0.9)
 
 # Row 4, Col 1, Slot 8 : EOS
 par(mar = custommar)
 plot(bspp_df2_ts_eos$fit_bspp, y_pos,
      xlim = c(-0.8, 0.8), ylim = c(0.5, n_spp + 0.5),
-     xlab = "Log ring width (mm) change per 10 days of coloredLeaves", ylab = "",
-     yaxt = "n", pch = 16, cex = 2, col = colslatbi, frame.plot = FALSE,      
+     xlab = "log(ring width) change per 10 days of coloredLeaves", ylab = "",
+     yaxt = "n", pch = 16, cex = 2, col = tscolslatbi, frame.plot = FALSE,      
      
      panel.first = abline(v = 0, lty = 2, col = "black"))
 segments(bspp_df2_ts_eos$fit_bspp_per5,  y_pos, bspp_df2_ts_eos$fit_bspp_per95, y_pos,
-         col = colslatbi, lwd = 1.5)
+         col = tscolslatbi, lwd = 1.5)
 segments(bspp_df2_ts_eos$fit_bspp_per25, y_pos, bspp_df2_ts_eos$fit_bspp_per75, y_pos,
-         col = colslatbi, lwd = 3)
+         col = tscolslatbi, lwd = 3)
 mtext("(d) End of season", side = 3, adj = 0, font = 2, cex = 0.9)
 
 # Row 1, Col 2, Slot 5 : GDD
 par(mar = custommar)
 plot(empts$pgsGDD5, y, type = "n", frame = FALSE,
      ylim = range(min(empts$loglength), max(empts$loglength)), 
-     xlab = "Growing season growing degree days (GDD)", ylab = "Log ring width (mm)",
+     xlab = "Growing season growing degree days (GDD)", ylab = "log(ring width)",
      main = "")
 mtext("(e)", side = 3, adj = 0, font = 2, cex = 0.9)
 
@@ -1276,7 +1244,7 @@ for (i in seq_along(sppvecnum)) { # i = 1
   y_low  <- apply(y_post, 1, quantile, 0.25)
   y_high <- apply(y_post, 1, quantile, 0.75)
   
-  line_col <- colslatbi[spp_num]
+  line_col <- tscolslatbi[spp_num]
   
   polygon(c(gddseq, rev(gddseq)),
           c(y_low, rev(y_high)), # low and high interval
@@ -1286,14 +1254,14 @@ for (i in seq_along(sppvecnum)) { # i = 1
         col = line_col,
         lwd = 2)
   
-  emp_spp <- empts[empts$spp_num == spp_num, ]
+  emp_spp <- empts[empts$latbi == spp_column_name, ]
 }
 
 # Row 2, Col 2, Slot 6 : GSL
 par(mar = custommar)
 plot(empts$pgsGSL, y, type = "n", frame = FALSE,
      ylim = range(min(empts$loglength), max(empts$loglength)), 
-     xlab = "Growing season length (days)", ylab = "Log ring width (mm)",
+     xlab = "Growing season length (days)", ylab = "log(ring width)",
      main = "")
 mtext("(f)", side = 3, adj = 0, font = 2, cex = 0.9)
 
@@ -1311,7 +1279,7 @@ for (i in seq_along(sppvecnum)) { # i = 1
   y_low  <- apply(y_post_gsl, 1, quantile, 0.25)
   y_high <- apply(y_post_gsl, 1, quantile, 0.75)
   
-  line_col <- colslatbi[spp_num]
+  line_col <- tscolslatbi[spp_num]
   
   polygon(c(gslseq, rev(gslseq)),
           c(y_low, rev(y_high)), # low and high interval
@@ -1321,14 +1289,14 @@ for (i in seq_along(sppvecnum)) { # i = 1
         col = line_col,
         lwd = 2)
   
-  emp_spp <- empts[empts$spp_num == spp_num, ]
+  emp_spp <- empts[empts$latbi == spp_column_name, ]
 }
 
 # Row 3, Col 2, Slot 7 : SOS
 par(mar = custommar)
 plot(empts$leafout, y, type = "n", frame = FALSE,
      ylim = range(min(empts$loglength), max(empts$loglength)), 
-     xlab = "Leafout day of year", ylab = "Log ring width (mm)",
+     xlab = "Leafout day of year", ylab = "log(ring width)",
      main = "")
 mtext("(g)", side = 3, adj = 0, font = 2, cex = 0.9)
 
@@ -1346,7 +1314,7 @@ for (i in seq_along(sppvecnum)) { # i = 1
   y_low  <- apply(y_post_sos, 1, quantile, 0.25)
   y_high <- apply(y_post_sos, 1, quantile, 0.75)
   
-  line_col <- colslatbi[spp_num]
+  line_col <- tscolslatbi[spp_num]
   
   polygon(c(sosseq, rev(sosseq)),
           c(y_low, rev(y_high)), # low and high interval
@@ -1356,14 +1324,14 @@ for (i in seq_along(sppvecnum)) { # i = 1
         col = line_col,
         lwd = 2)
   
-  emp_spp <- empts[empts$spp_num == spp_num, ]
+  emp_spp <- empts[empts$latbi == spp_column_name, ]
 }
 
 # Row 4, Col 2, Slot 8 : EOS
 par(mar = custommar)
 plot(empts$coloredLeaves, y, type = "n", frame = FALSE,
      ylim = range(min(empts$loglength), max(empts$loglength)), 
-     xlab = "coloredLeaves day of year", ylab = "Log ring width (mm)",
+     xlab = "coloredLeaves day of year", ylab = "log(ring width)",
      main = "")
 mtext("(h)", side = 3, adj = 0, font = 2, cex = 0.9)
 
@@ -1381,7 +1349,7 @@ for (i in seq_along(sppvecnum)) { # i = 1
   y_low  <- apply(y_post_eos, 1, quantile, 0.25)
   y_high <- apply(y_post_eos, 1, quantile, 0.75)
   
-  line_col <- colslatbi[spp_num]
+  line_col <- tscolslatbi[spp_num]
   
   polygon(c(eosseq, rev(eosseq)),
           c(y_low, rev(y_high)), # low and high interval
@@ -1391,7 +1359,7 @@ for (i in seq_along(sppvecnum)) { # i = 1
         col = line_col,
         lwd = 2)
   
-  emp_spp <- empts[empts$spp_num == spp_num, ]
+  emp_spp <- empts[empts$latbi == spp_column_name, ]
 }
 
 # Slot 9: species legend
@@ -1400,7 +1368,7 @@ plot.new()
 legend("center",
        legend = sapply(unique(bspp_df2_ts$spp_name), 
                        function(x) parse(text = paste0("italic('", x, "')"))),
-       col    = unique(colslatbi),
+       col    = unique(tscolslatbi),
        pch    = 16, pt.cex = 1.5, bty = "n", cex = 1.2,
        title  = "Species", title.font = 2)
 
@@ -1425,12 +1393,12 @@ par(mar = custommar)
 plot(aspp_df2_ts$fit_aspp, y_pos,
      xlim = c(-10, 10), ylim = c(0.5, n_spp + 0.5),
      xlab = "Log ring width intercept values (mm)", ylab = "",
-     yaxt = "n", pch = 15, cex = 2, col = colslatbi, frame.plot = FALSE,      
+     yaxt = "n", pch = 15, cex = 2, col = tscolslatbi, frame.plot = FALSE,      
      panel.first = abline(v = 0, lty = 2, col = "black"))
 segments(aspp_df2_ts$fit_aspp_per5,  y_pos, aspp_df2_ts$fit_aspp_per95, y_pos,
-         col = colslatbi, lwd = 1.5)
+         col = tscolslatbi, lwd = 1.5)
 segments(aspp_df2_ts$fit_aspp_per25, y_pos, aspp_df2_ts$fit_aspp_per75, y_pos,
-         col = colslatbi, lwd = 3)
+         col = tscolslatbi, lwd = 3)
 abline(v = 0, lty = 2, col = "black")
 mtext("(a) Growing degree days", side = 3, adj = 0, font = 2, cex = 0.9) 
 
@@ -1439,12 +1407,12 @@ par(mar = custommar)
 plot(aspp_df2_ts_gsl$fit_aspp, y_pos,
      xlim = c(-10, 10), ylim = c(0.5, n_spp + 0.5),
      xlab = "Log ring width intercept values (mm)", ylab = "",
-     yaxt = "n", pch = 15, cex = 2, col = colslatbi, frame.plot = FALSE,      
+     yaxt = "n", pch = 15, cex = 2, col = tscolslatbi, frame.plot = FALSE,      
      panel.first = abline(v = 0, lty = 2, col = "black"))
 segments(aspp_df2_ts_gsl$fit_aspp_per5,  y_pos, aspp_df2_ts_gsl$fit_aspp_per95, y_pos,
-         col = colslatbi, lwd = 1.5)
+         col = tscolslatbi, lwd = 1.5)
 segments(aspp_df2_ts_gsl$fit_aspp_per25, y_pos, aspp_df2_ts_gsl$fit_aspp_per75, y_pos,
-         col = colslatbi, lwd = 3)
+         col = tscolslatbi, lwd = 3)
 abline(v = 0, lty = 2, col = "black")
 mtext("(b) Growing season length", side = 3, adj = 0, font = 2, cex = 0.9)
 
@@ -1453,12 +1421,12 @@ par(mar = custommar)
 plot(aspp_df2_ts_sos$fit_aspp, y_pos,
      xlim = c(-10, 10),ylim = c(0.5, n_spp + 0.5),
      xlab = "Log ring width intercept values (mm)", ylab = "", 
-     yaxt = "n", pch = 15, cex = 2, col = colslatbi, frame.plot = FALSE,      
+     yaxt = "n", pch = 15, cex = 2, col = tscolslatbi, frame.plot = FALSE,      
      panel.first = abline(v = 0, lty = 2, col = "black"))
 segments(aspp_df2_ts_sos$fit_aspp_per5,  y_pos, aspp_df2_ts_sos$fit_aspp_per95, y_pos,
-         col = colslatbi, lwd = 1.5)
+         col = tscolslatbi, lwd = 1.5)
 segments(aspp_df2_ts_sos$fit_aspp_per25, y_pos, aspp_df2_ts_sos$fit_aspp_per75, y_pos,
-         col = colslatbi, lwd = 3)
+         col = tscolslatbi, lwd = 3)
 abline(v = 0, lty = 2, col = "black")
 mtext("(c) Start of season", side = 3, adj = 0, font = 2, cex = 0.9)
 
@@ -1467,12 +1435,12 @@ par(mar = custommar)
 plot(aspp_df2_ts_eos$fit_aspp, y_pos,
      xlim = c(-10, 10), ylim = c(0.5, n_spp + 0.5), 
      xlab = "Log ring width intercept values (mm)", ylab = "", 
-     yaxt = "n", pch = 15, cex = 2, col = colslatbi, frame.plot = FALSE,      
+     yaxt = "n", pch = 15, cex = 2, col = tscolslatbi, frame.plot = FALSE,      
      panel.first = abline(v = 0, lty = 2, col = "black"))
 segments(aspp_df2_ts_eos$fit_aspp_per5,  y_pos, aspp_df2_ts_eos$fit_aspp_per95, y_pos,
-         col = colslatbi, lwd = 1.5)
+         col = tscolslatbi, lwd = 1.5)
 segments(aspp_df2_ts_eos$fit_aspp_per25, y_pos, aspp_df2_ts_eos$fit_aspp_per75, y_pos,
-         col = colslatbi, lwd = 3)
+         col = tscolslatbi, lwd = 3)
 abline(v = 0, lty = 2, col = "black")
 mtext("(d) End of season", side = 3, adj = 0, font = 2, cex = 0.9)
 
@@ -1482,7 +1450,7 @@ plot.new()
 legend("center",
        legend = sapply(unique(aspp_df2_ts$spp_name), 
                        function(x) parse(text = paste0("italic('", x, "')"))),
-       col    = unique(colslatbi),
+       col    = unique(tscolslatbi),
        pch    = 16, pt.cex = 1.5, bty = "n", cex = 1.2,
        title  = "Species", title.font = 2)
 
@@ -1507,12 +1475,12 @@ par(mar = custommar)
 plot(aspp_df2_ts$fit_aspp, y_pos,
      xlim = c(-10, 10), ylim = c(0.5, n_spp + 0.5),
      xlab = "Log ring width intercept values (mm)", ylab = "",
-     yaxt = "n", pch = 15, cex = 2, col = colslatbi, frame.plot = FALSE,      
+     yaxt = "n", pch = 15, cex = 2, col = tscolslatbi, frame.plot = FALSE,      
      panel.first = abline(v = 0, lty = 2, col = "black"))
 segments(aspp_df2_ts$fit_aspp_per5,  y_pos, aspp_df2_ts$fit_aspp_per95, y_pos,
-         col = colslatbi, lwd = 1.5)
+         col = tscolslatbi, lwd = 1.5)
 segments(aspp_df2_ts$fit_aspp_per25, y_pos, aspp_df2_ts$fit_aspp_per75, y_pos,
-         col = colslatbi, lwd = 3)
+         col = tscolslatbi, lwd = 3)
 abline(v = 0, lty = 2, col = "black")
 mtext("(a) Growing degree days", side = 3, adj = 0, font = 2, cex = 0.9) 
 
@@ -1521,12 +1489,12 @@ par(mar = custommar)
 plot(aspp_df2_ts_gsl$fit_aspp, y_pos,
      xlim = c(-10, 10), ylim = c(0.5, n_spp + 0.5),
      xlab = "Log ring width intercept values (mm)", ylab = "",
-     yaxt = "n", pch = 15, cex = 2, col = colslatbi, frame.plot = FALSE,      
+     yaxt = "n", pch = 15, cex = 2, col = tscolslatbi, frame.plot = FALSE,      
      panel.first = abline(v = 0, lty = 2, col = "black"))
 segments(aspp_df2_ts_gsl$fit_aspp_per5,  y_pos, aspp_df2_ts_gsl$fit_aspp_per95, y_pos,
-         col = colslatbi, lwd = 1.5)
+         col = tscolslatbi, lwd = 1.5)
 segments(aspp_df2_ts_gsl$fit_aspp_per25, y_pos, aspp_df2_ts_gsl$fit_aspp_per75, y_pos,
-         col = colslatbi, lwd = 3)
+         col = tscolslatbi, lwd = 3)
 abline(v = 0, lty = 2, col = "black")
 mtext("(b) Growing season length", side = 3, adj = 0, font = 2, cex = 0.9)
 
@@ -1535,12 +1503,12 @@ par(mar = custommar)
 plot(aspp_df2_ts_sos$fit_aspp, y_pos,
      xlim = c(-10, 10),ylim = c(0.5, n_spp + 0.5),
      xlab = "Log ring width intercept values (mm)", ylab = "", 
-     yaxt = "n", pch = 15, cex = 2, col = colslatbi, frame.plot = FALSE,      
+     yaxt = "n", pch = 15, cex = 2, col = tscolslatbi, frame.plot = FALSE,      
      panel.first = abline(v = 0, lty = 2, col = "black"))
 segments(aspp_df2_ts_sos$fit_aspp_per5,  y_pos, aspp_df2_ts_sos$fit_aspp_per95, y_pos,
-         col = colslatbi, lwd = 1.5)
+         col = tscolslatbi, lwd = 1.5)
 segments(aspp_df2_ts_sos$fit_aspp_per25, y_pos, aspp_df2_ts_sos$fit_aspp_per75, y_pos,
-         col = colslatbi, lwd = 3)
+         col = tscolslatbi, lwd = 3)
 abline(v = 0, lty = 2, col = "black")
 mtext("(c) Start of season", side = 3, adj = 0, font = 2, cex = 0.9)
 
@@ -1549,12 +1517,12 @@ par(mar = custommar)
 plot(aspp_df2_ts_eos$fit_aspp, y_pos,
      xlim = c(-10, 10), ylim = c(0.5, n_spp + 0.5), 
      xlab = "Log ring width intercept values (mm)", ylab = "", 
-     yaxt = "n", pch = 15, cex = 2, col = colslatbi, frame.plot = FALSE,      
+     yaxt = "n", pch = 15, cex = 2, col = tscolslatbi, frame.plot = FALSE,      
      panel.first = abline(v = 0, lty = 2, col = "black"))
 segments(aspp_df2_ts_eos$fit_aspp_per5,  y_pos, aspp_df2_ts_eos$fit_aspp_per95, y_pos,
-         col = colslatbi, lwd = 1.5)
+         col = tscolslatbi, lwd = 1.5)
 segments(aspp_df2_ts_eos$fit_aspp_per25, y_pos, aspp_df2_ts_eos$fit_aspp_per75, y_pos,
-         col = colslatbi, lwd = 3)
+         col = tscolslatbi, lwd = 3)
 abline(v = 0, lty = 2, col = "black")
 mtext("(d) End of season", side = 3, adj = 0, font = 2, cex = 0.9)
 
@@ -1564,7 +1532,7 @@ plot.new()
 legend("center",
        legend = sapply(unique(aspp_df2_ts$spp_name), 
                        function(x) parse(text = paste0("italic('", x, "')"))),
-       col    = unique(colslatbi),
+       col    = unique(tscolslatbi),
        pch    = 16, pt.cex = 1.5, bty = "n", cex = 1.2,
        title  = "Species", title.font = 2)
 
@@ -1673,7 +1641,7 @@ segments(
   x0 = treeid_df4$fit_atreeid_per5,
   x1 = treeid_df4$fit_atreeid_per95,
   y0 = treeid_df4$y_pos,
-  col = adjustcolor(colslatbi[treeid_df4$spp], alpha.f = 0.7),
+  col = adjustcolor(tscolslatbi[treeid_df4$spp], alpha.f = 0.7),
   lwd = 1
 )
 
@@ -1682,7 +1650,7 @@ segments(
   x0 = treeid_df4$fit_atreeid_per25,
   x1 = treeid_df4$fit_atreeid_per75,
   y0 = treeid_df4$y_pos,
-  col = adjustcolor(colslatbi[treeid_df4$spp], alpha.f = 0.7),
+  col = adjustcolor(tscolslatbi[treeid_df4$spp], alpha.f = 0.7),
   lwd = 1.5
 )
 
@@ -1692,7 +1660,7 @@ points(
   treeid_df4$y_pos,
   cex = 0.8,
   pch = 16,
-  col = adjustcolor(colslatbi[treeid_df4$spp], alpha.f = 0.7)
+  col = adjustcolor(tscolslatbi[treeid_df4$spp], alpha.f = 0.7)
 )
 
 spp_y_top <- tapply(treeid_df4$y_pos, treeid_df4$spp, max)
@@ -1702,7 +1670,7 @@ segments(
   x0 = aspp_df2_ts$fit_aspp_per5,
   x1 = aspp_df2_ts$fit_aspp_per95,
   y0 = aspp_df2_ts$y_pos,
-  col = adjustcolor(colslatbi[aspp_df2_ts$spp_name], alpha.f = 0.9),
+  col = adjustcolor(tscolslatbi[aspp_df2_ts$spp_name], alpha.f = 0.9),
   lwd = 2
 )
 
@@ -1710,14 +1678,14 @@ segments(
   x0 = aspp_df2_ts$fit_aspp_per25,
   x1 = aspp_df2_ts$fit_aspp_per75,
   y0 = aspp_df2_ts$y_pos,
-  col = colslatbi[aspp_df2_ts$spp],
+  col = tscolslatbi[aspp_df2_ts$spp],
   lwd = 3
 )
 points(
   aspp_df2_ts$fit_aspp,
   aspp_df2_ts$y_pos,
   pch = 16,
-  col  = colslatbi[aspp_df2_ts$spp],
+  col  = tscolslatbi[aspp_df2_ts$spp],
   # col = "black",
   cex = 1.5
 )
@@ -1742,7 +1710,7 @@ legend(
   x = max(treeid_df4$fit_atreeid_per95) - 5,
   y = max(treeid_df4$y_pos) -16,
   legend = species_legend_order,
-  col = colslatbi[species_legend_order],    # index so colors match
+  col = tscolslatbi[species_legend_order],    # index so colors match
   pch = 16,
   pt.cex = 1.2,
   title = "Species",
