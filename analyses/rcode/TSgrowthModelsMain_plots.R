@@ -20,12 +20,12 @@ if (length(grep("christophe_rouleau-desrochers", getwd())) > 0) {
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 source("rcode/TSgrowthModelsMain.R")
 
-makeplots <- FALSE
+makeplots <- TRUE
 
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 # GDD posterior recovery ####
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
-fit <- readRDS("output/stanOutput/fitGrowthGDD")
+fit <- readRDS("output/stanOutput/fitGrowthGDDPPonbspp")
 df_fit <- as.data.frame(fit)
 
 # full posterior
@@ -258,7 +258,7 @@ treeid_bspp
 
 treeidvecnum <- 1:ncol(fullintercept)
 treeidvecname <- treeid_spp$id
-gddseq <- seq(min(empts$pgsGDD5), max(empts$pgsGDD5), length.out = 100)  
+gddseq <- seq(min(empts$pgsGDD5), max(empts$pgsGDD5), length.out = 10)  
 y_post_list <- list()  # store posterior predictions in a list where each tree id gets matrix
 
 # below I create a list where each row is the posterior estimate for each value of gdd (so the first row correspond to the model estimate for the first gdd value stored in x) and each column is the iteration (from 1 to 8000)
@@ -634,7 +634,7 @@ for (i in seq_len(ncol(treeid_bspp_gsl))) { # i = 30
   treeid_bspp_gsl[, i] <- bspp_df4_gsl[, spp_id]
 }
 treeid_bspp_gsl
-gslseq <- seq(min(empts$pgsGSL), max(empts$pgsGSL), length.out = 100)  
+gslseq <- seq(min(empts$pgsGSL), max(empts$pgsGSL), length.out = 10)  
 y_post_list_gsl <- list()  # store posterior predictions in a list where each tree id gets matrix
 
 # below I create a list where each row is the posterior estimate for each value of gdd (so the first row correspond to the model estimate for the first gdd value stored in x) and each column is the iteration (from 1 to 8000)
@@ -797,7 +797,7 @@ for (i in seq_len(ncol(treeid_bspp_sos))) { # i = 30
 }
 treeid_bspp_sos
 
-sosseq <- seq(min(empts$leafout), max(empts$leafout), length.out = 100)  
+sosseq <- seq(min(empts$leafout), max(empts$leafout), length.out = 10)  
 y_post_list_sos <- list()  # store posterior predictions in a list where each tree id gets matrix
 
 # below I create a list where each row is the posterior estimate for each value of gdd (so the first row correspond to the model estimate for the first gdd value stored in x) and each column is the iteration (from 1 to 8000)
@@ -960,7 +960,7 @@ for (i in seq_len(ncol(treeid_bspp_eos))) { # i = 30
 }
 treeid_bspp_eos
 
-eosseq <- seq(min(empts$coloredLeaves), max(empts$coloredLeaves), length.out = 100)  
+eosseq <- seq(min(empts$coloredLeaves), max(empts$coloredLeaves), length.out = 10)  
 y_post_list_eos <- list()  # store posterior predictions in a list where each tree id gets matrix
 
 # below I create a list where each row is the posterior estimate for each value of gdd (so the first row correspond to the model estimate for the first gdd value stored in x) and each column is the iteration (from 1 to 8000)
