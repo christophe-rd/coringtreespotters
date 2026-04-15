@@ -45,6 +45,7 @@ colnames(aspp_df) <- 1:ncol(aspp_df)
 # posterior summaries
 sigma_df2_ts  <- extract_params(df_fit, "sigma", "mean", "sigma")
 bspp_df2_ts   <- extract_params(df_fit, "bsp", "fit_bspp", "spp", "bspp\\[(\\d+)\\]")
+bspp_df2_ts <- subset(bspp_df2_ts, spp != "sigma_bspp")
 treeid_df2_ts <- extract_params(df_fit, "atreeid", "fit_atreeid", "treeid", "atreeid\\[(\\d+)\\]")
 treeid_df2_ts <- subset(treeid_df2_ts, !grepl("z", treeid) & !grepl("sigma", treeid))
 aspp_df2_ts   <- extract_params(df_fit, "aspp", "fit_aspp", "spp", "aspp\\[(\\d+)\\]")
