@@ -905,7 +905,7 @@ ayear_df2  <- subset(ayear_df2, !grepl("mean", year))
 
 # Open device
 jpeg("figures/growthModelsMain/withoutVSnoayr.jpeg", width = 9, height = 6, units = "in", res = 300)
-par(mfrow = c(2,3), oma = c(0, 2, 0, 0))
+par(mfrow = c(2,2), oma = c(0, 2, 0, 0))
 
 # sigma
 plot(sigma_df2_noayr$mean, sigma_df2$mean,

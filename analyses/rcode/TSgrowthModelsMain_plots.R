@@ -217,7 +217,7 @@ sppvecnum <- 1:11
 sppvecname <- unique(treeid_spp$latbi)
 
 treeidvecnum <- unique(treeid_spp$treeid_num)
-treeidvecname <- treeid_spp$treeid
+treeidvecname <- treeid_spp$id
 
 # for mu plots
 species_order <- rev(unique(empts$latbi))
@@ -315,7 +315,7 @@ dev.off()
 jpeg(filename = "figures/growthModelsMain/growthModelSlopesperSppFacetGDD.jpeg",
      width = 2400, height = 2400, res = 300)
 # Layout: 2 rows x 2 columns per page
-par(mfrow = c(2, 2), mar = c(4, 4, 2, 1))
+par(mfrow = c(4, 3), mar = c(4, 4, 2, 1))
 
 treeidsymbol <- c(15, 16, 17, 8, 9)
 
@@ -1256,8 +1256,28 @@ legend(
 
 dev.off()
 
-
 }
+jpeg(file = "figures/growthModelsMain/muayear.jpeg",
+     width = 1600, height = 1600, res = 300)
+
+ayear_df2_ts$year_name <- as.character(ayear_df2_ts$year_name)
+years_ordered <- sort(unique(ayear_df2_ts$year_name))
+ayear_df2_ts$y_pos <- match(ayear_df2_ts$year_name, years_ordered)
+
+par(mar = c(4, 4, 4, 4))
+plot(ayear_df2_ts$mean, ayear_df2_ts$y_pos,
+     xlim = c(-1.5, 1.), ylim = c(0.5, length(years_ordered) + 0.5),
+     xlab = "Ring width intercept values (mm)", ylab = "",
+     yaxt = "n", pch = 16, cex = 2, col = "black", frame.plot = FALSE,
+     panel.first = abline(v = 0, lty = 2, col = "black"))
+segments(ayear_df2_ts$p5,  ayear_df2_ts$y_pos, 
+         ayear_df2_ts$p95, ayear_df2_ts$y_pos, lwd = 1.5)
+segments(ayear_df2_ts$p25, ayear_df2_ts$y_pos, 
+         ayear_df2_ts$p75, ayear_df2_ts$y_pos, lwd = 3)
+axis(side = 2, at = seq_along(years_ordered), labels = years_ordered, las = 1)
+
+dev.off()
+
 
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 # Ring width summaries ####

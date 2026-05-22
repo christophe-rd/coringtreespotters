@@ -51,6 +51,7 @@ logan$doy <- as.numeric(format(as.Date(logan$date), "%j"))
 logan <- logan[order(logan$year, logan$date), ]
 
 logan$GDD_5 <- gdd(tmax = logan$maxT, tmin = logan$minT, tbase = 5, type = "B")
+logan$meanTempC <- (logan$maxTempC + logan$maxTempC) /2
 
 # Initialize the GDD_5 column
 logan$GDD_5 <- NA
@@ -72,6 +73,7 @@ for (y in years) {
 logan2 <- subset(logan, doy > 121 & doy < 243)
 
 str(logan2)
+write.csv(logan, "output/loganLongTermCleaned.csv")
 gddperyear <- aggregate(GDD_5 ~ year, logan2, FUN = max)
 library(dplyr)
 
