@@ -23,6 +23,19 @@ source("rcode/TSgrowthModelsMain.R")
 makeplots <- T
 runzscore <- F
 
+# acronym latbi
+empts$latbi[empts$latbi == "Acer rubrum"]           <- "A. rubrum"
+empts$latbi[empts$latbi == "Acer saccharum"]        <- "A. saccharum"
+empts$latbi[empts$latbi == "Aesculus flava"]        <- "Ae. flava"
+empts$latbi[empts$latbi == "Betula alleghaniensis"] <- "B. alleghaniensis"
+empts$latbi[empts$latbi == "Betula nigra"]          <- "B. nigra"
+empts$latbi[empts$latbi == "Carya glabra"]          <- "C. glabra"
+empts$latbi[empts$latbi == "Carya ovata"]           <- "C. ovata"
+empts$latbi[empts$latbi == "Populus deltoides"]     <- "P. deltoides"
+empts$latbi[empts$latbi == "Quercus alba"]          <- "Q. alba"
+empts$latbi[empts$latbi == "Quercus rubra"]         <- "Q. rubra"
+empts$latbi[empts$latbi == "Tilia americana"]       <- "T. americana"
+
 # Load parameter summaries generated in growthModelsMain.R ####
 sigma_df2_ts  <- read.csv("output/GM_GDDparam_sigma.csv")
 bspp_df2_ts   <- read.csv("output/GM_GDDparam_bspp.csv")
@@ -849,13 +862,15 @@ legend("center",
        col    = unique(tscolslatbi),
        pch    = 16, pt.cex = 1.5, bty = "n", cex = 1.2,
        title  = "Species", title.font = 2)
-dev.off()
+dev.off()  
 
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 ##### bspp with lines #####
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+custommar <- c(4, 4, 3, 1.2)
+
 jpeg(file = "figures/growthModelsMain/muALLbsppWlines.jpeg",
-     width = 3000, height = 2800, res = 300)
+     width = 2800, height = 3000, res = 300)
 
 layout(matrix(c(
   1, 5, 9,
@@ -863,64 +878,83 @@ layout(matrix(c(
   3, 7, 9,
   4, 8, 9
 ), nrow = 4, byrow = TRUE),
-widths = c(1.3, 1.2, 0.5))
+widths = c(1.1, 1.2, 0.6))
 
-# Row 1, Col 1: GDD
+
+# Row 1, Col 1, Slot 5 : GDD
 par(mar = custommar)
 plot(bspp_df2_ts$mean, y_pos,
-     xlim = c(-0.8, 0.8), ylim = c(0.5, n_spp + 0.5),
-     xlab = "log(ring width) change in averaged GDD of 10 spring days", ylab = "",
-     yaxt = "n", pch = 16, cex = 2, col = tscolslatbi, frame.plot = FALSE,
+     xlim = c(-0.5, 0.4), ylim = c(0.5, n_spp + 0.5),
+     xlab = "log(ring width) change in averaged GDD of 7 spring days", ylab = "",
+     yaxt = "n", pch = 16, cex = 2, col = tscolslatbi, frame.plot = TRUE, 
      panel.first = abline(v = 0, lty = 2, col = "black"))
-segments(bspp_df2_ts$p5,  y_pos, bspp_df2_ts$p95, y_pos, col = tscolslatbi, lwd = 1.5)
-segments(bspp_df2_ts$p25, y_pos, bspp_df2_ts$p75, y_pos, col = tscolslatbi, lwd = 3)
+segments(bspp_df2_ts$p5,  y_pos, bspp_df2_ts$p95, y_pos,
+         col = tscolslatbi, lwd = 1.5)
+segments(bspp_df2_ts$p25, y_pos, bspp_df2_ts$p75, y_pos,
+         col = tscolslatbi, lwd = 3)
 mtext("(a) Growing degree days", side = 3, adj = 0, font = 2, cex = 0.9)
+usr <- par("usr")
+rasterImage(img_thermom, usr[1], usr[4] - diff(usr[3:4]) * 0.40, usr[1] + diff(usr[1:2]) * 0.22, usr[4])
 
-# Row 2, Col 1: GSL
+# Row 2, Col 1, Slot 6 : GSL
 par(mar = custommar)
 plot(bspp_df2_ts_gsl$mean, y_pos,
-     xlim = c(-0.8, 0.8), ylim = c(0.5, n_spp + 0.5),
-     xlab = "log(ring width) change per 10 days of GSL", ylab = "",
-     yaxt = "n", pch = 16, cex = 2, col = tscolslatbi, frame.plot = FALSE,
+     xlim = c(-0.5, 0.4), ylim = c(0.5, n_spp + 0.5),
+     xlab = "log(ring width) change per 7 days of GSL", ylab = "",
+     yaxt = "n", pch = 16, cex = 2, col = tscolslatbi, frame.plot = TRUE, 
      panel.first = abline(v = 0, lty = 2, col = "black"))
-segments(bspp_df2_ts_gsl$p5,  y_pos, bspp_df2_ts_gsl$p95, y_pos, col = tscolslatbi, lwd = 1.5)
-segments(bspp_df2_ts_gsl$p25, y_pos, bspp_df2_ts_gsl$p75, y_pos, col = tscolslatbi, lwd = 3)
+segments(bspp_df2_ts_gsl$p5,  y_pos, bspp_df2_ts_gsl$p95, y_pos,
+         col = tscolslatbi, lwd = 1.5)
+segments(bspp_df2_ts_gsl$p25, y_pos, bspp_df2_ts_gsl$p75, y_pos,
+         col = tscolslatbi, lwd = 3)
 mtext("(b) Growing season length", side = 3, adj = 0, font = 2, cex = 0.9)
+usr <- par("usr")
+rasterImage(img_calenda, usr[1], usr[4] - diff(usr[3:4]) * 0.45, usr[1] + diff(usr[1:2]) * 0.25, usr[4])
 
-# Row 3, Col 1: SOS
+# Row 3, Col 1, Slot 7 : SOS
 par(mar = custommar)
 plot(bspp_df2_ts_sos$mean, y_pos,
-     xlim = c(-0.8, 0.8), ylim = c(0.5, n_spp + 0.5),
-     xlab = "log(ring width) change per 5 days of leafout", ylab = "",
-     yaxt = "n", pch = 16, cex = 2, col = tscolslatbi, frame.plot = FALSE,
+     xlim = c(-0.4, 0.4), ylim = c(0.5, n_spp + 0.5),
+     xlab = "log(ring width) change per 7 days of leafout", ylab = "",
+     yaxt = "n", pch = 16, cex = 2, col = tscolslatbi, frame.plot = TRUE, 
      panel.first = abline(v = 0, lty = 2, col = "black"))
-segments(bspp_df2_ts_sos$p5,  y_pos, bspp_df2_ts_sos$p95, y_pos, col = tscolslatbi, lwd = 1.5)
-segments(bspp_df2_ts_sos$p25, y_pos, bspp_df2_ts_sos$p75, y_pos, col = tscolslatbi, lwd = 3)
+segments(bspp_df2_ts_sos$p5,  y_pos, bspp_df2_ts_sos$p95, y_pos,
+         col = tscolslatbi, lwd = 1.5)
+segments(bspp_df2_ts_sos$p25, y_pos, bspp_df2_ts_sos$p75, y_pos,
+         col = tscolslatbi, lwd = 3)
 mtext("(c) Start of season", side = 3, adj = 0, font = 2, cex = 0.9)
+usr <- par("usr")
+rasterImage(img_leafout, usr[1], usr[4] - diff(usr[3:4]) * 0.45, usr[1] + diff(usr[1:2]) * 0.22, usr[4])
 
-# Row 4, Col 1: EOS
+# Row 4, Col 1, Slot 8 : EOS
 par(mar = custommar)
 plot(bspp_df2_ts_eos$mean, y_pos,
-     xlim = c(-0.8, 0.8), ylim = c(0.5, n_spp + 0.5),
-     xlab = "log(ring width) change per 10 days of budset", ylab = "",
-     yaxt = "n", pch = 16, cex = 2, col = tscolslatbi, frame.plot = FALSE,
+     xlim = c(-0.4, 0.4), ylim = c(0.5, n_spp + 0.5),
+     xlab = "log(ring width) change per 7 days of colored leaves", ylab = "",
+     yaxt = "n", pch = 16, cex = 2, col = tscolslatbi, frame.plot = TRUE, 
      panel.first = abline(v = 0, lty = 2, col = "black"))
-segments(bspp_df2_ts_eos$p5,  y_pos, bspp_df2_ts_eos$p95, y_pos, col = tscolslatbi, lwd = 1.5)
-segments(bspp_df2_ts_eos$p25, y_pos, bspp_df2_ts_eos$p75, y_pos, col = tscolslatbi, lwd = 3)
+segments(bspp_df2_ts_eos$p5,  y_pos, bspp_df2_ts_eos$p95, y_pos,
+         col = tscolslatbi, lwd = 1.5)
+segments(bspp_df2_ts_eos$p25, y_pos, bspp_df2_ts_eos$p75, y_pos,
+         col = tscolslatbi, lwd = 3)
 mtext("(d) End of season", side = 3, adj = 0, font = 2, cex = 0.9)
+usr <- par("usr")
+rasterImage(img_budset, usr[1], usr[4] - diff(usr[3:4]) * 0.45, usr[1] + diff(usr[1:2]) * 0.25, usr[4])
 
-# Row 1, Col 2: GDD lines
+# Row 1, Col 2, Slot 5 : GDD
 par(mar = custommar)
 plot(empts$pgsGDD5, dgdd$y, type = "n", frame = FALSE,
-     ylim = range(min(empts$loglength), max(empts$loglength)),
+     ylim = range(min(empts$loglength), max(empts$loglength)), 
      xlab = "Growing season growing degree days (GDD)", ylab = "log(ring width)",
      main = "")
 mtext("(e)", side = 3, adj = 0, font = 2, cex = 0.9)
 
-for (i in seq_along(sppvecnum)) {
+# Loop over trees again to plot each tree individually
+for (i in seq_along(sppvecnum)) { # i = 1
   spp_name <- as.character(sppvecname[i])
-  y_post   <- t(spp_post_array[, , i])
+  y_post <- t(spp_post_array[, , i])
   
+  # calculate mean and 50% credible interval (25%-75%)
   y_mean <- apply(y_post, 1, mean)
   y_low  <- apply(y_post, 1, quantile, 0.25)
   y_high <- apply(y_post, 1, quantile, 0.75)
@@ -928,98 +962,121 @@ for (i in seq_along(sppvecnum)) {
   line_col <- tscolslatbi[spp_name]
   
   polygon(c(gddseq, rev(gddseq)),
-          c(y_low, rev(y_high)),
+          c(y_low, rev(y_high)), # low and high interval
           col = adjustcolor(line_col, alpha.f = 0.1), border = NA)
   
-  lines(gddseq, y_mean, col = line_col, lwd = 2)
+  lines(gddseq, y_mean,
+        col = line_col,
+        lwd = 2)
+  
+  empts_spp <- empts[empts$latbi == spp_name, ]
+  
 }
 
-# Row 2, Col 2: GSL lines
+# Row 2, Col 2, Slot 6 : GSL
 par(mar = custommar)
 plot(empts$pgsGSL, dgsl$y, type = "n", frame = FALSE,
-     ylim = range(min(empts$loglength), max(empts$loglength)),
+     ylim = range(min(empts$loglength), max(empts$loglength)), 
      xlab = "Growing season length (days)", ylab = "log(ring width)",
      main = "")
 mtext("(f)", side = 3, adj = 0, font = 2, cex = 0.9)
 
-for (i in seq_along(sppvecnum)) {
-  spp_name   <- as.character(sppvecname[i])
-  y_post_gsl <- t(spp_post_array_gsl[, , i])
+# Loop over trees again to plot each tree individually
+for (i in seq_along(sppvecnum)) { # i = 1
+  spp_name <- as.character(sppvecname[i])
+  y_post <- t(spp_post_array_gsl[, , i])
   
-  y_mean <- apply(y_post_gsl, 1, mean)
-  y_low  <- apply(y_post_gsl, 1, quantile, 0.25)
-  y_high <- apply(y_post_gsl, 1, quantile, 0.75)
+  # calculate mean and 50% credible interval (25%-75%)
+  y_mean <- apply(y_post, 1, mean)
+  y_low  <- apply(y_post, 1, quantile, 0.25)
+  y_high <- apply(y_post, 1, quantile, 0.75)
   
   line_col <- tscolslatbi[spp_name]
   
   polygon(c(gslseq, rev(gslseq)),
-          c(y_low, rev(y_high)),
+          c(y_low, rev(y_high)), # low and high interval
           col = adjustcolor(line_col, alpha.f = 0.1), border = NA)
   
-  lines(gslseq, y_mean, col = line_col, lwd = 2)
+  lines(gslseq, y_mean,
+        col = line_col,
+        lwd = 2)
+  
+  empts_spp <- empts[empts$latbi == spp_name, ]
 }
 
-# Row 3, Col 2: SOS lines
+# Row 3, Col 2, Slot 7 : SOS
 par(mar = custommar)
 plot(empts$leafout, dsos$y, type = "n", frame = FALSE,
-     ylim = range(min(empts$loglength), max(empts$loglength)),
+     ylim = range(min(empts$loglength), max(empts$loglength)), 
      xlab = "Leafout day of year", ylab = "log(ring width)",
      main = "")
 mtext("(g)", side = 3, adj = 0, font = 2, cex = 0.9)
 
-for (i in seq_along(sppvecnum)) {
-  spp_name   <- as.character(sppvecname[i])
-  y_post_sos <- t(spp_post_array_sos[, , i])
+# Loop over trees again to plot each tree individually
+for (i in seq_along(sppvecnum)) { # i = 1
+  spp_name <- as.character(sppvecname[i])
+  y_post <- t(spp_post_array_sos[, , i])
   
-  y_mean <- apply(y_post_sos, 1, mean)
-  y_low  <- apply(y_post_sos, 1, quantile, 0.25)
-  y_high <- apply(y_post_sos, 1, quantile, 0.75)
+  # calculate mean and 50% credible interval (25%-75%)
+  y_mean <- apply(y_post, 1, mean)
+  y_low  <- apply(y_post, 1, quantile, 0.25)
+  y_high <- apply(y_post, 1, quantile, 0.75)
   
   line_col <- tscolslatbi[spp_name]
   
   polygon(c(sosseq, rev(sosseq)),
-          c(y_low, rev(y_high)),
+          c(y_low, rev(y_high)), # low and high interval
           col = adjustcolor(line_col, alpha.f = 0.1), border = NA)
   
-  lines(sosseq, y_mean, col = line_col, lwd = 2)
+  lines(sosseq, y_mean,
+        col = line_col,
+        lwd = 2)
+  
+  emp_spp <- empts[empts$latbi == spp_name, ]
 }
 
-# Row 4, Col 2: EOS lines
+# Row 4, Col 2, Slot 8 : EOS
 par(mar = custommar)
 plot(empts$coloredLeaves, deos$y, type = "n", frame = FALSE,
-     ylim = range(min(empts$loglength), max(empts$loglength)),
+     ylim = range(min(empts$loglength), max(empts$loglength)), 
      xlab = "Budset day of year", ylab = "log(ring width)",
      main = "")
 mtext("(h)", side = 3, adj = 0, font = 2, cex = 0.9)
 
-for (i in seq_along(sppvecnum)) {
-  spp_name   <- as.character(sppvecname[i])
-  y_post_eos <- t(spp_post_array_eos[, , i])
+# Loop over trees again to plot each tree individually
+for (i in seq_along(sppvecnum)) { # i = 1
+  spp_name <- as.character(sppvecname[i])
+  y_post <- t(spp_post_array_eos[, , i])
   
-  y_mean <- apply(y_post_eos, 1, mean)
-  y_low  <- apply(y_post_eos, 1, quantile, 0.25)
-  y_high <- apply(y_post_eos, 1, quantile, 0.75)
+  # calculate mean and 50% credible interval (25%-75%)
+  y_mean <- apply(y_post, 1, mean)
+  y_low  <- apply(y_post, 1, quantile, 0.25)
+  y_high <- apply(y_post, 1, quantile, 0.75)
   
   line_col <- tscolslatbi[spp_name]
   
   polygon(c(eosseq, rev(eosseq)),
-          c(y_low, rev(y_high)),
+          c(y_low, rev(y_high)), # low and high interval
           col = adjustcolor(line_col, alpha.f = 0.1), border = NA)
   
-  lines(eosseq, y_mean, col = line_col, lwd = 2)
+  lines(eosseq, y_mean,
+        col = line_col,
+        lwd = 2)
+  
+  emp_spp <- empts[empts$latbi == spp_name, ]
 }
 
 # Slot 9: species legend
 par(mar = c(1, 1, 1, 1))
 plot.new()
 legend("center",
-       legend = sapply(unique(bspp_df2_ts$spp_name),
+       legend = sapply(unique(bspp_df2_ts$spp_name), 
                        function(x) parse(text = paste0("italic('", x, "')"))),
-       col    = unique(tscolslatbi),
-       pch    = 16, pt.cex = 1.5, bty = "n", cex = 1.2,
+       col    = tscolslatbi,
+       pch    = 16, pt.cex = 1.5, bty = "n", cex = 1.5,
        title  = "Species", title.font = 2)
-dev.off()
 
+dev.off() 
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 ##### aspp #####
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---

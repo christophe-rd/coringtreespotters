@@ -34,6 +34,7 @@ source('/Users/christophe_rouleau-desrochers/github/wildchrokie/analyses/rcode/t
 runmodels <- FALSE
 runzscoredmodels <- FALSE
 runfulldata <- FALSE
+runmodelnoayear <- FALSE
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 # Most restricted amount of data ####
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
@@ -185,7 +186,7 @@ fiteos <- sampling(eosmodel, data = deos,
 saveRDS(fiteos, "output/stanOutput/fitGrowthEOS")
 
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
-# Load Fit Objects ####
+# Plot GDD fit ####
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 fitgdd <- readRDS("output/stanOutput/fitGrowthGDD")
 fitgsl <- readRDS("output/stanOutput/fitGrowthGSL")
@@ -195,9 +196,6 @@ fiteos <- readRDS("output/stanOutput/fitGrowthEOS")
 # Setup color palette across all plots
 pal <- wes_palette("AsteroidCity1")[3:4]
 
-# <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
-# Plot GDD fit ####
-# <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 ##### Recover parameters #####
 df_fitgdd <- as.data.frame(fitgdd)
 
@@ -867,4 +865,104 @@ fiteos <- sampling(eosmodel, data = c("N","y",
                    warmup = 1000, iter = 2000, chains=4)
 saveRDS(fiteos, "output/stanOutput/fitGrowthEOSZscored")
 
+}
+
+# <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+# Compare model with and without ayear ####
+# <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+##### Fit model GDD WITHOUT ayear #####
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+if(runmodelnoayear){
+gddmodel <- stan_model("stan/TSmodelGrowthGDD_noayear.stan")
+fitgdd <- sampling(gddmodel, data = dgdd,
+                   warmup = 1000, iter=2000, chains=4)
+saveRDS(fitgdd, "output/stanOutput/fitGrowthGDD_noayear")
+fitgdd <- readRDS("output/stanOutput/fitGrowthGDD_noayear")
+# Recover parameters
+df_fitgdd <- as.data.frame(fitgdd)
+
+sigma_df2_noayr  <- extract_params(df_fitgdd, "sigma", "mean", "sigma")
+bspp_df2_noayr   <- extract_params(df_fitgdd, "bsp", "fit_bspp", 
+                                   "spp", "bsp\\[(\\d+)\\]")
+treeid_df2_noayr <- extract_params(df_fitgdd, "atreeid", "fit_atreeid", 
+                                   "treeid", "atreeid\\[(\\d+)\\]")
+treeid_df2_noayr <- subset(treeid_df2_noayr, !grepl("z|sigma", treeid))
+aspp_df2_noayr   <- extract_params(df_fitgdd, "aspp", "fit_aspp", 
+                                   "spp", "aspp\\[(\\d+)\\]")
+
+# Recover model with ayear
+fitgdd <- readRDS("output/stanOutput/fitGrowthGDD")
+df_fitgdd <- as.data.frame(fitgdd)
+# posterior summaries
+sigma_df2  <- extract_params(df_fitgdd, "sigma", "mean", "sigma")
+bspp_df2   <- extract_params(df_fitgdd, "bspp", "fit_bspp", "spp", "bspp\\[(\\d+)\\]")
+treeid_df2 <- extract_params(df_fitgdd, "atreeid", "fit_atreeid", "id", "atreeid\\[(\\d+)\\]")
+treeid_df2 <- subset(treeid_df2, !grepl("z|sigma", id))
+aspp_df2   <- extract_params(df_fitgdd, "aspp", "fit_aspp", "spp", "aspp\\[(\\d+)\\]")
+ayear_df2  <- extract_params(df_fitgdd, "ayear", "fit_ayear", "year", "ayear\\[(\\d+)\\]")
+ayear_df2  <- subset(ayear_df2, !grepl("mean", year))
+
+# Open device
+jpeg("figures/growthModelsMain/withoutVSnoayr.jpeg", width = 9, height = 6, units = "in", res = 300)
+par(mfrow = c(2,3), oma = c(0, 2, 0, 0))
+
+# sigma
+plot(sigma_df2_noayr$mean, sigma_df2$mean,
+     xlab = "no year intercept", ylab = "with year intercept", main = "sigmas", type = "n", frame = FALSE,
+     ylim = range(c(sigma_df2$p25, sigma_df2$p75)),
+     xlim = range(c(sigma_df2_noayr$p25, sigma_df2_noayr$p75+0.2)))
+arrows(x0 = sigma_df2_noayr$mean, y0 = sigma_df2$p25,
+       x1 = sigma_df2_noayr$mean, y1 = sigma_df2$p75,
+       angle = 90, code = 3, length = 0, lwd = 1.5, col = "darkgray")
+arrows(x0 = sigma_df2_noayr$p25, y0 = sigma_df2$mean,
+       x1 = sigma_df2_noayr$p75, y1 = sigma_df2$mean,
+       angle = 90, code = 3, length = 0, lwd = 1.5, col = "darkgray")
+points(sigma_df2_noayr$mean, sigma_df2$mean, pch = 16, col = "#0a6a3c", cex = 1.5)
+abline(0, 1, lty = 2, col = "black", lwd = 2)
+points(sigma_df2_noayr$mean, sigma_df2$mean, pch = 16, col = "#0a6a3c", cex = 1.5)
+text(sigma_df2_noayr$p75, sigma_df2$p25, labels = sigma_df2_noayr$sigma, pos = c(3,3), cex = 0.75)
+
+# bspp
+plot(bspp_df2_noayr$mean, bspp_df2$mean,
+     xlab = "no year intercept", ylab = "with year intercept", main = "bspp", type = "n", frame = FALSE,
+     ylim = range(c(bspp_df2$p25, bspp_df2$p75)),
+     xlim = range(c(bspp_df2_noayr$p25, bspp_df2_noayr$p75)))
+arrows(x0 = bspp_df2_noayr$mean, y0 = bspp_df2$p25,
+       x1 = bspp_df2_noayr$mean, y1 = bspp_df2$p75,
+       angle = 90, code = 3, length = 0, lwd = 1.5, col = "darkgray")
+arrows(x0 = bspp_df2_noayr$p25, y0 = bspp_df2$mean,
+       x1 = bspp_df2_noayr$p75, y1 = bspp_df2$mean,
+       angle = 90, code = 3, length = 0, lwd = 1.5, col = "darkgray")
+points(bspp_df2_noayr$mean, bspp_df2$mean, pch = 16, col = "#0a6a3c", cex = 1.5)
+abline(0, 1, lty = 2, col = "black", lwd = 2)
+
+# aspp
+plot(aspp_df2_noayr$mean, aspp_df2$mean,
+     xlab = "no year intercept", ylab = "with year intercept", main = "aspp", type = "n", frame = FALSE,
+     ylim = range(c(aspp_df2$p25, aspp_df2$p75)),
+     xlim = range(c(aspp_df2_noayr$p25, aspp_df2_noayr$p75)))
+arrows(x0 = aspp_df2_noayr$mean, y0 = aspp_df2$p25,
+       x1 = aspp_df2_noayr$mean, y1 = aspp_df2$p75,
+       angle = 90, code = 3, length = 0, lwd = 1.5, col = "darkgray")
+arrows(x0 = aspp_df2_noayr$p25, y0 = aspp_df2$mean,
+       x1 = aspp_df2_noayr$p75, y1 = aspp_df2$mean,
+       angle = 90, code = 3, length = 0, lwd = 1.5, col = "darkgray")
+points(aspp_df2_noayr$mean, aspp_df2$mean, pch = 16, col = "#0a6a3c", cex = 1.5)
+abline(0, 1, lty = 2, col = "black", lwd = 2)
+
+# atreeid
+plot(treeid_df2_noayr$mean, treeid_df2$mean,
+     xlab = "no year intercept", ylab = "with year intercept", main = "atreeid", type = "n", frame = FALSE,
+     ylim = range(c(treeid_df2$p25, treeid_df2$p75)),
+     xlim = range(c(treeid_df2_noayr$p25, treeid_df2_noayr$p75)))
+arrows(x0 = treeid_df2_noayr$mean, y0 = treeid_df2$p25,
+       x1 = treeid_df2_noayr$mean, y1 = treeid_df2$p75,
+       angle = 90, code = 3, length = 0, lwd = 1, col = "darkgray")
+arrows(x0 = treeid_df2_noayr$p25, y0 = treeid_df2$mean,
+       x1 = treeid_df2_noayr$p75, y1 = treeid_df2$mean,
+       angle = 90, code = 3, length = 0, lwd = 1, col = "darkgray")
+points(treeid_df2_noayr$mean, treeid_df2$mean, pch = 16, col = "#0a6a3c", cex = 1.5)
+abline(0, 1, lty = 2, col = "black", lwd = 2)
+dev.off()
 }
