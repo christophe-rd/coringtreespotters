@@ -1,0 +1,330 @@
+\documentclass{article}
+\usepackage{hyperref}
+\usepackage{booktabs}
+\usepackage[top=1.5cm, bottom=1.5cm, left=2cm, right=2cm]{geometry}
+
+\begin{document}
+% \SweaveOpts{concordance=TRUE}
+
+\title{Results outline corintreespotters}
+\author{Christophe Rouleau-Desrochers}
+\date{\today}
+\maketitle
+
+% Set CoringTreespotters species shortcut
+\newcommand{\Arub}{\textit{A. rubrum}}
+\newcommand{\Asac}{\textit{A. saccharum}}
+\newcommand{\Afla}{\textit{A. flava}}
+\newcommand{\Ball}{\textit{B. alleghaniensis}}
+\newcommand{\Bnig}{\textit{B. nigra}}
+\newcommand{\Cgla}{\textit{C. glabra}}
+\newcommand{\Cova}{\textit{C. ovata}}
+\newcommand{\Pdel}{\textit{P. deltoides}}
+\newcommand{\Qalb}{\textit{Q. alba}}
+\newcommand{\Qrub}{\textit{Q. rubra}}
+\newcommand{\Tame}{\textit{T. americana}}   
+
+
+<<setup, echo=FALSE, message=FALSE, warning=FALSE>>=
+library(xtable)
+source("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/rcode/TSgrowthModelsMain_plots.R")
+
+options(digits = 2)
+
+tstablespp <- c("Acer rubrum" = "\\textit{A. rubrum}",
+                "Acer saccharum" = "\\textit{A. saccharum}",
+                "Aesculus flava" = "\\textit{A. flava}",
+                "Betula alleghaniensis" = "\\textit{B. alleghaniensis}",
+                "Betula nigra" = "\\textit{B. nigra}",
+                "Carya glabra" = "\\textit{C. glabra}",
+                "Carya ovata" = "\\textit{C. ovata}",
+                "Populus deltoides" = "\\textit{P. deltoides}",
+                "Quercus alba" = "\\textit{Q. alba}",
+                "Quercus rubra" = "\\textit{Q. rubra}",
+                "Tilia americana" = "\\textit{T. americana}")
+
+pgsGSLagg <- aggregate(pgsGSL ~ year, empts, mean)
+pgsGSLagg$pgsGSL <- round(pgsGSLagg$pgsGSL, 1)
+@
+
+% <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+\section*{Research questions}
+% <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+\begin{enumerate}
+\item Does tree growth increase with longer growing seasons?
+\item Did an earlier start and later end of season increase growth? 
+\item Does tree growth increase with longer growing seasons and is it consistent across species?
+\item How did growth change across years, and how did it relate to climate?
+\end{enumerate}
+
+% <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+\section*{Results}
+% <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+
+\begin{enumerate}
+\item CoringTreespotters includes eleven deciduous tree species with phenological observations from 2016 to 2024. In total, our final dataset has \Sexpr{nrow(empfullsosts)} leafout observations and 
+\Sexpr{nrow(empfulleosts)} leaf coloring observations. We used these phenophases to set the boundaries of individual-level growing seasons, which together yield 
+\Sexpr{nrow(empts)} complete growing seasons.
+\end{enumerate}
+
+\begin{enumerate}
+\item Summary basic information
+  \begin{enumerate}
+  \item Coringtreespotters includes elevent with leaf phenology data spaning nine years (2016 to 2024) for a total of \Sexpr{nrow(empfullsosts)} leafout and \Sexpr{nrow(empfulleosts)} budset observations, yielding \Sexpr{nrow(empts)} complete growing seasons (GS) for \Sexpr{length(unique(empts$treeid))} individuals. 
+    \item GSL ranged from 
+  \Sexpr{min(empts$pgsGSL)} days ({\Ball} in \Sexpr{empts$year[which.min(empts$pgsGSL)]}) to 
+  \Sexpr{max(empts$pgsGSL)} days ({\Ainc} in \Sexpr{empts$year[which.max(empts$pgsGSL)]})
+
+  \item GS thermal sum ranged from 
+  \Sexpr{round(min(empts$pgsGDD5),1)} GDD ({\Ball} in \Sexpr{empts$year[which.min(empts$pgsGDD5)]}) to 
+  \Sexpr{round(max(empts$pgsGDD5),1)} GDD, ({\Ainc} in \Sexpr{empts$year[which.max(empts$pgsGDD5)]})
+  
+  \item The earliest leafout day of year was \Sexpr{empts$loCal[which.min(empts$leafout)]} (\Sexpr{empts$year[which.min(empts$leafout)]}) and the latest, \Sexpr{empts$loCal[which.max(empts$leafout)]} (\Sexpr{empts$year[which.min(empts$leafout)]}). The earliest budset day of year was \Sexpr{empts$bsCal[which.min(empts$budset)]} (\Sexpr{empts$year[which.min(empts$budset)]}) and the latest, \Sexpr{empts$bsCal[which.max(empts$budset)]} (\Sexpr{empts$year[which.min(empts$budset)]}) 
+  
+  % \item 2018 had a mean summer temperature of \Sexpr{tsjja$tmeanmean[which(wcjja$year == 2018)]}$^\circ$C and had a mean summer PDSI value of 
+  % \Sexpr{wcjja$pdsi[which(wcjja$year == 2018)]}. 2019 was cooler 
+  % (\Sexpr{wcjja$tmeanmean[which(wcjja$year == 2019)]}$^\circ$C) and wetter 
+  % (PDSI $=$ \Sexpr{wcjja$pdsi[which(wcjja$year == 2019)]}), whereas 2020 was warmer 
+  % (\Sexpr{wcjja$tmeanmean[which(wcjja$year == 2020)]}$^\circ$C) and drier
+  % (PDSI $=$ \Sexpr{wcjja$pdsi[which(wcjja$year == 2020)]}) than 2018.
+
+\end{enumerate}
+
+% Question 1 --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+\item Does tree growth increase with longer growing seasons?
+  \begin{enumerate}
+
+  \item Longer growing seasons increased growth for all species, but varied depending on the metric used to measure it.
+
+  \item Longer thermal season increased growth for {\Bpap} 
+  ($\beta = $ 
+  \Sexpr{bspp_df2_ts_gdd$mean[which(bspp_df2_ts_gdd$spp_name %in% "B. papyrifera")]}, $UI_{90}$
+  [\Sexpr{bspp_df2_ts_gdd$p5[which(bspp_df2_ts_gdd$spp_name %in% "B. papyrifera")]}, 
+  \Sexpr{bspp_df2_ts_gdd$p95[which(bspp_df2_ts_gdd$spp_name %in% "B. papyrifera")]}]),
+  {\Bpop} 
+  ($\beta = $ 
+  \Sexpr{bspp_df2_ts_gdd$mean[which(bspp_df2_ts_gdd$spp_name %in% "B. populifolia")]}, $UI_{90}$
+  [\Sexpr{bspp_df2_ts_gdd$p5[which(bspp_df2_ts_gdd$spp_name %in% "B. populifolia")]}, 
+  \Sexpr{bspp_df2_ts_gdd$p95[which(bspp_df2_ts_gdd$spp_name %in% "B. populifolia")]}]), and {\Ball} 
+  ($\beta = $ 
+  \Sexpr{bspp_df2_ts_gdd$mean[which(bspp_df2_ts_gdd$spp_name %in% "B. alleghaniensis")]}, $UI_{90}$
+  [\Sexpr{bspp_df2_ts_gdd$p5[which(bspp_df2_ts_gdd$spp_name %in% "B. alleghaniensis")]}, 
+  \Sexpr{bspp_df2_ts_gdd$p95[which(bspp_df2_ts_gdd$spp_name %in% "B. alleghaniensis")]}]), but {\Ainc} had a weak effect, but trended in the same direction 
+  ($\beta = $ 
+  \Sexpr{bspp_df2_ts_gdd$mean[which(bspp_df2_ts_gdd$spp_name %in% "A. incana")]}, $UI_{90}$
+  [\Sexpr{bspp_df2_ts_gdd$p5[which(bspp_df2_ts_gdd$spp_name %in% "A. incana")]}, 
+  \Sexpr{bspp_df2_ts_gdd$p95[which(bspp_df2_ts_gdd$spp_name %in% "A. incana")]}]) (Figure \ref{fig:wcmuplotbspp}a and e) (Table\ref{tab:wc_slope_table}).
+ 
+  \item {\Ainc} grew more with longer calendar seasons ($\beta = $ 
+  \Sexpr{bspp_df2_ts_gsl$mean[which(bspp_df2_ts_gsl$spp_name %in% "A. incana")]}, $UI_{90}$
+  [\Sexpr{bspp_df2_ts_gsl$p5[which(bspp_df2_ts_gsl$spp_name %in% "A. incana")]}, 
+  \Sexpr{bspp_df2_ts_gsl$p95[which(bspp_df2_ts_gsl$spp_name %in% "A. incana")]}]), but of the three species that responded to thermal season, only {\Bpap} also grew more with longer calendar seasons ($\beta = $ 
+  \Sexpr{bspp_df2_ts_gsl$mean[which(bspp_df2_ts_gsl$spp_name %in% "B. papyrifera")]}, $UI_{90}$
+  [\Sexpr{bspp_df2_ts_gsl$p5[which(bspp_df2_ts_gsl$spp_name %in% "B. papyrifera")]}, 
+  \Sexpr{bspp_df2_ts_gsl$p95[which(bspp_df2_ts_gsl$spp_name %in% "B. papyrifera")]}]).
+  \item {\Ball} ($\beta = $ 
+  \Sexpr{bspp_df2_ts_gsl$mean[which(bspp_df2_ts_gsl$spp_name %in% "B. alleghaniensis")]}, $UI_{90}$
+  [\Sexpr{bspp_df2_ts_gsl$p5[which(bspp_df2_ts_gsl$spp_name %in% "B. alleghaniensis")]}, 
+  \Sexpr{bspp_df2_ts_gsl$p95[which(bspp_df2_ts_gsl$spp_name %in% "B. alleghaniensis")]}]), and {\Bpop} ($\beta = $ 
+  \Sexpr{bspp_df2_ts_gsl$mean[which(bspp_df2_ts_gsl$spp_name %in% "B. populifolia")]}, $UI_{90}$
+  [\Sexpr{bspp_df2_ts_gsl$p5[which(bspp_df2_ts_gsl$spp_name %in% "B. populifolia")]}, 
+  \Sexpr{bspp_df2_ts_gsl$p95[which(bspp_df2_ts_gsl$spp_name %in% "B. populifolia")]}]) trended in the same direction (Figure \ref{fig:wcmuplotbspp}b and f) (Table \ref{tab:wc_slope_table}).
+  
+  \item Results with basal area increment (BAI) for the GDD model were broadly similar to ring width (see Figure \ref{fig:RWvsBAI} and Table \ref{tab:BAItab})
+  \end{enumerate}
+  
+% Question 2 --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+\item Did an later start and end of season increase growth?
+  \begin{enumerate}
+  \item A longer calendar season increased growth for two species, but neither grew more with a later start of season.
+  \item {\Ainc} grew more with longer calendar season, but grew less with a later start of season ($\beta = $ 
+  \Sexpr{bspp_df2_ts_sos$mean[which(bspp_df2_ts_sos$spp_name %in% "A. incana")]}, $UI_{90}$
+  [\Sexpr{bspp_df2_ts_sos$p5[which(bspp_df2_ts_sos$spp_name %in% "A. incana")]}, 
+  \Sexpr{bspp_df2_ts_sos$p95[which(bspp_df2_ts_sos$spp_name %in% "A. incana")]}]) (Figure \ref{fig:wcmuplotbspp}c and g) (Table \ref{tab:wc_slope_table}).
+  
+  \item {\Ball} which did not grow more with longer calendar season, did increase growth with a later start of season ($\beta = $ 
+  \Sexpr{bspp_df2_ts_sos$mean[which(bspp_df2_ts_sos$spp_name %in% "B. alleghaniensis")]}, $UI_{90}$
+  [\Sexpr{bspp_df2_ts_sos$p5[which(bspp_df2_ts_sos$spp_name %in% "B. alleghaniensis")]}, 
+  \Sexpr{bspp_df2_ts_sos$p95[which(bspp_df2_ts_sos$spp_name %in% "B. alleghaniensis")]}]) (Figure \ref{fig:wcmuplotbspp}c and g) (Table \ref{tab:wc_slope_table}).
+  
+  \item Three species grew more with a later end of season ({\Ball}: $\beta = $ 
+  \Sexpr{bspp_df2_ts_eos$mean[which(bspp_df2_ts_eos$spp_name %in% "B. alleghaniensis")]}, $UI_{90}$
+  [\Sexpr{bspp_df2_ts_eos$p5[which(bspp_df2_ts_eos$spp_name %in% "B. alleghaniensis")]}, 
+  \Sexpr{bspp_df2_ts_eos$p95[which(bspp_df2_ts_eos$spp_name %in% "B. alleghaniensis")]}], 
+  {\Bpop}: $\beta = $ 
+  \Sexpr{bspp_df2_ts_eos$mean[which(bspp_df2_ts_eos$spp_name %in% "B. populifolia")]}, $UI_{90}$
+  [\Sexpr{bspp_df2_ts_eos$p5[which(bspp_df2_ts_eos$spp_name %in% "B. populifolia")]}, 
+  \Sexpr{bspp_df2_ts_eos$p95[which(bspp_df2_ts_eos$spp_name %in% "B. populifolia")]}]), with {\Bpap} 
+  ($\beta = $ 
+  \Sexpr{bspp_df2_ts_eos$mean[which(bspp_df2_ts_eos$spp_name %in% "B. papyrifera")]}, $UI_{90}$
+  [\Sexpr{bspp_df2_ts_eos$p5[which(bspp_df2_ts_eos$spp_name %in% "B. papyrifera")]}, 
+  \Sexpr{bspp_df2_ts_eos$p95[which(bspp_df2_ts_eos$spp_name %in% "B. papyrifera")]}])
+  being the only one of those three that also grew more with longer calendar season (Figure \ref{fig:wcmuplotbspp}d and h) (Table \ref{tab:wc_slope_table}).
+  
+  \end{enumerate}
+
+% Question 3 --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+\item Does tree growth increase with longer growing seasons and is it consistent across species and provenances?
+  \begin{enumerate}
+  
+  \item {\Bpap} grew the least ($\alpha = $ 
+  \Sexpr{aspp_df2$mean[which(aspp_df2$spp_name %in% "B. papyrifera")]}, $UI_{90}$
+  [\Sexpr{aspp_df2$p5[which(aspp_df2$spp_name %in% "B. papyrifera")]}, 
+  \Sexpr{aspp_df2$p95[which(aspp_df2$spp_name %in% "B. papyrifera")]}]) (Figure \ref{fig:wcmuplotatreeid}), but was the most responsive to longer growing seasons (Figure \ref{fig:wcmuplotbspp}a and b).
+  
+  \item {\Ainc} grew the most ($\alpha = $  
+  \Sexpr{aspp_df2$mean[which(aspp_df2$spp_name %in% "A. incana")]}, $UI_{90}$
+  [\Sexpr{aspp_df2$p5[which(aspp_df2$spp_name %in% "A. incana")]}, 
+  \Sexpr{aspp_df2$p95[which(aspp_df2$spp_name %in% "A. incana")]}]) (Figure \ref{fig:wcmuplotatreeid}), but had contrasting responses to longer growing seasons (Figure \ref{fig:wcmuplotbspp}a and b).
+
+  \item Growth did not change across any provenances (Figure \ref{fig:wcmuplotasite}) (Table \ref{tab:wc_asite_table}), but there was slightly more variation across sites ($\sigma = $
+  \Sexpr{sigma_df2$mean[which(sigma_df2$sigma %in% "sigma_asite")]}, $UI_{90}$
+  [\Sexpr{sigma_df2$p5[which(sigma_df2$sigma %in% "sigma_asite")]}, 
+  \Sexpr{sigma_df2$p95[which(sigma_df2$sigma %in% "sigma_asite")]}) than across tree ids ($\sigma = $ 
+  \Sexpr{sigma_df2$mean[which(sigma_df2$sigma %in% "sigma_atreeid")]}, $UI_{90}$
+  [\Sexpr{sigma_df2$p5[which(sigma_df2$sigma %in% "sigma_atreeid")]}, 
+  \Sexpr{sigma_df2$p95[which(sigma_df2$sigma %in% "sigma_atreeid")]}]
+
+  \end{enumerate}
+
+
+% Question 4 --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+\item How did growth change across years, and how did it relate to climate?
+  \begin{enumerate}
+  
+  \item Annual ring widths across years varied from 
+  \Sexpr{min(empts$lengthMM)} mm ({\Ball} in \Sexpr{empts$year[which.min(empts$lengthMM)]}) to 
+  \Sexpr{max(empts$lengthMM)} mm ({\Bpop} in \Sexpr{empts$year[which.max(empts$lengthMM)]}) (Figure \ref{fig:wcmuplotayear}). 
+ 
+  \item Growth was highest in \Sexpr{ayear_df2$year_name[which.max(ayear_df2$mean)]} 
+  (\Sexpr{ayear_df2$mean[which.max(ayear_df2$mean)]}, $UI_{90}$
+  [\Sexpr{ayear_df2$p5[which.max(ayear_df2$mean)]}, 
+\Sexpr{ayear_df2$p95[which.max(ayear_df2$mean)]}]) (Figure \ref{fig:wcmuplotayear}), but that year was not the warmest nor the longest calendar season, unlike our finding that warmer and longer seasons increase growth for most of our species (Figure \ref{fig:wcxyGDD} and Figure \ref{fig:wcxyGSL}).
+  
+  \item Growth was lowest in \Sexpr{ayear_df2$year_name[which.min(ayear_df2$mean)]} 
+  (\Sexpr{ayear_df2$mean[which.min(ayear_df2$mean)]}, $UI_{90}$
+  [\Sexpr{ayear_df2$p5[which.min(ayear_df2$mean)]}, 
+  \Sexpr{ayear_df2$p95[which.min(ayear_df2$mean)]}]) (Figure \ref{fig:wcmuplotayear}) that year had the warmest thermal, but the shortest calendar season, also unlike our findings that growth increases with warmer seasons, and to a lesser extent, with longer calendar season (Figure \ref{fig:wcxyGDD} and Figure \ref{fig:wcxyGSL}).
+  \end{enumerate}
+
+\end{enumerate}
+
+% Figure mu across all species and climate predictors
+\begin{figure}[!ht]
+\includegraphics[width=0.8\textwidth]{../../analyses/figures/growthModelsMain/muALLbsppWlines.jpeg}
+\caption{Model slope estimates representing ring width change as a function of four different predictors across four species. GDD represent the accumulated growing degree days between leafout and budset and the models estimates shows ring width change per 7 average spring days GDD (\Sexpr{wcgddscale}) (a). GSL is the number of days between leafout and budset (b). SOS represent the start of season, which is leafout (c) and EOS, the end of season through budset (d). All predictors were fit using the same model and number of observations, with only the independent variable changing. The dots represent the mean of each species and the lines, the 50\% and 90\% uncertainty intervals (UI). {\Ainc} and {\Bpap} grew more with longer calendar seasons, but only {\Ainc} grew less with later leafout and had no effect in response to budset. Interestingly, {\Bpap} did not grow more with earlier leafout, but did with a later budset and longer calendar season. {\Ball} and {\Bpop} did not grow more with longer calendar seasons, but {\Ball} grew more with a later leafout and budset whereas {\Bpop} only grew more with a later budset.}
+\label{fig:wcmuplotbspp}
+\end{figure}
+
+% Coringtreespotters year mu plot
+\begin{figure}[!ht]
+\includegraphics[width=1\textwidth]{../../analyses/figures/growthModelsMain/muayear_boxplot.jpeg}
+\caption{We show tree ring widths (mm) across years and species in two ways: (a) as model estimates for the year intercepts with the dots depicting the mean and the lines, the 50\% and 90\% uncertainty intervals (UI) and (b) using box plots of the empirical data. Though the trend is weak, 2020 is systematically the year with the lowest growth shown both as the mean of the model intercepts (a) and as the median of the raw data, for each species (b). The growth of 2018 and 2019 is similar.}
+\label{fig:wcmuplotayear}
+\end{figure}
+
+
+% <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+% Supplemental results
+% <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+\clearpage
+\section*{Supplemental results}
+
+\setcounter{table}{0}
+\renewcommand{\thetable}{S\arabic{table}}
+\setcounter{figure}{0}
+\renewcommand{\thefigure}{S\arabic{figure}}
+
+%DL22May: You already say in the caption that the values are the slopes, so you can remove the beta and the equal signs from the table, same with the alpha in the next table
+% Table slope for Coringtreespotters
+<<results='asis', echo = FALSE>>=
+# Bspp parameter estimates table
+options(digits = 2)
+
+bspp_df2_ts_gdd$GDD <- sprintf("%.2f [%.2f, %.2f]", bspp_df2_ts_gdd$mean, bspp_df2_ts_gdd$p5, bspp_df2_ts_gdd$p95)
+
+bspp_df2_ts_gsl$GSL <- sprintf("%.2f [%.2f, %.2f]", bspp_df2_ts_gsl$mean, bspp_df2_ts_gsl$p5, bspp_df2_ts_gsl$p95)
+
+bspp_df2_ts_sos$SOS <- sprintf("%.2f [%.2f, %.2f]", bspp_df2_ts_sos$mean, bspp_df2_ts_sos$p5, bspp_df2_ts_sos$p95)
+
+bspp_df2_ts_eos$EOS <- sprintf("%.2f [%.2f, %.2f]", bspp_df2_ts_eos$mean, bspp_df2_ts_eos$p5, bspp_df2_ts_eos$p95)
+      
+gdd <- bspp_df2_ts_gdd[, c("spp_name", "GDD")]
+gsl <- bspp_df2_ts_gsl[, c("spp_name", "GSL")]
+sos <- bspp_df2_ts_sos[, c("spp_name", "SOS")]
+eos <- bspp_df2_ts_eos[, c("spp_name", "EOS")]
+
+df_all <- Reduce(function(x, y) merge(x, y, by = "spp_name", all = TRUE),
+                 list(gdd, gsl, sos, eos))
+colnames(df_all)[1] <- "Species"
+df_all$Species <- wctablespp[df_all$Species]
+
+# Print table
+tab <- xtable(df_all,
+              caption = "Species level slope parameters (mean and 90\\% uncertainty intervals, in square brackets) across the four different predictors for Coringtreespotters. GDD: growing degree days, GSL: growing season length, SOS: start of season and EOS: end of season.",
+              label = "tab:wc_slope_table"
+)
+
+print(tab,
+      include.rownames = FALSE,
+      sanitize.text.function = identity,
+      caption.placement = "top")
+@
+
+% Table site intercept for Coringtreespotters
+%DL22May: Could you add the site names as a column too
+<<results='asis', echo = FALSE>>=
+site_df2$mean <- round(site_df2$mean, 2)
+site_df2$p5 <- round(site_df2$p5, 2)
+site_df2$p95 <- round(site_df2$p95, 2)
+
+sitefortable <- data.frame(
+  Provenance = site_df2$site_name,
+  "Intercept estimate" = paste0(site_df2$mean, " [", site_df2$p5, ", ", site_df2$p95, "]", sep = ""),
+  Latitude = empts$provenance.lat[match(site_df2$site_name, empts$site)],
+  Longitude = empts$provenance.long[match(site_df2$site_name, empts$site)]
+)
+
+sitefortable <- sitefortable[order(sitefortable$Latitude),]
+
+# Print table
+tab <- xtable(sitefortable,
+              caption = "Provenance level intercept parameters (mean and 90\\% uncertainty intervals, in square brackets) for the GDD model.",
+              label = "tab:wc_asite_table"
+)
+
+print(tab,
+      include.rownames = FALSE,
+      sanitize.text.function = identity,
+      caption.placement = "top")
+@
+
+% XY facetted by species GDD
+\begin{figure}[!ht]
+\includegraphics[width=0.8\textwidth]{../../analyses/figures/growthModelsMain/growthModelSlopesperSppFacet.jpeg}
+\caption{Ring width trends in response to thermal season (GDD). The plots are the reconstructed species estimates posterior distribution with error. The lines represent the mean of the posterior distribution and the shaded area, the 50\% UI. The dots are the empirical data shaped by year.}
+\label{fig:wcxyGDD}
+\end{figure}
+
+% XY facetted by species GSL
+\begin{figure}[!ht]
+\includegraphics[width=0.8\textwidth]{../../analyses/figures/growthModelsMain/growthModelSlopesperSppFacetGSL.jpeg}
+\caption{Ring width trends in response to calendar season (GSL). The plots are the reconstructed species estimates posterior distribution with error. The lines represent the mean of the posterior distribution and the shaded area, the 50\% UI. The dots are the empirical data shaped by year.}
+\label{fig:wcxyGSL}
+\end{figure}
+
+% Figure mu atreeid full
+\begin{figure}[!ht]
+\includegraphics[width=0.8\textwidth]{../../analyses/figures/growthModelsMain/meanPlotGrowthGDD_treeidBYspp.pdf}
+\caption{Intercept estimates for each group of the GDD model. The different tree id values represent the sum of the tree id, provenance, species and averaged year intercepts. The larger dots and lines represent aggregated average across these values. The dots are the mean of the posterior distribution and the thick and thin lines, the 50 and 90\% UI.}
+\label{fig:wcmuplotatreeid}
+\end{figure}
+
+% Z-scored slope results Coringtreespotters
+\begin{figure}[!ht]
+\includegraphics[width=0.8\textwidth]{../../analyses/figures/growthModelsMain/zscored/muALLbspp.pdf}
+\caption{Standardized (z-scored) slope estimates for Coringtreespotters. The dots represent the mean of the posterior distribution, the thick lines the 50\% uncertainty intervals (UI) and the thinner lines, the 90\% UI.}
+\label{fig:bsppZscored}
+\end{figure}
+
+\end{document}
