@@ -22,11 +22,12 @@ library(rnaturalearthdata)
 library(zoo)
 
 setwd("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses")
+source('/Users/christophe_rouleau-desrochers/github/wildchrokie/analyses/rcode/tools.R')
 
 # flags
 makeggplots <- FALSE
 
-emp <- read.csv("output/empiricalDataMAIN.csv")
+empts <- read.csv("output/empiricalDataMAIN.csv")
 gdd <- read.csv("output/gddByYear.csv")
 allringwidths <- read.csv("output/ringWidthTS.csv")
 longtermgdd <- read.csv("output/longTermGDDperYear.csv")
@@ -35,7 +36,7 @@ longtermgdd5yr <- read.csv("output/longTermGDD5YrAvg.csv")
 # from arboretum website most of the info is in the above dfs, just in case I want to look at other stuff
 coord <- read.csv("input/listTreesfromInteractiveMap.csv", header=TRUE)
 
-emp$accessionYear <- as.numeric(substr(emp$accessionDate, 7,11))
+empts$accessionYear <- as.numeric(substr(empts$accessionDate, 7,11))
 
 # now do the same for ringwidth DO THIS
 length <- aggregate(lengthCM ~ id + yearCor, allringwidths, FUN = mean)
@@ -48,18 +49,18 @@ allringwidths2 <- allringwidths[!duplicated(allringwidths$idyear),]
 
 allringwidths2$lengthMM <- length$lengthMM[match(allringwidths2$idyear, length$idyear)]
 
-allringwidths2$accessionYear <- emp$accessionYear[match(allringwidths2$id, emp$id)]
+allringwidths2$accessionYear <- empts$accessionYear[match(allringwidths2$id, empts$id)]
 
 allringwidths2$age <- allringwidths2$yearCor - allringwidths2$accessionYear
 
-emp$plantNickname <- paste(emp$latbi, emp$plantNickname, sep = " ")
+empts$plantNickname <- paste(empts$latbi, empts$plantNickname, sep = " ")
 # ringwidth X GDD in PGS
 renoir <- c("#17154f", "#2f357c", "#6c5d9e", "#9d9cd5", "#b0799a", "#e48171", "#bf3729", "#e69b00", "#f5bb50", "#ada43b", "#355828")
 
 if (makeggplots) {
-subsetbass <- subset(emp, latbi == "Tilia americana")
+subsetbass <- subset(empts, latbi == "Tilia americana")
 subsetbass$DBH
-ggplot(emp, aes(x = pgsGDD10, y = lengthMM, 
+ggplot(empts, aes(x = pgsGDD10, y = lengthMM, 
                 color = latbi, 
                 fill = latbi)) +
   geom_point(size = 2, alpha = 0.7) + 
@@ -75,7 +76,7 @@ ggplot(emp, aes(x = pgsGDD10, y = lengthMM,
 ggsave("figures/empiricalData/sppLinearRegressions_pgsGDD.jpeg", width = 8, height = 6, units = "in", dpi = 300)
 
 # plot just basswood
-subsetbass <- subset(emp, latbi == "Tilia americana")
+subsetbass <- subset(empts, latbi == "Tilia americana")
 ggplot(subsetbass, aes(x = pgsGDD10, y = lengthMM, 
                 color = id, 
                 fill = id)) +
@@ -91,7 +92,7 @@ ggplot(subsetbass, aes(x = pgsGDD10, y = lengthMM,
   guides(fill = "none", color = "none") 
 ggsave("figures/empiricalData/sppLinearRegressions_pgsGDD_TIAM.jpeg", width = 8, height = 6, units = "in", dpi = 300)
 
-emp$year2 <- as.factor(emp$year)
+empts$year2 <- as.factor(empts$year)
 
 
 }
@@ -102,7 +103,7 @@ emp$year2 <- as.factor(emp$year)
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
 # FOR WHOLE CHRONOLOGY
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
-emp2 <- emp
+emp2 <- empts
 emp2$treeAge <- emp2$year - emp2$accessionYear
 allringwidths2$treeAge <- allringwidths2$yearCor - allringwidths2$accessionYear
 
@@ -121,8 +122,8 @@ age <- aggregate(treeAge ~ id, allringwidths2, FUN = mean)
 allringwidths2$meanAge <- age$treeAge[match(allringwidths2$id, age$id)]
 allringwidths2 <- allringwidths2[order(allringwidths2$meanAge),]
 allringwidths2 <- allringwidths2[order(allringwidths2$id),]
-allringwidths2$latbi <- emp$latbi[match(allringwidths2$id, emp$id)]
-allringwidths2$plantNickname <- emp$plantNickname[match(allringwidths2$id, emp$id)]
+allringwidths2$latbi <- empts$latbi[match(allringwidths2$id, empts$id)]
+allringwidths2$plantNickname <- empts$plantNickname[match(allringwidths2$id, empts$id)]
 
 # add 5 year gdd average
 allringwidths2$gdd <- longtermgdd5yr$GDD_moving_avg[match(allringwidths2$yearCor, longtermgdd5yr$year)]
@@ -340,7 +341,7 @@ nrow(rwagecoefAll[which(rwagecoefAll$slope > 0),])
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
 # FOR CHRONOLOGY WITH PHENODATA
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
-emp2 <- emp[!is.na(emp$lengthMM),]
+emp2 <- empts[!is.na(empts$lengthMM),]
 
 emp2$treeAge <- emp2$year - emp2$accessionYear
 # remove the the negative ages referencing the previous vector with negative ages ids
@@ -352,7 +353,7 @@ emp2$meanAge <- age$treeAge[match(emp2$id, age$id)]
 
 emp2 <- emp2[order(emp2$meanAge),]
 
-emp2$latbi <- emp$latbi[match(emp2$id, emp$id)]
+emp2$latbi <- empts$latbi[match(emp2$id, empts$id)]
 
 # PLOT!.
 pdf("figures/empiricalData/ringwidthXage_bySpeciesOnlyLeafout.pdf", width = 10, height = 6)
@@ -432,7 +433,7 @@ for(i in ids) { # i = "White oak 21815*E"
   for(sp in unique(sub$latbi)) { # sp = "River birch"
     ssp <- sub[sub$latbi == sp, ]
     fit <- lm(lengthMM ~ year, data = ssp)
-    abline(fit, col = renoir[as.numeric(factor(sp, levels = levels(factor(emp$latbi))))], lwd =0.5) 
+    abline(fit, col = renoir[as.numeric(factor(sp, levels = levels(factor(empts$latbi))))], lwd =0.5) 
   }
 }
 dev.off()
@@ -477,12 +478,12 @@ ggsave("figures/tiamspaghetti_plot.jpeg", width = 10, height = 6,
 # Leafout 
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
 pdf("figures/empiricalData/leafoutXyear.pdf", width = 8, height = 6)
-spp <- unique(emp$latbi)
-emp$year <- as.integer(emp$year)
+spp <- unique(empts$latbi)
+empts$year <- as.integer(empts$year)
 par(mfrow = c(4, 3), mar = c(2, 2, 1.5, 0.5), mgp = c(1.5, 0.5, 0))
 for(i in spp) {
-  sub <- emp[emp$latbi == i, ]
-  sp_col <- renoir[as.numeric(factor(i, levels = levels(factor(emp$latbi))))]
+  sub <- empts[empts$latbi == i, ]
+  sp_col <- renoir[as.numeric(factor(i, levels = levels(factor(empts$latbi))))]
   
   plot(sub$year, sub$leafout,
        col = sp_col,
@@ -510,8 +511,8 @@ dev.off()
 pdf("figures/empiricalData/coloredLeavesXyear.pdf", width = 8, height = 6)
 par(mfrow = c(4, 3), mar = c(2, 2, 1.5, 0.5), mgp = c(1.5, 0.5, 0))
 for(i in spp) {
-  sub <- emp[emp$latbi == i, ]
-  sp_col <- renoir[as.numeric(factor(i, levels = levels(factor(emp$latbi))))]
+  sub <- empts[empts$latbi == i, ]
+  sp_col <- renoir[as.numeric(factor(i, levels = levels(factor(empts$latbi))))]
   
   plot(sub$year, sub$coloredLeaves,
        col = sp_col,
@@ -533,66 +534,36 @@ for(i in spp) {
   }
 }
 dev.off()
+
+
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
-# Map ####
+# Boxplot of years per species ####
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
-# --- Get the map data ---
-world <- ne_countries(scale = "medium", returnclass = "sf")
+species <- unique(empts$latbi)
+years <- sort(unique(empts$year))
+n_sp <- length(species)
 
-# --- Define bounding box for northeastern North America ---
-# Adjust these coordinates as needed
-lat_min <- 41
-lat_max <- 48
-lon_min <- -78
-lon_max <- -63
+yr_levels <- sort(unique(dat$year))
+bpcols <- colsyr[as.character(yr_levels)]
 
-# --- Create example points along a latitudinal gradient ---
-# These are arbitrary example locations
-locations <- data.frame(
-  name = c("Harvard Forest (MA)", "White Mountains (NH)", "Dartmouth College (NH)", "St-Hyppolyte (Qc)"),
-  lon = c(-72.2, -71, -70.66, -74.01),
-  lat = c(42.55, 44.11, 44.92, 45.98)
-)
-
-locations2 <- locations[order(-locations$lat), ]
-
-locations2$col <-  wes_palettes$Darjeeling1[1:4]
-
-special_point <- data.frame(
-  name = "Arnold Arboretum of 
-  Harvard University (MA)",
-  lon = -71.13358611669867,
-  lat = 42.29601035316377
-)
-special_sf <- st_as_sf(special_point, coords = c("lon", "lat"), crs = 4326)
-
-# Convert to sf object
-points_sf <- st_as_sf(locations2, coords = c("lon", "lat"), crs = 4326)
-
-# --- Plot the map ---
-ggplot(data = world) +
-  geom_sf(fill = "white", color = "gray60") +
-  geom_sf(data = points_sf, color = locations2$col, size = 4) +
-  geom_sf(data = special_sf, color = "#E54E21", shape = 8, size = 6, stroke = 1.2) +
-  geom_text(data = locations2, aes(x = lon, y = lat, label = name),
-            nudge_y = 0.35, nudge_x = 0, size = 4.5, fontface = "bold") +
-  geom_text(data = special_point,
-            aes(x = lon, y = lat, label = name),
-            nudge_y = 0.2, nudge_x = 2.5, color = "#E54E21", size = 5, fontface = "bold") +
-  coord_sf(xlim = c(lon_min, lon_max), ylim = c(lat_min, lat_max), expand = FALSE) +
-  theme_minimal() +   
-  theme(strip.text = element_blank(),                    
-        legend.key.height = unit(1.5, "lines"),
-        panel.border = element_rect(color = "black", fill = NA, linewidth = 1)) +
-  labs(
-    title = "",
-    x = "Longitude",
-    y = "Latitude"
-  ) +
-  theme(
-    panel.background = element_rect(fill = "aliceblue"),
-    panel.grid.major = element_line(color = "gray80", linetype = "dotted")
-  )
-ggsave("figures/mapSourcePop.jpeg", width = 9, height = 6, units = "in", dpi = 300)
-
+jpeg("figures/empiricalData/boxplotRingWidth.jpeg", width = 2400, height = 2000, res = 300)
+par(mfrow = c(4, 3), mar = c(4, 4, 3, 1))
+for(sp in species) {
+  dat <- empts[empts$latbi == sp,]
+  yr_levels <- sort(unique(dat$year))
+  bpcols <- colsyr[as.character(yr_levels)]
+  
+  boxplot(lengthMM ~ year, data = dat,
+          main = bquote(italic(.(sp))),
+          xlab = "Year", ylab = "Ring width (mm)",
+          col = adjustcolor(bpcols, alpha.f = 0.5),
+          border = adjustcolor(bpcols, alpha.f = 0.8),
+          medcol = "black",
+          whisklty = 1, staplewex = 0, medlty = 1, outpch = 16, outcex = 0.7, outcol = "black")
+  stripchart(lengthMM ~ year, data = dat,
+             method = "jitter", jitter = 0.08,
+             pch = 16, cex = 0.7, col = "black",
+             vertical = TRUE, add = TRUE)
+}
+dev.off()
 

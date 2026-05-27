@@ -20,7 +20,7 @@ if (length(grep("christophe_rouleau-desrochers", getwd())) > 0) {
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 source("rcode/TSgrowthModelsMain.R")
 
-makeplots <- T
+makeplots <- F
 runzscore <- F
 
 # acronym latbi
@@ -1250,13 +1250,16 @@ species_legend_order <- names(sort(spp_y, decreasing = TRUE))
 legend(
   x = max(treeid_df4$p95) - 1.5,
   y = max(treeid_df4$y_pos),
-  legend = species_legend_order,
+  legend = as.expression(lapply(species_legend_order, function(x)
+    substitute(italic(s), list(s = x))
+  )),
   col    = tscolslatbi[species_legend_order],
   pch = 16, pt.cex = 1.2, title = "Species", bty = "n")
 
 dev.off()
 
 }
+
 jpeg(file = "figures/growthModelsMain/muayear.jpeg",
      width = 1600, height = 1600, res = 300)
 

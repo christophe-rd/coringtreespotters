@@ -41,6 +41,10 @@ runmodelnoayear <- FALSE
 # empts <- read.csv("output/empiricalDataMAIN.csv")
 # read empirical data with max phenology observations instead of mingit status
 empts <- read.csv("output/empiricalDataMAIN.csv")
+
+empfullsosts <- empts[!is.na(empts$leafout),]
+empfulleosts <- empts[!is.na(empts$coloredLeaves),]
+
 empts <- empts[!is.na(empts$pgsGDD5) & !is.na(empts$lengthMM),]
 
 gddyr <- read.csv("output/gddByYear.csv")
@@ -580,12 +584,11 @@ dev.off()
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 # FULL DATA ####
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
-if(runfulldata) {
 # Fit model SOS 
 # transform my groups to numeric values
 empfullsosts$spp_num <- match(empfullsosts$latbi, unique(empfullsosts$latbi))
 empfullsosts$treeid_num <- match(empfullsosts$id, unique(empfullsosts$id))
-
+if(runfulldata) {
 # transform data in vectors for gsl
 y <- empfullsosts$loglength # ring width in mm
 N <- nrow(empfullsosts)
