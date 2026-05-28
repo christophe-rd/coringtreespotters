@@ -47,6 +47,18 @@ empfulleosts <- empts[!is.na(empts$coloredLeaves),]
 
 empts <- empts[!is.na(empts$pgsGDD5) & !is.na(empts$lengthMM),]
 
+# add calendar days
+empts$loCal <- format(
+  as.Date(empts$leafout - 1,
+          origin = paste0(empts$year, "-01-01")),
+  "%d-%b"
+)
+empts$clCal <- format(
+  as.Date(empts$coloredLeaves - 1,
+          origin = paste0(empts$year, "-01-01")),
+  "%d-%b"
+)
+
 gddyr <- read.csv("output/gddByYear.csv")
 
 lineplotseqlength <- 10
@@ -69,7 +81,7 @@ temp <- temp[order(temp$year, temp$doy), ]
 
 temp$bin10 <- ave(temp$doy, temp$year, FUN = function(x) ceiling((x - min(x) + 1) / 7))
 gdd_7day <- aggregate(gdddiff ~ year + bin10, data = temp, max)
-wcgddscale <- mean(gdd_7day$gdddiff)
+tsgddscale <- mean(gdd_7day$gdddiff)
 
 gddseq <- seq(min(empts$pgsGDD5), max(empts$pgsGDD5), length.out = lineplotseqlength)
 
@@ -87,9 +99,9 @@ dgdd <- list(
   Nyear = length(unique(empts$year_num)),
   treeid_species = treeid_spp_ordered$spp_num,
   Ntreeid_per_spp = as.integer(table(treeid_spp_ordered$spp_num)),
-  gdd = empts$pgsGDD5 / wcgddscale,
+  gdd = empts$pgsGDD5 / tsgddscale,
   gddseq = gddseq,
-  wcgddscale = wcgddscale,
+  tsgddscale = tsgddscale,
   Ngddseq = length(gddseq)
 )
 dgdd

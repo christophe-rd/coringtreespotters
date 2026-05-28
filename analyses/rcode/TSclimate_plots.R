@@ -92,7 +92,7 @@ for (i in seq_along(years)) { # i = 1
          col= colsyr, pch = 16, lty = 1, lwd = 2,
          title  = "Year")
 }
-
+}
 
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 # Climate summaries ####
@@ -205,5 +205,3 @@ frost_summary <- aggregate(minTempC ~ id + year,
 frost_summary <- do.call(data.frame, frost_summary)
 colnames(frost_summary) <- c("id", "year", "frost_days_after_burst", "minimum_frost_temp")
 
-# View the results
-head(frost_summary)

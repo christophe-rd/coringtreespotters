@@ -88,6 +88,7 @@ bspp_df2_ts_eos$spp_name <- empts$latbi[match(bspp_df2_ts_eos$spp, empts$spp_num
 aspp_df2_ts_eos$spp_name <- empts$latbi[match(aspp_df2_ts_eos$spp, empts$spp_num)]
 ayear_df2_ts_eos$year_name <- empts$year[match(ayear_df2_ts_eos$year, empts$year_num)]
 
+if(makeplots) {
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 # GDD posterior recovery ####
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
@@ -220,7 +221,7 @@ treeidvecnum <- unique(treeid_spp$treeid_num)
 treeidvecname <- treeid_spp$id
 
 # for mu plots
-species_order <- rev(unique(empts$latbi))
+species_order <- unique(empts$latbi)
 
 # vector of treeids
 subyvec <- vector()
@@ -261,7 +262,7 @@ gddseq <- dgdd$gddseq
 ##### GDD: per treeid, facet #####
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
 # PDF output
-pdf(file = "figures/growthModelsMain/growthModelSlopesperTreeid.pdf", width = 10, height = 8)
+pdf(file = "figures/growthModelsMain/TSgrowthModelSlopesperTreeid.pdf", width = 10, height = 8)
 # Layout: 2 rows x 2 columns per page
 par(mfrow = c(2, 2), mar = c(4, 4, 2, 1))
 
@@ -312,7 +313,7 @@ dev.off()
 ##### GDD: per Spp, facet #####
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
 # jpeg output
-jpeg(filename = "figures/growthModelsMain/growthModelSlopesperSppFacetGDD.jpeg",
+jpeg(filename = "figures/growthModelsMain/TSgrowthModelSlopesperSppFacetGDD.jpeg",
      width = 2400, height = 2400, res = 300)
 # Layout: 2 rows x 2 columns per page
 par(mfrow = c(4, 3), mar = c(4, 4, 2, 1))
@@ -380,7 +381,7 @@ dev.off()
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 ##### GDD: Per spp, facetted with treeid slopes #####
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
-pdf(file = "figures/growthModelsMain/growthModelSlopesperSppTreeidGDD.pdf", width = 10, height = 8)
+pdf(file = "figures/growthModelsMain/TSgrowthModelSlopesperSppTreeidGDD.pdf", width = 10, height = 8)
 par(mfrow = c(2, 2), mar = c(4, 4, 2, 1))
 
 for (i in seq_along(sppvecnum)) { # i = 1
@@ -452,7 +453,7 @@ dev.off()
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 spp_post_array <- extract(fitgdd, "spp_post")$spp_post
 
-jpeg(filename = "figures/growthModelsMain/growthModelSlopesperSppGDD.jpeg",
+jpeg(filename = "figures/growthModelsMain/TSgrowthModelSlopesperSppGDD.jpeg",
      width = 2400, height = 2400, res = 300)
 
 par(mar = c(4, 4, 2, 1))
@@ -506,7 +507,7 @@ gslseq <- dgsl$gslseq
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
 ##### GSL: per Spp, facet #####
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
-jpeg(filename = "figures/growthModelsMain/growthModelSlopesperSppFacetGSL.jpeg",
+jpeg(filename = "figures/growthModelsMain/TSgrowthModelSlopesperSppFacetGSL.jpeg",
      width = 2400, height = 2400, res = 300)
 par(mfrow = c(4, 3), mar = c(4, 4, 2, 1))
 
@@ -578,7 +579,7 @@ sosseq <- dsos$sosseq
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
 ##### SOS: per Spp, facet #####
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
-jpeg(filename = "figures/growthModelsMain/growthModelSlopesperSppFacetSOS.jpeg",
+jpeg(filename = "figures/growthModelsMain/TSgrowthModelSlopesperSppFacetSOS.jpeg",
      width = 2400, height = 2400, res = 300)
 par(mfrow = c(4, 3), mar = c(4, 4, 2, 1))
 
@@ -628,7 +629,7 @@ dev.off()
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
 ##### SOS: per Spp, non-facetted #####
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
-jpeg(filename = "figures/growthModelsMain/growthModelSlopesperSppNoFacetSOS.jpeg",
+jpeg(filename = "figures/growthModelsMain/TSgrowthModelSlopesperSppNoFacetSOS.jpeg",
      width = 2400, height = 2400, res = 300)
 
 par(mar = c(4, 4, 2, 1))
@@ -682,7 +683,7 @@ eosseq <- deos$eosseq
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
 ##### EOS: per Spp, facet #####
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
-jpeg(filename = "figures/growthModelsMain/growthModelSlopesperSppFacetEOS.jpeg",
+jpeg(filename = "figures/growthModelsMain/TSgrowthModelSlopesperSppFacetEOS.jpeg",
      width = 2400, height = 2400, res = 300)
 par(mfrow = c(4, 3), mar = c(4, 4, 2, 1))
 
@@ -732,7 +733,7 @@ dev.off()
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
 ##### EOS: per Spp, non-facetted #####
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
-jpeg(filename = "figures/growthModelsMain/growthModelSlopesperSppNoFacetEOS.jpeg",
+jpeg(filename = "figures/growthModelsMain/TSgrowthModelSlopesperSppNoFacetEOS.jpeg",
      width = 2400, height = 2400, res = 300)
 
 par(mar = c(4, 4, 2, 1))
@@ -774,7 +775,7 @@ img_budset  <- rsvg::rsvg("/Users/christophe_rouleau-desrochers/github/wildchrok
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
 ###### bsp ###### 
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
-jpeg(file = "figures/growthModelsMain/muALLbspp.jpeg",
+jpeg(file = "figures/growthModelsMain/TSmuALLbspp.jpeg",
      width = 2800, height = 2400, res = 300)
 
 layout(matrix(c(
@@ -869,7 +870,7 @@ dev.off()
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 custommar <- c(4, 4, 3, 1.2)
 
-jpeg(file = "figures/growthModelsMain/muALLbsppWlines.jpeg",
+jpeg(file = "figures/growthModelsMain/TSmuALLbsppWlines.jpeg",
      width = 2800, height = 3000, res = 300)
 
 layout(matrix(c(
@@ -1080,7 +1081,7 @@ dev.off()
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 ##### aspp #####
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
-jpeg(file = "figures/growthModelsMain/muALLaspp.jpeg",
+jpeg(file = "figures/growthModelsMain/TSmuALLaspp.jpeg",
      width = 1800, height = 2200, res = 300)
 
 layout(matrix(c(
@@ -1207,7 +1208,7 @@ for (sp in species_order) {
   current_y <- current_y - n - gap
 }
 
-pdf(file = "figures/growthModelsMain/meanPlotGrowthGDD_treeidBYspp.pdf",
+pdf(file = "figures/growthModelsMain/TSmeanPlotGrowthGDD_treeidBYspp.pdf",
     width = 9, height = 10)
 par(mar = c(4, 6, 6, 1))
 
@@ -1260,7 +1261,7 @@ dev.off()
 
 }
 
-jpeg(file = "figures/growthModelsMain/muayear.jpeg",
+jpeg(file = "figures/growthModelsMain/TSmuayear.jpeg",
      width = 1600, height = 1600, res = 300)
 
 ayear_df2_ts$year_name <- as.character(ayear_df2_ts$year_name)
@@ -1280,7 +1281,7 @@ segments(ayear_df2_ts$p25, ayear_df2_ts$y_pos,
 axis(side = 2, at = seq_along(years_ordered), labels = years_ordered, las = 1)
 
 dev.off()
-
+}
 
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 # Ring width summaries ####
@@ -1293,9 +1294,43 @@ rwsumts <- merge(rwmints, rwmaxts, by = "latbi")
 colnames(rwsumts) <- c("latbi","min", "max")
 rwsumts$mean <- rwmeannts$lengthMM[match(rwsumts$latbi, rwmeannts$latbi)]
 
+t <- subset(empts, latbi %in% "B. alleghaniensis")
+plot(t$loglength ~ t$pgsGDD5)
+unique(empts$latbi)
+
+par(mfrow=c(1,2))
+plot(bspp_df2_ts$mean, y_pos,
+     xlim = c(-0.5, 1.2), ylim = c(0.5, n_spp + 0.5),
+     xlab = "log(ring width) change per 7 spring days GDD", ylab = "",
+     yaxt = "n", pch = 16, cex = 2, col = tscolslatbi, frame.plot = TRUE,
+     panel.first = abline(v = 0, lty = 2, col = "black"))
+segments(bspp_df2_ts$p5,  y_pos, bspp_df2_ts$p95, y_pos, col = tscolslatbi, lwd = 1.5)
+segments(bspp_df2_ts$p25, y_pos, bspp_df2_ts$p75, y_pos, col = tscolslatbi, lwd = 3)
+mtext("Growing degree days bspp", adj = 0, side = 3, line = 2.5, font = 2, cex = 0.9)
+
+legend(
+  x = 0.25,
+  y = 10,
+  legend = as.expression(lapply(species_legend_order, function(x)
+    substitute(italic(s), list(s = x))
+  )),
+  col    = tscolslatbi[species_legend_order],
+  pch = 16, pt.cex = 1.2, title = "Species", bty = "n")
+
+plot(aspp_df2_ts$mean, y_pos,
+     xlim = c(-5, 5), ylim = c(0.5, n_spp + 0.5),
+     xlab = "log(ring width) change per 7 spring days GDD", ylab = "",
+     yaxt = "n", pch = 16, cex = 2, col = tscolslatbi, frame.plot = TRUE,
+     panel.first = abline(v = 0, lty = 2, col = "black"))
+  segments(aspp_df2_ts$p5,  y_pos, aspp_df2_ts$p95, y_pos, col = tscolslatbi, lwd = 1.5)
+segments(aspp_df2_ts$p25, y_pos, aspp_df2_ts$p75, y_pos, col = tscolslatbi, lwd = 3)
+mtext("Growing degree days aspp", adj = 0, side = 3, line = 2.5, font = 2, cex = 0.9)
+
+
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 # Z-scored output ####
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+if(runzscore) {
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 ##### GDD posterior recovery #####
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
@@ -1412,3 +1447,4 @@ max_ES_ts <- merge(agg_z_ts, bspp_z_binded_ts[, c("mean", "p5", "p95", "pred", "
 max_ES_ts$fit_bspp_abs <- NULL
 
 max_ES_ts <- max_ES_ts[order(max_ES_ts$pred),]
+}
