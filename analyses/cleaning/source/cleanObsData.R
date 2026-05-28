@@ -187,6 +187,7 @@ doy_pheno$commonName <- bb.pheno$commonName[match(doy_pheno$plantNickname, bb.ph
 # remove outliers e.g. when budburst and leafout are way to late in the summer/fall
 doy_pheno$budburst[which(doy_pheno$budburst > 180)] <- NA
 doy_pheno$leafout[which(doy_pheno$leafout > 180)] <- NA
+doy_pheno$coloredLeaves[which(doy_pheno$coloredLeaves < 190)] <- NA
 
 # Add tree coordinates
 phenosCoord <- merge(doy_pheno, coordcut, by.x="plantNickname", by.y="PlantID", all.x=TRUE)
