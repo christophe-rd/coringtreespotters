@@ -33,6 +33,18 @@ allringwidths <- read.csv("output/ringWidthTS.csv")
 longtermgdd <- read.csv("output/longTermGDDperYear.csv")
 longtermgdd5yr <- read.csv("output/longTermGDD5YrAvg.csv")
 
+empts$latbi[empts$latbi == "Acer rubrum"]           <- "A. rubrum"
+empts$latbi[empts$latbi == "Acer saccharum"]        <- "A. saccharum"
+empts$latbi[empts$latbi == "Aesculus flava"]        <- "Ae. flava"
+empts$latbi[empts$latbi == "Betula alleghaniensis"] <- "B. alleghaniensis"
+empts$latbi[empts$latbi == "Betula nigra"]          <- "B. nigra"
+empts$latbi[empts$latbi == "Carya glabra"]          <- "C. glabra"
+empts$latbi[empts$latbi == "Carya ovata"]           <- "C. ovata"
+empts$latbi[empts$latbi == "Populus deltoides"]     <- "P. deltoides"
+empts$latbi[empts$latbi == "Quercus alba"]          <- "Q. alba"
+empts$latbi[empts$latbi == "Quercus rubra"]         <- "Q. rubra"
+empts$latbi[empts$latbi == "Tilia americana"]       <- "T. americana"
+
 # from arboretum website most of the info is in the above dfs, just in case I want to look at other stuff
 coord <- read.csv("input/listTreesfromInteractiveMap.csv", header=TRUE)
 
@@ -543,12 +555,12 @@ species <- unique(empts$latbi)
 years <- sort(unique(empts$year))
 n_sp <- length(species)
 
-yr_levels <- sort(unique(dat$year))
-bpcols <- colsyr[as.character(yr_levels)]
+# yr_levels <- sort(unique(dat$year))
+# bpcols <- colsyr[as.character(yr_levels)]
 
-jpeg("figures/empiricalData/boxplotRingWidth.jpeg", width = 2400, height = 2000, res = 300)
-par(mfrow = c(4, 3), mar = c(4, 4, 3, 1))
-for(sp in species) {
+jpeg("figures/empiricalData/boxplotRingWidth.jpeg", width = 2600, height = 2000, res = 300)
+par(mfrow = c(4, 3), mar = c(2, 4, 3, 1))
+for(sp in species) { # sp = "A. rubrum"
   dat <- empts[empts$latbi == sp,]
   yr_levels <- sort(unique(dat$year))
   bpcols <- colsyr[as.character(yr_levels)]
@@ -559,7 +571,9 @@ for(sp in species) {
           col = adjustcolor(bpcols, alpha.f = 0.5),
           border = adjustcolor(bpcols, alpha.f = 0.8),
           medcol = "black",
-          whisklty = 1, staplewex = 0, medlty = 1, outpch = 16, outcex = 0.7, outcol = "black")
+          whisklty = 1, staplewex = 0, medlty = 1, medlwd = 0.8,
+          outpch = 16, outcex = 0.7, outcol = "black")
+  
   stripchart(lengthMM ~ year, data = dat,
              method = "jitter", jitter = 0.08,
              pch = 16, cex = 0.7, col = "black",

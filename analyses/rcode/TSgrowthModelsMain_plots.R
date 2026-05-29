@@ -20,7 +20,7 @@ if (length(grep("christophe_rouleau-desrochers", getwd())) > 0) {
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 source("rcode/TSgrowthModelsMain.R")
 
-makeplots <- F
+makeplots <- T
 runzscore <- F
 
 # acronym latbi
@@ -246,7 +246,7 @@ colnames(fullintercept) <- 1:ncol(fullintercept)
 
 # recover each slope
 treeid_slope_cols <- grep("^treeid_slope", colnames(df_fitgdd), value = TRUE)
-treeid_bspp <- df_fitgdd[, treeid_slope_cols] / wcgddscale
+treeid_bspp <- df_fitgdd[, treeid_slope_cols] / tsgddscale
 colnames(treeid_bspp) <- 1:ncol(treeid_bspp)
 
 # recover sim ypred for each gdd X tree id for each iteration
@@ -1261,6 +1261,9 @@ dev.off()
 
 }
 
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+##### ayear #####
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
 jpeg(file = "figures/growthModelsMain/TSmuayear.jpeg",
      width = 1600, height = 1600, res = 300)
 
@@ -1272,14 +1275,71 @@ par(mar = c(4, 4, 4, 4))
 plot(ayear_df2_ts$mean, ayear_df2_ts$y_pos,
      xlim = c(-1.5, 1.), ylim = c(0.5, length(years_ordered) + 0.5),
      xlab = "Ring width intercept values (mm)", ylab = "",
-     yaxt = "n", pch = 16, cex = 2, col = "black", frame.plot = FALSE,
+     yaxt = "n", pch = 16, cex = 2, col = colsyr[ayear_df2_ts$year_name], 
+     frame.plot = FALSE,
      panel.first = abline(v = 0, lty = 2, col = "black"))
 segments(ayear_df2_ts$p5,  ayear_df2_ts$y_pos, 
-         ayear_df2_ts$p95, ayear_df2_ts$y_pos, lwd = 1.5)
+         ayear_df2_ts$p95, ayear_df2_ts$y_pos, 
+         lwd = 1.5, col = colsyr[ayear_df2_ts$year_name])
 segments(ayear_df2_ts$p25, ayear_df2_ts$y_pos, 
-         ayear_df2_ts$p75, ayear_df2_ts$y_pos, lwd = 3)
+         ayear_df2_ts$p75, ayear_df2_ts$y_pos, 
+         lwd = 3, colsyr[ayear_df2_ts$year_name])
 axis(side = 2, at = seq_along(years_ordered), labels = years_ordered, las = 1)
 
+dev.off()
+
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+##### ayear with boxplot #####
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+jpeg("figures/growthModelsMain/TSayearBoxplot.jpeg", width = 3000, height = 2000, res = 300)
+par(oma = c(0, 0, 2, 0))
+layout(matrix(c(1,  2,  3,  4,  5,
+                1,  6,  7,  8,  9,
+                1, 10, 11, 12,  0), nrow = 3, ncol = 5, byrow = TRUE),
+       widths = c(1.2, 1, 1, 1, 1))
+
+# Left: mu plot
+par(mar = c(4, 4, 5, 1))
+
+plot(ayear_df2_ts$mean, ayear_df2_ts$y_pos,
+     xlim = c(-1, 1), ylim = c(0.5, length(years_ordered) + 0.5),
+     xlab = "log(ring width) intercept values (mm)", ylab = "",
+     yaxt = "n", pch = 16, cex = 2, col = colsyr[ayear_df2_ts$year_name], 
+     frame.plot = FALSE,
+     panel.first = abline(v = 0, lty = 2, col = "black"))
+segments(ayear_df2_ts$p5,  ayear_df2_ts$y_pos, 
+         ayear_df2_ts$p95, ayear_df2_ts$y_pos, 
+         lwd = 1.5, col = colsyr[ayear_df2_ts$year_name])
+segments(ayear_df2_ts$p25, ayear_df2_ts$y_pos, 
+         ayear_df2_ts$p75, ayear_df2_ts$y_pos, 
+         lwd = 3, colsyr[ayear_df2_ts$year_name])
+axis(side = 2, at = seq_along(years_ordered), labels = years_ordered, las = 1)
+mtext("(a) Year intercept", 
+      side = 3, outer = TRUE, adj = 0.05, font = 2, cex = 1, line = 0.2)
+
+# Right: boxplots
+for(sp in sppvecname) { # sp = "A. rubrum"
+  par(mar = c(2, 5, 3, 1))
+  dat <- empts[empts$latbi == sp,]
+  yr_levels <- sort(unique(dat$year))
+  bpcols <- colsyr[as.character(yr_levels)]
+  
+  boxplot(lengthMM ~ year, data = dat,
+          # main = bquote(italic(.(sp))),
+          xlab = "Year", ylab = "Ring width (mm)",
+          col = adjustcolor(bpcols, alpha.f = 0.5),
+          border = adjustcolor(bpcols, alpha.f = 0.8),
+          medcol = "black",
+          whisklty = 1, staplewex = 0, medlty = 1, medlwd = 0.8,
+          outpch = 16, outcex = 0.7, outcol = "black")
+  title(main = bquote(italic(.(sp))), line = 0.7, cex.main =1.3)
+  stripchart(lengthMM ~ year, data = dat,
+             method = "jitter", jitter = 0.08,
+             pch = 16, cex = 0.7, col = "black",
+             vertical = TRUE, add = TRUE)
+}
+mtext("(b) Ring width (mm) observations per year and species",
+      side = 3, outer = TRUE, adj = 0.5, font = 2, cex = 1, line = 0.2)
 dev.off()
 }
 

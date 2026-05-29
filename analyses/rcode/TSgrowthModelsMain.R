@@ -42,6 +42,8 @@ runmodelnoayear <- FALSE
 # read empirical data with max phenology observations instead of mingit status
 empts <- read.csv("output/empiricalDataMAIN.csv")
 
+empts <- subset(empts, year != 2015)
+
 empfullsosts <- empts[!is.na(empts$leafout),]
 empfulleosts <- empts[!is.na(empts$coloredLeaves),]
 
@@ -1216,7 +1218,6 @@ for (col in colnames(bspp_df)) {
 legend("topright", legend = c("Prior", "Posterior"), col = pal, lwd = 2)
 
 dev.off()
-
 
 }
 
