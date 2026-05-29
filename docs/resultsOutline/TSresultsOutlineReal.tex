@@ -75,13 +75,7 @@
 \newcommand{\Tame}{\textit{T. americana}}   
 
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
-\includegraphics[width=\maxwidth]{figure/setup-1} 
-\begin{kframe}
 
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in `h()`:\\\#\# ! error in evaluating the argument 'y' in selecting a method for function 'plot': object 'y\_pos' not found}}\end{kframe}
-\end{knitrout}
 
 % <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 \section*{Research questions}
@@ -96,17 +90,10 @@
 % <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 \section*{Results}
 % <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
-
-\begin{enumerate}
-\item CoringTreespotters includes eleven deciduous tree species with phenological observations from 2016 to 2024. In total, our final dataset has 329 leafout observations and 
-310 leaf coloring observations. We used these phenophases to set the boundaries of individual-level growing seasons, which together yield 
-280 complete growing seasons.
-\end{enumerate}
-
 \begin{enumerate}
 \item Summary basic information
   \begin{enumerate}
-  \item Coringtreespotters includes eleven with leaf phenology data spaning nine years (2016 to 2024) for a total of 329 leafout and 310 colored leaves observations, yielding 280 complete growing seasons (GS) for 49 individuals. 
+  \item Coringtreespotters includes eleven with leaf phenology data spaning nine years (2016 to 2024) for a total of 326 leafout and 289 colored leaves observations, yielding 278 complete growing seasons (GS) for 49 individuals. 
     \item GSL ranged from 
   77 days ({\Afla} in 2018) to 
   194 days ({\Asac} in 2021)
@@ -115,14 +102,25 @@
   1048.8 GDD ({\Afla} in 2020) to 
   2634.7 GDD, ({\Tame} in 2016)
   
-  \item The earliest leafout day of year was 08-Apr (2021) and the latest, 14-Jun (2021). The earliest coloredLeaves day of year was 15-Jul (2021) and the latest, 06-Nov (2021) 
+  \item The earliest leafout day of year was 
+  08-Apr 
+  (2021) and the latest, 
+  15-May 
+  (2021). The earliest colored leaves day of year was
+  15-Jul 
+  (2021) and the latest, 
+  06-Nov 
+  (2021) 
   
-  \item 2018 had a mean summer temperature of 22.85$^\circ$C and had a mean summer PDSI value of
-  1.92. 2019 was cooler
-  (22.38$^\circ$C) and wetter
-  (PDSI $=$ 4.02), whereas 2020 was warmer
-  (23.07$^\circ$C) and drier
-  (PDSI $=$ -2.35) than 2018.
+  \item Mean summer temperatures ranged from 
+  21.53$^\circ$C, in  
+  2017 to 
+  23.07$^\circ$C, in  
+  2020 and PDSI values ranged from 
+  -4.04, in  
+  2016 to 
+  4.02, in  
+  2019
 
 \end{enumerate}
 
@@ -140,15 +138,15 @@
   [-0.01,
   0.16]), \Cgla ($\beta = $
   0.05, $UI_{90}$
-  [-0.06,
+  [-0.07,
   0.17]), \Qrub ($\beta = $
-  0.08, $UI_{90}$
+  0.09, $UI_{90}$
   [-0.09,
   0.26]), and decreased for {\Ball} ($\beta = $
   -0.22, $UI_{90}$
-  [-0.36,
-  -0.09])
-  ) (Figure \ref{fig:tsmuplotbsppTS}a and e) (Table \ref{tab:ts_slope_table}). 
+  [-0.35,
+  -0.1])
+  ) (Figure \ref{fig:tsmuplotbspp}a and e) (Table \ref{tab:ts_slope_table}). 
  
   \item Of the four species that grew more with longer thermal season all, only two also grew more with longer   calendar season (\Bnig: $\beta = $
   0.03, $UI_{90}$
@@ -164,12 +162,11 @@
 
   \item \Ball trended in the same direction, but showed a weaker reponse than the thermal season ($\beta = $
   -0.05, $UI_{90}$
-  [-0.11,
+  [-0.12,
   0.02]) 
-   (Figure \ref{fig:tsmuplotbsppTS}b and f) (Table \ref{tab:ts_slope_table}). 
+   (Figure \ref{fig:tsmuplotbspp}b and f) (Table \ref{tab:ts_slope_table}). 
    (Figure \ref{fig:buburstVSleafoutTS}b).
   
-  \item Results with basal area increment (BAI) for the GDD model were broadly similar to ring width (see Figure \ref{fig:RWvsBAI} and Table \ref{tab:BAItab})
   \end{enumerate}
   
 % Question 2 --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
@@ -177,33 +174,33 @@
   \begin{enumerate}
   \item A later start of season increased growth for {\Tame} ($\beta = $
   0.14, $UI_{90}$
-  [0.01,
-  0.26]), but \Asac: $\beta = $
+  [0.02,
+  0.27]), but \Asac: $\beta = $
   0.07, $UI_{90}$
   [-0.02,
-  0.16], \Bnig: $\beta = $
+  0.17], \Bnig: $\beta = $
   0.03,   $UI_{90}$
   [-0.1,
   0.16], \Cgla: $\beta = $
   0.07, $UI_{90}$
-  [-0.09,
+  [-0.07,
   0.22], \Cova: $\beta = $
-  0.09, $UI_{90}$
+  0.1, $UI_{90}$
   [-0.04,
-  0.22], \Pdel: $\beta = $
+  0.23], \Pdel: $\beta = $
   0.06, $UI_{90}$
-  [-0.08,
-  0.2], \Qrub: $\beta = $
-  0.08, $UI_{90}$
   [-0.09,
+  0.21], \Qrub: $\beta = $
+  0.08, $UI_{90}$
+  [-0.1,
   0.26] trended in the same direction, and \Ball ($\beta = $
   -0.07,   $UI_{90}$
-  [-0.22,
+  [-0.21,
   0.07]) trended in the opposite direction
-  (Figure \ref{fig:tsmuplotbsppTS}c and g) (Table \ref{tab:ts_slope_table}). 
+  (Figure \ref{fig:tsmuplotbspp}c and g) (Table \ref{tab:ts_slope_table}). 
 
 \item A later end of season decreased growth for {\Ball} ($\beta = $
--0.08, $UI_{90}$[-0.15,
+-0.08, $UI_{90}$[-0.16,
 -0.01]), but \Tame ($\beta = $
 -0.01, $UI_{90}$[-0.04,
 0.02]) trended towards the same direction and {\Asac} ($\beta = $
@@ -215,14 +212,22 @@
 0.03, $UI_{90}$
 [-0.02,
 0.09] trended towards an increase in growth.
-(Figure \ref{fig:tsmuplotbsppTS}d and h) (Table \ref{tab:ts_slope_table}). 
+(Figure \ref{fig:tsmuplotbspp}d and h) (Table \ref{tab:ts_slope_table}). 
 
 % The estimates were unchanged when using the full ($n =$nrow(empfulleosts)) or restricted datasets ($n=$nrow(empts)) (Figure \ref{fig:tsSOSEOScomparison}b).
 
 % \item The estimates were unchanged when using the full or restricted datasets ($n =$
 % nrow(empfullsosts) vs $n=$
 % nrow(empts) Figure \ref{fig:tsSOSEOScomparison}b), or when using budburst instead of leafout as the start of the growing season (Figure \ref{fig:buburstVSleafoutTS}c).
-  
+
+% Figure mu across all species and climate predictors
+\begin{figure}[!ht]
+\includegraphics[width=0.8\textwidth]{../../analyses/figures/growthModelsMain/TSmuALLbsppWlines.jpeg}
+\caption{Model slope estimates representing ring width change as a function of four different predictors across four species. GDD represent the accumulated growing degree days between leafout and coloredLeaves and the models estimates shows ring width change per 7 average spring days GDD (176.87) (a). GSL is the number of days between leafout and coloredLeaves (b). SOS represent the start of season, which is leafout (c) and EOS, the end of season through coloredLeaves (d). All predictors were fit using the same model and number of observations, with only the independent variable changing. The dots represent the mean of each species and the lines, the 50\% and 90\% uncertainty intervals (UI). 
+% {\Ainc} and {\Bpap} grew more with longer calendar seasons, but only {\Ainc} grew less with later leafout and had no effect in response to coloredLeaves. Interestingly, {\Bpap} did not grow more with earlier leafout, but did with a later coloredLeaves and longer calendar season. {\Ball} and {\Bpop} did not grow more with longer calendar seasons, but {\Ball} grew more with a later leafout and coloredLeaves whereas {\Bpop} only grew more with a later coloredLeaves.
+}
+\label{fig:tsmuplotbspp}
+\end{figure}
   \end{enumerate}
 
 % Question 3 --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
@@ -271,16 +276,8 @@
 %   ayear_df2$p95[which.min(ayear_df2$mean)]]) (Figure \ref{fig:tsmuplotayear}) that year had the warmest thermal, but the shortest calendar season, also unlike our findings that growth increases with warmer seasons, and to a lesser extent, with longer calendar season (Figure \ref{fig:tsxyGDD} and Figure \ref{fig:tsxyGSL}).
 %   \end{enumerate}
 % 
-% \end{enumerate}
+\end{enumerate}
 
-% Figure mu across all species and climate predictors
-\begin{figure}[!ht]
-\includegraphics[width=0.8\textwidth]{../../analyses/figures/growthModelsMain/TSmuALLbsppWlines.jpeg}
-\caption{Model slope estimates representing ring width change as a function of four different predictors across four species. GDD represent the accumulated growing degree days between leafout and coloredLeaves and the models estimates shows ring width change per 7 average spring days GDD (176.87) (a). GSL is the number of days between leafout and coloredLeaves (b). SOS represent the start of season, which is leafout (c) and EOS, the end of season through coloredLeaves (d). All predictors were fit using the same model and number of observations, with only the independent variable changing. The dots represent the mean of each species and the lines, the 50\% and 90\% uncertainty intervals (UI). 
-% {\Ainc} and {\Bpap} grew more with longer calendar seasons, but only {\Ainc} grew less with later leafout and had no effect in response to coloredLeaves. Interestingly, {\Bpap} did not grow more with earlier leafout, but did with a later coloredLeaves and longer calendar season. {\Ball} and {\Bpop} did not grow more with longer calendar seasons, but {\Ball} grew more with a later leafout and coloredLeaves whereas {\Bpop} only grew more with a later coloredLeaves.
-}
-\label{fig:tsmuplotbspp}
-\end{figure}
 
 % Coringtreespotters year mu plot
 \begin{figure}[!ht]
@@ -297,9 +294,9 @@
 \section*{Supplemental results}
 
 \setcounter{table}{0}
-\renetsommand{\thetable}{S\arabic{table}}
+\renewcommand{\thetable}{S\arabic{table}}
 \setcounter{figure}{0}
-\renetsommand{\thefigure}{S\arabic{figure}}
+\renewcommand{\thefigure}{S\arabic{figure}}
 
 % Table slope for Coringtreespotters
 

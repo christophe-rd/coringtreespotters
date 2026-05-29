@@ -61,17 +61,10 @@ pgsGSLagg$pgsGSL <- round(pgsGSLagg$pgsGSL, 1)
 % <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 \section*{Results}
 % <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
-
-\begin{enumerate}
-\item CoringTreespotters includes eleven deciduous tree species with phenological observations from 2016 to 2024. In total, our final dataset has \Sexpr{nrow(empfullsosts)} leafout observations and 
-\Sexpr{nrow(empfulleosts)} leaf coloring observations. We used these phenophases to set the boundaries of individual-level growing seasons, which together yield 
-\Sexpr{nrow(empts)} complete growing seasons.
-\end{enumerate}
-
 \begin{enumerate}
 \item Summary basic information
   \begin{enumerate}
-  \item Coringtreespotters includes eleven with leaf phenology data spaning nine years (2016 to 2024) for a total of \Sexpr{nrow(empfullsosts)} leafout and \Sexpr{nrow(empfulleosts)} colored leaves observations, yielding \Sexpr{nrow(empts)} complete growing seasons (GS) for \Sexpr{length(unique(empts$treeid))} individuals. 
+  \item Coringtreespotters includes eleven with leaf phenology data spaning nine years (2016 to 2024) for a total of \Sexpr{nrow(empfullsosts)} leafout and \Sexpr{nrow(empfulleosts)} colored leaves observations, yielding \Sexpr{nrow(empts)} complete growing seasons (GS) for \Sexpr{length(unique(empts$id))} individuals. 
     \item GSL ranged from 
   \Sexpr{min(empts$pgsGSL)} days ({\Afla} in \Sexpr{empts$year[which.min(empts$pgsGSL)]}) to 
   \Sexpr{max(empts$pgsGSL)} days ({\Asac} in \Sexpr{empts$year[which.max(empts$pgsGSL)]})
@@ -80,14 +73,25 @@ pgsGSLagg$pgsGSL <- round(pgsGSLagg$pgsGSL, 1)
   \Sexpr{round(min(empts$pgsGDD5),1)} GDD ({\Afla} in \Sexpr{empts$year[which.min(empts$pgsGDD5)]}) to 
   \Sexpr{round(max(empts$pgsGDD5),1)} GDD, ({\Tame} in \Sexpr{empts$year[which.max(empts$pgsGDD5)]})
   
-  \item The earliest leafout day of year was \Sexpr{empts$loCal[which.min(empts$leafout)]} (\Sexpr{empts$year[which.min(empts$leafout)]}) and the latest, \Sexpr{empts$loCal[which.max(empts$leafout)]} (\Sexpr{empts$year[which.min(empts$leafout)]}). The earliest coloredLeaves day of year was \Sexpr{empts$clCal[which.min(empts$coloredLeaves)]} (\Sexpr{empts$year[which.min(empts$coloredLeaves)]}) and the latest, \Sexpr{empts$clCal[which.max(empts$coloredLeaves)]} (\Sexpr{empts$year[which.min(empts$coloredLeaves)]}) 
+  \item The earliest leafout day of year was 
+  \Sexpr{empts$loCal[which.min(empts$leafout)]} 
+  (\Sexpr{empts$year[which.min(empts$leafout)]}) and the latest, 
+  \Sexpr{empts$loCal[which.max(empts$leafout)]} 
+  (\Sexpr{empts$year[which.min(empts$leafout)]}). The earliest colored leaves day of year was
+  \Sexpr{empts$clCal[which.min(empts$coloredLeaves)]} 
+  (\Sexpr{empts$year[which.min(empts$coloredLeaves)]}) and the latest, 
+  \Sexpr{empts$clCal[which.max(empts$coloredLeaves)]} 
+  (\Sexpr{empts$year[which.min(empts$coloredLeaves)]}) 
   
-  \item 2018 had a mean summer temperature of \Sexpr{tsjja$tmeanmean[which(tsjja$year == 2018)]}$^\circ$C and had a mean summer PDSI value of
-  \Sexpr{tsjja$pdsi[which(tsjja$year == 2018)]}. 2019 was cooler
-  (\Sexpr{tsjja$tmeanmean[which(tsjja$year == 2019)]}$^\circ$C) and wetter
-  (PDSI $=$ \Sexpr{tsjja$pdsi[which(tsjja$year == 2019)]}), whereas 2020 was warmer
-  (\Sexpr{tsjja$tmeanmean[which(tsjja$year == 2020)]}$^\circ$C) and drier
-  (PDSI $=$ \Sexpr{tsjja$pdsi[which(tsjja$year == 2020)]}) than 2018.
+  \item Mean summer temperatures ranged from 
+  \Sexpr{tsjja$tmeanmean[which.min(tsjja$tmeanmean)]}$^\circ$C, in  
+  \Sexpr{tsjja$year[which.min(tsjja$tmeanmean)]} to 
+  \Sexpr{tsjja$tmeanmean[which.max(tsjja$tmeanmean)]}$^\circ$C, in  
+  \Sexpr{tsjja$year[which.max(tsjja$tmeanmean)]} and PDSI values ranged from 
+  \Sexpr{tsjja$pdsi[which.min(tsjja$pdsi)]}, in  
+  \Sexpr{tsjja$year[which.min(tsjja$pdsi)]} to 
+  \Sexpr{tsjja$pdsi[which.max(tsjja$pdsi)]}, in  
+  \Sexpr{tsjja$year[which.max(tsjja$pdsi)]}
 
 \end{enumerate}
 
@@ -113,7 +117,7 @@ pgsGSLagg$pgsGSL <- round(pgsGSLagg$pgsGSL, 1)
   \Sexpr{bspp_df2_ts$mean[which(bspp_df2_ts$spp_name %in% "B. alleghaniensis")]}, $UI_{90}$
   [\Sexpr{bspp_df2_ts$p5[which(bspp_df2_ts$spp_name %in% "B. alleghaniensis")]},
   \Sexpr{bspp_df2_ts$p95[which(bspp_df2_ts$spp_name %in% "B. alleghaniensis")]}])
-  ) (Figure \ref{fig:tsmuplotbsppTS}a and e) (Table \ref{tab:ts_slope_table}). 
+  ) (Figure \ref{fig:tsmuplotbspp}a and e) (Table \ref{tab:ts_slope_table}). 
  
   \item Of the four species that grew more with longer thermal season all, only two also grew more with longer   calendar season (\Bnig: $\beta = $
   \Sexpr{bspp_df2_ts_gsl$mean[which(bspp_df2_ts_gsl$spp_name %in% "B. nigra")]}, $UI_{90}$
@@ -131,10 +135,9 @@ pgsGSLagg$pgsGSL <- round(pgsGSLagg$pgsGSL, 1)
   \Sexpr{bspp_df2_ts_gsl$mean[which(bspp_df2_ts_gsl$spp_name %in% "B. alleghaniensis")]}, $UI_{90}$
   [\Sexpr{bspp_df2_ts_gsl$p5[which(bspp_df2_ts_gsl$spp_name %in% "B. alleghaniensis")]},
   \Sexpr{bspp_df2_ts_gsl$p95[which(bspp_df2_ts_gsl$spp_name %in% "B. alleghaniensis")]}]) 
-   (Figure \ref{fig:tsmuplotbsppTS}b and f) (Table \ref{tab:ts_slope_table}). 
+   (Figure \ref{fig:tsmuplotbspp}b and f) (Table \ref{tab:ts_slope_table}). 
    (Figure \ref{fig:buburstVSleafoutTS}b).
   
-  \item Results with basal area increment (BAI) for the GDD model were broadly similar to ring width (see Figure \ref{fig:RWvsBAI} and Table \ref{tab:BAItab})
   \end{enumerate}
   
 % Question 2 --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
@@ -165,7 +168,7 @@ pgsGSLagg$pgsGSL <- round(pgsGSLagg$pgsGSL, 1)
   \Sexpr{bspp_df2_ts_sos$mean[which(bspp_df2_ts_sos$spp_name %in% "B. alleghaniensis")]},   $UI_{90}$
   [\Sexpr{bspp_df2_ts_sos$p5[which(bspp_df2_ts_sos$spp_name %in% "B. alleghaniensis")]},
   \Sexpr{bspp_df2_ts_sos$p95[which(bspp_df2_ts_sos$spp_name %in% "B. alleghaniensis")]}]) trended in the opposite direction
-  (Figure \ref{fig:tsmuplotbsppTS}c and g) (Table \ref{tab:ts_slope_table}). 
+  (Figure \ref{fig:tsmuplotbspp}c and g) (Table \ref{tab:ts_slope_table}). 
 
 \item A later end of season decreased growth for {\Ball} ($\beta = $
 \Sexpr{bspp_df2_ts_eos$mean[which(bspp_df2_ts_eos$spp_name %in% "B. alleghaniensis")]}, $UI_{90}$[\Sexpr{bspp_df2_ts_eos$p5[which(bspp_df2_ts_eos$spp_name %in% "B. alleghaniensis")]},
@@ -180,14 +183,22 @@ pgsGSLagg$pgsGSL <- round(pgsGSLagg$pgsGSL, 1)
 \Sexpr{bspp_df2_ts_eos$mean[which(bspp_df2_ts_eos$spp_name %in% "C. glabra")]}, $UI_{90}$
 [\Sexpr{bspp_df2_ts_eos$p5[which(bspp_df2_ts_eos$spp_name %in% "C. glabra")]},
 \Sexpr{bspp_df2_ts_eos$p95[which(bspp_df2_ts_eos$spp_name %in% "C. glabra")]}] trended towards an increase in growth.
-(Figure \ref{fig:tsmuplotbsppTS}d and h) (Table \ref{tab:ts_slope_table}). 
+(Figure \ref{fig:tsmuplotbspp}d and h) (Table \ref{tab:ts_slope_table}). 
 
 % The estimates were unchanged when using the full ($n =$\Sexpr{nrow(empfulleosts)}) or restricted datasets ($n=$\Sexpr{nrow(empts)}) (Figure \ref{fig:tsSOSEOScomparison}b).
 
 % \item The estimates were unchanged when using the full or restricted datasets ($n =$
 % \Sexpr{nrow(empfullsosts)} vs $n=$
 % \Sexpr{nrow(empts)} Figure \ref{fig:tsSOSEOScomparison}b), or when using budburst instead of leafout as the start of the growing season (Figure \ref{fig:buburstVSleafoutTS}c).
-  
+
+% Figure mu across all species and climate predictors
+\begin{figure}[!ht]
+\includegraphics[width=0.8\textwidth]{../../analyses/figures/growthModelsMain/TSmuALLbsppWlines.jpeg}
+\caption{Model slope estimates representing ring width change as a function of four different predictors across four species. GDD represent the accumulated growing degree days between leafout and coloredLeaves and the models estimates shows ring width change per 7 average spring days GDD (\Sexpr{tsgddscale}) (a). GSL is the number of days between leafout and coloredLeaves (b). SOS represent the start of season, which is leafout (c) and EOS, the end of season through coloredLeaves (d). All predictors were fit using the same model and number of observations, with only the independent variable changing. The dots represent the mean of each species and the lines, the 50\% and 90\% uncertainty intervals (UI). 
+% {\Ainc} and {\Bpap} grew more with longer calendar seasons, but only {\Ainc} grew less with later leafout and had no effect in response to coloredLeaves. Interestingly, {\Bpap} did not grow more with earlier leafout, but did with a later coloredLeaves and longer calendar season. {\Ball} and {\Bpop} did not grow more with longer calendar seasons, but {\Ball} grew more with a later leafout and coloredLeaves whereas {\Bpop} only grew more with a later coloredLeaves.
+}
+\label{fig:tsmuplotbspp}
+\end{figure}
   \end{enumerate}
 
 % Question 3 --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
@@ -236,16 +247,8 @@ pgsGSLagg$pgsGSL <- round(pgsGSLagg$pgsGSL, 1)
 %   \Sexpr{ayear_df2$p95[which.min(ayear_df2$mean)]}]) (Figure \ref{fig:tsmuplotayear}) that year had the warmest thermal, but the shortest calendar season, also unlike our findings that growth increases with warmer seasons, and to a lesser extent, with longer calendar season (Figure \ref{fig:tsxyGDD} and Figure \ref{fig:tsxyGSL}).
 %   \end{enumerate}
 % 
-% \end{enumerate}
+\end{enumerate}
 
-% Figure mu across all species and climate predictors
-\begin{figure}[!ht]
-\includegraphics[width=0.8\textwidth]{../../analyses/figures/growthModelsMain/TSmuALLbsppWlines.jpeg}
-\caption{Model slope estimates representing ring width change as a function of four different predictors across four species. GDD represent the accumulated growing degree days between leafout and coloredLeaves and the models estimates shows ring width change per 7 average spring days GDD (\Sexpr{tsgddscale}) (a). GSL is the number of days between leafout and coloredLeaves (b). SOS represent the start of season, which is leafout (c) and EOS, the end of season through coloredLeaves (d). All predictors were fit using the same model and number of observations, with only the independent variable changing. The dots represent the mean of each species and the lines, the 50\% and 90\% uncertainty intervals (UI). 
-% {\Ainc} and {\Bpap} grew more with longer calendar seasons, but only {\Ainc} grew less with later leafout and had no effect in response to coloredLeaves. Interestingly, {\Bpap} did not grow more with earlier leafout, but did with a later coloredLeaves and longer calendar season. {\Ball} and {\Bpop} did not grow more with longer calendar seasons, but {\Ball} grew more with a later leafout and coloredLeaves whereas {\Bpop} only grew more with a later coloredLeaves.
-}
-\label{fig:tsmuplotbspp}
-\end{figure}
 
 % Coringtreespotters year mu plot
 \begin{figure}[!ht]
@@ -262,43 +265,43 @@ pgsGSLagg$pgsGSL <- round(pgsGSLagg$pgsGSL, 1)
 \section*{Supplemental results}
 
 \setcounter{table}{0}
-\renetsommand{\thetable}{S\arabic{table}}
+\renewcommand{\thetable}{S\arabic{table}}
 \setcounter{figure}{0}
-\renetsommand{\thefigure}{S\arabic{figure}}
+\renewcommand{\thefigure}{S\arabic{figure}}
 
 % Table slope for Coringtreespotters
 <<results='asis', echo = FALSE>>=
 # Bspp parameter estimates table
-# options(digits = 2)
-# 
-# bspp_df2_ts_gdd$GDD <- sprintf("%.2f [%.2f, %.2f]", bspp_df2_ts_gdd$mean, bspp_df2_ts_gdd$p5, bspp_df2_ts_gdd$p95)
-# 
-# bspp_df2_ts_gsl$GSL <- sprintf("%.2f [%.2f, %.2f]", bspp_df2_ts_gsl$mean, bspp_df2_ts_gsl$p5, bspp_df2_ts_gsl$p95)
-# 
-# bspp_df2_ts_sos$SOS <- sprintf("%.2f [%.2f, %.2f]", bspp_df2_ts_sos$mean, bspp_df2_ts_sos$p5, bspp_df2_ts_sos$p95)
-# 
-# bspp_df2_ts_eos$EOS <- sprintf("%.2f [%.2f, %.2f]", bspp_df2_ts_eos$mean, bspp_df2_ts_eos$p5, bspp_df2_ts_eos$p95)
-#       
-# gdd <- bspp_df2_ts_gdd[, c("spp_name", "GDD")]
-# gsl <- bspp_df2_ts_gsl[, c("spp_name", "GSL")]
-# sos <- bspp_df2_ts_sos[, c("spp_name", "SOS")]
-# eos <- bspp_df2_ts_eos[, c("spp_name", "EOS")]
-# 
-# df_all <- Reduce(function(x, y) merge(x, y, by = "spp_name", all = TRUE),
-#                  list(gdd, gsl, sos, eos))
-# colnames(df_all)[1] <- "Species"
-# df_all$Species <- tstablespp[df_all$Species]
-# 
-# # Print table
-# tab <- xtable(df_all,
-#               caption = "Species level slope parameters (mean and 90\\% uncertainty intervals, in square brackets) across the four different predictors for Coringtreespotters. GDD: growing degree days, GSL: growing season length, SOS: start of season and EOS: end of season.",
-#               label = "tab:ts_slope_table"
-# )
-# 
-# print(tab,
-#       include.rownames = FALSE,
-#       sanitize.text.function = identity,
-#       caption.placement = "top")
+options(digits = 2)
+
+bspp_df2_ts_gdd$GDD <- sprintf("%.2f [%.2f, %.2f]", bspp_df2_ts_gdd$mean, bspp_df2_ts_gdd$p5, bspp_df2_ts_gdd$p95)
+
+bspp_df2_ts_gsl$GSL <- sprintf("%.2f [%.2f, %.2f]", bspp_df2_ts_gsl$mean, bspp_df2_ts_gsl$p5, bspp_df2_ts_gsl$p95)
+
+bspp_df2_ts_sos$SOS <- sprintf("%.2f [%.2f, %.2f]", bspp_df2_ts_sos$mean, bspp_df2_ts_sos$p5, bspp_df2_ts_sos$p95)
+
+bspp_df2_ts_eos$EOS <- sprintf("%.2f [%.2f, %.2f]", bspp_df2_ts_eos$mean, bspp_df2_ts_eos$p5, bspp_df2_ts_eos$p95)
+
+gdd <- bspp_df2_ts_gdd[, c("spp_name", "GDD")]
+gsl <- bspp_df2_ts_gsl[, c("spp_name", "GSL")]
+sos <- bspp_df2_ts_sos[, c("spp_name", "SOS")]
+eos <- bspp_df2_ts_eos[, c("spp_name", "EOS")]
+
+df_all <- Reduce(function(x, y) merge(x, y, by = "spp_name", all = TRUE),
+                 list(gdd, gsl, sos, eos))
+colnames(df_all)[1] <- "Species"
+df_all$Species <- tstablespp[df_all$Species]
+
+# Print table
+tab <- xtable(df_all,
+              caption = "Species level slope parameters (mean and 90\\% uncertainty intervals, in square brackets) across the four different predictors for Coringtreespotters. GDD: growing degree days, GSL: growing season length, SOS: start of season and EOS: end of season.",
+              label = "tab:ts_slope_table"
+)
+
+print(tab,
+      include.rownames = FALSE,
+      sanitize.text.function = identity,
+      caption.placement = "top")
 @
 
 % XY facetted by species GDD
