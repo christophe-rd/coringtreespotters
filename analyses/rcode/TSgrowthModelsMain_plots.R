@@ -37,17 +37,17 @@ empts$latbi[empts$latbi == "Quercus rubra"]         <- "Q. rubra"
 empts$latbi[empts$latbi == "Tilia americana"]       <- "T. americana"
 
 # Load parameter summaries generated in growthModelsMain.R ####
-sigma_df2_ts  <- read.csv("output/GM_GDDparam_sigma.csv")
-bspp_df2_ts   <- read.csv("output/GM_GDDparam_bspp.csv")
-treeid_df2_ts <- read.csv("output/GM_GDDparam_treeid.csv")
-aspp_df2_ts   <- read.csv("output/GM_GDDparam_aspp.csv")
-ayear_df2_ts   <- read.csv("output/GM_GDDparam_ayear.csv")
+sigma_df2_ts_gdd  <- read.csv("output/GM_GDDparam_sigma.csv")
+bspp_df2_ts_gdd   <- read.csv("output/GM_GDDparam_bspp.csv")
+treeid_df2_ts_gdd <- read.csv("output/GM_GDDparam_treeid.csv")
+aspp_df2_ts_gdd   <- read.csv("output/GM_GDDparam_aspp.csv")
+ayear_df2_ts_gdd   <- read.csv("output/GM_GDDparam_ayear.csv")
 
-treeid_df2_ts$id <- as.numeric(treeid_df2_ts$id)  
-treeid_df2_ts$treeid_name <- empts$id[match(treeid_df2_ts$id, empts$treeid_num)]
-bspp_df2_ts$spp_name <- empts$latbi[match(bspp_df2_ts$spp, empts$spp_num)]
-aspp_df2_ts$spp_name <- empts$latbi[match(aspp_df2_ts$spp, empts$spp_num)]
-ayear_df2_ts$year_name <- empts$year[match(ayear_df2_ts$year, empts$year_num)]
+treeid_df2_ts_gdd$id <- as.numeric(treeid_df2_ts_gdd$id)  
+treeid_df2_ts_gdd$treeid_name <- empts$id[match(treeid_df2_ts_gdd$id, empts$treeid_num)]
+bspp_df2_ts_gdd$spp_name <- empts$latbi[match(bspp_df2_ts_gdd$spp, empts$spp_num)]
+aspp_df2_ts_gdd$spp_name <- empts$latbi[match(aspp_df2_ts_gdd$spp, empts$spp_num)]
+ayear_df2_ts_gdd$year_name <- empts$year[match(ayear_df2_ts_gdd$year, empts$year_num)]
 
 # GSL
 sigma_df2_ts_gsl  <- read.csv("output/GM_GSLparam_sigma.csv")
@@ -787,13 +787,13 @@ mumar <- c(4, 1, 4, 1)
 
 # Panel 1: GDD
 par(mar = mumar)
-plot(bspp_df2_ts$mean, y_pos,
+plot(bspp_df2_ts_gdd$mean, y_pos,
      xlim = c(-0.5, 1.2), ylim = c(0.5, n_spp + 0.5),
      xlab = "log(ring width) change per 7 spring days GDD", ylab = "",
      yaxt = "n", pch = 16, cex = 2, col = tscolslatbi, frame.plot = TRUE,
      panel.first = abline(v = 0, lty = 2, col = "black"))
-segments(bspp_df2_ts$p5,  y_pos, bspp_df2_ts$p95, y_pos, col = tscolslatbi, lwd = 1.5)
-segments(bspp_df2_ts$p25, y_pos, bspp_df2_ts$p75, y_pos, col = tscolslatbi, lwd = 3)
+segments(bspp_df2_ts_gdd$p5,  y_pos, bspp_df2_ts_gdd$p95, y_pos, col = tscolslatbi, lwd = 1.5)
+segments(bspp_df2_ts_gdd$p25, y_pos, bspp_df2_ts_gdd$p75, y_pos, col = tscolslatbi, lwd = 3)
 mtext("(a) Growing degree days", adj = 0, side = 3, line = 2.5, font = 2, cex = 0.9)
 # arrows(x0 = -0.05, y0 = n_spp + 0.85, x1 = -0.5, y1 = n_spp + 0.85, length = 0.1, xpd = TRUE)
 # text(-0.18, n_spp + 0.85, "Smaller/Cooler", pos = 3, xpd = TRUE, cex = 0.9)
@@ -858,7 +858,7 @@ rasterImage(img_budset, usr[1], usr[4] - diff(usr[3:4]) * 0.35, usr[1] + diff(us
 par(mar = c(mumar))
 plot.new()
 legend("center",
-       legend = sapply(unique(bspp_df2_ts$spp_name),
+       legend = sapply(unique(bspp_df2_ts_gdd$spp_name),
                        function(x) parse(text = paste0("italic('", x, "')"))),
        col    = unique(tscolslatbi),
        pch    = 16, pt.cex = 1.5, bty = "n", cex = 1.2,
@@ -884,14 +884,14 @@ widths = c(1.1, 1.2, 0.6))
 
 # Row 1, Col 1, Slot 5 : GDD
 par(mar = custommar)
-plot(bspp_df2_ts$mean, y_pos,
+plot(bspp_df2_ts_gdd$mean, y_pos,
      xlim = c(-0.5, 0.4), ylim = c(0.5, n_spp + 0.5),
      xlab = "log(ring width) change in averaged GDD of 7 spring days", ylab = "",
      yaxt = "n", pch = 16, cex = 2, col = tscolslatbi, frame.plot = TRUE, 
      panel.first = abline(v = 0, lty = 2, col = "black"))
-segments(bspp_df2_ts$p5,  y_pos, bspp_df2_ts$p95, y_pos,
+segments(bspp_df2_ts_gdd$p5,  y_pos, bspp_df2_ts_gdd$p95, y_pos,
          col = tscolslatbi, lwd = 1.5)
-segments(bspp_df2_ts$p25, y_pos, bspp_df2_ts$p75, y_pos,
+segments(bspp_df2_ts_gdd$p25, y_pos, bspp_df2_ts_gdd$p75, y_pos,
          col = tscolslatbi, lwd = 3)
 mtext("(a) Growing degree days", side = 3, adj = 0, font = 2, cex = 0.9)
 usr <- par("usr")
@@ -1071,7 +1071,7 @@ for (i in seq_along(sppvecnum)) { # i = 1
 par(mar = c(1, 1, 1, 1))
 plot.new()
 legend("center",
-       legend = sapply(unique(bspp_df2_ts$spp_name), 
+       legend = sapply(unique(bspp_df2_ts_gdd$spp_name), 
                        function(x) parse(text = paste0("italic('", x, "')"))),
        col    = tscolslatbi,
        pch    = 16, pt.cex = 1.5, bty = "n", cex = 1.5,
@@ -1094,13 +1094,13 @@ widths = c(0.7, 0.4))
 
 # Row 1: GDD
 par(mar = c(5, 8, 2, 2))
-plot(aspp_df2_ts$mean, y_pos,
+plot(aspp_df2_ts_gdd$mean, y_pos,
      xlim = c(-10, 10), ylim = c(0.5, n_spp + 0.5),
      xlab = "Log ring width intercept values (mm)", ylab = "",
      yaxt = "n", pch = 15, cex = 2, col = tscolslatbi, frame.plot = FALSE,
      panel.first = abline(v = 0, lty = 2, col = "black"))
-segments(aspp_df2_ts$p5,  y_pos, aspp_df2_ts$p95, y_pos, col = tscolslatbi, lwd = 1.5)
-segments(aspp_df2_ts$p25, y_pos, aspp_df2_ts$p75, y_pos, col = tscolslatbi, lwd = 3)
+segments(aspp_df2_ts_gdd$p5,  y_pos, aspp_df2_ts_gdd$p95, y_pos, col = tscolslatbi, lwd = 1.5)
+segments(aspp_df2_ts_gdd$p25, y_pos, aspp_df2_ts_gdd$p75, y_pos, col = tscolslatbi, lwd = 3)
 mtext("(a) Growing degree days", side = 3, adj = 0, font = 2, cex = 0.9)
 
 # Row 2: GSL
@@ -1140,7 +1140,7 @@ mtext("(d) End of season", side = 3, adj = 0, font = 2, cex = 0.9)
 par(mar = c(1, 1, 1, 1))
 plot.new()
 legend("center",
-       legend = sapply(unique(aspp_df2_ts$spp_name),
+       legend = sapply(unique(aspp_df2_ts_gdd$spp_name),
                        function(x) parse(text = paste0("italic('", x, "')"))),
        col    = unique(tscolslatbi),
        pch    = 16, pt.cex = 1.5, bty = "n", cex = 1.2,
@@ -1267,23 +1267,23 @@ dev.off()
 jpeg(file = "figures/growthModelsMain/TSmuayear.jpeg",
      width = 1600, height = 1600, res = 300)
 
-ayear_df2_ts$year_name <- as.character(ayear_df2_ts$year_name)
-years_ordered <- sort(unique(ayear_df2_ts$year_name))
-ayear_df2_ts$y_pos <- match(ayear_df2_ts$year_name, years_ordered)
+ayear_df2_ts_gdd$year_name <- as.character(ayear_df2_ts_gdd$year_name)
+years_ordered <- sort(unique(ayear_df2_ts_gdd$year_name))
+ayear_df2_ts_gdd$y_pos <- match(ayear_df2_ts_gdd$year_name, years_ordered)
 
 par(mar = c(4, 4, 4, 4))
-plot(ayear_df2_ts$mean, ayear_df2_ts$y_pos,
+plot(ayear_df2_ts_gdd$mean, ayear_df2_ts_gdd$y_pos,
      xlim = c(-1.5, 1.), ylim = c(0.5, length(years_ordered) + 0.5),
      xlab = "Ring width intercept values (mm)", ylab = "",
-     yaxt = "n", pch = 16, cex = 2, col = colsyr[ayear_df2_ts$year_name], 
+     yaxt = "n", pch = 16, cex = 2, col = colsyr[ayear_df2_ts_gdd$year_name], 
      frame.plot = FALSE,
      panel.first = abline(v = 0, lty = 2, col = "black"))
-segments(ayear_df2_ts$p5,  ayear_df2_ts$y_pos, 
-         ayear_df2_ts$p95, ayear_df2_ts$y_pos, 
-         lwd = 1.5, col = colsyr[ayear_df2_ts$year_name])
-segments(ayear_df2_ts$p25, ayear_df2_ts$y_pos, 
-         ayear_df2_ts$p75, ayear_df2_ts$y_pos, 
-         lwd = 3, colsyr[ayear_df2_ts$year_name])
+segments(ayear_df2_ts_gdd$p5,  ayear_df2_ts_gdd$y_pos, 
+         ayear_df2_ts_gdd$p95, ayear_df2_ts_gdd$y_pos, 
+         lwd = 1.5, col = colsyr[ayear_df2_ts_gdd$year_name])
+segments(ayear_df2_ts_gdd$p25, ayear_df2_ts_gdd$y_pos, 
+         ayear_df2_ts_gdd$p75, ayear_df2_ts_gdd$y_pos, 
+         lwd = 3, colsyr[ayear_df2_ts_gdd$year_name])
 axis(side = 2, at = seq_along(years_ordered), labels = years_ordered, las = 1)
 
 dev.off()
@@ -1301,34 +1301,39 @@ layout(matrix(c(1,  2,  3,  4,  5,
 # Left: mu plot
 par(mar = c(4, 4, 5, 1))
 
-plot(ayear_df2_ts$mean, ayear_df2_ts$y_pos,
+ayear_df2_ts_gdd <- ayear_df2_ts_gdd[rev(ayear_df2_ts_gdd$year),]
+y_pos_yr <- ayear_df2_ts_gdd$year
+
+plot(ayear_df2_ts_gdd$mean, ayear_df2_ts_gdd$y_pos,
      xlim = c(-1, 1), ylim = c(0.5, length(years_ordered) + 0.5),
      xlab = "log(ring width) intercept values (mm)", ylab = "",
-     yaxt = "n", pch = 16, cex = 2, col = colsyr[ayear_df2_ts$year_name], 
-     frame.plot = FALSE,
+     yaxt = "n", pch = 16, cex = 2, 
+     col = colsyr[as.character(ayear_df2_ts_gdd$year_name)],
+     frame.plot = TRUE,
      panel.first = abline(v = 0, lty = 2, col = "black"))
-segments(ayear_df2_ts$p5,  ayear_df2_ts$y_pos, 
-         ayear_df2_ts$p95, ayear_df2_ts$y_pos, 
-         lwd = 1.5, col = colsyr[ayear_df2_ts$year_name])
-segments(ayear_df2_ts$p25, ayear_df2_ts$y_pos, 
-         ayear_df2_ts$p75, ayear_df2_ts$y_pos, 
-         lwd = 3, colsyr[ayear_df2_ts$year_name])
+segments(ayear_df2_ts_gdd$p5,  ayear_df2_ts_gdd$y_pos, 
+         ayear_df2_ts_gdd$p95, ayear_df2_ts_gdd$y_pos, 
+         lwd = 1.5, 
+         col = colsyr[as.character(ayear_df2_ts_gdd$year_name)])
+segments(ayear_df2_ts_gdd$p25, ayear_df2_ts_gdd$y_pos, 
+         ayear_df2_ts_gdd$p75, ayear_df2_ts_gdd$y_pos, 
+         lwd = 3, 
+         col = colsyr[as.character(ayear_df2_ts_gdd$year_name)])
 axis(side = 2, at = seq_along(years_ordered), labels = years_ordered, las = 1)
 mtext("(a) Year intercept", 
       side = 3, outer = TRUE, adj = 0.05, font = 2, cex = 1, line = 0.2)
 
 # Right: boxplots
 for(sp in sppvecname) { # sp = "A. rubrum"
-  par(mar = c(2, 5, 3, 1))
+  par(mar = c(2, 5, 2, 1))
   dat <- empts[empts$latbi == sp,]
   yr_levels <- sort(unique(dat$year))
-  bpcols <- colsyr[as.character(yr_levels)]
-  
+  dat$year <- factor(dat$year, levels = sort(as.character(ayear_df2_ts_gdd$year_name)))
   boxplot(lengthMM ~ year, data = dat,
           # main = bquote(italic(.(sp))),
           xlab = "Year", ylab = "Ring width (mm)",
-          col = adjustcolor(bpcols, alpha.f = 0.5),
-          border = adjustcolor(bpcols, alpha.f = 0.8),
+          col = adjustcolor(colsyr[levels(dat$year)], alpha.f = 0.5),
+          border = adjustcolor(colsyr[levels(dat$year)], alpha.f = 0.5),
           medcol = "black",
           whisklty = 1, staplewex = 0, medlty = 1, medlwd = 0.8,
           outpch = 16, outcex = 0.7, outcol = "black")
@@ -1341,6 +1346,43 @@ for(sp in sppvecname) { # sp = "A. rubrum"
 mtext("(b) Ring width (mm) observations per year and species",
       side = 3, outer = TRUE, adj = 0.5, font = 2, cex = 1, line = 0.2)
 dev.off()
+
+##### checks temporary for betall #####
+t <- subset(empts, latbi %in% "B. alleghaniensis")
+plot(t$loglength ~ t$pgsGDD5)
+unique(empts$latbi)
+
+n_spp <- length(unique(empts$latbi))
+y_pos <- rev(1:n_spp)
+par(mfrow=c(1,2))
+plot(bspp_df2_ts_gdd$mean, y_pos,
+     xlim = c(-0.5, 1.2), ylim = c(0.5, n_spp + 0.5),
+     xlab = "log(ring width) change per 7 spring days GDD", ylab = "",
+     yaxt = "n", pch = 16, cex = 2, col = tscolslatbi, frame.plot = TRUE,
+     panel.first = abline(v = 0, lty = 2, col = "black"))
+segments(bspp_df2_ts_gdd$p5,  y_pos, bspp_df2_ts_gdd$p95, y_pos, col = tscolslatbi, lwd = 1.5)
+segments(bspp_df2_ts_gdd$p25, y_pos, bspp_df2_ts_gdd$p75, y_pos, col = tscolslatbi, lwd = 3)
+mtext("Growing degree days bspp", adj = 0, side = 3, line = 2.5, font = 2, cex = 0.9)
+
+legend(
+  x = 0.25,
+  y = 10,
+  legend = as.expression(lapply(species_legend_order, function(x)
+    substitute(italic(s), list(s = x))
+  )),
+  col    = tscolslatbi[species_legend_order],
+  pch = 16, pt.cex = 1.2, title = "Species", bty = "n")
+
+plot(aspp_df2_ts_gdd$mean, y_pos,
+     xlim = c(-5, 5), ylim = c(0.5, n_spp + 0.5),
+     xlab = "log(ring width) change per 7 spring days GDD", ylab = "",
+     yaxt = "n", pch = 16, cex = 2, col = tscolslatbi, frame.plot = TRUE,
+     panel.first = abline(v = 0, lty = 2, col = "black"))
+segments(aspp_df2_ts_gdd$p5,  y_pos, aspp_df2_ts_gdd$p95, y_pos, col = tscolslatbi, lwd = 1.5)
+segments(aspp_df2_ts_gdd$p25, y_pos, aspp_df2_ts_gdd$p75, y_pos, col = tscolslatbi, lwd = 3)
+mtext("Growing degree days aspp", adj = 0, side = 3, line = 2.5, font = 2, cex = 0.9)
+
+
 }
 
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
@@ -1353,39 +1395,6 @@ rwmaxts <- aggregate(lengthMM ~ latbi, empts, FUN = max)
 rwsumts <- merge(rwmints, rwmaxts, by = "latbi")
 colnames(rwsumts) <- c("latbi","min", "max")
 rwsumts$mean <- rwmeannts$lengthMM[match(rwsumts$latbi, rwmeannts$latbi)]
-
-t <- subset(empts, latbi %in% "B. alleghaniensis")
-plot(t$loglength ~ t$pgsGDD5)
-unique(empts$latbi)
-
-par(mfrow=c(1,2))
-plot(bspp_df2_ts$mean, y_pos,
-     xlim = c(-0.5, 1.2), ylim = c(0.5, n_spp + 0.5),
-     xlab = "log(ring width) change per 7 spring days GDD", ylab = "",
-     yaxt = "n", pch = 16, cex = 2, col = tscolslatbi, frame.plot = TRUE,
-     panel.first = abline(v = 0, lty = 2, col = "black"))
-segments(bspp_df2_ts$p5,  y_pos, bspp_df2_ts$p95, y_pos, col = tscolslatbi, lwd = 1.5)
-segments(bspp_df2_ts$p25, y_pos, bspp_df2_ts$p75, y_pos, col = tscolslatbi, lwd = 3)
-mtext("Growing degree days bspp", adj = 0, side = 3, line = 2.5, font = 2, cex = 0.9)
-
-legend(
-  x = 0.25,
-  y = 10,
-  legend = as.expression(lapply(species_legend_order, function(x)
-    substitute(italic(s), list(s = x))
-  )),
-  col    = tscolslatbi[species_legend_order],
-  pch = 16, pt.cex = 1.2, title = "Species", bty = "n")
-
-plot(aspp_df2_ts$mean, y_pos,
-     xlim = c(-5, 5), ylim = c(0.5, n_spp + 0.5),
-     xlab = "log(ring width) change per 7 spring days GDD", ylab = "",
-     yaxt = "n", pch = 16, cex = 2, col = tscolslatbi, frame.plot = TRUE,
-     panel.first = abline(v = 0, lty = 2, col = "black"))
-  segments(aspp_df2_ts$p5,  y_pos, aspp_df2_ts$p95, y_pos, col = tscolslatbi, lwd = 1.5)
-segments(aspp_df2_ts$p25, y_pos, aspp_df2_ts$p75, y_pos, col = tscolslatbi, lwd = 3)
-mtext("Growing degree days aspp", adj = 0, side = 3, line = 2.5, font = 2, cex = 0.9)
-
 
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 # Z-scored output ####
@@ -1400,8 +1409,8 @@ df_fitgdd <- as.data.frame(fitgdd)
 
 # posterior summaries
 sigma_df2_z  <- extract_params(df_fitgdd, "sigma", "mean", "sigma")
-bspp_df2_z   <- extract_params(df_fitgdd, "bspp", "fit_bspp", 
-                               "spp", "bspp\\[(\\d+)\\]")
+bspp_df2_z   <- extract_params(df_fitgdd, "bsp", "fit_bspp", 
+                               "spp", "bsp\\[(\\d+)\\]")
 treeid_df2_z <- extract_params(df_fitgdd, "atreeid", "fit_atreeid", 
                                "treeid", "atreeid\\[(\\d+)\\]")
 treeid_df2_z <- subset(treeid_df2_z, !grepl("z|sigma", treeid))
@@ -1421,8 +1430,8 @@ df_fitgsl <- as.data.frame(fitgsl)
 
 # posterior summaries
 sigma_df2_z_gsl  <- extract_params(df_fitgsl, "sigma", "mean", "sigma")
-bspp_df2_z_gsl   <- extract_params(df_fitgsl, "bspp", "fit_bspp", 
-                                   "spp", "bspp\\[(\\d+)\\]")
+bspp_df2_z_gsl   <- extract_params(df_fitgsl, "bsp", "fit_bspp", 
+                                   "spp", "bsp\\[(\\d+)\\]")
 treeid_df2_z_gsl <- extract_params(df_fitgsl, "atreeid", "fit_atreeid", 
                                    "treeid", "atreeid\\[(\\d+)\\]")
 treeid_df2_z_gsl <- subset(treeid_df2_z, !grepl("z|sigma", treeid))
@@ -1443,8 +1452,8 @@ df_fitsos <- as.data.frame(fitsos)
 
 # posterior summaries
 sigma_df2_z_sos  <- extract_params(df_fitsos, "sigma", "mean", "sigma")
-bspp_df2_z_sos   <- extract_params(df_fitsos, "bspp", "fit_bspp", 
-                                   "spp", "bspp\\[(\\d+)\\]")
+bspp_df2_z_sos   <- extract_params(df_fitsos, "bsp", "fit_bspp", 
+                                   "spp", "bsp\\[(\\d+)\\]")
 treeid_df2_z_sos <- extract_params(df_fitsos, "atreeid", "fit_atreeid", 
                                    "treeid", "atreeid\\[(\\d+)\\]")
 treeid_df2_z_sos <- subset(treeid_df2_z_sos, !grepl("z|sigma", treeid))
@@ -1465,8 +1474,8 @@ df_fiteos <- as.data.frame(fiteos)
 
 # posterior summaries
 sigma_df2_z_eos  <- extract_params(df_fiteos, "sigma", "mean", "sigma")
-bspp_df2_z_eos   <- extract_params(df_fiteos, "bspp", "fit_bspp", 
-                                   "spp", "bspp\\[(\\d+)\\]")
+bspp_df2_z_eos   <- extract_params(df_fiteos, "bsp", "fit_bspp", 
+                                   "spp", "bsp\\[(\\d+)\\]")
 treeid_df2_z_eos <- extract_params(df_fiteos, "atreeid", "fit_atreeid", 
                                    "treeid", "atreeid\\[(\\d+)\\]")
 treeid_df2_z_eos <- subset(treeid_df2_z_eos, !grepl("z|sigma", treeid))
@@ -1506,5 +1515,5 @@ max_ES_ts <- merge(agg_z_ts, bspp_z_binded_ts[, c("mean", "p5", "p95", "pred", "
 
 max_ES_ts$fit_bspp_abs <- NULL
 
-max_ES_ts <- max_ES_ts[order(max_ES_ts$pred),]
+s <- max_ES_ts[order(max_ES_ts$pred),]
 }
