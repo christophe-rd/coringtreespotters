@@ -14,7 +14,7 @@ array[Ntreeid] int treeid_species; // species index for each treeid
 array[Nspp] int Ntreeid_per_spp;
 int<lower=0> Ngddseq;
 vector[Ngddseq] gddseq;
-real wcgddscale; # scale
+real tsgddscale; # scale
 vector[N] gdd;     // gdd (predictor for slope)
 array[N] real y;         // ring width (response)
 }
@@ -107,7 +107,7 @@ generated quantities {
 
   for (t in 1:Ntreeid) {
     for (g in 1:Ngddseq) {
-      y_post[g, t] = normal_rng(fullintercept[t] + (treeid_slope[t]/ wcgddscale) * gddseq[g], sigma_y);
+      y_post[g, t] = normal_rng(fullintercept[t] + (treeid_slope[t]/ tsgddscale) * gddseq[g], sigma_y);
     }
   }
   
@@ -120,7 +120,7 @@ generated quantities {
   for (t in 1:Ntreeid) {
     int s = treeid_species[t];
     for (g in 1:Ngddseq) {
-      spp_mean[g, s] += (fullintercept[t] + (treeid_slope[t] / wcgddscale) * gddseq[g])
+      spp_mean[g, s] += (fullintercept[t] + (treeid_slope[t] / tsgddscale) * gddseq[g])
                         / Ntreeid_per_spp[s];
     }
   }
