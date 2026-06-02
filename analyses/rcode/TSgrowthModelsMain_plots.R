@@ -363,10 +363,10 @@ for (i in seq_along(sppvecnum)) { # i = 1
   
   # Add treeid symbols
   unique_trees <- unique(emp_spp$treeid_num)
-  # sym_per_row  <- treeidsymbol[match(emp_spp$treeid_num, unique_trees)]
+  sym_per_row  <- treeidsymbol[match(emp_spp$treeid_num, unique_trees)]
   
   points(emp_spp$pgsGDD5, emp_spp$loglength,
-         # pch = sym_per_row, 
+         pch = sym_per_row,
          cex = 1, col = line_col)
   
   # legend("topleft",
@@ -1150,21 +1150,25 @@ dev.off()
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
 ##### full treeid mu plots intercept #####
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+f <- as.data.frame(fitgdd)
+columns <- colnames(f)
+a <- f[,"a"]
+fullintercept2 <- fullintercept - a
 
 # get posterior means and quantiles
 treeid_df4 <- data.frame(
-  treeid   = character(ncol(fullintercept)),
-  mean     = numeric(ncol(fullintercept)),
+  treeid   = character(ncol(fullintercept2)),
+  mean     = numeric(ncol(fullintercept2)),
   p5  = NA, p25 = NA, p75 = NA, p95 = NA
 )
 
-for (i in 1:ncol(fullintercept)) { # i = 1
-  treeid_df4$treeid[i]  <- colnames(fullintercept)[i]
-  treeid_df4$mean[i]    <- round(mean(fullintercept[[i]]), 3)
-  treeid_df4$p5[i]      <- round(quantile(fullintercept[[i]], probs = 0.05), 3)
-  treeid_df4$p25[i]     <- round(quantile(fullintercept[[i]], probs = 0.25), 3)
-  treeid_df4$p75[i]     <- round(quantile(fullintercept[[i]], probs = 0.75), 3)
-  treeid_df4$p95[i]     <- round(quantile(fullintercept[[i]], probs = 0.95), 3)
+for (i in 1:ncol(fullintercept2)) { # i = 1
+  treeid_df4$treeid[i]  <- colnames(fullintercept2)[i]
+  treeid_df4$mean[i]    <- round(mean(fullintercept2[[i]]), 3)
+  treeid_df4$p5[i]      <- round(quantile(fullintercept2[[i]], probs = 0.05), 3)
+  treeid_df4$p25[i]     <- round(quantile(fullintercept2[[i]], probs = 0.25), 3)
+  treeid_df4$p75[i]     <- round(quantile(fullintercept2[[i]], probs = 0.75), 3)
+  treeid_df4$p95[i]     <- round(quantile(fullintercept2[[i]], probs = 0.95), 3)
 }
 
 # get the og treeid names and spp back
@@ -1174,19 +1178,20 @@ treeid_df4$spp_name    <- empts$latbi[match(treeid_df4$treeid, empts$treeid_num)
 treeid_df4$spp_num     <- empts$spp_num[match(treeid_df4$treeid, empts$treeid_num)]
 
 # species mean from full intercepts pooled across treeids
-fullinterceptspp <- fullintercept
-colnames(fullinterceptspp) <- treeid_spp_ordered$spp_num[match(
-  names(fullintercept), treeid_spp_ordered$treeid_num)]
+aspp_df <- f[, columns[grepl("aspp", columns) & !grepl("prior", columns)]]
+ayearmean <- f[, grepl("mean_ayear", columns)]
+aspp_df <- aspp_df + ayearmean
+colnames(aspp_df) <- 1:ncol(aspp_df)
 
 draws_spp <- split.default(fullinterceptspp, colnames(fullinterceptspp))
 
 aspp_df4 <- data.frame(
-  species = names(draws_spp),
-  mean = sapply(draws_spp, function(x) round(mean(unlist(x)), 3)),
-  p5   = sapply(draws_spp, function(x) round(quantile(unlist(x), 0.05), 3)),
-  p25  = sapply(draws_spp, function(x) round(quantile(unlist(x), 0.25), 3)),
-  p75  = sapply(draws_spp, function(x) round(quantile(unlist(x), 0.75), 3)),
-  p95  = sapply(draws_spp, function(x) round(quantile(unlist(x), 0.95), 3))
+  species = names(aspp_df),
+  mean = sapply(aspp_df, function(x) round(mean(unlist(x)), 3)),
+  p5   = sapply(aspp_df, function(x) round(quantile(unlist(x), 0.05), 3)),
+  p25  = sapply(aspp_df, function(x) round(quantile(unlist(x), 0.25), 3)),
+  p75  = sapply(aspp_df, function(x) round(quantile(unlist(x), 0.75), 3)),
+  p95  = sapply(aspp_df, function(x) round(quantile(unlist(x), 0.95), 3))
 )
 aspp_df4$spp_name <- empts$latbi[match(aspp_df4$species, empts$spp_num)]
 
@@ -1228,7 +1233,7 @@ points(treeid_df4$mean, treeid_df4$y_pos,
        cex = 0.8, pch = 16,
        col = adjustcolor(tscolslatbi[treeid_df4$spp_name], alpha.f = 0.7))
 
-spp_y_top       <- tapply(treeid_df4$y_pos, treeid_df4$spp_name, max)
+spp_y_top <- tapply(treeid_df4$y_pos, treeid_df4$spp_name, max)
 aspp_df4$y_pos  <- spp_y_top[aspp_df4$spp_name] + 1
 
 segments(x0 = aspp_df4$p5, x1 = aspp_df4$p95, y0 = aspp_df4$y_pos,
@@ -1245,11 +1250,11 @@ abline(v = 0, lty = 2)
 axis(side = 2, at = treeid_df4$y_pos, labels = treeid_df4$treeid_name,
      cex.axis = 0.5, las = 1)
 
-spp_y                <- tapply(treeid_df4$y_pos, treeid_df4$spp_name, mean)
+spp_y <- tapply(treeid_df4$y_pos, treeid_df4$spp_name, mean)
 species_legend_order <- names(sort(spp_y, decreasing = TRUE))
 
 legend(
-  x = max(treeid_df4$p95) - 1.5,
+  x = max(treeid_df4$p95)-0.2,
   y = max(treeid_df4$y_pos),
   legend = as.expression(lapply(species_legend_order, function(x)
     substitute(italic(s), list(s = x))
@@ -1258,6 +1263,7 @@ legend(
   pch = 16, pt.cex = 1.2, title = "Species", bty = "n")
 
 dev.off()
+
 
 }
 
@@ -1381,8 +1387,8 @@ plot(aspp_df2_ts_gdd$mean, y_pos,
 segments(aspp_df2_ts_gdd$p5,  y_pos, aspp_df2_ts_gdd$p95, y_pos, col = tscolslatbi, lwd = 1.5)
 segments(aspp_df2_ts_gdd$p25, y_pos, aspp_df2_ts_gdd$p75, y_pos, col = tscolslatbi, lwd = 3)
 mtext("Growing degree days aspp", adj = 0, side = 3, line = 2.5, font = 2, cex = 0.9)
-
 # Slopes with treeid
+
 jpeg(file = "figures/growthModelsMain/BallSlopesById.jpeg", 
      width = 2400, height = 2400, res = 300)
 par(mfrow = c(1, 1))
