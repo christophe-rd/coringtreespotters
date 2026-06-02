@@ -102,24 +102,24 @@ pgsGSLagg$pgsGSL <- round(pgsGSLagg$pgsGSL, 1)
   \item No clear trend of growing season length effect across our eleven species and season predictors.
 
   \item Longer thermal season increased growth *weakly for \Asac ($\beta = $
-  \Sexpr{bspp_df2_ts$mean[which(bspp_df2_ts$spp_name %in% "A. saccharum")]}, $UI_{90}$
-  [\Sexpr{bspp_df2_ts$p5[which(bspp_df2_ts$spp_name %in% "A. saccharum")]},
-  \Sexpr{bspp_df2_ts$p95[which(bspp_df2_ts$spp_name %in% "A. saccharum")]}]), \Bnig  ($\beta = $
-  \Sexpr{bspp_df2_ts$mean[which(bspp_df2_ts$spp_name %in% "B. nigra")]}, $UI_{90}$
-  [\Sexpr{bspp_df2_ts$p5[which(bspp_df2_ts$spp_name %in% "B. nigra")]},
-  \Sexpr{bspp_df2_ts$p95[which(bspp_df2_ts$spp_name %in% "B. nigra")]}]), \Cgla ($\beta = $
-  \Sexpr{bspp_df2_ts$mean[which(bspp_df2_ts$spp_name %in% "C. glabra")]}, $UI_{90}$
-  [\Sexpr{bspp_df2_ts$p5[which(bspp_df2_ts$spp_name %in% "C. glabra")]},
-  \Sexpr{bspp_df2_ts$p95[which(bspp_df2_ts$spp_name %in% "C. glabra")]}]), \Qrub ($\beta = $
-  \Sexpr{bspp_df2_ts$mean[which(bspp_df2_ts$spp_name %in% "Q. rubra")]}, $UI_{90}$
-  [\Sexpr{bspp_df2_ts$p5[which(bspp_df2_ts$spp_name %in% "Q. rubra")]},
-  \Sexpr{bspp_df2_ts$p95[which(bspp_df2_ts$spp_name %in% "Q. rubra")]}]), and decreased for {\Ball} ($\beta = $
-  \Sexpr{bspp_df2_ts$mean[which(bspp_df2_ts$spp_name %in% "B. alleghaniensis")]}, $UI_{90}$
-  [\Sexpr{bspp_df2_ts$p5[which(bspp_df2_ts$spp_name %in% "B. alleghaniensis")]},
-  \Sexpr{bspp_df2_ts$p95[which(bspp_df2_ts$spp_name %in% "B. alleghaniensis")]}])
+  \Sexpr{bspp_df2_ts_gdd$mean[which(bspp_df2_ts_gdd$spp_name %in% "A. saccharum")]}, $UI_{90}$
+  [\Sexpr{bspp_df2_ts_gdd$p5[which(bspp_df2_ts_gdd$spp_name %in% "A. saccharum")]},
+  \Sexpr{bspp_df2_ts_gdd$p95[which(bspp_df2_ts_gdd$spp_name %in% "A. saccharum")]}]), \Bnig  ($\beta = $
+  \Sexpr{bspp_df2_ts_gdd$mean[which(bspp_df2_ts_gdd$spp_name %in% "B. nigra")]}, $UI_{90}$
+  [\Sexpr{bspp_df2_ts_gdd$p5[which(bspp_df2_ts_gdd$spp_name %in% "B. nigra")]},
+  \Sexpr{bspp_df2_ts_gdd$p95[which(bspp_df2_ts_gdd$spp_name %in% "B. nigra")]}]), \Cgla ($\beta = $
+  \Sexpr{bspp_df2_ts_gdd$mean[which(bspp_df2_ts_gdd$spp_name %in% "C. glabra")]}, $UI_{90}$
+  [\Sexpr{bspp_df2_ts_gdd$p5[which(bspp_df2_ts_gdd$spp_name %in% "C. glabra")]},
+  \Sexpr{bspp_df2_ts_gdd$p95[which(bspp_df2_ts_gdd$spp_name %in% "C. glabra")]}]), \Qrub ($\beta = $
+  \Sexpr{bspp_df2_ts_gdd$mean[which(bspp_df2_ts_gdd$spp_name %in% "Q. rubra")]}, $UI_{90}$
+  [\Sexpr{bspp_df2_ts_gdd$p5[which(bspp_df2_ts_gdd$spp_name %in% "Q. rubra")]},
+  \Sexpr{bspp_df2_ts_gdd$p95[which(bspp_df2_ts_gdd$spp_name %in% "Q. rubra")]}]), and decreased for {\Ball} ($\beta = $
+  \Sexpr{bspp_df2_ts_gdd$mean[which(bspp_df2_ts_gdd$spp_name %in% "B. alleghaniensis")]}, $UI_{90}$
+  [\Sexpr{bspp_df2_ts_gdd$p5[which(bspp_df2_ts_gdd$spp_name %in% "B. alleghaniensis")]},
+  \Sexpr{bspp_df2_ts_gdd$p95[which(bspp_df2_ts_gdd$spp_name %in% "B. alleghaniensis")]}])
   ) (Figure \ref{fig:tsmuplotbspp}a and e) (Table \ref{tab:ts_slope_table}). 
  
-  \item Of the four species that grew more with longer thermal season all, only two also grew more with longer   calendar season (\Bnig: $\beta = $
+  \item Of the four species that grew more with longer thermal season all, only two trended in that direction with longer calendar season (\Bnig: $\beta = $
   \Sexpr{bspp_df2_ts_gsl$mean[which(bspp_df2_ts_gsl$spp_name %in% "B. nigra")]}, $UI_{90}$
   [\Sexpr{bspp_df2_ts_gsl$p5[which(bspp_df2_ts_gsl$spp_name %in% "B. nigra")]},
   \Sexpr{bspp_df2_ts_gsl$p95[which(bspp_df2_ts_gsl$spp_name %in% "B. nigra")]}], \Cgla: $\beta = $
@@ -131,7 +131,7 @@ pgsGSLagg$pgsGSL <- round(pgsGSLagg$pgsGSL, 1)
   \Sexpr{bspp_df2_ts_gsl$p95[which(bspp_df2_ts_gsl$spp_name %in% "T. americana")]}]), unlike its response to
   the thermal season. 
 
-  \item \Ball trended in the same direction, but showed a weaker reponse than the thermal season ($\beta = $
+  \item {\Ball} trended in the same direction, but showed a weaker reponse than the thermal season ($\beta = $
   \Sexpr{bspp_df2_ts_gsl$mean[which(bspp_df2_ts_gsl$spp_name %in% "B. alleghaniensis")]}, $UI_{90}$
   [\Sexpr{bspp_df2_ts_gsl$p5[which(bspp_df2_ts_gsl$spp_name %in% "B. alleghaniensis")]},
   \Sexpr{bspp_df2_ts_gsl$p95[which(bspp_df2_ts_gsl$spp_name %in% "B. alleghaniensis")]}]) 
@@ -182,7 +182,7 @@ pgsGSLagg$pgsGSL <- round(pgsGSLagg$pgsGSL, 1)
 \Sexpr{bspp_df2_ts_eos$p95[which(bspp_df2_ts_eos$spp_name %in% "B. nigra")]}]), and \Cgla: $\beta = $
 \Sexpr{bspp_df2_ts_eos$mean[which(bspp_df2_ts_eos$spp_name %in% "C. glabra")]}, $UI_{90}$
 [\Sexpr{bspp_df2_ts_eos$p5[which(bspp_df2_ts_eos$spp_name %in% "C. glabra")]},
-\Sexpr{bspp_df2_ts_eos$p95[which(bspp_df2_ts_eos$spp_name %in% "C. glabra")]}] trended towards an increase in growth.
+\Sexpr{bspp_df2_ts_eos$p95[which(bspp_df2_ts_eos$spp_name %in% "C. glabra")]}] trended towards an increase in growth
 (Figure \ref{fig:tsmuplotbspp}d and h) (Table \ref{tab:ts_slope_table}). 
 
 % The estimates were unchanged when using the full ($n =$\Sexpr{nrow(empfulleosts)}) or restricted datasets ($n=$\Sexpr{nrow(empts)}) (Figure \ref{fig:tsSOSEOScomparison}b).
@@ -252,7 +252,7 @@ pgsGSLagg$pgsGSL <- round(pgsGSLagg$pgsGSL, 1)
 
 % Coringtreespotters year mu plot
 \begin{figure}[!ht]
-\includegraphics[width=1\textwidth]{../../analyses/figures/growthModelsMain/TSmuayear.jpeg}
+\includegraphics[width=1\textwidth]{../../analyses/figures/growthModelsMain/TSayearBoxplot.jpeg}
 \caption{We show tree ring widths (mm) across years as model estimates for the year intercepts with the dots depicting the mean and the lines, the 50\% and 90\% uncertainty intervals (UI).}
 \label{fig:tsmuplotayear}
 \end{figure}
@@ -290,7 +290,7 @@ eos <- bspp_df2_ts_eos[, c("spp_name", "EOS")]
 df_all <- Reduce(function(x, y) merge(x, y, by = "spp_name", all = TRUE),
                  list(gdd, gsl, sos, eos))
 colnames(df_all)[1] <- "Species"
-df_all$Species <- tstablespp[df_all$Species]
+# df_all$Species <- tstablespp[df_all$Species]
 
 # Print table
 tab <- xtable(df_all,
@@ -307,14 +307,14 @@ print(tab,
 % XY facetted by species GDD
 \begin{figure}[!ht]
 \includegraphics[width=0.8\textwidth]{../../analyses/figures/growthModelsMain/TSgrowthModelSlopesperSppFacetGDD.jpeg}
-\caption{Ring width trends in response to thermal season (GDD). The plots are the reconstructed species estimates posterior distribution with error. The lines represent the mean of the posterior distribution and the shaded area, the 50\% UI. The dots are the empirical data shaped by year.}
+\caption{Ring width trends in response to thermal season (GDD). The plots are the reconstructed species estimates posterior distribution with error. The lines represent the mean of the posterior distribution and the shaded area, the 50\% UI. The dots are the empirical data shaped by treeids.}
 \label{fig:tsxyGDD}
 \end{figure}
 
 % XY facetted by species GSL
 \begin{figure}[!ht]
 \includegraphics[width=0.8\textwidth]{../../analyses/figures/growthModelsMain/TSgrowthModelSlopesperSppFacetGSL.jpeg}
-\caption{Ring width trends in response to calendar season (GSL). The plots are the reconstructed species estimates posterior distribution with error. The lines represent the mean of the posterior distribution and the shaded area, the 50\% UI. The dots are the empirical data shaped by year.}
+\caption{Ring width trends in response to calendar season (GSL). The plots are the reconstructed species estimates posterior distribution with error. The lines represent the mean of the posterior distribution and the shaded area, the 50\% UI. The dots are the empirical data shaped by treeids.}
 \label{fig:tsxyGSL}
 \end{figure}
 
