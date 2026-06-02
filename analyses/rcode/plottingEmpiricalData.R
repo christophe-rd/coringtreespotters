@@ -581,3 +581,41 @@ for(sp in species) { # sp = "A. rubrum"
 }
 dev.off()
 
+
+# <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+# Time series phenological data ####
+# <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+# I can't really do the same thing as I did for Wildchrokie because we can't assume that each tree was visited on a given date.
+# comb <- read.csv("output/uncleanedTimeseriesPheno.csv")
+# comb$yeardoy <- paste(comb$year, comb$doy, sep = "_")
+# comb2 <- comb[!duplicated(comb$yeardoy),]
+# nrow(comb)
+# minbb <- aggregate(budburst ~ year, emp, FUN = min)
+# meanbb <- aggregate(budburst ~ year, emp, FUN = mean)
+# maxbb <- aggregate(budburst ~ year, emp, FUN = max)
+# bb <- merge(minbb, meanbb, by = "year")
+# bb <- merge(bb, maxbb, by = "year")
+# colnames(bb) <- c("year", "min", "mean", "max")
+# 
+# jpeg(
+#   filename = "figures/empiricalData/phenoTimeseries.jpeg",
+#   width = 2000, height = 2800, res = 400)
+# colsyr
+# par(mfrow = c(length(unique(comb2$year)), 1))
+# for (yr in sort(unique(comb2$year))) { # i =1
+#   hist(comb2$doy[comb2$year == yr], breaks = seq(0, 366, by = 14),
+#        main = yr, xlab = "Day of year", xlim = c(50, 366), ylim = c(0,4),
+#        ylab = "Number of observations per 14 days", col = adjustcolor(colsyr[as.character(yr)], alpha.f = 0.2))
+#   bbx <- bb[bb$year == yr,]
+#   segments(x0 = bbx$min, y0 = 0, y1 = 5, lwd = 2, lty = 1, col = "#247d3f")
+#   segments(x0 = bbx$mean, y0 = 0, y1 = 5, lwd = 2, lty = 1, col = "black")
+#   segments(x0 = bbx$max, y0 = 0, y1 = 5, lwd = 2, lty = 1, col = "#da7901")
+#   if(yr == min(unique(comb2$year))) {
+#     legend("topright", legend = c("Min", "Mean", "Max"),
+#            col = c("#247d3f", "black", "#da7901"),
+#            lwd = 2, lty = 1, bty = "n", cex = 0.8)
+#   }
+# }
+# dev.off()
+
+
