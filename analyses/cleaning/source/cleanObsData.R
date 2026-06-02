@@ -61,6 +61,10 @@ unique(leafcolorchecks$plantNickname)
 d <- indPheno[indPheno$plantNickname %in% trees2core$ACC_NUM.QUAL,]
 coloredleaves3 <- subset(d, Phenophase_Description == "Colored leaves")
 hist(coloredleaves3$First_Yes_DOY)
+
+# save d before cleaning to get raw observations data
+d2 <- d
+
 ### First let's do the obligatory cleaning checks with citizen science data
 d <- d[(d$Multiple_FirstY>=1 | d$Multiple_Observers>0),] ## This selects data where multiple people observed the same phenophase.
 coloredleaves3 <- subset(d, Phenophase_Description == "Colored leaves")
@@ -301,3 +305,60 @@ temp <- phenosCoord[!duplicated(phenosCoord$plantNickname),]
 # count per latbi
 temp %>%
   count(latbi)
+
+# uncleaned pheno observations
+if (false){
+bb2 <- d2 %>%
+  rename(
+    lat = Latitude,
+    long = Longitude,
+    elev = Elevation_in_Meters,
+    year = First_Yes_Year,
+    month = First_Yes_Month,
+    day = First_Yes_Day,
+    doy = First_Yes_DOY,
+    numYs = Multiple_Observers,
+    phase = Phenophase_Description,
+    id = Individual_ID,
+    genus = Genus,
+    species = Species,
+    symbol = USDA_PLANTS_Symbol,
+    plantNickname = plantNickname
+  )
+
+# add latin binomial column
+bb2$latbi <- paste(bb2$genus, bb2$species, sep=" ")
+
+#clean common name column
+bb2$commonName <- bb2$Common_Name
+bb2$commonName[which(bb2$Common_Name == "yellow birch")] <- "Yellow birch"
+bb2$commonName[which(bb2$Common_Name == "river birch")] <- "River birch"
+bb2$commonName[which(bb2$Common_Name == "sugar maple")] <- "Sugar maple"
+bb2$commonName[which(bb2$Common_Name == "white oak")] <- "White oak"
+bb2$commonName[which(bb2$Common_Name == "eastern cottonwood")] <- "Eastern cottonwood"
+bb2$commonName[which(bb2$Common_Name == "yellow buckeye")] <- "Yellow buckeye"
+bb2$commonName[which(bb2$Common_Name == "American beech")] <- "American beech"
+bb2$commonName[which(bb2$Common_Name == "pignut hickory")] <- "Pignut hickory"
+bb2$commonName[which(bb2$Common_Name == "shagbark hickory")] <- "Shagbark hickory"
+bb2$commonName[which(bb2$Common_Name == "northern red oak")] <- "Northern red oak"
+bb2$commonName[which(bb2$Common_Name == "red maple")] <- "Red maple"
+
+bb2.pheno <- bb2[, c("genus", "species", "latbi", "commonName", "symbol", "phase", "year", "doy", "numYs", "plantNickname")]
+
+# clean phenophase names
+bb2.pheno$phase<-ifelse(bb2.pheno$phase=="Breaking leaf buds", "budburst", bb2.pheno$phase)
+bb2.pheno$phase<-ifelse(bb2.pheno$phase=="Leaves", "leafout", bb2.pheno$phase)
+bb2.pheno$phase<-ifelse(bb2.pheno$phase=="Flowers or flower buds", "flowers", bb2.pheno$phase)
+bb2.pheno$phase<-ifelse(bb2.pheno$phase=="Falling leaves", "leafDrop", bb2.pheno$phase)
+bb2.pheno$phase<-ifelse(bb2.pheno$phase=="Colored leaves", "coloredLeaves", bb2.pheno$phase)
+bb2.pheno$phase<-ifelse(bb2.pheno$phase=="Fruits", "fruits", bb2.pheno$phase)
+bb2.pheno$phase<-ifelse(bb2.pheno$phase=="Ripe fruits", "ripeFruits", bb2.pheno$phase)
+bb2.pheno$phase<-ifelse(bb2.pheno$phase=="Recent fruit or seed drop", "recentFruitOrSeedDrop", bb2.pheno$phase)
+bb2.pheno$phase<-ifelse(bb2.pheno$phase=="Increasing leaf size", "increasingLeafSize", bb2.pheno$phase)
+bb2.pheno$phase<-ifelse(bb2.pheno$phase=="Open flowers", "openFlowers", bb2.pheno$phase)
+bb2.pheno$phase<-ifelse(bb2.pheno$phase=="Pollen release (flowers)", "pollenRelease", bb2.pheno$phase)
+
+bb2.pheno <- bb2.pheno[(bb2.pheno$numYs>=1),]
+
+write.csv(bb2.pheno,"output/uncleanedTimeseriesPheno.csv")
+}
