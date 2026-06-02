@@ -46,8 +46,8 @@ for (i in 1:N){ // don't change this for reparameterization
 }
 
 model{    
-  a ~ normal(2, 3);
-  aspp ~ normal(0, 4);
+  a ~ normal(1,3);
+  aspp ~ normal(0, 6);
   ayear ~ normal(0, 1);
   
   bspp ~ normal(0, 0.7);
@@ -71,8 +71,8 @@ generated quantities {
   }
 
   // prior predictive samples
-  real a_prior = normal_rng(2, 3);
-  real aspp_prior = normal_rng(0, 4);
+  real a_prior = normal_rng(1,3);
+  real aspp_prior = normal_rng(0, 6);
   real ayear_prior = normal_rng(0, 1);
   
   real bsp_prior = normal_rng(0, 0.7);

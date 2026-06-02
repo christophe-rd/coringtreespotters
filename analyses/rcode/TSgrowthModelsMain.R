@@ -31,7 +31,7 @@ source('mcmc_visualization_tools.R', local=util)
 # my function to extract parameters
 source('/Users/christophe_rouleau-desrochers/github/wildchrokie/analyses/rcode/tools.R')
 
-runmodels <- FALSE
+runmodels <- F
 runzscoredmodels <- FALSE
 runfulldata <- FALSE
 runmodelnoayear <- FALSE
@@ -85,11 +85,13 @@ temp$bin10 <- ave(temp$doy, temp$year, FUN = function(x) ceiling((x - min(x) + 1
 gdd_7day <- aggregate(gdddiff ~ year + bin10, data = temp, max)
 tsgddscale <- mean(gdd_7day$gdddiff)
 
+empts$pgsGDD5 <- empts$pgsGDD5 - 1500
 gddseq <- seq(min(empts$pgsGDD5), max(empts$pgsGDD5), length.out = lineplotseqlength)
 
 empts$loglength <- log(empts$lengthMM)
 
 # data list for gdd
+
 dgdd <- list(
   y = empts$loglength,
   N = nrow(empts),
@@ -101,7 +103,7 @@ dgdd <- list(
   Nyear = length(unique(empts$year_num)),
   treeid_species = treeid_spp_ordered$spp_num,
   Ntreeid_per_spp = as.integer(table(treeid_spp_ordered$spp_num)),
-  gdd = empts$pgsGDD5 / tsgddscale,
+  gdd = (empts$pgsGDD5) / tsgddscale,
   gddseq = gddseq,
   tsgddscale = tsgddscale,
   Ngddseq = length(gddseq)
@@ -179,7 +181,7 @@ if(runmodels){
 # Fit model GDD
 gddmodel <- stan_model("stan/TSmodelGrowthGDD.stan")
 fitgdd <- sampling(gddmodel, data = dgdd,
-                   warmup = 1000, iter=2000, chains=4)
+                   warmup = 500, iter=1000, chains=4)
 saveRDS(fitgdd, "output/stanOutput/fitGrowthGDD")
 
 diagnostics <- util$extract_hmc_diagnostics(fitgdd)
