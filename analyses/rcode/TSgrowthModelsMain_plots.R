@@ -20,7 +20,7 @@ if (length(grep("christophe_rouleau-desrochers", getwd())) > 0) {
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 source("rcode/TSgrowthModelsMain.R")
 
-makeplots <- T
+makeplots <- F
 runzscore <- F
 
 # acronym latbi
@@ -1182,8 +1182,6 @@ aspp_df <- f[, columns[grepl("aspp", columns) & !grepl("prior", columns)]]
 ayearmean <- f[, grepl("mean_ayear", columns)]
 aspp_df <- aspp_df + ayearmean
 colnames(aspp_df) <- 1:ncol(aspp_df)
-
-draws_spp <- split.default(fullinterceptspp, colnames(fullinterceptspp))
 
 aspp_df4 <- data.frame(
   species = names(aspp_df),
