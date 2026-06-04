@@ -75,12 +75,7 @@
 \newcommand{\Tame}{\textit{T. americana}}   
 
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error:\\\#\# ! object 'fullinterceptspp' not found}}\end{kframe}
-\end{knitrout}
 
 % <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 \section*{Research questions}
@@ -98,34 +93,42 @@
 \begin{enumerate}
 \item Summary basic information
   \begin{enumerate}
-  \item Coringtreespotters includes eleven with leaf phenology data spaning nine years (2016 to 2024) for a total of 326 leafout and 289 colored leaves observations, yielding 278 complete growing seasons (GS) for 49 individuals. 
-    \item GSL ranged from 
-  77 days ({\Afla} in 2018) to 
-  194 days ({\Asac} in 2021)
+  \item Coringtreespotters includes eleven with leaf phenology data spaning nine years (2016 to 2024) for a total of 
+  326 leafout and 
+  289 colored leaves observations, yielding 
+  278 complete growing seasons (GS) for 
+  49 individuals. 
+  
+  \item 
+  2017 was the coolest year
+  (21.53$^\circ$C), and   
+  2020 was the warmest
+  (23.07$^\circ$C)
+  
+  \item 2020 and 2022 had moderate droughts that ramped up to severe droughts in September. 2016 had a moderate drought starting in June, ramped up to severe in July, then to extreme in August and September. There were no droughts in the other years.
+  
+  \item GSL ranged from 
+  77 days ({\Afla} in 
+  2018) to 
+  194 days ({\Asac} in 
+  2021)
 
   \item GS thermal sum ranged from 
-  -451.2 GDD ({\Afla} in 2020) to 
-  1134.7 GDD, ({\Tame} in 2016)
+  1048.8 GDD ({\Afla} in 
+  2020) to 
+  2634.7 GDD, ({\Tame} in 
+  2016)
   
   \item The earliest leafout day of year was 
-  08-Apr 
-  (2021) and the latest, 
-  15-May 
-  (2021). The earliest colored leaves day of year was
-  15-Jul 
-  (2021) and the latest, 
-  06-Nov 
-  (2021) 
-  
-  \item Mean summer temperatures ranged from 
-  21.53$^\circ$C, in  
-  2017 to 
-  23.07$^\circ$C, in  
-  2020 and PDSI values ranged from 
-  -4.04, in  
-  2016 to 
-  4.02, in  
-  2019
+  08-Apr ({\Afla} in 
+  2021) and the latest, 
+  15-May ({\Cova} in 
+  2020). The earliest colored leaves day of year was
+  15-Jul ({\Afla} in 
+  2021---same individual with earliest leafout) and the latest, 
+  06-Nov ({\Tame} in
+  2016) 
+
 
 \end{enumerate}
 
@@ -235,32 +238,6 @@
 \end{figure}
   \end{enumerate}
 
-% Question 3 --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
-% \item Does tree growth increase with longer growing seasons and is it consistent across species and provenances?
-%   \begin{enumerate}
-%   
-%   \item {\Ball} grew the most, and was the most responsive to longer growing seasons
-%   
-%   \item {\Bpap} grew the least ($\alpha = $ 
-%   aspp_df2$mean[which(aspp_df2$spp_name %in% "B. papyrifera")], $UI_{90}$
-%   [aspp_df2$p5[which(aspp_df2$spp_name %in% "B. papyrifera")], 
-%   aspp_df2$p95[which(aspp_df2$spp_name %in% "B. papyrifera")]]) (Figure \ref{fig:tsmuplotatreeid}), but was the most responsive to longer growing seasons (Figure \ref{fig:tsmuplotbspp}a and b).
-%   
-%   \item {\Ainc} grew the most ($\alpha = $  
-%   aspp_df2$mean[which(aspp_df2$spp_name %in% "A. incana")], $UI_{90}$
-%   [aspp_df2$p5[which(aspp_df2$spp_name %in% "A. incana")], 
-%   aspp_df2$p95[which(aspp_df2$spp_name %in% "A. incana")]]) (Figure \ref{fig:tsmuplotatreeid}), but had contrasting responses to longer growing seasons (Figure \ref{fig:tsmuplotbspp}a and b).
-% 
-%   \item Growth did not change across any provenances (Figure \ref{fig:tsmuplotasite}) (Table \ref{tab:ts_asite_table}), but there was slightly more variation across sites ($\sigma = $
-%   sigma_df2$mean[which(sigma_df2$sigma %in% "sigma_asite")], $UI_{90}$
-%   [sigma_df2$p5[which(sigma_df2$sigma %in% "sigma_asite")], 
-%   sigma_df2$p95[which(sigma_df2$sigma %in% "sigma_asite")]) than across tree ids ($\sigma = $ 
-%   sigma_df2$mean[which(sigma_df2$sigma %in% "sigma_atreeid")], $UI_{90}$
-%   [sigma_df2$p5[which(sigma_df2$sigma %in% "sigma_atreeid")], 
-%   sigma_df2$p95[which(sigma_df2$sigma %in% "sigma_atreeid")]]
-% 
-%   \end{enumerate}
-
 
 % Question 4 --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 % \item How did growth change across years, and how did it relate to climate?
@@ -305,7 +282,7 @@
 
 % Table slope for Coringtreespotters
 % latex table generated in R 4.5.1 by xtable 1.8-4 package
-% Tue Jun  2 14:16:17 2026
+% Thu Jun  4 14:25:10 2026
 \begin{table}[ht]
 \centering
 \caption{Species level slope parameters (mean and 90\% uncertainty intervals, in square brackets) across the four different predictors for Coringtreespotters. GDD: growing degree days, GSL: growing season length, SOS: start of season and EOS: end of season.} 
