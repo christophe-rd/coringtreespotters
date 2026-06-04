@@ -20,7 +20,7 @@ if (length(grep("christophe_rouleau-desrochers", getwd())) > 0) {
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 source("rcode/TSgrowthModelsMain.R")
 
-makeplots <- T
+makeplots <- F
 runzscore <- F
 
 # acronym latbi
@@ -229,6 +229,9 @@ for (i in 1:length(unique(empts$treeid_num))) {
   subyvec[i] <- paste("atreeid", "[",i,"]", sep = "")  
 }
 
+# axis sizes
+mysizeaxis <- 1.1
+mysizelab <- 1.2
 
 if(makeplots) {
 
@@ -626,7 +629,6 @@ dev.off()
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
 ##### GSL: per Spp, facet, shaped by year #####
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
- 
 # jpeg output
 jpeg(filename = "figures/growthModelsMain/TSgrowthModelSlopesperSppFacetGSLyr.jpeg",
      width = 2400, height = 2400, res = 300)
@@ -1484,6 +1486,31 @@ for(sp in sppvecname) { # sp = "A. rubrum"
 }
 mtext("(b) Ring width (mm) observations per year and species",
       side = 3, outer = TRUE, adj = 0.5, font = 2, cex = 1, line = 0.2)
+dev.off()
+
+##### Box plot alone #####
+jpeg("figures/growthModelsMain/boxplotRingWidth.jpeg",
+     width = 2400, height = 2000, res = 300)
+
+par(mfrow = c(3, 4), mar = c(2, 5, 3, 1))
+for(sp in sppvecname) { # sp = "A. incana" 
+  dat <- empts[empts$latbi == sp,]
+  dat$year <- factor(dat$year, levels = sort(as.character(ayear_df2_ts_gdd$year_name)))
+  boxplot(lengthMM ~ year, data = dat,
+          # main = bquote(italic(.(sp))),
+          xlab = "", ylab = "Ring width (mm)",
+          col = adjustcolor(colsyr[levels(dat$year)], alpha.f = 0.5),
+          border = adjustcolor(colsyr[levels(dat$year)], alpha.f = 0.5),
+          medcol = "black",
+          whisklty = 1, staplewex = 0, medlty = 1, outpch = 16, outcex = 0.7, outcol = "black",
+          cex.axis = mysizeaxis, cex.lab = mysizelab)
+  mtext(bquote(italic(.(sp))), side = 3, line = 0.5, cex = 0.8)
+  stripchart(lengthMM ~ year, data = dat,
+             method = "jitter", jitter = 0.08,
+             pch = 16, cex = 0.7, col = "black",
+             vertical = TRUE, add = TRUE)
+}
+
 dev.off()
 
 ##### checks temporary for betall #####
