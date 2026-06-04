@@ -20,7 +20,7 @@ if (length(grep("christophe_rouleau-desrochers", getwd())) > 0) {
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 source("rcode/TSgrowthModelsMain.R")
 
-makeplots <- F
+makeplots <- T
 runzscore <- F
 
 # acronym latbi
@@ -1459,6 +1459,140 @@ dev.off()
 
 # By year
 jpeg(file = "figures/growthModelsMain/BallSlopesByYr.jpeg", 
+     width = 2400, height = 2400, res = 300)
+par(mfrow = c(1, 1))
+
+plot(emp_spp$pgsGDD5, emp_spp$loglength,
+     type = "n",
+     ylim = ylim_spp,
+     xlab = "Growing season growing degree days (GDD)",
+     ylab = "log(ring width)",
+     frame = FALSE,
+     main = bquote(italic(.(spp_name))))
+
+polygon(c(gddseq, rev(gddseq)),
+        c(y_low, rev(y_high)),
+        col = adjustcolor(line_col, alpha.f = 0.3),
+        border = NA)
+
+lines(gddseq, y_mean, col = line_col, lwd = 3)
+
+
+unique_years <- sort(unique(emp_spp$year))
+year_syms <- setNames(seq_along(unique_years), unique_years)
+
+for (j in seq_along(treeidspp)) {
+  tree_id_num <- treeidspp[j]
+  tree_idx    <- which(treeidvecnum == tree_id_num)
+  
+  y_post_tree <- t(y_post_array[, , tree_idx])
+  y_mean_tree <- apply(y_post_tree, 1, mean)
+  y_low_tree  <- apply(y_post_tree, 1, quantile, 0.25)
+  y_high_tree <- apply(y_post_tree, 1, quantile, 0.75)
+  
+  treeidtempsymbol <- emp_spp[emp_spp$treeid_num == tree_id_num, ]
+  
+  points(treeidtempsymbol$pgsGDD5, treeidtempsymbol$loglength,
+         pch = year_syms[as.character(treeidtempsymbol$year)],
+         col = "black")
+  
+  polygon(c(gddseq, rev(gddseq)),
+          c(y_low_tree, rev(y_high_tree)),
+          col = adjustcolor(line_col, alpha.f = 0.1),
+          border = NA)
+  
+  lines(gddseq, y_mean_tree, col = line_col, lwd = 1)
+}
+
+legend("topright",
+       legend = unique_years,
+       pch = year_syms,
+       col = "black",
+       bty = "n")
+
+dev.off() 
+
+
+
+##### checks temporary for BETNIG #####
+t <- subset(empts, latbi %in% "B. nigra")
+# plot(t$loglength ~ t$pgsGDD5)
+unique(empts$latbi)
+
+# Slopes with treeid
+
+jpeg(file = "figures/growthModelsMain/BnigSlopesById.jpeg", 
+     width = 2400, height = 2400, res = 300)
+par(mfrow = c(1, 1))
+
+spp_name <- "B. nigra"
+spp_num  <- 5
+
+emp_spp <- empts[empts$latbi == spp_name, ]
+
+# species-level posterior [Ngddseq, n_draws]
+y_post_spp <- t(spp_post_array[, , spp_num])
+
+y_mean <- apply(y_post_spp, 1, mean)
+y_low  <- apply(y_post_spp, 1, quantile, 0.25)
+y_high <- apply(y_post_spp, 1, quantile, 0.75)
+
+ylim_spp <- range(c(emp_spp$loglength, y_low, y_high), na.rm = TRUE)
+
+line_col <- tscolslatbi[spp_name]
+
+plot(emp_spp$pgsGDD5, emp_spp$loglength,
+     type = "n",
+     ylim = ylim_spp,
+     xlab = "Growing season growing degree days (GDD)",
+     ylab = "log(ring width)",
+     frame = FALSE,
+     main = bquote(italic(.(spp_name))))
+
+polygon(c(gddseq, rev(gddseq)),
+        c(y_low, rev(y_high)),
+        col = adjustcolor(line_col, alpha.f = 0.3),
+        border = NA)
+
+lines(gddseq, y_mean, col = line_col, lwd = 3)
+
+# add individual treeid variation
+treeidspp <- treeid_spp$treeid_num[which(treeid_spp$spp_num == spp_num)]
+
+for (j in seq_along(treeidspp)) { # j = 1
+  tree_id_num <- treeidspp[j]
+  tree_idx    <- which(treeidvecnum == tree_id_num)
+  
+  # slice this tree from y_post_array [Ngddseq, n_draws]
+  y_post_tree <- t(y_post_array[, , tree_idx])
+  
+  y_mean_tree <- apply(y_post_tree, 1, mean)
+  y_low_tree  <- apply(y_post_tree, 1, quantile, 0.25)
+  y_high_tree <- apply(y_post_tree, 1, quantile, 0.75)
+  
+  sym <- treeidsymbol[j]
+  
+  treeidtempsymbol <- emp_spp[emp_spp$treeid_num == tree_id_num, ]
+  
+  points(treeidtempsymbol$pgsGDD5, treeidtempsymbol$loglength,
+         pch = sym, col = "black")
+  
+  polygon(c(gddseq, rev(gddseq)),
+          c(y_low_tree, rev(y_high_tree)),
+          col = adjustcolor(line_col, alpha.f = 0.1),
+          border = NA)
+  
+  lines(gddseq, y_mean_tree, col = line_col, lwd = 1)
+}
+legend("topright",
+       legend = treeid_spp$id[which(treeid_spp$spp_num == spp_num)],
+       pch = treeidsymbol,
+       col = line_col,
+       bty = "n")
+dev.off()
+
+# By year
+jpeg(file = "figures/growthModelsMain/BnigSlopesByYr.jpeg", 
      width = 2400, height = 2400, res = 300)
 par(mfrow = c(1, 1))
 
