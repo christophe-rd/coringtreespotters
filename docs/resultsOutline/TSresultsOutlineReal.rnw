@@ -87,7 +87,7 @@ pgsGSLagg$pgsGSL <- round(pgsGSLagg$pgsGSL, 1)
   \item GS thermal sum ranged from 
   \Sexpr{round(min(empts$pgsGDD5),1)} GDD ({\Afla} in 
   \Sexpr{empts$year[which.min(empts$pgsGDD5)]}) to 
-  \Sexpr{round(max(empts$pgsGDD5),1)} GDD, ({\Tame} in 
+  \Sexpr{round(max(empts$pgsGDD5),1)} GDD ({\Tame} in 
   \Sexpr{empts$year[which.max(empts$pgsGDD5)]})
   
   \item The earliest leafout day of year was 
@@ -99,8 +99,11 @@ pgsGSLagg$pgsGSL <- round(pgsGSLagg$pgsGSL, 1)
   \Sexpr{empts$year[which.min(empts$coloredLeaves)]}---same individual with earliest leafout) and the latest, 
   \Sexpr{empts$clCal[which.max(empts$coloredLeaves)]} ({\Tame} in
   \Sexpr{empts$year[which.max(empts$coloredLeaves)]}) 
-
-
+  
+  \item Annual ring widths across years varied from 
+  \Sexpr{min(empts$lengthMM)} mm ({\Asac} in \Sexpr{empts$year[which.min(empts$lengthMM)]}) to 
+  \Sexpr{max(empts$lengthMM)} mm ({\Tame} in \Sexpr{empts$year[which.max(empts$lengthMM)]}) (Figure \ref{fig:tsboxplot}). 
+ 
 \end{enumerate}
 
 % Question 1 --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
@@ -150,20 +153,12 @@ pgsGSLagg$pgsGSL <- round(pgsGSLagg$pgsGSL, 1)
 \item How did tree growth change across years and tree ids?
   \begin{enumerate}
   
-  \item We did not find any clear effect of year on growth (Figure \ref{fig:tsmuplotayear}) and there is no clear differences of growth looking across species (Figure \ref{fig:tsxyGDD} and Figure \ref{fig:wcxyGSL})
+  \item We did not find any clear effect of year on growth (Figure \ref{fig:tsmuplotayear}) and there is no clear differences of growth looking across species (Figure \ref{fig:tsxyGDDyr} and Figure \ref{fig:tsxyGSLyr})
   
   \item Growth did not change across any provenances (Figure \ref{fig:wcmuplotasite}) (Table \ref{tab:wc_asite_table})
 
   \end{enumerate}
 \end{enumerate}
-
-
-% Coringtreespotters year mu plot
-\begin{figure}[!ht]
-\includegraphics[width=1\textwidth]{../../analyses/figures/growthModelsMain/TSayearBoxplot.jpeg}
-\caption{We show tree ring widths (mm) across years as model estimates for the year intercepts with the dots depicting the mean and the lines, the 50\% and 90\% uncertainty intervals (UI).}
-\label{fig:tsmuplotayear}
-\end{figure}
 
 
 % <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
@@ -212,18 +207,245 @@ print(tab,
       caption.placement = "top")
 @
 
-% XY facetted by species GDD
+<<Table GDD, results='asis', echo = FALSE>>=
+options(digits = 2)
+sigma_df2_GDD  <- read.csv("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/output/GM_GDDparam_sigma.csv")
+bspp_df2_GDD   <- read.csv("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/output/GM_GDDparam_bspp.csv")
+treeid_df2_GDD <- read.csv("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/output/GM_GDDparam_treeid.csv")
+aspp_df2_GDD   <- read.csv("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/output/GM_GDDparam_aspp.csv")
+ayear_df2_GDD  <- read.csv("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/output/GM_GDDparam_ayear.csv")
+
+bspp_df2_GDD$spp_name <- empts$latbi[match(bspp_df2_GDD$spp, empts$spp_num)]
+aspp_df2_GDD$spp_name <- empts$latbi[match(aspp_df2_GDD$spp, empts$spp_num)]
+ayear_df2_GDD$year_name <- empts$year[match(ayear_df2_GDD$year, empts$year_num)]
+
+sigma <- data.frame(
+  "Parameter" = c("$\\sigma_{\\alpha_{tree}}$",
+                  "$\\sigma_{y}$"),
+  "Estimate" = sprintf("%.2f [%.2f, %.2f]",
+                       sigma_df2_GDD$mean,
+                       sigma_df2_GDD$p5,
+                       sigma_df2_GDD$p95)
+)
+
+bspp <- data.frame(
+  "Parameter" = paste0("$\\beta_{spp_{", bspp_df2_GDD$spp_name, "}}$"),
+  "Estimate" = sprintf("%.2f [%.2f, %.2f]",
+                       bspp_df2_GDD$mean,
+                       bspp_df2_GDD$p5,
+                       bspp_df2_GDD$p95)
+)
+
+aspp <- data.frame(
+  "Parameter" = paste0("$\\alpha_{spp_{", aspp_df2_GDD$spp_name, "}}$"),
+  "Estimate" = sprintf("%.2f [%.2f, %.2f]",
+                       aspp_df2_GDD$mean,
+                       aspp_df2_GDD$p5,
+                       aspp_df2_GDD$p95)
+)
+
+ayear <- data.frame(
+  "Parameter" = paste0("$\\alpha_{year_{", ayear_df2_GDD$year_name, "}}$"),
+  "Estimate" = sprintf("%.2f [%.2f, %.2f]",
+                       ayear_df2_GDD$mean,
+                       ayear_df2_GDD$p5,
+                       ayear_df2_GDD$p95)
+)
+
+binded <- rbind(sigma, bspp, ayear, aspp)
+
+print(xtable(binded,
+             caption = "Posterior means and 90\\% uncertainty intervals for all model parameters, when using GDD as the predictor",
+             label = "tab:BAItab"),
+      include.rownames = FALSE, sanitize.text.function = identity, caption.placement = "top")
+@
+
+<<Table GSL, results='asis', echo = FALSE>>=
+options(digits = 2)
+sigma_df2_GSL  <- read.csv("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/output/GM_GSLparam_sigma.csv")
+bspp_df2_GSL   <- read.csv("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/output/GM_GSLparam_bspp.csv")
+treeid_df2_GSL <- read.csv("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/output/GM_GSLparam_treeid.csv")
+aspp_df2_GSL   <- read.csv("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/output/GM_GSLparam_aspp.csv")
+ayear_df2_GSL  <- read.csv("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/output/GM_GSLparam_ayear.csv")
+
+bspp_df2_GSL$spp_name <- empts$latbi[match(bspp_df2_GSL$spp, empts$spp_num)]
+aspp_df2_GSL$spp_name <- empts$latbi[match(aspp_df2_GSL$spp, empts$spp_num)]
+ayear_df2_GSL$year_name <- empts$year[match(ayear_df2_GSL$year, empts$year_num)]
+
+sigma <- data.frame(
+  "Parameter" = c("$\\sigma_{\\alpha_{tree}}$",
+                  "$\\sigma_{y}$"),
+  "Estimate" = sprintf("%.2f [%.2f, %.2f]",
+                       sigma_df2_GSL$mean,
+                       sigma_df2_GSL$p5,
+                       sigma_df2_GSL$p95)
+)
+bspp <- data.frame(
+  "Parameter" = paste0("$\\beta_{spp_{", bspp_df2_GSL$spp_name, "}}$"),
+  "Estimate" = sprintf("%.2f [%.2f, %.2f]",
+                       bspp_df2_GSL$mean,
+                       bspp_df2_GSL$p5,
+                       bspp_df2_GSL$p95)
+)
+aspp <- data.frame(
+  "Parameter" = paste0("$\\alpha_{spp_{", aspp_df2_GSL$spp_name, "}}$"),
+  "Estimate" = sprintf("%.2f [%.2f, %.2f]",
+                       aspp_df2_GSL$mean,
+                       aspp_df2_GSL$p5,
+                       aspp_df2_GSL$p95)
+)
+
+ayear <- data.frame(
+  "Parameter" = paste0("$\\alpha_{year_{", ayear_df2_GSL$year_name, "}}$"),
+  "Estimate" = sprintf("%.2f [%.2f, %.2f]",
+                       ayear_df2_GSL$mean,
+                       ayear_df2_GSL$p5,
+                       ayear_df2_GSL$p95)
+)
+binded <- rbind(sigma, bspp, ayear, aspp)
+print(xtable(binded,
+             caption = "Posterior means and 90\\% uncertainty intervals for all model parameters, when using GSL as the predictor",
+             label = "tab:BAItab_GSL"),
+      include.rownames = FALSE, sanitize.text.function = identity, caption.placement = "top")
+@
+
+<<Table SOS, results='asis', echo = FALSE>>=
+options(digits = 2)
+sigma_df2_SOS  <- read.csv("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/output/GM_SOSparam_sigma.csv")
+bspp_df2_SOS   <- read.csv("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/output/GM_SOSparam_bspp.csv")
+treeid_df2_SOS <- read.csv("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/output/GM_SOSparam_treeid.csv")
+aspp_df2_SOS   <- read.csv("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/output/GM_SOSparam_aspp.csv")
+ayear_df2_SOS  <- read.csv("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/output/GM_SOSparam_ayear.csv")
+
+bspp_df2_SOS$spp_name <- empts$latbi[match(bspp_df2_SOS$spp, empts$spp_num)]
+aspp_df2_SOS$spp_name <- empts$latbi[match(aspp_df2_SOS$spp, empts$spp_num)]
+ayear_df2_SOS$year_name <- empts$year[match(ayear_df2_SOS$year, empts$year_num)]
+sigma <- data.frame(
+  "Parameter" = c("$\\sigma_{\\alpha_{tree}}$",
+                  "$\\sigma_{y}$"),
+  "Estimate" = sprintf("%.2f [%.2f, %.2f]",
+                       sigma_df2_SOS$mean,
+                       sigma_df2_SOS$p5,
+                       sigma_df2_SOS$p95)
+)
+bspp <- data.frame(
+  "Parameter" = paste0("$\\beta_{spp_{", bspp_df2_SOS$spp_name, "}}$"),
+  "Estimate" = sprintf("%.2f [%.2f, %.2f]",
+                       bspp_df2_SOS$mean,
+                       bspp_df2_SOS$p5,
+                       bspp_df2_SOS$p95)
+)
+aspp <- data.frame(
+  "Parameter" = paste0("$\\alpha_{spp_{", aspp_df2_SOS$spp_name, "}}$"),
+  "Estimate" = sprintf("%.2f [%.2f, %.2f]",
+                       aspp_df2_SOS$mean,
+                       aspp_df2_SOS$p5,
+                       aspp_df2_SOS$p95)
+)
+
+ayear <- data.frame(
+  "Parameter" = paste0("$\\alpha_{year_{", ayear_df2_SOS$year_name, "}}$"),
+  "Estimate" = sprintf("%.2f [%.2f, %.2f]",
+                       ayear_df2_SOS$mean,
+                       ayear_df2_SOS$p5,
+                       ayear_df2_SOS$p95)
+)
+binded <- rbind(sigma, bspp, ayear, aspp)
+print(xtable(binded,
+             caption = "Posterior means and 90\\% uncertainty intervals for all model parameters, when using SOS as the predictor",
+             label = "tab:BAItab_SOS"),
+      include.rownames = FALSE, sanitize.text.function = identity, caption.placement = "top")
+@
+
+<<Table EOS, results='asis', echo = FALSE>>=
+options(digits = 2)
+sigma_df2_EOS  <- read.csv("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/output/GM_EOSparam_sigma.csv")
+bspp_df2_EOS   <- read.csv("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/output/GM_EOSparam_bspp.csv")
+treeid_df2_EOS <- read.csv("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/output/GM_EOSparam_treeid.csv")
+aspp_df2_EOS   <- read.csv("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/output/GM_EOSparam_aspp.csv")
+ayear_df2_EOS  <- read.csv("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/output/GM_EOSparam_ayear.csv")
+
+bspp_df2_EOS$spp_name <- empts$latbi[match(bspp_df2_EOS$spp, empts$spp_num)]
+aspp_df2_EOS$spp_name <- empts$latbi[match(aspp_df2_EOS$spp, empts$spp_num)]
+ayear_df2_EOS$year_name <- empts$year[match(ayear_df2_EOS$year, empts$year_num)]
+
+sigma <- data.frame(
+  "Parameter" = c("$\\sigma_{\\alpha_{tree}}$",
+                  "$\\sigma_{y}$"),
+  "Estimate" = sprintf("%.2f [%.2f, %.2f]",
+                       sigma_df2_EOS$mean,
+                       sigma_df2_EOS$p5,
+                       sigma_df2_EOS$p95)
+)
+bspp <- data.frame(
+  "Parameter" = paste0("$\\beta_{spp_{", bspp_df2_EOS$spp_name, "}}$"),
+  "Estimate" = sprintf("%.2f [%.2f, %.2f]",
+                       bspp_df2_EOS$mean,
+                       bspp_df2_EOS$p5,
+                       bspp_df2_EOS$p95)
+)
+aspp <- data.frame(
+  "Parameter" = paste0("$\\alpha_{spp_{", aspp_df2_EOS$spp_name, "}}$"),
+  "Estimate" = sprintf("%.2f [%.2f, %.2f]",
+                       aspp_df2_EOS$mean,
+                       aspp_df2_EOS$p5,
+                       aspp_df2_EOS$p95)
+)
+
+ayear <- data.frame(
+  "Parameter" = paste0("$\\alpha_{year_{", ayear_df2_EOS$year_name, "}}$"),
+  "Estimate" = sprintf("%.2f [%.2f, %.2f]",
+                       ayear_df2_EOS$mean,
+                       ayear_df2_EOS$p5,
+                       ayear_df2_EOS$p95)
+)
+binded <- rbind(sigma, bspp, ayear, aspp)
+print(xtable(binded,
+             caption = "Posterior means and 90\\% uncertainty intervals for all model parameters, when using EOS as the predictor",
+             label = "tab:BAItab_EOS"),
+      include.rownames = FALSE, sanitize.text.function = identity, caption.placement = "top")
+@
+
+% Coringtreespotters year mu plot
 \begin{figure}[!ht]
-\includegraphics[width=0.8\textwidth]{../../analyses/figures/growthModelsMain/TSgrowthModelSlopesperSppFacetGDD.jpeg}
-\caption{Ring width trends in response to thermal season (GDD). The plots are the reconstructed species estimates posterior distribution with error. The lines represent the mean of the posterior distribution and the shaded area, the 50\% UI. The dots are the empirical data shaped by treeids.}
-\label{fig:tsxyGDD}
+\includegraphics[width=1\textwidth]{../../analyses/figures/growthModelsMain/TSayearBoxplot.jpeg}
+\caption{Model estimates for the year intercepts with the dots depicting the mean and the lines, the 50\% and 90\% uncertainty intervals (UI) and (b) using box plots of the empirical data.}
+\label{fig:tsmuplotayear}
 \end{figure}
 
-% XY facetted by species GSL
+% Coringtreespotters boxplot
 \begin{figure}[!ht]
-\includegraphics[width=0.8\textwidth]{../../analyses/figures/growthModelsMain/TSgrowthModelSlopesperSppFacetGSL.jpeg}
+\includegraphics[width=1\textwidth]{../../analyses/figures/growthModelsMain/boxplotRingWidth.jpeg}
+\caption{Boxplot representing the empirical data of our ring widths (mm) facetted by species. The dots represent the raw data, the line the mean and the box the IQR.}
+\label{fig:tsboxplot}
+\end{figure}
+
+% XY facetted by species GDD shaped by tree id
+\begin{figure}[!ht]
+\includegraphics[width=0.8\textwidth]{../../analyses/figures/growthModelsMain/TSgrowthModelSlopesperSppFacetGDDtree.jpeg}
+\caption{Ring width trends in response to thermal season (GDD). The plots are the reconstructed species estimates posterior distribution with error. The lines represent the mean of the posterior distribution and the shaded area, the 50\% UI. The dots are the empirical data shaped by treeids.}
+\label{fig:tsxyGDDtree}
+\end{figure}
+
+% XY facetted by species GSL shaped by tree id
+\begin{figure}[!ht]
+\includegraphics[width=0.8\textwidth]{../../analyses/figures/growthModelsMain/TSgrowthModelSlopesperSppFacetGSLtree.jpeg}
 \caption{Ring width trends in response to calendar season (GSL). The plots are the reconstructed species estimates posterior distribution with error. The lines represent the mean of the posterior distribution and the shaded area, the 50\% UI. The dots are the empirical data shaped by treeids.}
-\label{fig:tsxyGSL}
+\label{fig:tsxyGSLtree}
+\end{figure}
+
+% XY facetted by species GDD shaped by year
+\begin{figure}[!ht]
+\includegraphics[width=0.8\textwidth]{../../analyses/figures/growthModelsMain/TSgrowthModelSlopesperSppFacetGDDyr.jpeg}
+\caption{Ring width trends in response to thermal season (GDD). The plots are the reconstructed species estimates posterior distribution with error. The lines represent the mean of the posterior distribution and the shaded area, the 50\% UI. The dots are the empirical data shaped by year.}
+\label{fig:tsxyGDDyr}
+\end{figure}
+
+% XY facetted by species GSL shaped by year
+\begin{figure}[!ht]
+\includegraphics[width=0.8\textwidth]{../../analyses/figures/growthModelsMain/TSgrowthModelSlopesperSppFacetGSLyr.jpeg}
+\caption{Ring width trends in response to calendar season (GSL). The plots are the reconstructed species estimates posterior distribution with error. The lines represent the mean of the posterior distribution and the shaded area, the 50\% UI. The dots are the empirical data shaped by year.}
+\label{fig:tsxyGSLyr}
 \end{figure}
 
 % Figure mu atreeid full

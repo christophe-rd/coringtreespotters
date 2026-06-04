@@ -116,7 +116,7 @@
   \item GS thermal sum ranged from 
   1048.8 GDD ({\Afla} in 
   2020) to 
-  2634.7 GDD, ({\Tame} in 
+  2634.7 GDD ({\Tame} in 
   2016)
   
   \item The earliest leafout day of year was 
@@ -128,8 +128,11 @@
   2021---same individual with earliest leafout) and the latest, 
   06-Nov ({\Tame} in
   2016) 
-
-
+  
+  \item Annual ring widths across years varied from 
+  0.43 mm ({\Asac} in 2019) to 
+  11.75 mm ({\Tame} in 2019) (Figure \ref{fig:tsboxplot}). 
+ 
 \end{enumerate}
 
 % Question 1 --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
@@ -179,20 +182,12 @@
 \item How did tree growth change across years and tree ids?
   \begin{enumerate}
   
-  \item We did not find any clear effect of year on growth (Figure \ref{fig:tsmuplotayear}) and there is no clear differences of growth looking across species (Figure \ref{fig:tsxyGDD} and Figure \ref{fig:wcxyGSL})
+  \item We did not find any clear effect of year on growth (Figure \ref{fig:tsmuplotayear}) and there is no clear differences of growth looking across species (Figure \ref{fig:tsxyGDDyr} and Figure \ref{fig:tsxyGSLyr})
   
   \item Growth did not change across any provenances (Figure \ref{fig:wcmuplotasite}) (Table \ref{tab:wc_asite_table})
 
   \end{enumerate}
 \end{enumerate}
-
-
-% Coringtreespotters year mu plot
-\begin{figure}[!ht]
-\includegraphics[width=1\textwidth]{../../analyses/figures/growthModelsMain/TSayearBoxplot.jpeg}
-\caption{We show tree ring widths (mm) across years as model estimates for the year intercepts with the dots depicting the mean and the lines, the 50\% and 90\% uncertainty intervals (UI).}
-\label{fig:tsmuplotayear}
-\end{figure}
 
 
 % <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
@@ -208,7 +203,7 @@
 
 % Table slope for Coringtreespotters
 % latex table generated in R 4.5.1 by xtable 1.8-4 package
-% Thu Jun  4 15:19:05 2026
+% Thu Jun  4 16:35:50 2026
 \begin{table}[ht]
 \centering
 \caption{Species level slope parameters (mean and 90\% uncertainty intervals, in square brackets) across the four different predictors for Coringtreespotters. GDD: growing degree days, GSL: growing season length, SOS: start of season and EOS: end of season.} 
@@ -233,18 +228,238 @@ A. rubrum & 0.00 [-0.18, 0.19] & 0.05 [-0.05, 0.15] & -0.05 [-0.28, 0.17] & 0.04
 \end{table}
 
 
-% XY facetted by species GDD
+% latex table generated in R 4.5.1 by xtable 1.8-4 package
+% Thu Jun  4 16:35:50 2026
+\begin{table}[ht]
+\centering
+\caption{Posterior means and 90\% uncertainty intervals for all model parameters, when using GDD as the predictor} 
+\label{tab:BAItab}
+\begin{tabular}{ll}
+  \hline
+Parameter & Estimate \\ 
+  \hline
+$\sigma_{\alpha_{tree}}$ & 0.55 [0.45, 0.67] \\ 
+  $\sigma_{y}$ & 0.31 [0.29, 0.34] \\ 
+  $\beta_{spp_{A. rubrum}}$ & 0.00 [-0.18, 0.19] \\ 
+  $\beta_{spp_{A. saccharum}}$ & 0.10 [-0.02, 0.21] \\ 
+  $\beta_{spp_{Ae. flava}}$ & 0.03 [-0.02, 0.07] \\ 
+  $\beta_{spp_{B. alleghaniensis}}$ & -0.23 [-0.36, -0.10] \\ 
+  $\beta_{spp_{B. nigra}}$ & 0.08 [-0.01, 0.17] \\ 
+  $\beta_{spp_{C. glabra}}$ & 0.06 [-0.07, 0.18] \\ 
+  $\beta_{spp_{C. ovata}}$ & -0.01 [-0.14, 0.12] \\ 
+  $\beta_{spp_{P. deltoides}}$ & 0.01 [-0.05, 0.08] \\ 
+  $\beta_{spp_{Q. alba}}$ & 0.07 [-0.18, 0.33] \\ 
+  $\beta_{spp_{Q. rubra}}$ & 0.09 [-0.08, 0.27] \\ 
+  $\beta_{spp_{T. americana}}$ & -0.02 [-0.09, 0.04] \\ 
+  $\alpha_{year_{2019}}$ & 0.08 [-0.50, 0.66] \\ 
+  $\alpha_{year_{2020}}$ & -0.06 [-0.64, 0.51] \\ 
+  $\alpha_{year_{2021}}$ & 0.00 [-0.58, 0.58] \\ 
+  $\alpha_{year_{2022}}$ & -0.06 [-0.62, 0.52] \\ 
+  $\alpha_{year_{2023}}$ & 0.20 [-0.38, 0.76] \\ 
+  $\alpha_{year_{2024}}$ & 0.08 [-0.51, 0.66] \\ 
+  $\alpha_{year_{2016}}$ & -0.22 [-0.80, 0.36] \\ 
+  $\alpha_{year_{2017}}$ & -0.04 [-0.63, 0.52] \\ 
+  $\alpha_{year_{2018}}$ & 0.03 [-0.56, 0.59] \\ 
+  $\alpha_{spp_{A. rubrum}}$ & -0.01 [-2.54, 2.74] \\ 
+  $\alpha_{spp_{A. saccharum}}$ & -0.04 [-2.52, 2.62] \\ 
+  $\alpha_{spp_{Ae. flava}}$ & -0.20 [-2.67, 2.45] \\ 
+  $\alpha_{spp_{B. alleghaniensis}}$ & 0.45 [-2.04, 3.08] \\ 
+  $\alpha_{spp_{B. nigra}}$ & 0.01 [-2.47, 2.72] \\ 
+  $\alpha_{spp_{C. glabra}}$ & -0.38 [-2.85, 2.27] \\ 
+  $\alpha_{spp_{C. ovata}}$ & -0.36 [-2.79, 2.31] \\ 
+  $\alpha_{spp_{P. deltoides}}$ & -0.21 [-2.68, 2.48] \\ 
+  $\alpha_{spp_{Q. alba}}$ & -0.20 [-2.90, 2.58] \\ 
+  $\alpha_{spp_{Q. rubra}}$ & -0.26 [-2.84, 2.48] \\ 
+  $\alpha_{spp_{T. americana}}$ & 0.16 [-2.25, 2.80] \\ 
+   \hline
+\end{tabular}
+\end{table}
+
+
+% latex table generated in R 4.5.1 by xtable 1.8-4 package
+% Thu Jun  4 16:35:50 2026
+\begin{table}[ht]
+\centering
+\caption{Posterior means and 90\% uncertainty intervals for all model parameters, when using GSL as the predictor} 
+\label{tab:BAItab_GSL}
+\begin{tabular}{ll}
+  \hline
+Parameter & Estimate \\ 
+  \hline
+$\sigma_{\alpha_{tree}}$ & 0.55 [0.45, 0.67] \\ 
+  $\sigma_{y}$ & 0.32 [0.29, 0.34] \\ 
+  $\beta_{spp_{A. rubrum}}$ & 0.05 [-0.05, 0.15] \\ 
+  $\beta_{spp_{A. saccharum}}$ & 0.00 [-0.04, 0.05] \\ 
+  $\beta_{spp_{Ae. flava}}$ & 0.02 [-0.01, 0.05] \\ 
+  $\beta_{spp_{B. alleghaniensis}}$ & -0.05 [-0.12, 0.02] \\ 
+  $\beta_{spp_{B. nigra}}$ & 0.03 [-0.02, 0.07] \\ 
+  $\beta_{spp_{C. glabra}}$ & 0.03 [-0.03, 0.08] \\ 
+  $\beta_{spp_{C. ovata}}$ & -0.01 [-0.08, 0.05] \\ 
+  $\beta_{spp_{P. deltoides}}$ & 0.02 [-0.03, 0.06] \\ 
+  $\beta_{spp_{Q. alba}}$ & 0.03 [-0.05, 0.12] \\ 
+  $\beta_{spp_{Q. rubra}}$ & 0.03 [-0.08, 0.14] \\ 
+  $\beta_{spp_{T. americana}}$ & -0.02 [-0.05, 0.01] \\ 
+  $\alpha_{year_{2019}}$ & 0.06 [-0.51, 0.62] \\ 
+  $\alpha_{year_{2020}}$ & -0.07 [-0.64, 0.49] \\ 
+  $\alpha_{year_{2021}}$ & -0.00 [-0.57, 0.55] \\ 
+  $\alpha_{year_{2022}}$ & -0.08 [-0.65, 0.49] \\ 
+  $\alpha_{year_{2023}}$ & 0.18 [-0.39, 0.76] \\ 
+  $\alpha_{year_{2024}}$ & 0.08 [-0.51, 0.65] \\ 
+  $\alpha_{year_{2016}}$ & -0.22 [-0.80, 0.34] \\ 
+  $\alpha_{year_{2017}}$ & -0.06 [-0.62, 0.51] \\ 
+  $\alpha_{year_{2018}}$ & 0.03 [-0.54, 0.58] \\ 
+  $\alpha_{spp_{A. rubrum}}$ & -0.98 [-4.23, 2.23] \\ 
+  $\alpha_{spp_{A. saccharum}}$ & 0.43 [-2.48, 3.32] \\ 
+  $\alpha_{spp_{Ae. flava}}$ & -0.45 [-3.23, 2.33] \\ 
+  $\alpha_{spp_{B. alleghaniensis}}$ & 0.61 [-2.36, 3.54] \\ 
+  $\alpha_{spp_{B. nigra}}$ & -0.11 [-2.95, 2.64] \\ 
+  $\alpha_{spp_{C. glabra}}$ & -0.62 [-3.53, 2.15] \\ 
+  $\alpha_{spp_{C. ovata}}$ & -0.07 [-2.94, 2.90] \\ 
+  $\alpha_{spp_{P. deltoides}}$ & -0.38 [-3.19, 2.40] \\ 
+  $\alpha_{spp_{Q. alba}}$ & -0.54 [-3.72, 2.59] \\ 
+  $\alpha_{spp_{Q. rubra}}$ & -0.44 [-3.96, 3.07] \\ 
+  $\alpha_{spp_{T. americana}}$ & 0.60 [-2.16, 3.32] \\ 
+   \hline
+\end{tabular}
+\end{table}
+
+
+% latex table generated in R 4.5.1 by xtable 1.8-4 package
+% Thu Jun  4 16:35:50 2026
+\begin{table}[ht]
+\centering
+\caption{Posterior means and 90\% uncertainty intervals for all model parameters, when using SOS as the predictor} 
+\label{tab:BAItab_SOS}
+\begin{tabular}{ll}
+  \hline
+Parameter & Estimate \\ 
+  \hline
+$\sigma_{\alpha_{tree}}$ & 0.54 [0.44, 0.66] \\ 
+  $\sigma_{y}$ & 0.32 [0.29, 0.34] \\ 
+  $\beta_{spp_{A. rubrum}}$ & -0.05 [-0.28, 0.17] \\ 
+  $\beta_{spp_{A. saccharum}}$ & 0.08 [-0.02, 0.17] \\ 
+  $\beta_{spp_{Ae. flava}}$ & -0.04 [-0.21, 0.13] \\ 
+  $\beta_{spp_{B. alleghaniensis}}$ & -0.07 [-0.23, 0.07] \\ 
+  $\beta_{spp_{B. nigra}}$ & 0.03 [-0.10, 0.17] \\ 
+  $\beta_{spp_{C. glabra}}$ & 0.08 [-0.08, 0.23] \\ 
+  $\beta_{spp_{C. ovata}}$ & 0.10 [-0.03, 0.24] \\ 
+  $\beta_{spp_{P. deltoides}}$ & 0.07 [-0.08, 0.22] \\ 
+  $\beta_{spp_{Q. alba}}$ & -0.00 [-0.18, 0.17] \\ 
+  $\beta_{spp_{Q. rubra}}$ & 0.09 [-0.10, 0.28] \\ 
+  $\beta_{spp_{T. americana}}$ & 0.15 [0.03, 0.27] \\ 
+  $\alpha_{year_{2019}}$ & 0.07 [-0.48, 0.61] \\ 
+  $\alpha_{year_{2020}}$ & -0.13 [-0.68, 0.42] \\ 
+  $\alpha_{year_{2021}}$ & 0.01 [-0.55, 0.54] \\ 
+  $\alpha_{year_{2022}}$ & -0.08 [-0.64, 0.48] \\ 
+  $\alpha_{year_{2023}}$ & 0.20 [-0.36, 0.73] \\ 
+  $\alpha_{year_{2024}}$ & 0.07 [-0.49, 0.62] \\ 
+  $\alpha_{year_{2016}}$ & -0.26 [-0.81, 0.28] \\ 
+  $\alpha_{year_{2017}}$ & -0.00 [-0.55, 0.54] \\ 
+  $\alpha_{year_{2018}}$ & -0.01 [-0.55, 0.53] \\ 
+  $\alpha_{spp_{A. rubrum}}$ & 1.27 [-3.08, 5.74] \\ 
+  $\alpha_{spp_{A. saccharum}}$ & -0.54 [-3.56, 2.49] \\ 
+  $\alpha_{spp_{Ae. flava}}$ & 0.94 [-2.80, 4.58] \\ 
+  $\alpha_{spp_{B. alleghaniensis}}$ & 1.14 [-2.38, 4.73] \\ 
+  $\alpha_{spp_{B. nigra}}$ & 0.17 [-3.24, 3.55] \\ 
+  $\alpha_{spp_{C. glabra}}$ & -1.13 [-4.68, 2.41] \\ 
+  $\alpha_{spp_{C. ovata}}$ & -1.92 [-5.26, 1.38] \\ 
+  $\alpha_{spp_{P. deltoides}}$ & -1.05 [-4.66, 2.57] \\ 
+  $\alpha_{spp_{Q. alba}}$ & 0.45 [-3.46, 4.32] \\ 
+  $\alpha_{spp_{Q. rubra}}$ & -1.07 [-5.06, 2.96] \\ 
+  $\alpha_{spp_{T. americana}}$ & -2.02 [-5.13, 1.25] \\ 
+   \hline
+\end{tabular}
+\end{table}
+
+
+% latex table generated in R 4.5.1 by xtable 1.8-4 package
+% Thu Jun  4 16:35:50 2026
+\begin{table}[ht]
+\centering
+\caption{Posterior means and 90\% uncertainty intervals for all model parameters, when using EOS as the predictor} 
+\label{tab:BAItab_EOS}
+\begin{tabular}{ll}
+  \hline
+Parameter & Estimate \\ 
+  \hline
+$\sigma_{\alpha_{tree}}$ & 0.55 [0.45, 0.67] \\ 
+  $\sigma_{y}$ & 0.32 [0.29, 0.34] \\ 
+  $\beta_{spp_{A. rubrum}}$ & 0.04 [-0.06, 0.15] \\ 
+  $\beta_{spp_{A. saccharum}}$ & 0.03 [-0.03, 0.09] \\ 
+  $\beta_{spp_{Ae. flava}}$ & 0.02 [-0.01, 0.05] \\ 
+  $\beta_{spp_{B. alleghaniensis}}$ & -0.09 [-0.17, -0.01] \\ 
+  $\beta_{spp_{B. nigra}}$ & 0.03 [-0.02, 0.08] \\ 
+  $\beta_{spp_{C. glabra}}$ & 0.04 [-0.02, 0.09] \\ 
+  $\beta_{spp_{C. ovata}}$ & 0.01 [-0.07, 0.08] \\ 
+  $\beta_{spp_{P. deltoides}}$ & 0.02 [-0.02, 0.06] \\ 
+  $\beta_{spp_{Q. alba}}$ & 0.05 [-0.07, 0.16] \\ 
+  $\beta_{spp_{Q. rubra}}$ & 0.05 [-0.06, 0.15] \\ 
+  $\beta_{spp_{T. americana}}$ & -0.01 [-0.05, 0.02] \\ 
+  $\alpha_{year_{2019}}$ & 0.08 [-0.48, 0.65] \\ 
+  $\alpha_{year_{2020}}$ & -0.05 [-0.61, 0.53] \\ 
+  $\alpha_{year_{2021}}$ & 0.01 [-0.55, 0.58] \\ 
+  $\alpha_{year_{2022}}$ & -0.06 [-0.61, 0.51] \\ 
+  $\alpha_{year_{2023}}$ & 0.19 [-0.37, 0.77] \\ 
+  $\alpha_{year_{2024}}$ & 0.10 [-0.48, 0.68] \\ 
+  $\alpha_{year_{2016}}$ & -0.23 [-0.79, 0.35] \\ 
+  $\alpha_{year_{2017}}$ & -0.05 [-0.61, 0.53] \\ 
+  $\alpha_{year_{2018}}$ & 0.04 [-0.52, 0.60] \\ 
+  $\alpha_{spp_{A. rubrum}}$ & -1.03 [-5.61, 3.52] \\ 
+  $\alpha_{spp_{A. saccharum}}$ & -0.29 [-3.73, 3.20] \\ 
+  $\alpha_{spp_{Ae. flava}}$ & -0.40 [-3.31, 2.42] \\ 
+  $\alpha_{spp_{B. alleghaniensis}}$ & 3.38 [-0.43, 7.10] \\ 
+  $\alpha_{spp_{B. nigra}}$ & -0.41 [-3.55, 2.73] \\ 
+  $\alpha_{spp_{C. glabra}}$ & -1.09 [-4.52, 2.22] \\ 
+  $\alpha_{spp_{C. ovata}}$ & -0.24 [-4.01, 3.46] \\ 
+  $\alpha_{spp_{P. deltoides}}$ & -0.38 [-3.31, 2.55] \\ 
+  $\alpha_{spp_{Q. alba}}$ & -1.30 [-6.35, 3.71] \\ 
+  $\alpha_{spp_{Q. rubra}}$ & -1.32 [-6.09, 3.36] \\ 
+  $\alpha_{spp_{T. americana}}$ & 1.01 [-1.96, 3.85] \\ 
+   \hline
+\end{tabular}
+\end{table}
+
+
+% Coringtreespotters year mu plot
 \begin{figure}[!ht]
-\includegraphics[width=0.8\textwidth]{../../analyses/figures/growthModelsMain/TSgrowthModelSlopesperSppFacetGDD.jpeg}
-\caption{Ring width trends in response to thermal season (GDD). The plots are the reconstructed species estimates posterior distribution with error. The lines represent the mean of the posterior distribution and the shaded area, the 50\% UI. The dots are the empirical data shaped by treeids.}
-\label{fig:tsxyGDD}
+\includegraphics[width=1\textwidth]{../../analyses/figures/growthModelsMain/TSayearBoxplot.jpeg}
+\caption{Model estimates for the year intercepts with the dots depicting the mean and the lines, the 50\% and 90\% uncertainty intervals (UI) and (b) using box plots of the empirical data.}
+\label{fig:tsmuplotayear}
 \end{figure}
 
-% XY facetted by species GSL
+% Coringtreespotters boxplot
 \begin{figure}[!ht]
-\includegraphics[width=0.8\textwidth]{../../analyses/figures/growthModelsMain/TSgrowthModelSlopesperSppFacetGSL.jpeg}
+\includegraphics[width=1\textwidth]{../../analyses/figures/growthModelsMain/boxplotRingWidth.jpeg}
+\caption{Boxplot representing the empirical data of our ring widths (mm) facetted by species. The dots represent the raw data, the line the mean and the box the IQR.}
+\label{fig:tsboxplot}
+\end{figure}
+
+% XY facetted by species GDD shaped by tree id
+\begin{figure}[!ht]
+\includegraphics[width=0.8\textwidth]{../../analyses/figures/growthModelsMain/TSgrowthModelSlopesperSppFacetGDDtree.jpeg}
+\caption{Ring width trends in response to thermal season (GDD). The plots are the reconstructed species estimates posterior distribution with error. The lines represent the mean of the posterior distribution and the shaded area, the 50\% UI. The dots are the empirical data shaped by treeids.}
+\label{fig:tsxyGDDtree}
+\end{figure}
+
+% XY facetted by species GSL shaped by tree id
+\begin{figure}[!ht]
+\includegraphics[width=0.8\textwidth]{../../analyses/figures/growthModelsMain/TSgrowthModelSlopesperSppFacetGSLtree.jpeg}
 \caption{Ring width trends in response to calendar season (GSL). The plots are the reconstructed species estimates posterior distribution with error. The lines represent the mean of the posterior distribution and the shaded area, the 50\% UI. The dots are the empirical data shaped by treeids.}
-\label{fig:tsxyGSL}
+\label{fig:tsxyGSLtree}
+\end{figure}
+
+% XY facetted by species GDD shaped by year
+\begin{figure}[!ht]
+\includegraphics[width=0.8\textwidth]{../../analyses/figures/growthModelsMain/TSgrowthModelSlopesperSppFacetGDDyr.jpeg}
+\caption{Ring width trends in response to thermal season (GDD). The plots are the reconstructed species estimates posterior distribution with error. The lines represent the mean of the posterior distribution and the shaded area, the 50\% UI. The dots are the empirical data shaped by year.}
+\label{fig:tsxyGDDyr}
+\end{figure}
+
+% XY facetted by species GSL shaped by year
+\begin{figure}[!ht]
+\includegraphics[width=0.8\textwidth]{../../analyses/figures/growthModelsMain/TSgrowthModelSlopesperSppFacetGSLyr.jpeg}
+\caption{Ring width trends in response to calendar season (GSL). The plots are the reconstructed species estimates posterior distribution with error. The lines represent the mean of the posterior distribution and the shaded area, the 50\% UI. The dots are the empirical data shaped by year.}
+\label{fig:tsxyGSLyr}
 \end{figure}
 
 % Figure mu atreeid full
