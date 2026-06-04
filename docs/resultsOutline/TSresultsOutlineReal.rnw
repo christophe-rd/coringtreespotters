@@ -109,95 +109,52 @@ pgsGSLagg$pgsGSL <- round(pgsGSLagg$pgsGSL, 1)
 
   \item No clear trend of growing season length effect across our eleven species and season predictors.
 
-  \item Longer thermal season decreased growth only for {\Ball} ($\beta = $
+  \item Longer thermal season increased growth for no species and decreased growth for {\Ball} ($\beta = $
   \Sexpr{bspp_df2_ts_gdd$mean[which(bspp_df2_ts_gdd$spp_name %in% "B. alleghaniensis")]}, $UI_{90}$
   [\Sexpr{bspp_df2_ts_gdd$p5[which(bspp_df2_ts_gdd$spp_name %in% "B. alleghaniensis")]},
   \Sexpr{bspp_df2_ts_gdd$p95[which(bspp_df2_ts_gdd$spp_name %in% "B. alleghaniensis")]}])
-  ) (Figure \ref{fig:tsmuplotbspp}a and e) (Table \ref{tab:ts_slope_table}), and no species responded to longer calendar season.
+  ) (Figure \ref{fig:tsmuplotbspp}a and e) (Table \ref{tab:ts_slope_table}).
   
+  \item No species responded to longer calendar season (Figure \ref{fig:tsmuplotbspp}b and f) (Table \ref{tab:ts_slope_table}).
+
   \end{enumerate}
   
 % Question 2 --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 \item Did a later start and end of season increase growth?
   \begin{enumerate}
-  \item A later start of season increased growth for {\Tame} ($\beta = $
+  \item An earlier start of season increased growth for no species and decreased growth for {\Tame} ($\beta = $
   \Sexpr{bspp_df2_ts_sos$mean[which(bspp_df2_ts_sos$spp_name %in% "T. americana")]}, $UI_{90}$
   [\Sexpr{bspp_df2_ts_sos$p5[which(bspp_df2_ts_sos$spp_name %in% "T. americana")]},
-  \Sexpr{bspp_df2_ts_sos$p95[which(bspp_df2_ts_sos$spp_name %in% "T. americana")]}]), but \Asac: $\beta = $
-  \Sexpr{bspp_df2_ts_sos$mean[which(bspp_df2_ts_sos$spp_name %in% "A. saccharum")]}, $UI_{90}$
-  [\Sexpr{bspp_df2_ts_sos$p5[which(bspp_df2_ts_sos$spp_name %in% "A. saccharum")]},
-  \Sexpr{bspp_df2_ts_sos$p95[which(bspp_df2_ts_sos$spp_name %in% "A. saccharum")]}], \Bnig: $\beta = $
-  \Sexpr{bspp_df2_ts_sos$mean[which(bspp_df2_ts_sos$spp_name %in% "B. nigra")]},   $UI_{90}$
-  [\Sexpr{bspp_df2_ts_sos$p5[which(bspp_df2_ts_sos$spp_name %in% "B. nigra")]},
-  \Sexpr{bspp_df2_ts_sos$p95[which(bspp_df2_ts_sos$spp_name %in% "B. nigra")]}], \Cgla: $\beta = $
-  \Sexpr{bspp_df2_ts_sos$mean[which(bspp_df2_ts_sos$spp_name %in% "C. glabra")]}, $UI_{90}$
-  [\Sexpr{bspp_df2_ts_sos$p5[which(bspp_df2_ts_sos$spp_name %in% "C. glabra")]},
-  \Sexpr{bspp_df2_ts_sos$p95[which(bspp_df2_ts_sos$spp_name %in% "C. glabra")]}], \Cova: $\beta = $
-  \Sexpr{bspp_df2_ts_sos$mean[which(bspp_df2_ts_sos$spp_name %in% "C. ovata")]}, $UI_{90}$
-  [\Sexpr{bspp_df2_ts_sos$p5[which(bspp_df2_ts_sos$spp_name %in% "C. ovata")]},
-  \Sexpr{bspp_df2_ts_sos$p95[which(bspp_df2_ts_sos$spp_name %in% "C. ovata")]}], \Pdel: $\beta = $
-  \Sexpr{bspp_df2_ts_sos$mean[which(bspp_df2_ts_sos$spp_name %in% "P. deltoides")]}, $UI_{90}$
-  [\Sexpr{bspp_df2_ts_sos$p5[which(bspp_df2_ts_sos$spp_name %in% "P. deltoides")]},
-  \Sexpr{bspp_df2_ts_sos$p95[which(bspp_df2_ts_sos$spp_name %in% "P. deltoides")]}], \Qrub: $\beta = $
-  \Sexpr{bspp_df2_ts_sos$mean[which(bspp_df2_ts_sos$spp_name %in% "Q. rubra")]}, $UI_{90}$
-  [\Sexpr{bspp_df2_ts_sos$p5[which(bspp_df2_ts_sos$spp_name %in% "Q. rubra")]},
-  \Sexpr{bspp_df2_ts_sos$p95[which(bspp_df2_ts_sos$spp_name %in% "Q. rubra")]}] trended in the same direction, and \Ball ($\beta = $
-  \Sexpr{bspp_df2_ts_sos$mean[which(bspp_df2_ts_sos$spp_name %in% "B. alleghaniensis")]},   $UI_{90}$
-  [\Sexpr{bspp_df2_ts_sos$p5[which(bspp_df2_ts_sos$spp_name %in% "B. alleghaniensis")]},
-  \Sexpr{bspp_df2_ts_sos$p95[which(bspp_df2_ts_sos$spp_name %in% "B. alleghaniensis")]}]) trended in the opposite direction
-  (Figure \ref{fig:tsmuplotbspp}c and g) (Table \ref{tab:ts_slope_table}). 
+  \Sexpr{bspp_df2_ts_sos$p95[which(bspp_df2_ts_sos$spp_name %in% "T. americana")]}]) (Figure \ref{fig:tsmuplotbspp}c and g) (Table \ref{tab:ts_slope_table}). 
 
-\item A later end of season decreased growth for {\Ball} ($\beta = $
+\item A later end of season increased growth for no species and decreased growth for {\Ball} ($\beta = $
 \Sexpr{bspp_df2_ts_eos$mean[which(bspp_df2_ts_eos$spp_name %in% "B. alleghaniensis")]}, $UI_{90}$[\Sexpr{bspp_df2_ts_eos$p5[which(bspp_df2_ts_eos$spp_name %in% "B. alleghaniensis")]},
-\Sexpr{bspp_df2_ts_eos$p95[which(bspp_df2_ts_eos$spp_name %in% "B. alleghaniensis")]}]), but \Tame ($\beta = $
-\Sexpr{bspp_df2_ts_eos$mean[which(bspp_df2_ts_eos$spp_name %in% "T. americana")]}, $UI_{90}$[\Sexpr{bspp_df2_ts_eos$p5[which(bspp_df2_ts_eos$spp_name %in% "T. americana")]},
-\Sexpr{bspp_df2_ts_eos$p95[which(bspp_df2_ts_eos$spp_name %in% "T. americana")]}]) trended towards the same direction and {\Asac} ($\beta = $
-\Sexpr{bspp_df2_ts_eos$mean[which(bspp_df2_ts_eos$spp_name %in% "A. saccharum")]}, $UI_{90}$
-[\Sexpr{bspp_df2_ts_eos$p5[which(bspp_df2_ts_eos$spp_name %in% "A. saccharum")]},
-\Sexpr{bspp_df2_ts_eos$p95[which(bspp_df2_ts_eos$spp_name %in% "A. saccharum")]}], {\Bnig} ($\beta = $
-\Sexpr{bspp_df2_ts_eos$mean[which(bspp_df2_ts_eos$spp_name %in% "B. nigra")]}, $UI_{90}$[\Sexpr{bspp_df2_ts_eos$p5[which(bspp_df2_ts_eos$spp_name %in% "B. nigra")]},
-\Sexpr{bspp_df2_ts_eos$p95[which(bspp_df2_ts_eos$spp_name %in% "B. nigra")]}]), and \Cgla: $\beta = $
-\Sexpr{bspp_df2_ts_eos$mean[which(bspp_df2_ts_eos$spp_name %in% "C. glabra")]}, $UI_{90}$
-[\Sexpr{bspp_df2_ts_eos$p5[which(bspp_df2_ts_eos$spp_name %in% "C. glabra")]},
-\Sexpr{bspp_df2_ts_eos$p95[which(bspp_df2_ts_eos$spp_name %in% "C. glabra")]}] trended towards an increase in growth
+\Sexpr{bspp_df2_ts_eos$p95[which(bspp_df2_ts_eos$spp_name %in% "B. alleghaniensis")]}])
 (Figure \ref{fig:tsmuplotbspp}d and h) (Table \ref{tab:ts_slope_table}). 
 
-% The estimates were unchanged when using the full ($n =$\Sexpr{nrow(empfulleosts)}) or restricted datasets ($n=$\Sexpr{nrow(empts)}) (Figure \ref{fig:tsSOSEOScomparison}b).
+\item The estimates were unchanged when using the full or restricted datasets (SOS $n =$
+\Sexpr{nrow(empfullsosts)} and EOS $n =$
+\Sexpr{nrow(empfulleosts)} vs $n=$
+\Sexpr{nrow(empts)} Figure \ref{fig:tsSOSEOScomparison}b), or when using budburst instead of leafout as the start of the growing season (Figure \ref{fig:buburstVSleafoutTS}c).
 
-% \item The estimates were unchanged when using the full or restricted datasets ($n =$
-% \Sexpr{nrow(empfullsosts)} vs $n=$
-% \Sexpr{nrow(empts)} Figure \ref{fig:tsSOSEOScomparison}b), or when using budburst instead of leafout as the start of the growing season (Figure \ref{fig:buburstVSleafoutTS}c).
+\end{enumerate}
 
 % Figure mu across all species and climate predictors
 \begin{figure}[!ht]
 \includegraphics[width=0.8\textwidth]{../../analyses/figures/growthModelsMain/TSmuALLbsppWlines.jpeg}
-\caption{Model slope estimates representing ring width change as a function of four different predictors across four species. GDD represent the accumulated growing degree days between leafout and coloredLeaves and the models estimates shows ring width change per 7 average spring days GDD (\Sexpr{tsgddscale}) (a). GSL is the number of days between leafout and coloredLeaves (b). SOS represent the start of season, which is leafout (c) and EOS, the end of season through coloredLeaves (d). All predictors were fit using the same model and number of observations, with only the independent variable changing. The dots represent the mean of each species and the lines, the 50\% and 90\% uncertainty intervals (UI). 
-% {\Ainc} and {\Bpap} grew more with longer calendar seasons, but only {\Ainc} grew less with later leafout and had no effect in response to coloredLeaves. Interestingly, {\Bpap} did not grow more with earlier leafout, but did with a later coloredLeaves and longer calendar season. {\Ball} and {\Bpop} did not grow more with longer calendar seasons, but {\Ball} grew more with a later leafout and coloredLeaves whereas {\Bpop} only grew more with a later coloredLeaves.
-}
+\caption{Model slope estimates representing ring width change as a function of four different predictors across four species. GDD represent the accumulated growing degree days between leafout and coloredLeaves and the models estimates shows ring width change per 7 average spring days GDD (\Sexpr{tsgddscale}) (a). GSL is the number of days between leafout and coloredLeaves (b). SOS represent the start of season, which is leafout (c) and EOS, the end of season through coloredLeaves (d). All predictors were fit using the same model and number of observations, with only the independent variable changing. The dots represent the mean of each species and the lines, the 50\% and 90\% uncertainty intervals (UI). }
 \label{fig:tsmuplotbspp}
 \end{figure}
+
+% Question 3 --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+\item How did tree growth change across years and tree ids?
+  \begin{enumerate}
+  
+  \item We did not find any clear effect of year on growth (Figure \ref{fig:tsmuplotayear}) and there is no clear differences of growth looking across species (Figure \ref{fig:tsxyGDD} and Figure \ref{fig:wcxyGSL})
+  
+  \item Growth did not change across any provenances (Figure \ref{fig:wcmuplotasite}) (Table \ref{tab:wc_asite_table})
+
   \end{enumerate}
-
-
-% Question 4 --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
-% \item How did growth change across years, and how did it relate to climate?
-%   \begin{enumerate}
-%   
-%   \item Annual ring widths across years varied from 
-%   \Sexpr{min(empts$lengthMM)} mm ({\Ball} in \Sexpr{empts$year[which.min(empts$lengthMM)]}) to 
-%   \Sexpr{max(empts$lengthMM)} mm ({\Bpop} in \Sexpr{empts$year[which.max(empts$lengthMM)]}) (Figure \ref{fig:tsmuplotayear}). 
-%  
-%   \item Growth was highest in \Sexpr{ayear_df2$year_name[which.max(ayear_df2$mean)]} 
-%   (\Sexpr{ayear_df2$mean[which.max(ayear_df2$mean)]}, $UI_{90}$
-%   [\Sexpr{ayear_df2$p5[which.max(ayear_df2$mean)]}, 
-% \Sexpr{ayear_df2$p95[which.max(ayear_df2$mean)]}]) (Figure \ref{fig:tsmuplotayear}), but that year was not the warmest nor the longest calendar season, unlike our finding that warmer and longer seasons increase growth for most of our species (Figure \ref{fig:tsxyGDD} and Figure \ref{fig:tsxyGSL}).
-%   
-%   \item Growth was lowest in \Sexpr{ayear_df2$year_name[which.min(ayear_df2$mean)]} 
-%   (\Sexpr{ayear_df2$mean[which.min(ayear_df2$mean)]}, $UI_{90}$
-%   [\Sexpr{ayear_df2$p5[which.min(ayear_df2$mean)]}, 
-%   \Sexpr{ayear_df2$p95[which.min(ayear_df2$mean)]}]) (Figure \ref{fig:tsmuplotayear}) that year had the warmest thermal, but the shortest calendar season, also unlike our findings that growth increases with warmer seasons, and to a lesser extent, with longer calendar season (Figure \ref{fig:tsxyGDD} and Figure \ref{fig:tsxyGSL}).
-%   \end{enumerate}
-% 
 \end{enumerate}
 
 
@@ -282,5 +239,19 @@ print(tab,
 % \caption{Standardized (z-scored) slope estimates for Coringtreespotters. The dots represent the mean of the posterior distribution, the thick lines the 50\% uncertainty intervals (UI) and the thinner lines, the 90\% UI.}
 % \label{fig:bsppZscored}
 % \end{figure}
+
+% Full vs restricted data comparison for Coringtreespotters
+\begin{figure}[!ht]
+\includegraphics[width=1\textwidth]{/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/figures/growthModelsMain/FullVSRestricted.jpeg}
+\caption{Full vs most restricted rows of data for the model with SOS (a) EOS (b) as the predictor for CoringTreespotters. Each pannel represent the different parameters used to fit the models.}
+\label{fig:tsSOSEOScomparison}
+\end{figure}
+
+% Budburst vs leafout for CoringTreespotters
+\begin{figure}[!ht]
+\includegraphics[width=0.8\textwidth]{/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/figures/growthModelsMain/budburstVSLeafout/DporousVSRporous.jpeg}
+\caption{Parameter estimates when calculating the GDD (a), GSL (b) from leafout vs budburst, to leaf coloring. (c) shows the model estimates when taking leafout vs budburst as the SOS.}
+\label{fig:buburstVSleafoutTS}
+\end{figure}
 
 \end{document}

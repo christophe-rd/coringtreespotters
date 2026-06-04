@@ -85,7 +85,7 @@ temp$bin10 <- ave(temp$doy, temp$year, FUN = function(x) ceiling((x - min(x) + 1
 gdd_7day <- aggregate(gdddiff ~ year + bin10, data = temp, max)
 tsgddscale <- mean(gdd_7day$gdddiff)
 
-empts$pgsGDD5 <- empts$pgsGDD5 - 1500
+# empts$pgsGDD5 <- empts$pgsGDD5 - 1500
 gddseq <- seq(min(empts$pgsGDD5), max(empts$pgsGDD5), length.out = lineplotseqlength)
 
 empts$loglength <- log(empts$lengthMM)

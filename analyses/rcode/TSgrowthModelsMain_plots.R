@@ -54,7 +54,7 @@ sigma_df2_ts_gsl  <- read.csv("output/GM_GSLparam_sigma.csv")
 bspp_df2_ts_gsl   <- read.csv("output/GM_GSLparam_bspp.csv")
 treeid_df2_ts_gsl <- read.csv("output/GM_GSLparam_treeid.csv")
 aspp_df2_ts_gsl   <- read.csv("output/GM_GSLparam_aspp.csv")
-ayear_df2_ts_gsl      <- read.csv("output/GM_GSLparam_ayear.csv")
+ayear_df2_ts_gsl  <- read.csv("output/GM_GSLparam_ayear.csv")
 
 treeid_df2_ts_gsl$id <- as.numeric(treeid_df2_ts_gsl$id)
 treeid_df2_ts_gsl$treeid_name <- empts$id[match(treeid_df2_ts_gsl$id, empts$treeid_num)]
@@ -310,10 +310,10 @@ for (i in seq_along(treeidvecnum)) { # i = 1
 dev.off()
 
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
-##### GDD: per Spp, facet #####
+##### GDD: per Spp, facet, shaped by treeid #####
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
 # jpeg output
-jpeg(filename = "figures/growthModelsMain/TSgrowthModelSlopesperSppFacetGDD.jpeg",
+jpeg(filename = "figures/growthModelsMain/TSgrowthModelSlopesperSppFacetGDDtree.jpeg",
      width = 2400, height = 2400, res = 300)
 # Layout: 2 rows x 2 columns per page
 par(mfrow = c(4, 3), mar = c(4, 4, 2, 1))
@@ -376,6 +376,75 @@ for (i in seq_along(sppvecnum)) { # i = 1
   #        pt.cex = 1.5, bty = "n", cex = 1.2,
   #        title  = "Year", title.font = 2)
 }
+dev.off()
+
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+##### GDD: per Spp, facet, shaped by year #####
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+unique_years <- sort(unique(emp_spp$year))
+year_syms <- setNames(seq_along(unique_years), unique_years)
+# jpeg output
+jpeg(filename = "figures/growthModelsMain/TSgrowthModelSlopesperSppFacetGDDyr.jpeg",
+     width = 2400, height = 2400, res = 300)
+# Layout: 2 rows x 2 columns per page
+par(mfrow = c(4, 3), mar = c(4, 4, 2, 1))
+
+treeidsymbol <- c(15, 16, 17, 8, 9)
+
+for (i in seq_along(sppvecnum)) { # i = 1
+  
+  spp_name <- as.character(sppvecname[i])
+  
+  # subset empirical data correctly
+  emp_spp <- empts[empts$latbi == spp_name, ]
+  
+  # spp_post_array is [n_draws, Ngddseq, Nspp]
+  # slice and transpose to [Ngddseq, n_draws]
+  y_post <- t(spp_post_array[, , i])
+  
+  # summaries
+  y_mean <- apply(y_post, 1, mean)
+  y_low  <- apply(y_post, 1, quantile, 0.25)
+  y_high <- apply(y_post, 1, quantile, 0.75)
+  
+  # species-specific ylim
+  ylim_spp <- range(c(emp_spp$loglength, y_low, y_high), na.rm = TRUE)
+  
+  plot(emp_spp$pgsGDD5, emp_spp$loglength,
+       type = "n",
+       ylim = ylim_spp,
+       xlab = "Growing season growing degree days (GDD)",
+       ylab = "log(ring width)",
+       frame = FALSE,
+       main = bquote(italic(.(spp_name))))
+  
+  # add panel letter
+  mtext(paste0("(", letters[i], ")"),
+        side = 3, adj = 0, line = 0.3, font = 2, cex = 1.2)
+  
+  # color
+  line_col <- tscolslatbi[spp_name]
+  
+  polygon(c(gddseq, rev(gddseq)),
+          c(y_low, rev(y_high)),
+          col = adjustcolor(line_col, alpha.f = 0.3),
+          border = NA)
+  
+  lines(gddseq, y_mean, col = line_col, lwd = 2)
+
+  points(emp_spp$pgsGDD5, emp_spp$loglength,
+         pch = year_syms,
+         cex = 1, col = line_col)
+}
+plot.new()
+par(mar = c(1,1,1,1))
+legend("topleft",
+       legend = names(year_syms),
+       pch    = year_syms,
+       col    = line_col,
+       pt.cex = 1.5, bty = "n", cex = 1.2,
+       title  = "Year", title.font = 2)
+
 dev.off()
 
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
@@ -505,9 +574,9 @@ spp_post_array_gsl <- extract(fitgsl, "spp_post")$spp_post
 gslseq <- dgsl$gslseq
 
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
-##### GSL: per Spp, facet #####
+##### GSL: per Spp, facet, shaped by treeid #####
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
-jpeg(filename = "figures/growthModelsMain/TSgrowthModelSlopesperSppFacetGSL.jpeg",
+jpeg(filename = "figures/growthModelsMain/TSgrowthModelSlopesperSppFacetGSLtree.jpeg",
      width = 2400, height = 2400, res = 300)
 par(mfrow = c(4, 3), mar = c(4, 4, 2, 1))
 
@@ -552,6 +621,72 @@ for (i in seq_along(sppvecnum)) { # i = 1
   points(emp_spp$pgsGSL, emp_spp$loglength,
          pch = sym_per_row, cex = 1, col = line_col)
 }
+dev.off()
+
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+##### GSL: per Spp, facet, shaped by year #####
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+ 
+# jpeg output
+jpeg(filename = "figures/growthModelsMain/TSgrowthModelSlopesperSppFacetGSLyr.jpeg",
+     width = 2400, height = 2400, res = 300)
+# Layout: 2 rows x 2 columns per page
+par(mfrow = c(4, 3), mar = c(4, 4, 2, 1))
+
+for (i in seq_along(sppvecnum)) { # i = 1
+  
+  spp_name <- as.character(sppvecname[i])
+  
+  # subset empirical data correctly
+  emp_spp <- empts[empts$latbi == spp_name, ]
+  
+  # spp_post_array is [n_draws, Ngddseq, Nspp]
+  # slice and transpose to [Ngddseq, n_draws]
+  y_post <- t(spp_post_array[, , i])
+  
+  # summaries
+  y_mean <- apply(y_post, 1, mean)
+  y_low  <- apply(y_post, 1, quantile, 0.25)
+  y_high <- apply(y_post, 1, quantile, 0.75)
+  
+  # species-specific ylim
+  ylim_spp <- range(c(emp_spp$loglength, y_low, y_high), na.rm = TRUE)
+  
+  plot(emp_spp$pgsGSL, emp_spp$loglength,
+       type = "n",
+       ylim = ylim_spp,
+       xlab = "Growing season growing degree days (GDD)",
+       ylab = "log(ring width)",
+       frame = FALSE,
+       main = bquote(italic(.(spp_name))))
+  
+  # add panel letter
+  mtext(paste0("(", letters[i], ")"),
+        side = 3, adj = 0, line = 0.3, font = 2, cex = 1.2)
+  
+  # color
+  line_col <- tscolslatbi[spp_name]
+  
+  polygon(c(gslseq, rev(gslseq)),
+          c(y_low, rev(y_high)),
+          col = adjustcolor(line_col, alpha.f = 0.3),
+          border = NA)
+  
+  lines(gslseq, y_mean, col = line_col, lwd = 2)
+  
+  points(emp_spp$pgsGSL, emp_spp$loglength,
+         pch = year_syms,
+         cex = 1, col = line_col)
+}
+plot.new()
+par(mar = c(1,1,1,1))
+legend("topleft",
+       legend = names(year_syms),
+       pch    = year_syms,
+       col    = line_col,
+       pt.cex = 1.5, bty = "n", cex = 1.2,
+       title  = "Year", title.font = 2)
+
 dev.off()
 
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
@@ -1213,12 +1348,12 @@ for (sp in species_order) {
 
 pdf(file = "figures/growthModelsMain/TSmeanPlotGrowthGDD_treeidBYspp.pdf",
     width = 9, height = 10)
-par(mar = c(4, 6, 6, 1))
+par(mar = c(4, 6, 6, 2))
 
 plot(NA, NA,
-     xlim = range(c(treeid_df4$p5 - 1, treeid_df4$p95 + 1)),
+     xlim = range(c(treeid_df4$p5 - 1, treeid_df4$p95 + 1.8)),
      ylim = c(0.5, max(treeid_df4$y_pos) + 0.5),
-     xlab = "treeid intercept values", ylab = "",
+     xlab = "Tree id and species effects", ylab = "",
      bty = "l", yaxt = "n")
 
 segments(x0 = treeid_df4$p5, x1 = treeid_df4$p95, y0 = treeid_df4$y_pos,
@@ -1252,7 +1387,7 @@ spp_y <- tapply(treeid_df4$y_pos, treeid_df4$spp_name, mean)
 species_legend_order <- names(sort(spp_y, decreasing = TRUE))
 
 legend(
-  x = max(treeid_df4$p95)-0.2,
+  x = max(treeid_df4$p95)-0.6,
   y = max(treeid_df4$y_pos),
   legend = as.expression(lapply(species_legend_order, function(x)
     substitute(italic(s), list(s = x))
@@ -1477,9 +1612,6 @@ polygon(c(gddseq, rev(gddseq)),
 
 lines(gddseq, y_mean, col = line_col, lwd = 3)
 
-
-unique_years <- sort(unique(emp_spp$year))
-year_syms <- setNames(seq_along(unique_years), unique_years)
 
 for (j in seq_along(treeidspp)) {
   tree_id_num <- treeidspp[j]
