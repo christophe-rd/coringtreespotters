@@ -33,6 +33,7 @@ empts <- read.csv("output/empiricalDataMAIN.csv")
 # rw <- read.csv("output/wildchrokieRingWidth.csv")
 gdd <- read.csv("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/output/gddByYear.csv")
 
+
 empts$latbi[empts$latbi == "Acer rubrum"]           <- "A. rubrum"
 empts$latbi[empts$latbi == "Acer saccharum"]        <- "A. saccharum"
 empts$latbi[empts$latbi == "Aesculus flava"]        <- "Ae. flava"
@@ -46,7 +47,7 @@ empts$latbi[empts$latbi == "Quercus rubra"]         <- "Q. rubra"
 empts$latbi[empts$latbi == "Tilia americana"]       <- "T. americana"
 
 
-runmodels <- T
+runmodels <- F
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 # Most restricted amount of data ####
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
@@ -117,7 +118,7 @@ fit <- readRDS("output/stanOutput/fitGrowthPreviousYear")
 diagnostics <- util$extract_hmc_diagnostics(fit) 
 util$check_all_hmc_diagnostics(diagnostics)
 samples <- util$extract_expectand_vals(fit)
-}
+
 
 # Diagnostics ####
 # check aspp
@@ -256,11 +257,13 @@ for (col in colnames(bspp_df)) {
 legend("topright", legend = c("Prior", "Posterior"), col = pal, lwd = 2)
 
 dev.off()
+}
 
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 # Compare bspp vs bsppyr ####
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
-# Open device
+fit <- readRDS("output/stanOutput/fitGrowthPreviousYear")
+df_fit
 # posterior summaries
 bspp_df2_current <- extract_params(df_fit, "bsp", "fit_bspp", "spp", "bsp\\[(\\d+)\\]")
 bspp_df2_current <- subset(bspp_df2_current, spp %in% bspp_df2_current$spp[!grepl("yr", bspp_df2_current$spp)])
@@ -302,12 +305,10 @@ mtext("Previous year", side = 3, adj = 0, font = 2, cex = 0.9)
 
 bspp_df2_previous$spp_name <- empts$latbi[match(bspp_df2_previous$spp, empts$spp)]
 
-
-
 dev.off()
 
 
- jpeg("figures/growthPreviousYearModel/bsppCurrentVSpreviousYROnly.jpeg", width = 6, height = 6, units = "in", res = 300)
+jpeg("figures/growthPreviousYearModel/bsppCurrentVSpreviousYROnly.jpeg", width = 6, height = 6, units = "in", res = 300)
 par(mfrow = c(1,1))
 n_spp <- length(unique(bspp_df2_current$spp))
 y_pos <- rev(1:4)
