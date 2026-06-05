@@ -155,7 +155,7 @@ pgsGSLagg$pgsGSL <- round(pgsGSLagg$pgsGSL, 1)
   
   \item We did not find any clear effect of year on growth (Figure \ref{fig:tsmuplotayear}) and there is no clear differences of growth looking across species (Figure \ref{fig:tsxyGDDyr} and Figure \ref{fig:tsxyGSLyr})
   
-  \item Growth did not change across any provenances (Figure \ref{fig:wcmuplotasite}) (Table \ref{tab:wc_asite_table})
+  \item Growth did not change across any tree id (Figure \ref{fig:tsmuplotatreeid}).
 
   \end{enumerate}
 \end{enumerate}
@@ -406,9 +406,60 @@ print(xtable(binded,
       include.rownames = FALSE, sanitize.text.function = identity, caption.placement = "top")
 @
 
+<<Table combined, results='asis', echo = FALSE>>=
+options(digits = 2)
+
+sigma_df2_GDD  <- read.csv("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/output/GM_GDDparam_sigma.csv")
+bspp_df2_GDD   <- read.csv("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/output/GM_GDDparam_bspp.csv")
+aspp_df2_GDD   <- read.csv("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/output/GM_GDDparam_aspp.csv")
+ayear_df2_GDD  <- read.csv("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/output/GM_GDDparam_ayear.csv")
+
+sigma_df2_GSL  <- read.csv("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/output/GM_GSLparam_sigma.csv")
+bspp_df2_GSL   <- read.csv("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/output/GM_GSLparam_bspp.csv")
+aspp_df2_GSL   <- read.csv("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/output/GM_GSLparam_aspp.csv")
+ayear_df2_GSL  <- read.csv("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/output/GM_GSLparam_ayear.csv")
+
+sigma_df2_SOS  <- read.csv("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/output/GM_SOSparam_sigma.csv")
+bspp_df2_SOS   <- read.csv("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/output/GM_SOSparam_bspp.csv")
+aspp_df2_SOS   <- read.csv("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/output/GM_SOSparam_aspp.csv")
+ayear_df2_SOS  <- read.csv("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/output/GM_SOSparam_ayear.csv")
+
+sigma_df2_EOS  <- read.csv("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/output/GM_EOSparam_sigma.csv")
+bspp_df2_EOS   <- read.csv("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/output/GM_EOSparam_bspp.csv")
+aspp_df2_EOS   <- read.csv("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/output/GM_EOSparam_aspp.csv")
+ayear_df2_EOS  <- read.csv("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/output/GM_EOSparam_ayear.csv")
+
+bspp_df2_GDD$spp_name  <- empts$latbi[match(bspp_df2_GDD$spp, empts$spp_num)]
+aspp_df2_GDD$spp_name  <- empts$latbi[match(aspp_df2_GDD$spp, empts$spp_num)]
+ayear_df2_GDD$year_name <- empts$year[match(ayear_df2_GDD$year, empts$year_num)]
+
+fmt <- function(df) sprintf("%.2f [%.2f, %.2f]", df$mean, df$p5, df$p95)
+
+param_labels <- c(
+  "$\\sigma_{\\alpha_{tree}}$", "$\\sigma_{y}$",
+  paste0("$\\beta_{spp_{",   bspp_df2_GDD$spp_name,  "}}$"),
+  paste0("$\\alpha_{year_{", ayear_df2_GDD$year_name, "}}$"),
+  paste0("$\\alpha_{spp_{",  aspp_df2_GDD$spp_name,  "}}$")
+)
+
+combined <- data.frame(
+  "Parameter" = param_labels,
+  "GDD" = c(fmt(sigma_df2_GDD), fmt(bspp_df2_GDD), fmt(ayear_df2_GDD), fmt(aspp_df2_GDD)),
+  "GSL" = c(fmt(sigma_df2_GSL), fmt(bspp_df2_GSL), fmt(ayear_df2_GSL), fmt(aspp_df2_GSL)),
+  "SOS" = c(fmt(sigma_df2_SOS), fmt(bspp_df2_SOS), fmt(ayear_df2_SOS), fmt(aspp_df2_SOS)),
+  "EOS" = c(fmt(sigma_df2_EOS), fmt(bspp_df2_EOS), fmt(ayear_df2_EOS), fmt(aspp_df2_EOS)),
+  check.names = FALSE
+)
+
+print(xtable(combined,
+             caption = "Posterior means and 90\\% uncertainty intervals for all model parameters across predictors",
+             label = "tab:BAItab_all"),
+      include.rownames = FALSE, sanitize.text.function = identity, caption.placement = "top")
+@
+
 % Coringtreespotters year mu plot
 \begin{figure}[!ht]
-\includegraphics[width=1\textwidth]{../../analyses/figures/growthModelsMain/TSayearBoxplot.jpeg}
+\includegraphics[width=0.5\textwidth]{../../analyses/figures/growthModelsMain/TSmuayear}
 \caption{Model estimates for the year intercepts with the dots depicting the mean and the lines, the 50\% and 90\% uncertainty intervals (UI) and (b) using box plots of the empirical data.}
 \label{fig:tsmuplotayear}
 \end{figure}
