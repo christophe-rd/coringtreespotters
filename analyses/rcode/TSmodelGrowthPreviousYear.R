@@ -4,11 +4,11 @@
 # Goal: check if the condition of the previous year on current year's growth
 
 # housekeeping
-rm(list=ls())
-options(stringsAsFactors = FALSE)
-options(max.print = 150) 
-options(mc.cores = parallel::detectCores())
-options(digits = 3)
+# rm(list=ls())
+# options(stringsAsFactors = FALSE)
+# options(max.print = 150) 
+# options(mc.cores = parallel::detectCores())
+# options(digits = 3)
 
 # Load library 
 library(ggplot2)
@@ -29,6 +29,8 @@ source('mcmc_visualization_tools.R', local=util)
 # my function to extract parameters
 source('/Users/christophe_rouleau-desrochers/github/wildchrokie/analyses/rcode/tools.R')
 
+runmodels <- F
+
 empts <- read.csv("output/empiricalDataMAIN.csv")
 # rw <- read.csv("output/wildchrokieRingWidth.csv")
 gdd <- read.csv("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/output/gddByYear.csv")
@@ -47,7 +49,6 @@ empts$latbi[empts$latbi == "Quercus rubra"]         <- "Q. rubra"
 empts$latbi[empts$latbi == "Tilia americana"]       <- "T. americana"
 
 
-runmodels <- F
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 # Most restricted amount of data ####
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
@@ -265,44 +266,44 @@ dev.off()
 fit <- readRDS("output/stanOutput/fitGrowthPreviousYear")
 df_fit <- as.data.frame(fit)
 # posterior summaries
-bspp_df2_current <- extract_params(df_fit, "bsp", "fit_bspp", "spp", "bsp\\[(\\d+)\\]")
-bspp_df2_current <- subset(bspp_df2_current, spp %in% bspp_df2_current$spp[!grepl("yr", bspp_df2_current$spp)])
-bspp_df2_previous <- extract_params(df_fit, "bspyr", "fit_bspp", "spp", "bspyr\\[(\\d+)\\]")
+bspp_df2_curr <- extract_params(df_fit, "bsp", "fit_bspp", "spp", "bsp\\[(\\d+)\\]")
+bspp_df2_curr <- subset(bspp_df2_curr, spp %in% bspp_df2_curr$spp[!grepl("yr", bspp_df2_curr$spp)])
+bspp_df2_prvs <- extract_params(df_fit, "bspyr", "fit_bspp", "spp", "bspyr\\[(\\d+)\\]")
 
-bspp_df2_current$spp_name <- empts$latbi[match(bspp_df2_current$spp, empts$spp)]
-bspp_df2_previous$spp_name <- empts$latbi[match(bspp_df2_previous$spp, empts$spp)]
+bspp_df2_curr$spp_name <- empts$latbi[match(bspp_df2_curr$spp, empts$spp)]
+bspp_df2_prvs$spp_name <- empts$latbi[match(bspp_df2_prvs$spp, empts$spp)]
 
 jpeg("figures/growthPreviousYearModel/bsppCurrentVSpreviousYR.jpeg", width = 6, height = 9, units = "in", res = 300)
 par(mfrow = c(2,1), mar = c(4, 2, 2, 1))
-n_spp <- length(unique(bspp_df2_current$spp))
+n_spp <- length(unique(bspp_df2_curr$spp))
 y_pos <- rev(1:11)
 
 # Current year
-plot(bspp_df2_current$mean, y_pos,
+plot(bspp_df2_curr$mean, y_pos,
      xlim = c(-0.4, 0.6), ylim = c(0.5, n_spp + 0.5), 
      xlab = "slope current year", ylab = "",
      yaxt = "n", pch = 16, cex = 2, col = tscolslatbi, frame.plot = TRUE,
      panel.first = abline(v = 0, lty = 2, col = "black"))
-segments(bspp_df2_current$p5,  y_pos, bspp_df2_current$p95, y_pos,
+segments(bspp_df2_curr$p5,  y_pos, bspp_df2_curr$p95, y_pos,
          col = tscolslatbi, lwd = 1.5)
-segments(bspp_df2_current$p25, y_pos, bspp_df2_current$p75, y_pos,
+segments(bspp_df2_curr$p25, y_pos, bspp_df2_curr$p75, y_pos,
          col = tscolslatbi, lwd = 3)
 mtext("(a) Current year", side = 3, adj = 0, font = 2, cex = 1.3)
 
 legend("topright",
-       legend = bspp_df2_previous$spp_name,
-       col    = tscolslatbi[bspp_df2_previous$spp_name],
+       legend = bspp_df2_prvs$spp_name,
+       col    = tscolslatbi[bspp_df2_prvs$spp_name],
        pch = 16, pt.cex = 1.2, title = "Species", bty = "n")
 
 # Row 2: Previous year
-plot(bspp_df2_previous$mean, y_pos,
+plot(bspp_df2_prvs$mean, y_pos,
      xlim = c(-0.4, 0.6), ylim = c(0.5, n_spp + 0.5),
      xlab = "slope previous year", ylab = "",
      yaxt = "n", pch = 16, cex = 2, col = tscolslatbi, frame.plot = TRUE,      
      panel.first = abline(v = 0, lty = 2, col = "black"))
-segments(bspp_df2_previous$p5,  y_pos, bspp_df2_previous$p95, y_pos,
+segments(bspp_df2_prvs$p5,  y_pos, bspp_df2_prvs$p95, y_pos,
          col = tscolslatbi, lwd = 1.5)
-segments(bspp_df2_previous$p25, y_pos, bspp_df2_previous$p75, y_pos,
+segments(bspp_df2_prvs$p25, y_pos, bspp_df2_prvs$p75, y_pos,
          col = tscolslatbi, lwd = 3)
 mtext("(b) Previous year", side = 3, adj = 0, font = 2, cex = 1.3)
 dev.off()
@@ -337,6 +338,9 @@ aspp_df2   <- extract_params(df_fitgdd, "aspp", "fit_aspp",
 jpeg("figures/growthPreviousYearModel/bsppVSbspyr.jpeg", width = 8, height = 6, units = "in", res = 300)
 par(mfrow = c(2,2), oma = c(0, 2, 0, 0))
 
+bspp_df2_yr$spp_name <- empts$latbi[match(bspp_df2_yr$spp, empts$spp)]
+aspp_df2_yr$spp_name <- empts$latbi[match(aspp_df2_yr$spp, empts$spp)]
+
 # sigma
 plot(sigma_df2_yr$mean, sigma_df2$mean,
      xlab = "with bsp on prvs year", ylab = "no bsp on prvs year", main = "sigmas", type = "n", frame = FALSE,
@@ -364,10 +368,11 @@ arrows(x0 = bspp_df2_yr$mean, y0 = bspp_df2$p25,
 arrows(x0 = bspp_df2_yr$p25, y0 = bspp_df2$mean,
        x1 = bspp_df2_yr$p75, y1 = bspp_df2$mean,
        angle = 90, code = 3, length = 0, lwd = 1.5, col = "darkgray")
-points(bspp_df2_yr$mean, bspp_df2$mean, pch = 16, col = "#0a6a3c", cex = 1.5)
+points(bspp_df2_yr$mean, bspp_df2$mean, pch = 16, col = tscolslatbi[bspp_df2_yr$spp_name], cex = 1.5)
 abline(0, 1, lty = 2, col = "black", lwd = 2)
 
 # aspp
+aspp_df2_yr
 plot(aspp_df2_yr$mean, aspp_df2$mean,
      xlab = "with bsp on prvs year", ylab = "no bsp on prvs year", main = "aspp", type = "n", frame = FALSE,
      ylim = range(c(aspp_df2$p25, aspp_df2$p75)),
@@ -378,7 +383,7 @@ arrows(x0 = aspp_df2_yr$mean, y0 = aspp_df2$p25,
 arrows(x0 = aspp_df2_yr$p25, y0 = aspp_df2$mean,
        x1 = aspp_df2_yr$p75, y1 = aspp_df2$mean,
        angle = 90, code = 3, length = 0, lwd = 1.5, col = "darkgray")
-points(aspp_df2_yr$mean, aspp_df2$mean, pch = 16, col = "#0a6a3c", cex = 1.5)
+points(aspp_df2_yr$mean, aspp_df2$mean, pch = 16, col = tscolslatbi[aspp_df2_yr$spp_name], cex = 1.5)
 abline(0, 1, lty = 2, col = "black", lwd = 2)
 
 # # atreeid

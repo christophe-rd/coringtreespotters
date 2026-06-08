@@ -35,6 +35,7 @@ runmodels <- F
 runzscoredmodels <- FALSE
 runfulldata <- FALSE
 runmodelnoayear <- FALSE
+fitmodelprvsyr <- FALSE
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 # Most restricted amount of data ####
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
@@ -61,7 +62,7 @@ empts$clCal <- format(
   "%d-%b"
 )
 
-gddyr <- read.csv("output/gddByYear.csv")
+gdd <- read.csv("output/gddByYear.csv")
 
 lineplotseqlength <- 10
 # transform my groups to numeric values
@@ -75,7 +76,7 @@ treeid_spp <- unique(empts[, c("treeid_num", "spp_num", "id", "latbi")])
 treeid_spp_ordered <- treeid_spp[order(treeid_spp$treeid_num), ]
 
 # scale gdd to how many gdd are in 10 average spring days
-temp <- subset(gddyr, doy <151 & doy > 120)
+temp <- subset(gdd, doy <151 & doy > 120)
 temp$mingddperiod <- ave(temp$GDD_5, temp$year, FUN = min)
 temp$gdddiff <- temp$GDD_5 - temp$mingddperiod
 
@@ -1320,5 +1321,212 @@ arrows(x0 = treeid_df2_noayr$p25, y0 = treeid_df2$mean,
        angle = 90, code = 3, length = 0, lwd = 1, col = "darkgray")
 points(treeid_df2_noayr$mean, treeid_df2$mean, pch = 16, col = "#0a6a3c", cex = 1.5)
 abline(0, 1, lty = 2, col = "black", lwd = 2)
+dev.off()
+}
+
+# <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+# Fit model previous year ####
+# <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+if(fitmodelprvsyr){
+# add a year diff index 
+empts <- read.csv("output/empiricalDataMAIN.csv")
+years <- 2016:2024
+empts$yeardiff <- NA
+for (i in years) {
+  empts$yeardiff[empts$year == i] <- empts$year[empts$year == i] - 1
+}
+
+# remove NAs
+empts$idyear <- paste0(empts$id, "_", empts$year)
+empts$idyearprvs <- paste0(empts$id, "_", empts$yeardiff)
+empts$gddprvsyr <- empts$pgsGDD5[match(empts$idyearprvs, empts$idyear)]
+empts[, c("id", "year", "pgsGDD5", "gddprvsyr")]
+
+empts2 <- empts[!is.na(empts$pgsGDD5) & !is.na(empts$gddprvsyr)
+               & !is.na(empts$lengthMM),]
+
+# transform my groups to numeric values
+empts2$spp_num <- match(empts2$latbi, unique(empts2$latbi))
+empts2$treeid_num <- match(empts2$id, unique(empts2$id))
+empts2$year_num <- match(empts2$year, unique(empts2$year))
+
+dgddyr <- list(
+  y = log(empts2$lengthMM),
+  N = nrow(empts2),
+  Nspp = length(unique(empts2$spp_num)),
+  species = as.numeric(as.character(empts2$spp_num)),
+  treeid = as.numeric(empts2$treeid_num),
+  Ntreeid = length(unique(as.numeric(empts2$treeid_num))),
+  year = as.numeric(empts2$year_num),
+  Nyear = length(unique(empts2$year_num)),
+  gdd = empts2$pgsGDD5/176,
+  gddyr = empts2$gddprvsyr / 176
+)
+
+# Fit model GDD with previous year GDD
+gddmodel <- stan_model("stan/TSmodelGrowthPreviousYear.stan")
+fit <- sampling(gddmodel, data = dgddyr, iter = 2000, chains = 4, 
+                control = list(max_treedepth = 12))
+saveRDS(fit, "output/stanOutput/fitGrowthPreviousYear")
+diagnostics <- util$extract_hmc_diagnostics(fit) 
+util$check_all_hmc_diagnostics(diagnostics)
+samples <- util$extract_expectand_vals(fit)
+
+if(FALSE){
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+##### Retrodictive checks #####
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+fit <- readRDS("output/stanOutput/fitGrowthPreviousYear")
+jpeg(
+  filename = "figures/growthPreviousYearModel/retrodictiveCheckHistPrvsYr.jpeg",
+  width = 2400, height = 2400, res = 300)
+util$plot_hist_quantiles(samples, "y_rep", 
+                         -2, # lower x axis limit
+                         5, # upper x axis limit
+                         0.2, # binning
+                         baseline_values = data$y,
+                         xlab = "log(ring width")
+dev.off()
+
+# discs by species
+jpeg(
+  filename = "figures/growthPreviousYearModel/retrodictiveDiskSpp.jpeg",
+  width = 3600, height = 2400, res = 300)
+par(mfrow = c(3,4))
+for (s in unique(data$species)) { # s = 1
+  idxs <- which(data$species == s)
+  util$plot_disc_pushforward_quantiles(samples,
+                                       paste0("y_rep[", idxs, "]"),
+                                       baseline_values = data$y[idxs],
+                                       ylab = "Ring width",
+                                       main = paste("Spp", s))
+}
+dev.off()
+# discs by year
+par(mfrow = c(1,data$Nyear))
+for (y in unique(data$year)) { # s = 1
+  idxs <- which(data$year == y)
+  util$plot_disc_pushforward_quantiles(samples,
+                                       paste0("y_rep[", idxs, "]"),
+                                       baseline_values = data$y[idxs],
+                                       ylab = "Leafout",
+                                       main = paste("Year", y))
+}
+}
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+##### Plot posterior vs priors for gdd fit #####
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+fit <- readRDS("output/stanOutput/fitGrowthPreviousYear")
+
+# Setup color palette across all plots
+pal <- wes_palette("AsteroidCity1")[3:4]
+
+##### Recover parameters #####
+df_fit <- as.data.frame(fit)
+
+# full posterior arrays for multi-line extraction
+columns <- colnames(df_fit)[!grepl("prior", colnames(df_fit))]
+bspp_df <- df_fit[, columns[grepl("bsp", columns) & !grepl("yr", columns)]]
+bsppyr_df <- df_fit[, columns[grepl("bspyr", columns)]]
+treeid_df <- df_fit[, grepl("atreeid", columns) & !grepl("z|sigma", columns)]
+aspp_df <- df_fit[, columns[grepl("aspp", columns)]]
+ayear_df <- df_fit[, columns[grepl("ayear", columns) & !grepl("mean", columns)]]
+
+# change colnames to indexes for loop tracing
+colnames(bspp_df) <- 1:ncol(bspp_df)
+colnames(bsppyr_df) <- 1:ncol(bsppyr_df)
+colnames(treeid_df) <- 1:ncol(treeid_df)
+colnames(aspp_df) <- 1:ncol(aspp_df)
+colnames(ayear_df) <- 1:ncol(ayear_df)
+
+# posterior summaries
+sigma_df2  <- extract_params(df_fit, "sigma", "mean", "sigma")
+bspp_df2_curr <- extract_params(df_fit, "bsp", "fit_bsp", "spp", "bsp\\[(\\d+)\\]")
+bspp_df2_curr <- subset(bspp_df2_curr, !grepl("yr", spp))
+bspp_df2_prvs <- extract_params(df_fit, "bspyr", "fit_bsp", "spp", "bspyr\\[(\\d+)\\]")
+treeid_df2 <- extract_params(df_fit, "atreeid", "fit_atreeid", "id", "atreeid\\[(\\d+)\\]")
+treeid_df2 <- subset(treeid_df2, !grepl("z|sigma", id))
+aspp_df2   <- extract_params(df_fit, "aspp", "fit_aspp", "spp", "aspp\\[(\\d+)\\]")
+ayear_df2  <- extract_params(df_fit, "ayear", "fit_ayear", "year", "ayear\\[(\\d+)\\]")
+ayear_df2  <- subset(ayear_df2, !grepl("mean", year))
+
+# save csvs
+write.csv(sigma_df2,  "output/GM_GDDparam_sigma_prvsYr.csv",  row.names = FALSE)
+write.csv(bspp_df2_curr, "output/GM_GDDparam_bspp_prvsYr.csv",   row.names = FALSE)
+write.csv(bspp_df2_prvs, "output/GM_GDDparam_bsppYr_prvsYr.csv",   row.names = FALSE)
+write.csv(treeid_df2, "output/GM_GDDparam_treeid_prvsYr.csv", row.names = FALSE)
+write.csv(aspp_df2,   "output/GM_GDDparam_aspp_prvsYr.csv",   row.names = FALSE)
+write.csv(ayear_df2,  "output/GM_GDDparam_ayear.csv",  row.names = FALSE)
+
+jpeg("figures/growthPreviousYearModel/gddModelPriorVSPosteriorPrvsYr.jpeg", 
+     width =2400, height = 2400, res =300)
+pal <- wes_palette("AsteroidCity1")[3:4]
+
+par(mfrow = c(3, 3))
+
+# a
+plot(density(df_fit[, "a_prior"]), 
+     col = pal[1], lwd = 2, 
+     main = "priorVSposterior_a", 
+     xlab = "a", ylim = c(0,0.1))
+lines(density(df_fit[, "a"]), col = pal[2], lwd = 2)
+legend("topright", legend = c("Prior", "Posterior"), col = pal, lwd = 2)
+
+# sigma_atreeid
+plot(density(df_fit[, "sigma_atreeid_prior"]),
+     col = pal[1], lwd = 2,
+     main = "priorVSposterior_sigma_atreeid",
+     xlab = "sigma_atreeid", ylim = c(0,2))
+lines(density(df_fit[, "sigma_atreeid"]), col = pal[2], lwd = 2)
+legend("topright", legend = c("Prior", "Posterior"), col = pal, lwd = 2)
+
+# sigma_y
+plot(density(df_fit[, "sigma_y_prior"]), 
+     col = pal[1], lwd = 2, 
+     main = "priorVSposterior_sigma_y", 
+     xlab = "sigma_y", ylim = c(0,2))
+lines(density(df_fit[, "sigma_y"]), col = pal[2], lwd = 2)
+legend("topright", legend = c("Prior", "Posterior"), col = pal, lwd = 2)
+
+# aspp
+plot(density(df_fit[, "aspp_prior"]), 
+     col = pal[1], lwd = 2, 
+     main = "priorVSposterior_aspp", 
+     xlab = "aspp", xlim = c(-60, 60), ylim = c(0, 0.1))
+for (col in colnames(aspp_df)) {
+  lines(density(aspp_df[, col]), col = pal[2], lwd = 1)
+} 
+legend("topright", legend = c("Prior", "Posterior"), col = pal, lwd = 2)
+
+# ayear
+plot(density(df_fit[, "ayear_prior"]), 
+     col = pal[1], lwd = 2, 
+     main = "priorVSposterior_ayear", 
+     xlab = "ayear", xlim = c(-10, 10), ylim = c(0, 2))
+for (col in colnames(ayear_df)) {
+  lines(density(ayear_df[, col]), col = pal[2], lwd = 1)
+} 
+legend("topright", legend = c("Prior", "Posterior"), col = pal, lwd = 2)
+
+# bsp
+plot(density(df_fit[, "bsp_prior"]), 
+     col = pal[1], lwd = 2, 
+     main = "priorVSposterior_bsp", 
+     xlab = "bsp", ylim = c(0, 1.8))
+for (col in colnames(bspp_df)) {
+  lines(density(bspp_df[, col]), col = pal[2], lwd = 1)
+}
+legend("topright", legend = c("Prior", "Posterior"), col = pal, lwd = 2)
+
+# bspyr
+plot(density(df_fit[, "bspyr_prior"]),
+     col = pal[1], lwd = 2,
+     main = "priorVSposterior_bspPreviousYr",
+     xlab = "bspPreviousYr", ylim = c(0, 1.8))
+for (col in colnames(bspp_df)) {
+  lines(density(bsppyr_df[, col]), col = pal[2], lwd = 1)
+}
+legend("topright", legend = c("Prior", "Posterior"), col = pal, lwd = 2)
+
 dev.off()
 }

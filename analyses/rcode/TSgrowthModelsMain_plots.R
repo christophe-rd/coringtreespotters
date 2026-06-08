@@ -20,7 +20,7 @@ if (length(grep("christophe_rouleau-desrochers", getwd())) > 0) {
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 source("rcode/TSgrowthModelsMain.R")
 
-makeplots <- T
+makeplots <- F
 runzscore <- F
 
 # acronym latbi
@@ -1511,6 +1511,49 @@ for(sp in sppvecname) { # sp = "A. incana"
              vertical = TRUE, add = TRUE)
 }
 
+dev.off()
+
+##### Previous year model #####
+# Load parameter summaries generated in growthModelsMain.R ####
+bspp_df2_ts_curr  <- read.csv("output/GM_GDDparam_bspp_prvsYr.csv")
+bspp_df2_ts_prvs  <- read.csv("output/GM_GDDparam_bsppYr_prvsYr.csv")
+
+bspp_df2_curr$spp_name <- empts$latbi[match(bspp_df2_curr$spp, empts$spp)]
+bspp_df2_prvs$spp_name <- empts$latbi[match(bspp_df2_prvs$spp, empts$spp)]
+
+jpeg("figures/growthPreviousYearModel/bsppCurrentVSpreviousYR.jpeg", width = 6, height = 9, units = "in", res = 300)
+par(mfrow = c(2,1), mar = c(4, 2, 2, 1))
+n_spp <- length(unique(bspp_df2_curr$spp))
+y_pos <- rev(1:11)
+
+# Current year
+plot(bspp_df2_curr$mean, y_pos,
+     xlim = c(-0.4, 0.6), ylim = c(0.5, n_spp + 0.5), 
+     xlab = "slope current year", ylab = "",
+     yaxt = "n", pch = 16, cex = 2, col = tscolslatbi, frame.plot = TRUE,
+     panel.first = abline(v = 0, lty = 2, col = "black"))
+segments(bspp_df2_curr$p5,  y_pos, bspp_df2_curr$p95, y_pos,
+         col = tscolslatbi, lwd = 1.5)
+segments(bspp_df2_curr$p25, y_pos, bspp_df2_curr$p75, y_pos,
+         col = tscolslatbi, lwd = 3)
+mtext("(a) Current year", side = 3, adj = 0, font = 2, cex = 1.3)
+
+legend("topright",
+       legend = bspp_df2_prvs$spp_name,
+       col    = tscolslatbi[bspp_df2_prvs$spp_name],
+       pch = 16, pt.cex = 1.2, title = "Species", bty = "n")
+
+# Row 2: Previous year
+plot(bspp_df2_prvs$mean, y_pos,
+     xlim = c(-0.4, 0.6), ylim = c(0.5, n_spp + 0.5),
+     xlab = "slope previous year", ylab = "",
+     yaxt = "n", pch = 16, cex = 2, col = tscolslatbi, frame.plot = TRUE,      
+     panel.first = abline(v = 0, lty = 2, col = "black"))
+segments(bspp_df2_prvs$p5,  y_pos, bspp_df2_prvs$p95, y_pos,
+         col = tscolslatbi, lwd = 1.5)
+segments(bspp_df2_prvs$p25, y_pos, bspp_df2_prvs$p75, y_pos,
+         col = tscolslatbi, lwd = 3)
+mtext("(b) Previous year", side = 3, adj = 0, font = 2, cex = 1.3)
 dev.off()
 
 ##### checks temporary for betall #####
