@@ -93,11 +93,11 @@
 \begin{enumerate}
 \item Summary basic information
   \begin{enumerate}
-  \item Coringtreespotters includes eleven with leaf phenology data spaning nine years (2016 to 2024) for a total of 
+  \item Coringtreespotters includes eleven deciduous tree species with leaf phenology data spanning nine years (2016 to 2024) for a total of 
   326 leafout and 
   289 colored leaves observations, yielding 
-  278 complete growing seasons (GS) for 
-  49 individuals. 
+  217 complete growing seasons (GS) for 
+  47 individuals. 
   
   \item 
   2017 was the coolest year
@@ -108,26 +108,26 @@
   \item 2020 and 2022 had moderate droughts that ramped up to severe droughts in September. 2016 had a moderate drought starting in June, ramped up to severe in July, then to extreme in August and September. There were no droughts in the other years.
   
   \item GSL ranged from 
-  77 days ({\Afla} in 
-  2018) to 
+  84 days ({\Afla} in 
+  2022) to 
   194 days ({\Asac} in 
   2021)
 
   \item GS thermal sum ranged from 
   1048.8 GDD ({\Afla} in 
   2020) to 
-  2634.7 GDD ({\Tame} in 
-  2016)
+  2621 GDD ({\Tame} in 
+  2021)
   
   \item The earliest leafout day of year was 
-  08-Apr ({\Afla} in 
+   ({\Afla} in 
   2021) and the latest, 
-  15-May ({\Cova} in 
+   ({\Cova} in 
   2020). The earliest colored leaves day of year was
-  15-Jul ({\Afla} in 
+   ({\Afla} in 
   2021---same individual with earliest leafout) and the latest, 
-  06-Nov ({\Tame} in
-  2016) 
+   ({\Tame} in
+  2018) 
   
   \item Annual ring widths across years varied from 
   0.43 mm ({\Asac} in 2019) to 
@@ -150,8 +150,14 @@
   \item No species responded to longer calendar season (Figure \ref{fig:tsmuplotbspp}b and f) (Table \ref{tab:ts_slope_table}).
 
   \end{enumerate}
-  
+
 % Question 2 --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+\item Did the previous year thermal season increase growth in the following year
+  \begin{enumerate}
+  \item (Figure \ref{fig:tsPrvsYr})
+  \end{enumerate}
+  
+% Question 3 --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 \item Did a later start and end of season increase growth?
   \begin{enumerate}
   \item An earlier start of season increased growth for no species and decreased growth for {\Tame} ($\beta = $
@@ -167,18 +173,10 @@
 \item The estimates were unchanged when using the full or restricted datasets (SOS $n =$
 326 and EOS $n =$
 289 vs $n=$
-278 Figure \ref{fig:tsSOSEOScomparison}b), or when using budburst instead of leafout as the start of the growing season (Figure \ref{fig:buburstVSleafoutTS}c).
-
+217 Figure \ref{fig:tsSOSEOScomparison}b), or when using budburst instead of leafout as the start of the growing season (Figure \ref{fig:buburstVSleafoutTS}c).
 \end{enumerate}
 
-% Figure mu across all species and climate predictors
-\begin{figure}[!ht]
-\includegraphics[width=0.8\textwidth]{../../analyses/figures/growthModelsMain/TSmuALLbsppWlines.jpeg}
-\caption{Model slope estimates representing ring width change as a function of four different predictors across four species. GDD represent the accumulated growing degree days between leafout and coloredLeaves and the models estimates shows ring width change per 7 average spring days GDD (176.87) (a). GSL is the number of days between leafout and coloredLeaves (b). SOS represent the start of season, which is leafout (c) and EOS, the end of season through coloredLeaves (d). All predictors were fit using the same model and number of observations, with only the independent variable changing. The dots represent the mean of each species and the lines, the 50\% and 90\% uncertainty intervals (UI). }
-\label{fig:tsmuplotbspp}
-\end{figure}
-
-% Question 3 --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+% Question 4 --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 \item How did tree growth change across years and tree ids?
   \begin{enumerate}
   
@@ -189,7 +187,21 @@
   \end{enumerate}
 \end{enumerate}
 
+% Figure mu across all species and climate predictors
+\begin{figure}[!ht]
+\includegraphics[width=0.8\textwidth]{../../analyses/figures/growthModelsMain/TSmuALLbsppWlines.jpeg}
+\caption{Model slope estimates representing ring width change as a function of four different predictors across four species. GDD represent the accumulated growing degree days between leafout and coloredLeaves and the models estimates shows ring width change per 7 average spring days GDD (176.87) (a). GSL is the number of days between leafout and coloredLeaves (b). SOS represent the start of season, which is leafout (c) and EOS, the end of season through coloredLeaves (d). All predictors were fit using the same model and number of observations, with only the independent variable changing. The dots represent the mean of each species and the lines, the 50\% and 90\% uncertainty intervals (UI). }
+\label{fig:tsmuplotbspp}
+\end{figure}
 
+% Figure mu previous year and current year
+\begin{figure}[!ht]
+\includegraphics[width=0.8\textwidth]{../../analyses/figures/growthModelsMain/bsppCurrentVSpreviousYR.jpeg}
+\caption{Model slope estimates representing ring width change as a function of the current year GDD (a) and the previous year GDD (b). 
+% GDD represent the accumulated growing degree days between leafout and coloredLeaves and the models estimates shows ring width change per 7 average spring days GDD (tsgddscale) 
+The dots represent the mean of each species and the lines, the 50\% and 90\% uncertainty intervals (UI). }
+\label{fig:tsPrvsYr}
+\end{figure}
 % <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 % Supplemental results
 % <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
@@ -203,7 +215,7 @@
 
 
 % latex table generated in R 4.5.1 by xtable 1.8-4 package
-% Fri Jun  5 10:11:54 2026
+% Mon Jun  8 09:30:45 2026
 \begin{table}[ht]
 \centering
 \caption{Species level slope parameters (mean and 90\% uncertainty intervals, in square brackets) across the four different predictors for Coringtreespotters. GDD: growing degree days, GSL: growing season length, SOS: start of season and EOS: end of season.} 
@@ -230,7 +242,7 @@ A. rubrum & 0.00 [-0.18, 0.19] & 0.05 [-0.05, 0.15] & -0.05 [-0.28, 0.17] & 0.04
 
 
 % latex table generated in R 4.5.1 by xtable 1.8-4 package
-% Fri Jun  5 10:11:54 2026
+% Mon Jun  8 09:30:45 2026
 \begin{table}[ht]
 \centering
 \caption{Posterior means and 90\% uncertainty intervals for all model parameters across predictors} 
@@ -252,15 +264,15 @@ $\sigma_{\alpha_{tree}}$ & 0.55 [0.45, 0.67] & 0.55 [0.45, 0.67] & 0.54 [0.44, 0
   $\beta_{spp_{Q. alba}}$ & 0.07 [-0.18, 0.33] & 0.03 [-0.05, 0.12] & -0.00 [-0.18, 0.17] & 0.05 [-0.07, 0.16] \\ 
   $\beta_{spp_{Q. rubra}}$ & 0.09 [-0.08, 0.27] & 0.03 [-0.08, 0.14] & 0.09 [-0.10, 0.28] & 0.05 [-0.06, 0.15] \\ 
   $\beta_{spp_{T. americana}}$ & -0.02 [-0.09, 0.04] & -0.02 [-0.05, 0.01] & 0.15 [0.03, 0.27] & -0.01 [-0.05, 0.02] \\ 
-  $\alpha_{year_{2019}}$ & 0.08 [-0.50, 0.66] & 0.06 [-0.51, 0.62] & 0.07 [-0.48, 0.61] & 0.08 [-0.48, 0.65] \\ 
-  $\alpha_{year_{2020}}$ & -0.06 [-0.64, 0.51] & -0.07 [-0.64, 0.49] & -0.13 [-0.68, 0.42] & -0.05 [-0.61, 0.53] \\ 
-  $\alpha_{year_{2021}}$ & 0.00 [-0.58, 0.58] & -0.00 [-0.57, 0.55] & 0.01 [-0.55, 0.54] & 0.01 [-0.55, 0.58] \\ 
-  $\alpha_{year_{2022}}$ & -0.06 [-0.62, 0.52] & -0.08 [-0.65, 0.49] & -0.08 [-0.64, 0.48] & -0.06 [-0.61, 0.51] \\ 
-  $\alpha_{year_{2023}}$ & 0.20 [-0.38, 0.76] & 0.18 [-0.39, 0.76] & 0.20 [-0.36, 0.73] & 0.19 [-0.37, 0.77] \\ 
-  $\alpha_{year_{2024}}$ & 0.08 [-0.51, 0.66] & 0.08 [-0.51, 0.65] & 0.07 [-0.49, 0.62] & 0.10 [-0.48, 0.68] \\ 
-  $\alpha_{year_{2016}}$ & -0.22 [-0.80, 0.36] & -0.22 [-0.80, 0.34] & -0.26 [-0.81, 0.28] & -0.23 [-0.79, 0.35] \\ 
-  $\alpha_{year_{2017}}$ & -0.04 [-0.63, 0.52] & -0.06 [-0.62, 0.51] & -0.00 [-0.55, 0.54] & -0.05 [-0.61, 0.53] \\ 
-  $\alpha_{year_{2018}}$ & 0.03 [-0.56, 0.59] & 0.03 [-0.54, 0.58] & -0.01 [-0.55, 0.53] & 0.04 [-0.52, 0.60] \\ 
+  $\alpha_{year_{NA}}$ & 0.08 [-0.50, 0.66] & 0.06 [-0.51, 0.62] & 0.07 [-0.48, 0.61] & 0.08 [-0.48, 0.65] \\ 
+  $\alpha_{year_{NA}}$ & -0.06 [-0.64, 0.51] & -0.07 [-0.64, 0.49] & -0.13 [-0.68, 0.42] & -0.05 [-0.61, 0.53] \\ 
+  $\alpha_{year_{NA}}$ & 0.00 [-0.58, 0.58] & -0.00 [-0.57, 0.55] & 0.01 [-0.55, 0.54] & 0.01 [-0.55, 0.58] \\ 
+  $\alpha_{year_{NA}}$ & -0.06 [-0.62, 0.52] & -0.08 [-0.65, 0.49] & -0.08 [-0.64, 0.48] & -0.06 [-0.61, 0.51] \\ 
+  $\alpha_{year_{NA}}$ & 0.20 [-0.38, 0.76] & 0.18 [-0.39, 0.76] & 0.20 [-0.36, 0.73] & 0.19 [-0.37, 0.77] \\ 
+  $\alpha_{year_{NA}}$ & 0.08 [-0.51, 0.66] & 0.08 [-0.51, 0.65] & 0.07 [-0.49, 0.62] & 0.10 [-0.48, 0.68] \\ 
+  $\alpha_{year_{NA}}$ & -0.22 [-0.80, 0.36] & -0.22 [-0.80, 0.34] & -0.26 [-0.81, 0.28] & -0.23 [-0.79, 0.35] \\ 
+  $\alpha_{year_{NA}}$ & -0.04 [-0.63, 0.52] & -0.06 [-0.62, 0.51] & -0.00 [-0.55, 0.54] & -0.05 [-0.61, 0.53] \\ 
+  $\alpha_{year_{NA}}$ & 0.03 [-0.56, 0.59] & 0.03 [-0.54, 0.58] & -0.01 [-0.55, 0.53] & 0.04 [-0.52, 0.60] \\ 
   $\alpha_{spp_{A. rubrum}}$ & -0.01 [-2.54, 2.74] & -0.98 [-4.23, 2.23] & 1.27 [-3.08, 5.74] & -1.03 [-5.61, 3.52] \\ 
   $\alpha_{spp_{A. saccharum}}$ & -0.04 [-2.52, 2.62] & 0.43 [-2.48, 3.32] & -0.54 [-3.56, 2.49] & -0.29 [-3.73, 3.20] \\ 
   $\alpha_{spp_{Ae. flava}}$ & -0.20 [-2.67, 2.45] & -0.45 [-3.23, 2.33] & 0.94 [-2.80, 4.58] & -0.40 [-3.31, 2.42] \\ 

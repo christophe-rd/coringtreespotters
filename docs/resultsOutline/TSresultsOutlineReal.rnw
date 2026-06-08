@@ -28,6 +28,7 @@
 <<setup, echo=FALSE, message=FALSE, warning=FALSE>>=
 library(xtable)
 source("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/rcode/TSgrowthModelsMain_plots.R")
+source("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/rcode/TSmodelGrowthPreviousYear.R")
 source("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/rcode/TSclimate_plots.R")
 
 options(digits = 2)
@@ -64,7 +65,7 @@ pgsGSLagg$pgsGSL <- round(pgsGSLagg$pgsGSL, 1)
 \begin{enumerate}
 \item Summary basic information
   \begin{enumerate}
-  \item Coringtreespotters includes eleven with leaf phenology data spaning nine years (2016 to 2024) for a total of 
+  \item Coringtreespotters includes eleven deciduous tree species with leaf phenology data spanning nine years (2016 to 2024) for a total of 
   \Sexpr{nrow(empfullsosts)} leafout and 
   \Sexpr{nrow(empfulleosts)} colored leaves observations, yielding 
   \Sexpr{nrow(empts)} complete growing seasons (GS) for 
@@ -113,43 +114,41 @@ pgsGSLagg$pgsGSL <- round(pgsGSLagg$pgsGSL, 1)
   \item No clear trend of growing season length effect across our eleven species and season predictors.
 
   \item Longer thermal season increased growth for no species and decreased growth for {\Ball} ($\beta = $
-  \Sexpr{bspp_df2_ts_gdd$mean[which(bspp_df2_ts_gdd$spp_name %in% "B. alleghaniensis")]}, $UI_{90}$
-  [\Sexpr{bspp_df2_ts_gdd$p5[which(bspp_df2_ts_gdd$spp_name %in% "B. alleghaniensis")]},
-  \Sexpr{bspp_df2_ts_gdd$p95[which(bspp_df2_ts_gdd$spp_name %in% "B. alleghaniensis")]}])
+  \Sexpr{bspp_df2_ts_gdd$mean[bspp_df2_ts_gdd$spp_name %in% "B. alleghaniensis"]}, $UI_{90}$
+  [\Sexpr{bspp_df2_ts_gdd$p5[bspp_df2_ts_gdd$spp_name %in% "B. alleghaniensis"]},
+  \Sexpr{bspp_df2_ts_gdd$p95[bspp_df2_ts_gdd$spp_name %in% "B. alleghaniensis"]}])
   ) (Figure \ref{fig:tsmuplotbspp}a and e) (Table \ref{tab:ts_slope_table}).
   
   \item No species responded to longer calendar season (Figure \ref{fig:tsmuplotbspp}b and f) (Table \ref{tab:ts_slope_table}).
 
   \end{enumerate}
-  
+
 % Question 2 --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+\item Did the previous year thermal season increase growth in the following year
+  \begin{enumerate}
+  \item (Figure \ref{fig:tsPrvsYr})
+  \end{enumerate}
+  
+% Question 3 --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 \item Did a later start and end of season increase growth?
   \begin{enumerate}
   \item An earlier start of season increased growth for no species and decreased growth for {\Tame} ($\beta = $
-  \Sexpr{bspp_df2_ts_sos$mean[which(bspp_df2_ts_sos$spp_name %in% "T. americana")]}, $UI_{90}$
-  [\Sexpr{bspp_df2_ts_sos$p5[which(bspp_df2_ts_sos$spp_name %in% "T. americana")]},
-  \Sexpr{bspp_df2_ts_sos$p95[which(bspp_df2_ts_sos$spp_name %in% "T. americana")]}]) (Figure \ref{fig:tsmuplotbspp}c and g) (Table \ref{tab:ts_slope_table}). 
+  \Sexpr{bspp_df2_ts_sos$mean[bspp_df2_ts_sos$spp_name %in% "T. americana"]}, $UI_{90}$
+  [\Sexpr{bspp_df2_ts_sos$p5[bspp_df2_ts_sos$spp_name %in% "T. americana"]},
+  \Sexpr{bspp_df2_ts_sos$p95[bspp_df2_ts_sos$spp_name %in% "T. americana"]}]) (Figure \ref{fig:tsmuplotbspp}c and g) (Table \ref{tab:ts_slope_table}). 
 
 \item A later end of season increased growth for no species and decreased growth for {\Ball} ($\beta = $
-\Sexpr{bspp_df2_ts_eos$mean[which(bspp_df2_ts_eos$spp_name %in% "B. alleghaniensis")]}, $UI_{90}$[\Sexpr{bspp_df2_ts_eos$p5[which(bspp_df2_ts_eos$spp_name %in% "B. alleghaniensis")]},
-\Sexpr{bspp_df2_ts_eos$p95[which(bspp_df2_ts_eos$spp_name %in% "B. alleghaniensis")]}])
+\Sexpr{bspp_df2_ts_eos$mean[bspp_df2_ts_eos$spp_name %in% "B. alleghaniensis"]}, $UI_{90}$[\Sexpr{bspp_df2_ts_eos$p5[bspp_df2_ts_eos$spp_name %in% "B. alleghaniensis"]},
+\Sexpr{bspp_df2_ts_eos$p95[bspp_df2_ts_eos$spp_name %in% "B. alleghaniensis"]}])
 (Figure \ref{fig:tsmuplotbspp}d and h) (Table \ref{tab:ts_slope_table}). 
 
 \item The estimates were unchanged when using the full or restricted datasets (SOS $n =$
 \Sexpr{nrow(empfullsosts)} and EOS $n =$
 \Sexpr{nrow(empfulleosts)} vs $n=$
 \Sexpr{nrow(empts)} Figure \ref{fig:tsSOSEOScomparison}b), or when using budburst instead of leafout as the start of the growing season (Figure \ref{fig:buburstVSleafoutTS}c).
-
 \end{enumerate}
 
-% Figure mu across all species and climate predictors
-\begin{figure}[!ht]
-\includegraphics[width=0.8\textwidth]{../../analyses/figures/growthModelsMain/TSmuALLbsppWlines.jpeg}
-\caption{Model slope estimates representing ring width change as a function of four different predictors across four species. GDD represent the accumulated growing degree days between leafout and coloredLeaves and the models estimates shows ring width change per 7 average spring days GDD (\Sexpr{tsgddscale}) (a). GSL is the number of days between leafout and coloredLeaves (b). SOS represent the start of season, which is leafout (c) and EOS, the end of season through coloredLeaves (d). All predictors were fit using the same model and number of observations, with only the independent variable changing. The dots represent the mean of each species and the lines, the 50\% and 90\% uncertainty intervals (UI). }
-\label{fig:tsmuplotbspp}
-\end{figure}
-
-% Question 3 --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+% Question 4 --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 \item How did tree growth change across years and tree ids?
   \begin{enumerate}
   
@@ -160,7 +159,21 @@ pgsGSLagg$pgsGSL <- round(pgsGSLagg$pgsGSL, 1)
   \end{enumerate}
 \end{enumerate}
 
+% Figure mu across all species and climate predictors
+\begin{figure}[!ht]
+\includegraphics[width=0.8\textwidth]{../../analyses/figures/growthModelsMain/TSmuALLbsppWlines.jpeg}
+\caption{Model slope estimates representing ring width change as a function of four different predictors across four species. GDD represent the accumulated growing degree days between leafout and coloredLeaves and the models estimates shows ring width change per 7 average spring days GDD (\Sexpr{tsgddscale}) (a). GSL is the number of days between leafout and coloredLeaves (b). SOS represent the start of season, which is leafout (c) and EOS, the end of season through coloredLeaves (d). All predictors were fit using the same model and number of observations, with only the independent variable changing. The dots represent the mean of each species and the lines, the 50\% and 90\% uncertainty intervals (UI). }
+\label{fig:tsmuplotbspp}
+\end{figure}
 
+% Figure mu previous year and current year
+\begin{figure}[!ht]
+\includegraphics[width=0.8\textwidth]{../../analyses/figures/growthModelsMain/bsppCurrentVSpreviousYR.jpeg}
+\caption{Model slope estimates representing ring width change as a function of the current year GDD (a) and the previous year GDD (b). 
+% GDD represent the accumulated growing degree days between leafout and coloredLeaves and the models estimates shows ring width change per 7 average spring days GDD (\Sexpr{tsgddscale}) 
+The dots represent the mean of each species and the lines, the 50\% and 90\% uncertainty intervals (UI). }
+\label{fig:tsPrvsYr}
+\end{figure}
 % <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 % Supplemental results
 % <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
