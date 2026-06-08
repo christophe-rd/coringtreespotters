@@ -83,13 +83,13 @@ pgsGSLagg$pgsGSL <- round(pgsGSLagg$pgsGSL, 1)
   \item No droughts in the other years.
   
   \item GSL ranged from 
-  \Sexpr{min(empts$pgsGSL)} days ({\Afla} in 
+  \Sexpr{min(empts$pgsGSL)} ({\Afla} in 
   \Sexpr{empts$year[which.min(empts$pgsGSL)]}) to 
   \Sexpr{max(empts$pgsGSL)} days ({\Asac} in 
   \Sexpr{empts$year[which.max(empts$pgsGSL)]})
 
   \item GS thermal sum ranged from 
-  \Sexpr{round(min(empts$pgsGDD5),1)} GDD ({\Afla} in 
+  \Sexpr{round(min(empts$pgsGDD5),1)} ({\Afla} in 
   \Sexpr{empts$year[which.min(empts$pgsGDD5)]}) to 
   \Sexpr{round(max(empts$pgsGDD5),1)} GDD ({\Tame} in 
   \Sexpr{empts$year[which.max(empts$pgsGDD5)]})
