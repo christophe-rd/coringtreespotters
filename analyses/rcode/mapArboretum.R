@@ -40,7 +40,7 @@ color_palette <- c(
 )
 
 # Ensure enough colors for unique species
-sppvec <- unique(dnodup$Common_Name)
+sppvec <- unique(dnodup$latbi)
 color_palette_extended <- rep(color_palette, length.out = length(sppvec))
 
 # Convert spp_colors to a named list
@@ -57,9 +57,9 @@ tree_map <- leaflet(dnodup) %>%
   addCircleMarkers(
     lng = ~long, 
     lat = ~lat, 
-    popup = ~paste("Species:", Common_Name, "<br>Nickname:", plantNickname),
+    popup = ~paste("Species:", latbi, "<br>Nickname:", plantNickname),
     radius = 5,#sqrt(nbobsperID$n) / 10,  # Scale radius by sqrt(n)
-    color = ~unname(spp_colors[Common_Name]),  # Convert named list to values
+    color = ~unname(spp_colors[latbi]),  # Convert named list to values
     fillOpacity = 5
   ) %>%
   # Add a special symbol at the given coordinates
@@ -117,3 +117,148 @@ tree_map
 
 saveWidget(tree_map, file = "figures/mapTrees2Core.html")
 
+# <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+# Map trees to core – ggplot version
+# 25 Feb 2025 by CRD
+# <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+library(ggplot2)
+library(sf)
+library(rnaturalearth)
+library(rnaturalearthdata)
+library(cowplot)
+
+rm(list = ls())
+options(stringsAsFactors = FALSE)
+setwd("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/")
+
+d <- read.csv("output/cleanTS.csv", header = TRUE)
+dnodup <- d[!duplicated(d$plantNickname), ]
+library(sf)
+library(ggplot2)
+library(ggspatial)
+library(maptiles)
+
+# --------------------------------------------------
+# Study area extent
+# --------------------------------------------------
+
+pad <- 0.008
+
+lon_min <- min(dnodup$long) - pad
+lon_max <- max(dnodup$long) + pad
+lat_min <- min(dnodup$lat) - pad
+lat_max <- max(dnodup$lat) + pad
+# --------------------------------------------------
+# Basemap
+# --------------------------------------------------
+
+osm <- get_tiles(
+  st_as_sfc(
+    st_bbox(
+      c(
+        xmin = lon_min,
+        xmax = lon_max,
+        ymin = lat_min,
+        ymax = lat_max
+      ),
+      crs = 4326
+    )
+  ),
+  provider = "CartoDB.Positron",
+  crop = TRUE,
+  zoom = 16
+)
+
+# --------------------------------------------------
+# Main map
+# --------------------------------------------------
+
+main_map <- ggplot() +
+  
+  layer_spatial(osm) +
+  
+  geom_sf(
+    data = dnodup_sf,
+    aes(fill = latbi),
+    shape = 21,
+    size = 3,
+    colour = "white",
+    stroke = 0.4,
+    alpha = 0.95
+  ) +
+  
+  geom_sf(
+    data = special_sf,
+    shape = 23,
+    size = 5,
+    fill = "black",
+    colour = "white",
+    stroke = 1
+  ) +
+  
+  geom_text(
+    data = special_point,
+    aes(x = lon, y = lat, label = name),
+    hjust = 0,
+    nudge_x = 0.0015,
+    size = 3.2,
+    fontface = "bold"
+  ) +
+  
+  scale_fill_manual(
+    values = spp_colors,
+    name = "Species"
+  ) +
+  
+  coord_sf(
+    xlim = c(lon_min, lon_max),
+    ylim = c(lat_min, lat_max),
+    expand = FALSE
+  ) +
+  
+  annotation_scale(
+    location = "bl",
+    width_hint = 0.25
+  ) +
+  
+  annotation_north_arrow(
+    location = "tr",
+    which_north = "true",
+    style = north_arrow_minimal()
+  ) +
+  
+  theme_minimal() +
+  
+  theme(
+    panel.grid = element_blank(),
+    aspect.ratio = 2.5,
+    panel.border = element_rect(
+      colour = "black",
+      fill = NA,
+      linewidth = 0.8
+    ),
+    
+    legend.position = "left",
+    
+    legend.title = element_text(
+      face = "bold",
+      size = 10
+    ),
+    
+    legend.text = element_text(
+      size = 8
+    ),
+    
+    legend.background = element_rect(
+      fill = scales::alpha("white", 0.9),
+      colour = "grey70"
+    )
+  )
+
+ggsave(
+  filename = "figures/empiricalData/tree_species_map.pdf",
+  plot = main_map,
+  width = 7,
+  height = 10,
+  units = "in"
+)
