@@ -33,6 +33,9 @@ allringwidths <- read.csv("output/ringWidthTS.csv")
 longtermgdd <- read.csv("output/longTermGDDperYear.csv")
 longtermgdd5yr <- read.csv("output/longTermGDD5YrAvg.csv")
 
+empts$lengthMM <- empts$lengthCM * 10
+allringwidths$lengthMM <- allringwidths$lengthCM * 10
+
 empts$latbi[empts$latbi == "Acer rubrum"]           <- "A. rubrum"
 empts$latbi[empts$latbi == "Acer saccharum"]        <- "A. saccharum"
 empts$latbi[empts$latbi == "Aesculus flava"]        <- "Ae. flava"
@@ -51,8 +54,7 @@ coord <- read.csv("input/listTreesfromInteractiveMap.csv", header=TRUE)
 empts$accessionYear <- as.numeric(substr(empts$accessionDate, 7,11))
 
 # now do the same for ringwidth DO THIS
-length <- aggregate(lengthCM ~ id + yearCor, allringwidths, FUN = mean)
-length$lengthMM <- length$lengthCM*10
+length <- aggregate(lengthMM ~ id + yearCor, allringwidths, FUN = mean)
 length$idyear <- paste(length$id, length$yearCor)
 
 allringwidths$idyear <- paste(allringwidths$id, allringwidths$yearCor)
@@ -418,34 +420,41 @@ dev.off()
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 # Plot all tree together in one page by year ####
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
-pdf("figures/empiricalData/ringwidthXyearPhenoData1page.pdf", 
-    width = 11, height = 10)
-ids <- unique(emp2$plantNickname)
-par(mfrow = c(ceiling(length(ids)/5), 5), 
-    mar = c(2, 2, 1.5, 0.5),
+pdf("figures/empiricalData/rwXyearRestricted.pdf", width = 8, height = 10)
+
+empts$year <- as.integer(empts$year)
+vec <- unique(empts$id)
+
+set.seed(123)
+suby <- subset(empts, id %in% sample(vec, 20) & year > 2015 & year < 2025)
+
+par(mfrow = c(5,ceiling(length(unique(suby$id))/5)),
+    mar = c(3, 2, 1.5, 0.5),
     mgp = c(1.5, 0.5, 0))
-emp2$year <- as.integer(emp2$year)
-for(i in ids) { # i = "White oak 21815*E"
-  sub <- emp2[emp2$plantNickname == i, ]
+
+for(i in unique(suby$id)) { # i = "QUAL_21815_E"
+  sub <- suby[suby$id == i, ]
+  if(nrow(sub) == 0) next
   col_vals <- renoir[as.numeric(factor(sub$latbi, levels = levels(factor(emp2$latbi))))]
   
   plot(sub$year, sub$lengthMM,
-       col = col_vals,
+       col = col_vals, 
        pch = 16,
-       cex = 1,
+       cex = 1.5,
        main = i,
        xlab = "",
        xaxt = "n",
        ylab = "",
-       tck = -0.1,
+       tck = -0.02,
        bty = 'l')
   
-  axis(1, at = seq(floor(min(sub$year)), floor(max(sub$year)), by = 2), tck = -0.1)
+  axis(1, at = seq(floor(min(sub$year)), floor(max(sub$year)), by = 1), tck = -0.02)
+  
   # regression line per species
   for(sp in unique(sub$latbi)) { # sp = "River birch"
     ssp <- sub[sub$latbi == sp, ]
     fit <- lm(lengthMM ~ year, data = ssp)
-    abline(fit, col = renoir[as.numeric(factor(sp, levels = levels(factor(empts$latbi))))], lwd =0.5) 
+    abline(fit, col = renoir[as.numeric(factor(sp, levels = levels(factor(empts$latbi))))], lwd =1.8) 
   }
 }
 dev.off()

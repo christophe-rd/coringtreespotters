@@ -1,0 +1,256 @@
+\documentclass{article}\usepackage[]{graphicx}\usepackage[]{xcolor}
+% maxwidth is the original width if it is less than linewidth
+% otherwise use linewidth (to make sure the graphics do not exceed the margin)
+\makeatletter
+\def\maxwidth{ %
+  \ifdim\Gin@nat@width>\linewidth
+    \linewidth
+  \else
+    \Gin@nat@width
+  \fi
+}
+\makeatother
+
+\definecolor{fgcolor}{rgb}{0.345, 0.345, 0.345}
+\newcommand{\hlnum}[1]{\textcolor[rgb]{0.686,0.059,0.569}{#1}}%
+\newcommand{\hlsng}[1]{\textcolor[rgb]{0.192,0.494,0.8}{#1}}%
+\newcommand{\hlcom}[1]{\textcolor[rgb]{0.678,0.584,0.686}{\textit{#1}}}%
+\newcommand{\hlopt}[1]{\textcolor[rgb]{0,0,0}{#1}}%
+\newcommand{\hldef}[1]{\textcolor[rgb]{0.345,0.345,0.345}{#1}}%
+\newcommand{\hlkwa}[1]{\textcolor[rgb]{0.161,0.373,0.58}{\textbf{#1}}}%
+\newcommand{\hlkwb}[1]{\textcolor[rgb]{0.69,0.353,0.396}{#1}}%
+\newcommand{\hlkwc}[1]{\textcolor[rgb]{0.333,0.667,0.333}{#1}}%
+\newcommand{\hlkwd}[1]{\textcolor[rgb]{0.737,0.353,0.396}{\textbf{#1}}}%
+\let\hlipl\hlkwb
+
+\usepackage{framed}
+\makeatletter
+\newenvironment{kframe}{%
+ \def\at@end@of@kframe{}%
+ \ifinner\ifhmode%
+  \def\at@end@of@kframe{\end{minipage}}%
+  \begin{minipage}{\columnwidth}%
+ \fi\fi%
+ \def\FrameCommand##1{\hskip\@totalleftmargin \hskip-\fboxsep
+ \colorbox{shadecolor}{##1}\hskip-\fboxsep
+     % There is no \\@totalrightmargin, so:
+     \hskip-\linewidth \hskip-\@totalleftmargin \hskip\columnwidth}%
+ \MakeFramed {\advance\hsize-\width
+   \@totalleftmargin\z@ \linewidth\hsize
+   \@setminipage}}%
+ {\par\unskip\endMakeFramed%
+ \at@end@of@kframe}
+\makeatother
+
+\definecolor{shadecolor}{rgb}{.97, .97, .97}
+\definecolor{messagecolor}{rgb}{0, 0, 0}
+\definecolor{warningcolor}{rgb}{1, 0, 1}
+\definecolor{errorcolor}{rgb}{1, 0, 0}
+\newenvironment{knitrout}{}{} % an empty environment to be redefined in TeX
+
+\usepackage{alltt}
+\usepackage{hyperref}
+\usepackage[margin=1in]{geometry}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{gensymb}
+\usepackage{natbib}
+
+\setlength{\parindent}{0pt}
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\begin{document}
+% \SweaveOpts{concordance=TRUE}
+
+\title{Coringtreespotters ms}
+\author{Christophe Rouleau-Desrochers}
+\date{\today}
+\maketitle
+
+% Set CoringTreespotters species shortcut
+\newcommand{\Arub}{\textit{A. rubrum}}
+\newcommand{\Asac}{\textit{A. saccharum}}
+\newcommand{\Afla}{\textit{A. flava}}
+\newcommand{\Ball}{\textit{B. alleghaniensis}}
+\newcommand{\Bnig}{\textit{B. nigra}}
+\newcommand{\Cgla}{\textit{C. glabra}}
+\newcommand{\Cova}{\textit{C. ovata}}
+\newcommand{\Pdel}{\textit{P. deltoides}}
+\newcommand{\Qalb}{\textit{Q. alba}}
+\newcommand{\Qrub}{\textit{Q. rubra}}
+\newcommand{\Tame}{\textit{T. americana}}   
+
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{verbatim}
+##     X             id year genus species     latbi commonName plantNickname
+## 2   6 ACRU_1196-84_A 2019  Acer  rubrum A. rubrum  Red maple     1196-84*A
+## 3   7 ACRU_1196-84_A 2020  Acer  rubrum A. rubrum  Red maple     1196-84*A
+## 8 154   ACRU_15350_A 2020  Acer  rubrum A. rubrum  Red maple       15350*A
+## 9 155   ACRU_15350_A 2021  Acer  rubrum A. rubrum  Red maple       15350*A
+##   budburst leafout coloredLeaves  DBH lengthMM accessionDate pgs fgs
+## 2      103     115           269 27.3     3.98    10-15-1984 154 166
+## 3      119     124           253 27.3     1.73    10-15-1984 129 134
+## 8      105     120           236 77.5     1.26    04-16-1924 116 131
+## 9      101     114           236 77.5     2.46    04-16-1924 122 135
+##   budburstGDD5 leafoutGDD5 leafcolorGDD5 pgsGDD5 fgsGDD5 budburstGDD10
+## 2          153         254          2443    2189    2290          56.8
+## 3          238         281          2337    2056    2098          79.7
+## 8          204         242          2065    1823    1861          70.4
+## 9          179         242          2016    1774    1836          79.1
+##   leafoutGDD10 leafcolorGDD10 pgsGDD10 fgsGDD10 pgsGDD10AVG pgsGSL  loCal
+## 2        112.3           1588     1476     1531        1511    154 25-Apr
+## 3        102.1           1561     1459     1481        1493    129 03-May
+## 8         80.5           1374     1293     1303        1514    116 29-Apr
+## 9        110.9           1311     1200     1232        1200    122 24-Apr
+##    clCal spp_num treeid_num year_num loglength
+## 2 26-Sep       1          1        1     1.380
+## 3 09-Sep       1          1        2     0.547
+## 8 23-Aug       1          2        2     0.229
+## 9 24-Aug       1          2        3     0.902
+##  [ reached 'max' / getOption("max.print") -- omitted 274 rows ]
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+
+% <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+% INTRODUCTION
+% <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+% \section*{Introduction}
+
+% <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+% METHODS
+% <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+% \clearpage
+\section*{Methods}
+
+%-------------------------------------------------------------------------------
+% Common garden setup
+%-------------------------------------------------------------------------------
+\subsection*{Citizen science program}
+The Tree Spotters was a citizen science program that started in 2015 and aimed to train citizen scientists for accurate and rigorous phenological monitoring at the Arnold Arboretum of Harvard University (42.30 \degree N, -71.12 \degree W) (Figure \ref{fig:wildSpottersMap}). From 2015 to 2024, hundreds of citizen scientists monitored 77 individual trees and shrubs of 14 species. They regularly followed those individuals from budburst in the spring to leaf colouring in the fall using the National Phenology Netword (NPN) phenophases \citep{denny_standardized_2014}: Leaves (483), Colored leaves (498), Fruits (516), Ripe Fruits (390), Falling leaves(471), Recent fruit or seed drop (504), Increasing leaf size (467), Breaking leaf buds (371), Flowers or flower buds (500), Open flowers (501), Pollen release (502). Not all phenophases were recorded for every tree, for every year, and some trees miss several years of data. \\
+
+% Provenance map
+\begin{figure}[!ht]
+\includegraphics[width=0.8\textwidth]{/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/figures/empiricalData/treesMap.pdf}
+\caption{Locations of the trees in the arboretum. The colors of the dots match the model estimates of Figure \ref{fig:tsMap}.} 
+\label{fig:mapProv}
+\end{figure}
+
+%-------------------------------------------------------------------------------
+% Phenological monitoring and sample collection
+%-------------------------------------------------------------------------------
+\subsection*{Phenological monitoring and sample collection}
+From 20 to 22 April 2025, we collected tree ring samples only for the tree species that were previously monitored for phenology---excluding \textit{Fagus grandifolia} because of beach bark disease concerns (Table \ref{tab:coringTreespottersSpecies}). For this, we collected two 5-mm diameter cores, 15-cm length at 1.3 meters above ground. , using an increment borer (Mora Borer, Haglöfs Sweden, Bromma, Stockholm, Sweden). We collected the cores perpendicular to the slope and at 180 degrees from each other, cleaning the increment borer with alcohol (70\% ethanol) and the inside with a brush before collecting each core. We stored the cores at ambient temperature for three months in paper straws that were previously labelled and punched to help with drying. \\
+
+%-------------------------------------------------------------------------------
+% Sample processing, imaging and measuring
+%-------------------------------------------------------------------------------
+\subsection*{Sample processing, imaging and measuring}
+We mounted the cores on wooden mounts, sanded them using progressively finer sandpaper grits (150, 300, 400, 600, 800, 1000), and then scanned the cores at a resolution of 6250 dpi with a high-resolution treering scanner (Fong, unpublished). Using the digitized images, we measured ring widths with ImageJ \citep{schneider_nih_2012}
+\par
+We performed visual cross dating. We did not perform statistical crossdating because of the short chronologies that limit the capacity of these analyses \citep{raden_potential_2020}, and for similar reasons, we did not detrend the ring widths. Visual analyses of trends showed no consistent allometric patterns (Figure \ref{fig:allom}); thus we included only a year intercept to correct for potential effects of different years, not otherwise included in our model. \\
+
+\subsection*{Data analyses}
+To understand how growth shifted with season lengths we used linear Bayesian hierarchical models, estimating ring width with differing season lengths using four different season predictors (GDD, GSL, SOS and EOS). We calculated the thermal season using growing degree days (GDD) (mean daily temperature above 5\degree C) accumulated between leafout and budset, and the calendar season (or growing season length (GSL)) as the number of days between leafout and budset. Finally, we used leafout and budset as the start (SOS) and end of the season (EOS) as separate predictors that represent the boundaries of the growing season. \\
+
+We used the daily climate data from the climate station located at Weldhill research station for 2018 and 2019 (\url{https://arboretum.harvard.edu/research/data-resources/weather/}). Because the data was not available for that station after August 2020, we used the daily climate data from the weather station “Boston (Weld Hill)" of the Network for Environment and Weather Applications (NEWA) for the whole year in 2020 (\url{https://newa.cornell.edu/all-weather-data-query/}). \\
+
+For each predictor, we estimated its effect on ring width observed for each tree in each year as:
+
+\[
+\begin{aligned} 
+ln(ringwidth)_i &\sim N(\mu, \sigma_y) \\
+\mu &= \alpha + \alpha_{\text{species}} + \alpha_{\text{prov}} + \alpha_{\text{treeid}} + \alpha_{\text{year}} + \beta_{species} \times \text{season predictor} \\
+\alpha_{\text{prov}} &\sim N(0, \sigma_{\alpha \, \text{prov}}) \\
+\alpha_{\text{treeid}} &\sim N(0, \sigma_{\alpha \, \text{treeid}}) \\
+\end{aligned}
+\]
+
+where $i$ denotes each observation, $\alpha$ represent intercepts and $\beta$ represent slopes. This model yields a species-specific effect of each seasonal predictor (e.g. GDD) while also allowing other variation due to species ($\alpha_{species}$), alongside variation due to provenance ($\alpha_{prov}$), tree id ($\alpha_{treeid}$), year ($\alpha_{year}$) and a species specific growth rate ($\beta_{species}$). We chose weakly informative priors for all models; increasing the priors by 2x did not change the results trends. We ran four chains for a total of 8000 warmup (discarded) and 8000 sampling iterations, which we kept for posterior distribution estimates. The models did not have any divergent transitions, had a $\hat{R}$ below 1.01, and values of effective sample size ($n_{\text{eff}}$) greater than 10\% of the model iterations. We wrote our models using Stan \citep{carpenter_stan_2017} with the rstan package version 2.32.7 \citep{stan_development_team_rstan_2025} to run the Stan code in R. \\
+
+\par
+As a supplementary analyses, we ran the models using basal area increment (BAI), as the response variable. For this, we summed each ring width separately at the three distinct locations on the cross sections yielding three radii from pit to bark. We then calculated the area of each ring by subtracting the radius from the inner ring from the outer ring: $\pi \times (\text{Inner radius}^2 - \text{Outer radius}^2)$. Then, we averaged across the three BAI for each ring and fit the models with the four different predictors. \\
+
+We also fit the models for SOS and EOS using the full vs restricted datasets.
+
+
+% <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+% RESULTS
+% <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+% \clearpage
+\section*{Results}
+
+% <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+% DISCUSSION
+% <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+\clearpage
+\section*{Discussion}
+
+%<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+% REFERENCES %
+%<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+\bibliography{ExportedItems}
+\bibliographystyle{ecolett} 
+
+% <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+% SUPPLEMENT
+% <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+\clearpage
+
+\section*{Supplemental}
+
+\setcounter{table}{0}
+\renewcommand{\thetable}{S\arabic{table}}
+\setcounter{figure}{0}
+\renewcommand{\thefigure}{S\arabic{figure}}
+
+%-------------------------------------------------------------------------------
+% Supplemental Methods
+%-------------------------------------------------------------------------------
+\subsection*{Supplemental Methods}
+
+% Rw per year for allometry
+% \begin{figure}[!ht]
+% \includegraphics[width=0.6\textwidth]{/Users/christophe_rouleau-desrochers/github/wildchrokie/analyses/figures/empiricalData/rwXyearAll.pdf}
+% \caption{We randomly sampled 20 trees from our dataset and represent the ring width as a function of year to represent the allometry patterns across all years we had ring width for.}
+% \label{fig:allom}
+% \end{figure}
+
+% latex table generated in R 4.5.1 by xtable 1.8-4 package
+% Tue Jun  9 10:42:43 2026
+\begin{table}[ht]
+\centering
+\caption{Treespotters species grouped by tree type, life history, and wood anatomy. A total of 49 individual trees were sampled.} 
+\label{tab:tsCount}
+\begin{tabular}{p{7cm}p{5cm}p{3cm}r}
+  \hline
+Common Name (Latin) & Life History Strategy & Wood Anatomy & $n$ \\
+\hline
+ \hline
+ American basswood (\textit{Tilia americana}) & Fast-growth, moderate life & Diffuse-porous &   5 \\ 
+  Eastern cottonwood (\textit{Populus deltoides}) & Fast-growth, short life & Diffuse-porous &   4 \\ 
+  Northern red oak (\textit{Quercus rubra}) & Moderate-growth, long life & Ring-porous &   4 \\ 
+  White oak (\textit{Quercus alba}) & Slow-growth, long life & Ring-porous &   5 \\ 
+  Pignut hickory (\textit{Carya glabra}) & Slow-growth, long life & Ring-porous &   4 \\ 
+  Shagbark hickory (\textit{Carya ovata}) & Slow-growth, long life & Ring-porous &   5 \\ 
+  River birch (\textit{Betula nigra}) & Fast-growth, short life & Diffuse-porous &   4 \\ 
+  Yellow birch (\textit{Betula alleghaniensis}) & Moderate-growth, moderate life & Diffuse-porous &   4 \\ 
+  Sugar maple (\textit{Acer saccharum}) & Slow-growth, long life & Diffuse-porous &   5 \\ 
+  Red maple (\textit{Acer rubrum}) & Slow-growth, long life & Diffuse-porous &   4 \\ 
+  Yellow buckeye (\textit{Aesculus flava}) & Moderate-growth, moderate life & Diffuse-porous &   5 \\ 
+   \hline
+\end{tabular}
+\end{table}
+
+
+%-------------------------------------------------------------------------------
+% Supplemental Results
+%-------------------------------------------------------------------------------
+\clearpage
+\subsection*{Supplemental Results}
+
+
+
+\end{document}
