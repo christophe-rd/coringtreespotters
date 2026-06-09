@@ -34,7 +34,7 @@
 library(xtable)
 source("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/rcode/TSgrowthModelsMain_plots.R")
 source("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/rcode/TSclimate_plots.R")
-empts
+
 countspp <- table(empts[!duplicated(empts$id),]$latbi)
 options(digits = 2)
 
@@ -84,7 +84,7 @@ The Tree Spotters was a citizen science program that started in 2015 and aimed t
 % Phenological monitoring and sample collection
 %-------------------------------------------------------------------------------
 \subsection*{Phenological monitoring and sample collection}
-From 20 to 22 April 2025, we collected tree ring samples only for the tree species that were previously monitored for phenology---excluding \textit{Fagus grandifolia} because of beach bark disease concerns (Table \ref{tab:coringTreespottersSpecies}). For this, we collected two 5-mm diameter cores, 15-cm length at 1.3 meters above ground. , using an increment borer (Mora Borer, Haglöfs Sweden, Bromma, Stockholm, Sweden). We collected the cores perpendicular to the slope and at 180 degrees from each other, cleaning the increment borer with alcohol (70\% ethanol) and the inside with a brush before collecting each core. We stored the cores at ambient temperature for three months in paper straws that were previously labelled and punched to help with drying. \\
+From 20 to 22 April 2025, we collected tree ring samples only for the tree species that were previously monitored for phenology (excluding \textit{Fagus grandifolia} because of beach bark disease concerns) for a total of 49 individuals (Table \ref{tab:tsCount}). For this, we collected two 5-mm diameter cores, 15-cm length at 1.3 meters above ground, using an increment borer (Mora Borer, Haglöfs Sweden, Bromma, Stockholm, Sweden). We collected the cores perpendicular to the slope and at 180 degrees from each other, cleaning the increment borer with alcohol (70\% ethanol) and the inside with a brush before collecting each core. We stored the cores in modified plastic straws to allow aeration and were left to dry at ambient temperature for three months.  \\
 
 %-------------------------------------------------------------------------------
 % Sample processing, imaging and measuring
@@ -92,19 +92,19 @@ From 20 to 22 April 2025, we collected tree ring samples only for the tree speci
 \subsection*{Sample processing, imaging and measuring}
 We mounted the cores on wooden mounts, sanded them using progressively finer sandpaper grits (150, 300, 400, 600, 800, 1000), and then scanned the cores at a resolution of 6250 dpi with a high-resolution treering scanner (Fong, unpublished). Using the digitized images, we measured ring widths with ImageJ \citep{schneider_nih_2012}
 \par
-We performed visual cross dating. We did not perform statistical crossdating because of the short chronologies that limit the capacity of these analyses \citep{raden_potential_2020}, and for similar reasons, we did not detrend the ring widths. Visual analyses of trends showed no consistent allometric patterns (Figure \ref{fig:allom}); thus we included only a year intercept to correct for potential effects of different years, not otherwise included in our model. \\
+We performed visual cross dating. We did not perform statistical crossdating because of the short chronologies and low replication of trees per species which limit the capacity of these analyses \citep{raden_potential_2020}. For similar reasons, we did not detrend the ring widths. Visual analyses of trends showed no consistent allometric patterns (Figure \ref{fig:allom}); thus we included only a year intercept to correct for potential effects of different years, not otherwise included in our model. \\
 
 \subsection*{Data analyses}
 To understand how growth shifted with season lengths we used linear Bayesian hierarchical models, estimating ring width with differing season lengths using four different season predictors (GDD, GSL, SOS and EOS). We calculated the thermal season using growing degree days (GDD) (mean daily temperature above 5\degree C) accumulated between leafout and budset, and the calendar season (or growing season length (GSL)) as the number of days between leafout and budset. Finally, we used leafout and budset as the start (SOS) and end of the season (EOS) as separate predictors that represent the boundaries of the growing season. \\
 
-We used the daily climate data from the climate station located at Weldhill research station for 2018 and 2019 (\url{https://arboretum.harvard.edu/research/data-resources/weather/}). Because the data was not available for that station after August 2020, we used the daily climate data from the weather station “Boston (Weld Hill)" of the Network for Environment and Weather Applications (NEWA) for the whole year in 2020 (\url{https://newa.cornell.edu/all-weather-data-query/}). \\
+We used the daily climate data from the climate station located at Weldhill research station for 2016 and 2019 (\url{https://arboretum.harvard.edu/research/data-resources/weather/}). Because the data was not available for that station after August 2020, we used the daily climate data from the weather station “Boston (Weld Hill)" of the Network for Environment and Weather Applications (NEWA) for the whole year in 2020 (\url{https://newa.cornell.edu/all-weather-data-query/}). \\
 
 For each predictor, we estimated its effect on ring width observed for each tree in each year as:
 
 \[
 \begin{aligned} 
 ln(ringwidth)_i &\sim N(\mu, \sigma_y) \\
-\mu &= \alpha + \alpha_{\text{species}} + \alpha_{\text{prov}} + \alpha_{\text{treeid}} + \alpha_{\text{year}} + \beta_{species} \times \text{season predictor} \\
+\mu &= \alpha + \alpha_{\text{species}} + \alpha_{\text{treeid}} + \alpha_{\text{year}} + \beta_{species} \times \text{season predictor} \\
 \alpha_{\text{prov}} &\sim N(0, \sigma_{\alpha \, \text{prov}}) \\
 \alpha_{\text{treeid}} &\sim N(0, \sigma_{\alpha \, \text{treeid}}) \\
 \end{aligned}
@@ -113,9 +113,8 @@ ln(ringwidth)_i &\sim N(\mu, \sigma_y) \\
 where $i$ denotes each observation, $\alpha$ represent intercepts and $\beta$ represent slopes. This model yields a species-specific effect of each seasonal predictor (e.g. GDD) while also allowing other variation due to species ($\alpha_{species}$), alongside variation due to provenance ($\alpha_{prov}$), tree id ($\alpha_{treeid}$), year ($\alpha_{year}$) and a species specific growth rate ($\beta_{species}$). We chose weakly informative priors for all models; increasing the priors by 2x did not change the results trends. We ran four chains for a total of 8000 warmup (discarded) and 8000 sampling iterations, which we kept for posterior distribution estimates. The models did not have any divergent transitions, had a $\hat{R}$ below 1.01, and values of effective sample size ($n_{\text{eff}}$) greater than 10\% of the model iterations. We wrote our models using Stan \citep{carpenter_stan_2017} with the rstan package version 2.32.7 \citep{stan_development_team_rstan_2025} to run the Stan code in R. \\
 
 \par
-As a supplementary analyses, we ran the models using basal area increment (BAI), as the response variable. For this, we summed each ring width separately at the three distinct locations on the cross sections yielding three radii from pit to bark. We then calculated the area of each ring by subtracting the radius from the inner ring from the outer ring: $\pi \times (\text{Inner radius}^2 - \text{Outer radius}^2)$. Then, we averaged across the three BAI for each ring and fit the models with the four different predictors. \\
 
-We also fit the models for SOS and EOS using the full vs restricted datasets.
+We also We also fit the models for SOS and EOS using the full vs restricted datasets.
 
 
 % <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
@@ -154,14 +153,13 @@ We also fit the models for SOS and EOS using the full vs restricted datasets.
 \subsection*{Supplemental Methods}
 
 % Rw per year for allometry
-% \begin{figure}[!ht]
-% \includegraphics[width=0.6\textwidth]{/Users/christophe_rouleau-desrochers/github/wildchrokie/analyses/figures/empiricalData/rwXyearAll.pdf}
-% \caption{We randomly sampled 20 trees from our dataset and represent the ring width as a function of year to represent the allometry patterns across all years we had ring width for.}
-% \label{fig:allom}
-% \end{figure}
+\begin{figure}[!ht]
+\includegraphics[width=0.6\textwidth]{/Users/christophe_rouleau-desrochers/github/coringTreespotters/analyses/figures/empiricalData/rwXyearRestricted.pdf}
+\caption{We randomly sampled 20 trees from our dataset and represent the ring width as a function of year to represent the allometry patterns across all years we had phenology data for.}
+\label{fig:allom}
+\end{figure}
 
 <<Table species summary, results='asis', echo=FALSE>>=
-
 spptable <- data.frame(
   Species = c(
     "American basswood (\\textit{Tilia americana})",

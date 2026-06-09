@@ -36,6 +36,7 @@ runzscoredmodels <- FALSE
 runfulldata <- FALSE
 runmodelnoayear <- FALSE
 fitmodelprvsyr <- FALSE
+runbudburst <- FALSE
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 # Most restricted amount of data ####
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
@@ -874,11 +875,15 @@ sigma_df <- df_fitgdd[, columns[grepl("sigma", columns)]]
 bspp_df <- df_fitgdd[, columns[grepl("bsp", columns)]]
 treeid_df <- df_fitgdd[, grepl("treeid", columns) & !grepl("z|sigma", columns)]
 aspp_df <- df_fitgdd[, columns[grepl("aspp", columns)]]
+ayear_df2   <- extract_params(df_fitgdd, "ayear", "fit_ayear",
+                              "year", "ayear\\[(\\d+)\\]")
+ayear_df <- df_fitgdd[, columns[grepl("ayear", columns)]]
 
 # change colnames
 colnames(bspp_df) <- 1:ncol(bspp_df)
 colnames(treeid_df) <- 1:ncol(treeid_df)
 colnames(aspp_df) <- 1:ncol(aspp_df)
+colnames(ayear_df) <- 1:ncol(ayear_df)
 
 # posterior summaries
 sigma_df2  <- extract_params(df_fitgdd, "sigma", "mean", "sigma")
@@ -895,7 +900,7 @@ write.csv(sigma_df2,  "output/GM_GDDparam_Z_sigma.csv",  row.names = FALSE)
 write.csv(bspp_df2,   "output/GM_GDDparam_Z_bspp.csv",   row.names = FALSE)
 write.csv(treeid_df2, "output/GM_GDDparam_Z_treeid.csv", row.names = FALSE)
 write.csv(aspp_df2,   "output/GM_GDDparam_Z_aspp.csv",   row.names = FALSE)
-
+write.csv(ayear_df2, "output/GM_GDDparam_Z_ayear.csv", row.names = FALSE)
 
 ##### Plot posterior vs priors for gdd fit #####
 pdf(file = "figures/growthModelsMain/diagnostics/ZgddModelPriorVSPosterior.pdf", width = 8, height = 10)
@@ -940,6 +945,17 @@ for (col in colnames(aspp_df)) {
 } 
 legend("topright", legend = c("Prior", "Posterior"), col = pal, lwd = 2)
 
+# ayear
+plot(density(df_fitgdd[, "ayear_prior"]),
+     col = pal[1], lwd = 2,
+     main = "priorVSposterior_ayear",
+     xlab = "ayear",
+     ylim = c(0, 1))
+for (col in colnames(ayear_df)) {
+  lines(density(ayear_df[, col]), col = pal[2], lwd = 1)
+}
+legend("topright", legend = c("Prior", "Posterior"), col = pal, lwd = 2)
+
 # bsp
 plot(density(df_fitgdd[, "bsp_prior"]), 
      col = pal[1], lwd = 2, 
@@ -962,25 +978,28 @@ bspp_df <- df_fitgsl[, columns[grepl("bsp", columns)]]
 treeid_df <- df_fitgsl[, grepl("treeid", columns) & 
                          !grepl("z|sigma", columns)]
 aspp_df <- df_fitgsl[, columns[grepl("aspp", columns)]]
+ayear_df <- df_fitgsl[, columns[grepl("ayear", columns)]]
 
 # change colnames
 colnames(bspp_df) <- 1:ncol(bspp_df)
 colnames(treeid_df) <- 1:ncol(treeid_df)
 colnames(aspp_df) <- 1:ncol(aspp_df)
+colnames(ayear_df) <- 1:ncol(ayear_df)
 
 # posterior summaries
 sigma_df2  <- extract_params(df_fitgsl, "sigma", "mean", "sigma")
 bspp_df2   <- extract_params(df_fitgsl, "bsp", "fit_bspp", "spp", "bsp\\[(\\d+)\\]")
 treeid_df2 <- extract_params(df_fitgsl, "atreeid", "fit_atreeid", "treeid", "atreeid\\[(\\d+)\\]")
-treeid_df2 <- subset(treeid_df2, !grepl("z|sigma", treeid))
+treeid_df2 <- subset(treeid_df2, !grepl("prior|z|sigma", treeid))
 aspp_df2   <- extract_params(df_fitgsl, "aspp", "fit_aspp", "spp", "aspp\\[(\\d+)\\]")
-treeid_df2 <- subset(treeid_df2, !grepl("prior", treeid))
-
+ayear_df2   <- extract_params(df_fitgsl, "ayear", "fit_ayear",
+                              "year", "ayear\\[(\\d+)\\]")
 # save csvs
 write.csv(sigma_df2,  "output/GM_GSLparam_Z_sigma.csv",  row.names = FALSE)
 write.csv(bspp_df2,   "output/GM_GSLparam_Z_bspp.csv",   row.names = FALSE)
 write.csv(treeid_df2, "output/GM_GSLparam_Z_treeid.csv", row.names = FALSE)
 write.csv(aspp_df2,   "output/GM_GSLparam_Z_aspp.csv",   row.names = FALSE)
+write.csv(ayear_df2, "output/GM_GSLparam_Z_ayear.csv", row.names = FALSE)
 
 ##### Plot posterior vs priors for GSL fit #####
 pdf(file = "figures/growthModelsMain/diagnostics/ZgslModelPriorVSPosterior.pdf", width = 8, height = 10)
@@ -1025,6 +1044,17 @@ for (col in colnames(aspp_df)) {
 } 
 legend("topright", legend = c("Prior", "Posterior"), col = pal, lwd = 2)
 
+# ayear
+plot(density(df_fitgsl[, "ayear_prior"]),
+     col = pal[1], lwd = 2,
+     main = "priorVSposterior_ayear",
+     xlab = "ayear",
+     ylim = c(0, 1))
+for (col in colnames(ayear_df)) {
+  lines(density(ayear_df[, col]), col = pal[2], lwd = 1)
+}
+legend("topright", legend = c("Prior", "Posterior"), col = pal, lwd = 2)
+
 # bsp
 plot(density(df_fitgsl[, "bsp_prior"]), 
      col = pal[1], lwd = 2, 
@@ -1048,19 +1078,30 @@ bspp_df <- df_fitsos[, columns[grepl("bsp", columns)]]
 treeid_df <- df_fitsos[, grepl("treeid", columns) & 
                          !grepl("z|sigma", columns)]
 aspp_df <- df_fitsos[, columns[grepl("aspp", columns)]]
+ayear_df <- df_fitsos[, columns[grepl("ayear", columns)]]
 
 # change colnames
 colnames(bspp_df) <- 1:ncol(bspp_df)
 colnames(treeid_df) <- 1:ncol(treeid_df)
 colnames(aspp_df) <- 1:ncol(aspp_df)
+colnames(ayear_df) <- 1:ncol(ayear_df)
 
 # posterior summaries
 sigma_df2_sos  <- extract_params(df_fitsos, "sigma", "mean", "sigma")
 bspp_df2_sos   <- extract_params(df_fitsos, "bsp", "fit_bspp", "spp", "bsp\\[(\\d+)\\]")
 treeid_df2_sos <- extract_params(df_fitsos, "atreeid", "fit_atreeid", "treeid", "atreeid\\[(\\d+)\\]")
-treeid_df2_sos <- subset(treeid_df2_sos, !grepl("z|sigma", treeid))
+treeid_df2_sos <- subset(treeid_df2_sos, !grepl("prior|z|sigma", treeid))
 aspp_df2_sos   <- extract_params(df_fitsos, "aspp", "fit_aspp", "spp", "aspp\\[(\\d+)\\]")
-treeid_df2_sos <- subset(treeid_df2_sos, !grepl("prior", treeid))
+ayear_df2_sos   <- extract_params(df_fitsos, "ayear", "fit_ayear",
+                                  "year", "ayear\\[(\\d+)\\]")
+
+# save csvs
+write.csv(sigma_df2_sos,  "output/GM_SOS_param_Z_sigma.csv",  row.names = FALSE)
+write.csv(bspp_df2_sos,   "output/GM_SOS_param_Z_bspp.csv",   row.names = FALSE)
+write.csv(treeid_df2_sos, "output/GM_SOS_param_Z_treeid.csv", row.names = FALSE)
+write.csv(aspp_df2_sos,   "output/GM_SOS_param_Z_aspp.csv",   row.names = FALSE)
+write.csv(ayear_df2_sos,  "output/GM_SOS_param_Z_ayear.csv", row.names = FALSE)
+
 
 ##### Plot posterior vs priors for sos fit #####
 pdf(file = "figures/growthModelsMain/diagnostics/ZsosModelPriorVSPosterior.pdf", width = 8, height = 10)
@@ -1105,6 +1146,17 @@ for (col in colnames(aspp_df)) {
 } 
 legend("topright", legend = c("Prior", "Posterior"), col = pal, lwd = 2)
 
+# ayear
+plot(density(df_fitsos[, "ayear_prior"]),
+     col = pal[1], lwd = 2,
+     main = "priorVSposterior_ayear",
+     xlab = "ayear",
+     ylim = c(0, 1))
+for (col in colnames(ayear_df)) {
+  lines(density(ayear_df[, col]), col = pal[2], lwd = 1)
+}
+legend("topright", legend = c("Prior", "Posterior"), col = pal, lwd = 2)
+
 # bsp
 plot(density(df_fitsos[, "bsp_prior"]), 
      col = pal[1], lwd = 2, 
@@ -1128,19 +1180,22 @@ bspp_df <- df_fiteos[, columns[grepl("bsp", columns)]]
 treeid_df <- df_fiteos[, grepl("treeid", columns) & 
                          !grepl("z|sigma", columns)]
 aspp_df <- df_fiteos[, columns[grepl("aspp", columns)]]
+ayear_df <- df_fiteos[, columns[grepl("ayear", columns)]]
 
 # change colnames
 colnames(bspp_df) <- 1:ncol(bspp_df)
 colnames(treeid_df) <- 1:ncol(treeid_df)
 colnames(aspp_df) <- 1:ncol(aspp_df)
+colnames(ayear_df) <- 1:ncol(ayear_df)
 
 # posterior summaries
 sigma_df2_eos  <- extract_params(df_fiteos, "sigma", "mean", "sigma")
 bspp_df2_eos   <- extract_params(df_fiteos, "bsp", "fit_bspp", "spp", "bsp\\[(\\d+)\\]")
 treeid_df2_eos <- extract_params(df_fiteos, "atreeid", "fit_atreeid", "treeid", "atreeid\\[(\\d+)\\]")
-treeid_df2_eos <- subset(treeid_df2_eos, !grepl("z|sigma", treeid))
+treeid_df2_eos <- subset(treeid_df2_eos, !grepl("prior|z|sigma", treeid))
 aspp_df2_eos   <- extract_params(df_fiteos, "aspp", "fit_aspp", "spp", "aspp\\[(\\d+)\\]")
-treeid_df2_eos <- subset(treeid_df2_eos, !grepl("prior", treeid))
+ayear_df2_eos   <- extract_params(df_fiteos, "ayear", "fit_ayear",
+                                  "year", "ayear\\[(\\d+)\\]")
 
 ##### Plot posterior vs priors for eos fit #####
 pdf(file = "figures/growthModelsMain/diagnostics/ZeosModelPriorVSPosterior.pdf", width = 8, height = 10)
@@ -1183,6 +1238,17 @@ plot(density(df_fiteos[, "aspp_prior"]),
 for (col in colnames(aspp_df)) {
   lines(density(aspp_df[, col]), col = pal[2], lwd = 1)
 } 
+legend("topright", legend = c("Prior", "Posterior"), col = pal, lwd = 2)
+
+# ayear
+plot(density(df_fiteos[, "ayear_prior"]),
+     col = pal[1], lwd = 2,
+     main = "priorVSposterior_ayear",
+     xlab = "ayear",
+     ylim = c(0, 1))
+for (col in colnames(ayear_df)) {
+  lines(density(ayear_df[, col]), col = pal[2], lwd = 1)
+}
 legend("topright", legend = c("Prior", "Posterior"), col = pal, lwd = 2)
 
 # bsp
@@ -1511,6 +1577,7 @@ dev.off()
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 # Fit model budburst vs leafout ####
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+if(runbudburst){
 empts <- read.csv("output/empiricalDataMAIN.csv")
 
 # remove entries for which we dont have budburst
@@ -1945,5 +2012,4 @@ legend("right", legend = names(wood_colors), col = wood_colors,
        pch = 16, pt.cex = 1.2, bty = "n", title = "Wood anatomy", xpd = TRUE)
 dev.off()
 
-
-dev.off()
+}
