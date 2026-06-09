@@ -605,6 +605,7 @@ dev.off()
 # transform my groups to numeric values
 empfullsosts$spp_num <- match(empfullsosts$latbi, unique(empfullsosts$latbi))
 empfullsosts$treeid_num <- match(empfullsosts$id, unique(empfullsosts$id))
+
 if(runfulldata) {
 # transform data in vectors for gsl
 y <- empfullsosts$loglength # ring width in mm
@@ -814,22 +815,6 @@ mtext("(b)", side = 2, outer = TRUE, at = 0.42, font = 2, las = 1, line = 0.5)
 
 dev.off()
 
-# <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
-# Retrodictive checks ####
-# <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
-samples <- util$extract_expectand_vals(fitsos)
-jpeg(
-  filename = "figures/growthModelsMain/diagnostics/retrodictiveCheckHist.jpeg",
-  width = 2400, height = 2400, res = 300          
-)
-util$plot_hist_quantiles(samples, "y_rep", 
-                         -3, # lower x axis limit
-                         5, # upper x axis limit
-                         0.2, # binning
-                         baseline_values = y,
-                         xlab = "Ring width (mm)")
-dev.off()
-
 }
 
 
@@ -875,15 +860,12 @@ fiteos <- sampling(eosmodel, data = deos,
                    warmup = 1000, iter = 2000, chains=4)
 saveRDS(fiteos, "output/stanOutput/fitGrowthEOSZscored")
 
-# <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
-# Plot GDD fit ####
-# <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+# Plot GDD fit
 fitgdd <- readRDS("output/stanOutput/fitGrowthGDDZscored")
 fitgsl <- readRDS("output/stanOutput/fitGrowthGSLZscored")
 fitsos <- readRDS("output/stanOutput/fitGrowthSOSZscored")
 fiteos <- readRDS("output/stanOutput/fitGrowthEOSZscored")
 
-##### Recover parameters #####
 df_fitgdd <- as.data.frame(fitgdd)
 
 # full posterior
@@ -970,10 +952,7 @@ legend("topright", legend = c("Prior", "Posterior"), col = pal, lwd = 2)
 
 dev.off()
 
-# <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
-# Plot GSL fit ####
-# <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
-##### Recover parameters #####
+# Plot GSL fit
 df_fitgsl <- as.data.frame(fitgsl)
 
 # full posterior
@@ -1058,10 +1037,8 @@ legend("topright", legend = c("Prior", "Posterior"), col = pal, lwd = 2)
 
 dev.off()
 
-# <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
-# Plot SOS fit ####
-# <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
-##### Recover parameters #####
+# Plot SOS fit 
+# Recover parameters
 df_fitsos <- as.data.frame(fitsos)
 
 # full posterior
@@ -1140,10 +1117,8 @@ legend("topright", legend = c("Prior", "Posterior"), col = pal, lwd = 2)
 
 dev.off()
 
-# <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
-# Plot EOS fit ####
-# <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
-##### Recover parameters #####
+# Plot EOS fit
+# Recover parameters
 df_fiteos <- as.data.frame(fiteos)
 
 # full posterior
@@ -1530,3 +1505,113 @@ legend("topright", legend = c("Prior", "Posterior"), col = pal, lwd = 2)
 
 dev.off()
 }
+
+# <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+# Fit model budburst vs leafout ####
+# <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+empts <- read.csv("output/empiricalDataMAIN.csv")
+
+# remove entries for which we dont have budburst
+empts$loglength <- log(empts$lengthMM)
+
+nrow(empts[!is.na(empts$fgsGDD5) & !is.na(empts$loglength),])
+nrow(empts[!is.na(empts$pgsGDD5) & !is.na(empts$loglength),])
+emptscomp <- empts[!is.na(empts$fgsGDD5) & !is.na(empts$loglength),]
+emptscomp <- subset(emptscomp, year != 2015)
+
+lineplotseqlength <- 10
+
+# transform my groups to numeric values
+emptscomp$spp_num <- match(emptscomp$latbi, unique(emptscomp$latbi))
+emptscomp$treeid_num <- match(emptscomp$id, unique(emptscomp$id))
+emptscomp$year_num <- match(emptscomp$year, unique(emptscomp$year))
+
+# order by tree id
+treeid_spp <- unique(emptscomp[, c("treeid_num", "spp_num", "id", "latbi")])
+
+treeid_spp_ordered <- treeid_spp[order(treeid_spp$treeid_num), ]
+gddseq <- seq(min(emptscomp$fgsGDD5), max(emptscomp$fgsGDD5), length.out = lineplotseqlength)
+
+dgdd <- list(
+  y = emptscomp$loglength,
+  N = nrow(emptscomp),
+  Nspp = length(unique(emptscomp$spp_num)),
+  species = as.numeric(as.character(emptscomp$spp_num)),
+  treeid = as.numeric(emptscomp$treeid_num),
+  Ntreeid = length(unique(as.numeric(emptscomp$treeid_num))),
+  year = as.numeric(emptscomp$year_num),
+  Nyear = length(unique(emptscomp$year_num)),
+  treeid_species = treeid_spp_ordered$spp_num,
+  Ntreeid_per_spp = as.integer(table(treeid_spp_ordered$spp_num)),
+  gddseq = gddseq,
+  tsgddscale = tsgddscale,
+  Ngddseq = length(gddseq)
+)
+dgdd
+
+# Set model GSL data
+gslscale <- 7
+emptscomp$fgsGSL <- emptscomp$coloredLeaves - emptscomp$budburst
+gslseq <-  seq(min(emptscomp$fgsGSL), max(emptscomp$fgsGSL), length.out = lineplotseqlength)
+
+# data list for GSL
+dgsl <- list(
+  y = emptscomp$loglength,
+  N = nrow(emptscomp),
+  Nspp = length(unique(emptscomp$spp_num)),
+  species = as.numeric(as.character(emptscomp$spp_num)),
+  treeid = as.numeric(emptscomp$treeid_num),
+  Ntreeid = length(unique(as.numeric(emptscomp$treeid_num))),
+  year = as.numeric(emptscomp$year_num),
+  Nyear = length(unique(emptscomp$year_num)),
+  treeid_species = treeid_spp_ordered$spp_num,
+  Ntreeid_per_spp = as.integer(table(treeid_spp_ordered$spp_num)),
+  gslseq = gslseq,
+  gslscale = gslscale,
+  Ngslseq = length(gslseq)
+)
+
+sosscale <- 7
+sos <- emptscomp$budburst / sosscale
+sosseq <-  seq(min(emptscomp$budburst), max(emptscomp$budburst), length.out = lineplotseqlength)
+
+# data list for sos
+dsos <- list(
+  y = emptscomp$loglength,
+  N = nrow(emptscomp),
+  Nspp = length(unique(emptscomp$spp_num)),
+  species = as.numeric(as.character(emptscomp$spp_num)),
+  treeid = as.numeric(emptscomp$treeid_num),
+  Ntreeid = length(unique(as.numeric(emptscomp$treeid_num))),
+  year = as.numeric(emptscomp$year_num),
+  Nyear = length(unique(emptscomp$year_num)),
+  treeid_species = treeid_spp_ordered$spp_num,
+  Ntreeid_per_spp = as.integer(table(treeid_spp_ordered$spp_num)),
+  sosseq = sosseq,
+  sosscale = sosscale,
+  Nsosseq = length(sosseq)
+)
+
+
+# translate model
+model <- stan_model("stan/TSmodelGrowth_z.stan")
+
+# Fit model GDD
+dgdd$covariate <- (emptscomp$fgsGDD5 - mean(emptscomp$fgsGDD5)) / sd(emptscomp$fgsGDD5)
+fitgdd <- sampling(model, data = dgdd,
+                   warmup = 1000, iter=2000, chains=4)
+saveRDS(fitgdd, "output/stanOutput/fitGrowthGDDZscored")
+diagnostics <- util$extract_hmc_diagnostics(fitgdd)
+util$check_all_hmc_diagnostics(diagnostics)
+
+# Fit model GSL
+dgsl$covariate <- (emptscomp$fgsGSL - mean(emptscomp$fgsGSL)) / sd(emptscomp$fgsGSL)
+fitgsl <- sampling(model, data = dgsl,
+                   warmup = 1000, iter = 2000, chains = 4)
+saveRDS(fitgsl, "output/stanOutput/fitGrowthGSLZscored")
+
+# Fit model SOS
+dsos$covariate <- (emptscomp$budburst - mean(emptscomp$budburst)) / sd(emptscomp$budburst)
+fitsos <- sampling(model, data = dsos,
+                   warmup = 1000, iter = 2000, chains=4)
+saveRDS(fitsos, "output/stanOutput/fitGrowthSOSZscored")
