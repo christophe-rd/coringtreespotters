@@ -32,7 +32,7 @@ source('mcmc_visualization_tools.R', local=util)
 source('/Users/christophe_rouleau-desrochers/github/wildchrokie/analyses/rcode/tools.R')
 
 runmodels <- F
-runzscoredmodels <- FALSE
+runzscoredmodels <- T
 runfulldata <- FALSE
 runmodelnoayear <- FALSE
 fitmodelprvsyr <- FALSE
@@ -716,32 +716,32 @@ par(mfrow = c(2,3), oma = c(0, 2, 0, 0))
 
 plot(sigma_df2_sos$mean, sigma_df2_sos_full$mean,
      xlab = "restricted", ylab = "full", main = "sigmas", type = "n", frame = FALSE,
-     ylim = range(c(sigma_df2_sos_full$mean_per25, sigma_df2_sos_full$mean_per75)),
-     xlim = range(c(sigma_df2_sos$mean_per25, sigma_df2_sos$mean_per75)))
-arrows(x0 = sigma_df2_sos$mean, y0 = sigma_df2_sos_full$mean_per25,
-       x1 = sigma_df2_sos$mean, y1 = sigma_df2_sos_full$mean_per75,
+     ylim = range(c(sigma_df2_sos_full$p25, sigma_df2_sos_full$p75)),
+     xlim = range(c(sigma_df2_sos$p25, sigma_df2_sos$p75)))
+arrows(x0 = sigma_df2_sos$mean, y0 = sigma_df2_sos_full$p25,
+       x1 = sigma_df2_sos$mean, y1 = sigma_df2_sos_full$p75,
        angle = 90, code = 3, length = 0, lwd = 1.5, col = "darkgray")
-arrows(x0 = sigma_df2_sos$mean_per25, y0 = sigma_df2_sos_full$mean,
-       x1 = sigma_df2_sos$mean_per75, y1 = sigma_df2_sos_full$mean,
+arrows(x0 = sigma_df2_sos$p25, y0 = sigma_df2_sos_full$mean,
+       x1 = sigma_df2_sos$p75, y1 = sigma_df2_sos_full$mean,
        angle = 90, code = 3, length = 0, lwd = 1.5, col = "darkgray")
 points(sigma_df2_sos$mean, sigma_df2_sos_full$mean,
        pch = 16, col = "#0a6a3c", cex = 1.5)
 abline(0, 1, lty = 2, col = "black", lwd = 2)
 points(sigma_df2_sos$mean, sigma_df2_sos_full$mean, pch = 16, col = "#0a6a3c", cex = 1.5)
-text(sigma_df2_sos$mean_per75, sigma_df2_sos_full$mean_per25, labels = sigma_df2_sos$sigma, pos = c(3,3), cex = 0.75)
+text(sigma_df2_sos$p75, sigma_df2_sos_full$p25, labels = sigma_df2_sos$sigma, pos = c(3,3), cex = 0.75)
 
 # bspp
-plot(bspp_df2_sos$fit_bspp, bspp_df2_sos_full$fit_bspp,
+plot(bspp_df2_sos$mean, bspp_df2_sos_full$mean,
      xlab = "restricted", ylab = "full", main = "bspp", type = "n", frame = FALSE,
-     ylim = range(c(bspp_df2_sos_full$fit_bspp_per25, bspp_df2_sos_full$fit_bspp_per75)),
-     xlim = range(c(bspp_df2_sos$fit_bspp_per25, bspp_df2_sos$fit_bspp_per75)))
-arrows(x0 = bspp_df2_sos$fit_bspp, y0 = bspp_df2_sos_full$fit_bspp_per25,
-       x1 = bspp_df2_sos$fit_bspp, y1 = bspp_df2_sos_full$fit_bspp_per75,
+     ylim = range(c(bspp_df2_sos_full$p25, bspp_df2_sos_full$p75)),
+     xlim = range(c(bspp_df2_sos$p25, bspp_df2_sos$p75)))
+arrows(x0 = bspp_df2_sos$mean, y0 = bspp_df2_sos_full$p25,
+       x1 = bspp_df2_sos$mean, y1 = bspp_df2_sos_full$p75,
        angle = 90, code = 3, length = 0, lwd = 1.5, col = "darkgray")
-arrows(x0 = bspp_df2_sos$fit_bspp_per25, y0 = bspp_df2_sos_full$fit_bspp,
-       x1 = bspp_df2_sos$fit_bspp_per75, y1 = bspp_df2_sos_full$fit_bspp,
+arrows(x0 = bspp_df2_sos$p25, y0 = bspp_df2_sos_full$mean,
+       x1 = bspp_df2_sos$p75, y1 = bspp_df2_sos_full$mean,
        angle = 90, code = 3, length = 0, lwd = 1.5, col = "darkgray")
-points(bspp_df2_sos$fit_bspp, bspp_df2_sos_full$fit_bspp,
+points(bspp_df2_sos$mean, bspp_df2_sos_full$mean,
        pch = 16, col = "#0a6a3c", cex = 1.5)
 abline(0, 1, lty = 2, col = "black", lwd = 2)
 
@@ -767,32 +767,32 @@ mtext("(a)", side = 2, outer = TRUE, at = 0.95, font = 2, las = 1, line = 0.5)
 # EOS
 plot(sigma_df2_eos$mean, sigma_df2_eos_full$mean,
      xlab = "restricted", ylab = "full", main = "sigmas", type = "n", frame = FALSE,
-     ylim = range(c(sigma_df2_eos_full$mean_per25, sigma_df2_eos_full$mean_per75)),
-     xlim = range(c(sigma_df2_eos$mean_per25, sigma_df2_eos$mean_per75)))
-arrows(x0 = sigma_df2_eos$mean, y0 = sigma_df2_eos_full$mean_per25,
-       x1 = sigma_df2_eos$mean, y1 = sigma_df2_eos_full$mean_per75,
+     ylim = range(c(sigma_df2_eos_full$p25, sigma_df2_eos_full$p75)),
+     xlim = range(c(sigma_df2_eos$p25, sigma_df2_eos$p75)))
+arrows(x0 = sigma_df2_eos$mean, y0 = sigma_df2_eos_full$p25,
+       x1 = sigma_df2_eos$mean, y1 = sigma_df2_eos_full$p75,
        angle = 90, code = 3, length = 0, lwd = 1.5, col = "darkgray")
-arrows(x0 = sigma_df2_eos$mean_per25, y0 = sigma_df2_eos_full$mean,
-       x1 = sigma_df2_eos$mean_per75, y1 = sigma_df2_eos_full$mean,
+arrows(x0 = sigma_df2_eos$p25, y0 = sigma_df2_eos_full$mean,
+       x1 = sigma_df2_eos$p75, y1 = sigma_df2_eos_full$mean,
        angle = 90, code = 3, length = 0, lwd = 1.5, col = "darkgray")
 points(sigma_df2_eos$mean, sigma_df2_eos_full$mean,
        pch = 16, col = "#d39822", cex = 1.5)
 abline(0, 1, lty = 2, col = "black", lwd = 2)
 points(sigma_df2_eos$mean, sigma_df2_eos_full$mean, pch = 16, col = "#d39822", cex = 1.5)
-text(sigma_df2_eos$mean_per75, sigma_df2_eos_full$mean_per25, labels = sigma_df2_eos$sigma, pos = c(3,3), cex = 0.75)
+text(sigma_df2_eos$p75, sigma_df2_eos_full$p25, labels = sigma_df2_eos$sigma, pos = c(3,3), cex = 0.75)
 
 # bspp
-plot(bspp_df2_eos$fit_bspp, bspp_df2_eos_full$fit_bspp,
+plot(bspp_df2_eos$mean, bspp_df2_eos_full$mean,
      xlab = "restricted", ylab = "full", main = "bspp", type = "n", frame = FALSE,
-     ylim = range(c(bspp_df2_eos_full$fit_bspp_per25, bspp_df2_eos_full$fit_bspp_per75)),
-     xlim = range(c(bspp_df2_eos$fit_bspp_per25, bspp_df2_eos$fit_bspp_per75)))
-arrows(x0 = bspp_df2_eos$fit_bspp, y0 = bspp_df2_eos_full$fit_bspp_per25,
-       x1 = bspp_df2_eos$fit_bspp, y1 = bspp_df2_eos_full$fit_bspp_per75,
+     ylim = range(c(bspp_df2_eos_full$p25, bspp_df2_eos_full$p75)),
+     xlim = range(c(bspp_df2_eos$p25, bspp_df2_eos$p75)))
+arrows(x0 = bspp_df2_eos$mean, y0 = bspp_df2_eos_full$p25,
+       x1 = bspp_df2_eos$mean, y1 = bspp_df2_eos_full$p75,
        angle = 90, code = 3, length = 0, lwd = 1.5, col = "darkgray")
-arrows(x0 = bspp_df2_eos$fit_bspp_per25, y0 = bspp_df2_eos_full$fit_bspp,
-       x1 = bspp_df2_eos$fit_bspp_per75, y1 = bspp_df2_eos_full$fit_bspp,
+arrows(x0 = bspp_df2_eos$p25, y0 = bspp_df2_eos_full$mean,
+       x1 = bspp_df2_eos$p75, y1 = bspp_df2_eos_full$mean,
        angle = 90, code = 3, length = 0, lwd = 1.5, col = "darkgray")
-points(bspp_df2_eos$fit_bspp, bspp_df2_eos_full$fit_bspp,
+points(bspp_df2_eos$mean, bspp_df2_eos_full$mean,
        pch = 16, col = "#d39822", cex = 1.5)
 abline(0, 1, lty = 2, col = "black", lwd = 2)
 
@@ -900,7 +900,7 @@ write.csv(sigma_df2,  "output/GM_GDDparam_Z_sigma.csv",  row.names = FALSE)
 write.csv(bspp_df2,   "output/GM_GDDparam_Z_bspp.csv",   row.names = FALSE)
 write.csv(treeid_df2, "output/GM_GDDparam_Z_treeid.csv", row.names = FALSE)
 write.csv(aspp_df2,   "output/GM_GDDparam_Z_aspp.csv",   row.names = FALSE)
-write.csv(ayear_df2, "output/GM_GDDparam_Z_ayear.csv", row.names = FALSE)
+write.csv(ayear_df2,  "output/GM_GDDparam_Z_ayear.csv", row.names = FALSE)
 
 ##### Plot posterior vs priors for gdd fit #####
 pdf(file = "figures/growthModelsMain/diagnostics/ZgddModelPriorVSPosterior.pdf", width = 8, height = 10)
@@ -1196,6 +1196,12 @@ treeid_df2_eos <- subset(treeid_df2_eos, !grepl("prior|z|sigma", treeid))
 aspp_df2_eos   <- extract_params(df_fiteos, "aspp", "fit_aspp", "spp", "aspp\\[(\\d+)\\]")
 ayear_df2_eos   <- extract_params(df_fiteos, "ayear", "fit_ayear",
                                   "year", "ayear\\[(\\d+)\\]")
+# save csvs
+write.csv(sigma_df2_eos,  "output/GM_EOS_param_Z_sigma.csv",  row.names = FALSE)
+write.csv(bspp_df2_eos,   "output/GM_EOS_param_Z_bspp.csv",   row.names = FALSE)
+write.csv(treeid_df2_eos, "output/GM_EOS_param_Z_treeid.csv", row.names = FALSE)
+write.csv(aspp_df2_eos,   "output/GM_EOS_param_Z_aspp.csv",   row.names = FALSE)
+write.csv(ayear_df2_eos,  "output/GM_EOS_param_Z_ayear.csv", row.names = FALSE)
 
 ##### Plot posterior vs priors for eos fit #####
 pdf(file = "figures/growthModelsMain/diagnostics/ZeosModelPriorVSPosterior.pdf", width = 8, height = 10)
@@ -1661,7 +1667,7 @@ dsos <- list(
   Nsosseq = length(sosseq)
 )
 
-
+if(FALSE) {
 # translate model
 model <- stan_model("stan/TSmodelGrowth_z.stan")
 
@@ -1681,11 +1687,16 @@ saveRDS(fitgsl, "output/stanOutput/fitGrowthGSL_budburst")
 dsos$covariate <- (emptscomp$budburst - mean(emptscomp$budburst)) / sd(emptscomp$budburst)
 fitsos <- sampling(model, data = dsos, warmup = 1000, iter = 2000, chains=4)
 saveRDS(fitsos, "output/stanOutput/fitGrowthSOS_budburst")
+}
 
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
 ##### Recover models with budburst #####
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
-df_fit <- as.data.frame(fitgdd)
+fitgdd <- readRDS("output/stanOutput/fitGrowthGDD_budburst")
+fitgsl <- readRDS("output/stanOutput/fitGrowthGSL_budburst")
+fitsos <- readRDS("output/stanOutput/fitGrowthSOS_budburst")
+
+df_fit    <- as.data.frame(fitgdd)
 df_fitgsl <- as.data.frame(fitgsl)
 df_fitsos <- as.data.frame(fitsos)
 
@@ -1695,7 +1706,7 @@ bspp_df2_bb   <- extract_params(df_fit, "bsp", "fit_bsp", "spp", "bsp\\[(\\d+)\\
 treeid_df2_bb <- extract_params(df_fit, "atreeid", "fit_atreeid", "treeid", "atreeid\\[(\\d+)\\]")
 treeid_df2_bb <- subset(treeid_df2_bb, !grepl("z", treeid) & !grepl("sigma", treeid))
 aspp_df2_bb   <- extract_params(df_fit, "aspp", "fit_aspp", "spp", "aspp\\[(\\d+)\\]")
-ayear_df2_bb   <- extract_params(df_fit, "ayear", "fit_ayear", "year", "ayear\\[(\\d+)\\]")
+ayear_df2_bb  <- extract_params(df_fit, "ayear", "fit_ayear", "year", "ayear\\[(\\d+)\\]")
 
 treeid_df2_bb$treeid_name <- empts$id[match(treeid_df2_bb$treeid, emptscomp$treeid_num)]
 aspp_df2_bb$spp_name <- emptscomp$latbi[match(aspp_df2_bb$spp, emptscomp$spp_num)]
@@ -1730,7 +1741,7 @@ treeid_df2_bb_sos <- extract_params(df_fitsos, "atreeid", "fit_atreeid",
 treeid_df2_bb_sos <- subset(treeid_df2_bb_sos, !grepl("z|sigma", treeid))
 aspp_df2_bb_sos   <- extract_params(df_fitsos, "aspp", "fit_aspp", 
                                     "spp", "aspp\\[(\\d+)\\]")
-ayear_df2_bb_sos   <- extract_params(df_fit, "ayear", "fit_ayear", 
+ayear_df2_bb_sos  <- extract_params(df_fit, "ayear", "fit_ayear", 
                                  "year", "ayear\\[(\\d+)\\]")
 
 treeid_df2_bb_sos$treeid_name <- emptscomp$id[match(treeid_df2_bb_sos$treeid, emptscomp$treeid_num)]
@@ -1741,61 +1752,35 @@ ayear_df2_bb_sos$year_name <- emptscomp$year[match(ayear_df2_bb_sos$year, emptsc
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
 ##### Recover models with Leafout #####
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
-# GDD posterior recovery
-fit <- readRDS("output/stanOutput/fitGrowthGDD")
-df_fit <- as.data.frame(fit)
-
-# posterior summaries
-sigma_df2  <- extract_params(df_fit, "sigma", "mean", "sigma")
-bspp_df2   <- extract_params(df_fit, "bsp", "fit_bspp", "spp", "bspp\\[(\\d+)\\]")
-treeid_df2 <- extract_params(df_fit, "atreeid", "fit_atreeid", "treeid", "atreeid\\[(\\d+)\\]")
-treeid_df2 <- subset(treeid_df2, !grepl("z", treeid) & !grepl("sigma", treeid))
-aspp_df2   <- extract_params(df_fit, "aspp", "fit_aspp", "spp", "aspp\\[(\\d+)\\]")
-ayear_df2  <- extract_params(df_fit, "ayear", "fit_ayear", "year", "ayear\\[(\\d+)\\]")
+sigma_df2  <- read.csv("output/GM_GDDparam_z_sigma.csv")
+bspp_df2   <- read.csv("output/GM_GDDparam_z_bspp.csv")
+treeid_df2 <- read.csv("output/GM_GDDparam_z_treeid.csv")
+aspp_df2   <- read.csv("output/GM_GDDparam_z_aspp.csv")
+ayear_df2  <- read.csv("output/GM_GDDparam_z_ayear.csv")
 
 treeid_df2$treeid_name <- emptscomp$id[match(treeid_df2$treeid, emptscomp$treeid_num)]
-aspp_df2$spp_name <- emptscomp$latbi[match(aspp_df2$spp, emptscomp$spp_num)]
 bspp_df2$spp_name <- emptscomp$latbi[match(bspp_df2$spp, emptscomp$spp_num)]
+aspp_df2$spp_name <- emptscomp$latbi[match(aspp_df2$spp, emptscomp$spp_num)]
 ayear_df2$year_name <- emptscomp$year[match(ayear_df2$year, emptscomp$year_num)]
 
-# GSL posterior recovery
-fitgsl <- readRDS("output/stanOutput/fitGrowthGSL")
-
-df_fitgsl <- as.data.frame(fitgsl)
-
-# posterior summaries
-sigma_df2_gsl  <- extract_params(df_fitgsl, "sigma", "mean", "sigma")
-bspp_df2_gsl   <- extract_params(df_fitgsl, "bsp", "fit_bspp", 
-                                 "spp", "bspp\\[(\\d+)\\]")
-treeid_df2_gsl <- extract_params(df_fitgsl, "atreeid", "fit_atreeid", 
-                                 "treeid", "atreeid\\[(\\d+)\\]")
-treeid_df2_gsl <- subset(treeid_df2_gsl, !grepl("z|sigma", treeid))
-aspp_df2_gsl   <- extract_params(df_fitgsl, "aspp", "fit_aspp", 
-                                 "spp", "aspp\\[(\\d+)\\]")
-ayear_df2_gsl  <- extract_params(df_fit, "ayear", "fit_ayear", 
-                             "year", "ayear\\[(\\d+)\\]")
+# GSL
+sigma_df2_gsl  <- read.csv("output/GM_GSLparam_z_sigma.csv")
+bspp_df2_gsl   <- read.csv("output/GM_GSLparam_z_bspp.csv")
+treeid_df2_gsl <- read.csv("output/GM_GSLparam_z_treeid.csv")
+aspp_df2_gsl   <- read.csv("output/GM_GSLparam_z_aspp.csv")
+ayear_df2_gsl  <- read.csv("output/GM_GSLparam_z_ayear.csv")
 
 treeid_df2_gsl$treeid_name <- emptscomp$id[match(treeid_df2_gsl$treeid, emptscomp$treeid_num)]
 bspp_df2_gsl$spp_name <- emptscomp$latbi[match(bspp_df2_gsl$spp, emptscomp$spp_num)]
 aspp_df2_gsl$spp_name <- emptscomp$latbi[match(aspp_df2_gsl$spp, emptscomp$spp_num)]
 ayear_df2_gsl$year_name <- emptscomp$year[match(ayear_df2_gsl$year, emptscomp$year_num)]
 
-# SOS posterior recovery
-fitsos <- readRDS("output/stanOutput/fitGrowthSOS")
-
-df_fitsos <- as.data.frame(fitsos)
-
-# posterior summaries
-sigma_df2_sos  <- extract_params(df_fitsos, "sigma", "mean", "sigma")
-bspp_df2_sos   <- extract_params(df_fitsos, "bsp", "fit_bspp", 
-                                 "spp", "bspp\\[(\\d+)\\]")
-treeid_df2_sos <- extract_params(df_fitsos, "atreeid", "fit_atreeid", 
-                                 "treeid", "atreeid\\[(\\d+)\\]")
-treeid_df2_sos <- subset(treeid_df2_sos, !grepl("z|sigma", treeid))
-aspp_df2_sos   <- extract_params(df_fitsos, "aspp", "fit_aspp", 
-                                 "spp", "aspp\\[(\\d+)\\]")
-ayear_df2_sos  <- extract_params(df_fit, "ayear", "fit_ayear", 
-                             "year", "ayear\\[(\\d+)\\]")
+# SOS 
+sigma_df2_sos  <- read.csv("output/GM_SOS_param_z_sigma.csv")
+bspp_df2_sos   <- read.csv("output/GM_SOS_param_z_bspp.csv")
+treeid_df2_sos <- read.csv("output/GM_SOS_param_Z_treeid.csv")
+aspp_df2_sos   <- read.csv("output/GM_SOS_param_z_aspp.csv")
+ayear_df2_sos  <- read.csv("output/GM_SOS_param_z_ayear.csv")
 
 treeid_df2_sos$treeid_name <- emptscomp$id[match(treeid_df2_sos$treeid, emptscomp$treeid_num)]
 bspp_df2_sos$spp_name <- emptscomp$latbi[match(bspp_df2_sos$spp, emptscomp$spp_num)]
@@ -1805,8 +1790,6 @@ ayear_df2_sos$year_name <- emptscomp$year[match(ayear_df2_sos$year, emptscomp$ye
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
 ##### Figure for model comparison #####
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
-jpeg("figures/growthModelsMain/budburstVSLeafout/DporousVSRporous.jpeg", width = 7, height = 6, units = "in", res = 300)
-
 # define colors
 wood_colors <- c("Diffuse-porous" = "#4e9af1",   # blue
                  "Ring-porous"    = "#e07b3f")     # orange
@@ -1854,159 +1837,173 @@ bspp_df2_sos$wood <- porousness[bspp_df2_sos$spp_name]
 bspp_df2_bb_sos$wood <- porousness[bspp_df2_bb_sos$spp_name]
 treeid_df2_sos$wood <- porousness[treeid_df2_sos$spp_name]
 treeid_df2_bb_sos$wood <- porousness[treeid_df2_bb_sos$spp_name]
-
-par(mfrow = c(3,3), oma = c(0, 2, 0, 4))
+jpeg("figures/growthModelsMain/budburstVSLeafout/DporousVSRporous.jpeg", width = 7, height = 6, units = "in", res = 300)
+par(mfrow = c(3,3), mar = c(4, 4, 4, 4)) 
 
 # GDD --- --- --- --- --- ---
 plot(sigma_df2_bb$mean, sigma_df2$mean,
-     xlab = "budburst", ylab = "leafout", main = "sigmas", type = "n", frame = FALSE,
-     ylim = range(c(sigma_df2$mean_per25, sigma_df2$mean_per75)),
-     xlim = range(c(sigma_df2_bb$mean_per25, sigma_df2_bb$mean_per75)))
-arrows(x0 = sigma_df2_bb$mean, y0 = sigma_df2$mean_per25,
-       x1 = sigma_df2_bb$mean, y1 = sigma_df2$mean_per75,
+     xlab = "Budburst as SOS", ylab = "Leafout as SOS", 
+     type = "n", frame = FALSE,
+     ylim = range(c(sigma_df2$p25, sigma_df2$p75)),
+     xlim = range(c(sigma_df2_bb$p25, sigma_df2_bb$p75)))
+arrows(x0 = sigma_df2_bb$mean, y0 = sigma_df2$p25,
+       x1 = sigma_df2_bb$mean, y1 = sigma_df2$p75,
        angle = 90, code = 3, length = 0, lwd = 1.5, col = "darkgray")
-arrows(x0 = sigma_df2_bb$mean_per25, y0 = sigma_df2$mean,
-       x1 = sigma_df2_bb$mean_per75, y1 = sigma_df2$mean,
+arrows(x0 = sigma_df2_bb$p25, y0 = sigma_df2$mean,
+       x1 = sigma_df2_bb$p75, y1 = sigma_df2$mean,
        angle = 90, code = 3, length = 0, lwd = 1.5, col = "darkgray")
 points(sigma_df2_bb$mean, sigma_df2$mean,
        pch = 16, col = "black", cex = 1.2)
 abline(0, 1, lty = 2, col = "black", lwd = 2)
 points(sigma_df2_bb$mean, sigma_df2$mean, pch = 16, 
        col = wood_colors[sigma_df2$wood], cex = 1.2)
-text(sigma_df2_bb$mean_per75, sigma_df2$mean_per25, labels = sigma_df2_bb$sigma, pos = c(3,3), cex = 0.75)
-
-mtext("(a) GDD", side = 3, adj = -0.5, font = 2, cex = 0.9)
+text(sigma_df2_bb$p75, sigma_df2$p25, labels = sigma_df2_bb$sigma, pos = c(3,3), cex = 0.75)
+mtext("sigmas", side = 3, line = -0.1, adj = 0.5, font = 2, cex = 0.7)
+mtext("(a) GDD", side = 3, adj = 0, line = 1, font = 2, cex = 0.9)
 
 # bspp
-plot(bspp_df2_bb$fit_bspp, bspp_df2$fit_bspp,
-     xlab = "budburst", ylab = "leafout", main = "bspp", type = "n", frame = FALSE,
-     ylim = range(c(bspp_df2$fit_bspp_per25, bspp_df2$fit_bspp_per75)),
-     xlim = range(c(bspp_df2_bb$fit_bspp_per25, bspp_df2_bb$fit_bspp_per75)))
-arrows(x0 = bspp_df2_bb$fit_bspp, y0 = bspp_df2$fit_bspp_per25,
-       x1 = bspp_df2_bb$fit_bspp, y1 = bspp_df2$fit_bspp_per75,
+plot(bspp_df2_bb$mean, bspp_df2$mean,
+     xlab = "Budburst as SOS", ylab = "Leafout as SOS", 
+     type = "n", frame = FALSE,
+     ylim = range(c(bspp_df2$p25, bspp_df2$p75)),
+     xlim = range(c(bspp_df2_bb$p25, bspp_df2_bb$p75)))
+arrows(x0 = bspp_df2_bb$mean, y0 = bspp_df2$p25,
+       x1 = bspp_df2_bb$mean, y1 = bspp_df2$p75,
        angle = 90, code = 3, length = 0, lwd = 1.5, col = "darkgray")
-arrows(x0 = bspp_df2_bb$fit_bspp_per25, y0 = bspp_df2$fit_bspp,
-       x1 = bspp_df2_bb$fit_bspp_per75, y1 = bspp_df2$fit_bspp,
+arrows(x0 = bspp_df2_bb$p25, y0 = bspp_df2$mean,
+       x1 = bspp_df2_bb$p75, y1 = bspp_df2$mean,
        angle = 90, code = 3, length = 0, lwd = 1.5, col = "darkgray")
-points(bspp_df2_bb$fit_bspp, bspp_df2$fit_bspp,
+points(bspp_df2_bb$mean, bspp_df2$mean,
        pch = 16, col = wood_colors[bspp_df2$wood], cex = 1.2)
 abline(0, 1, lty = 2, col = "black", lwd = 2)
+mtext("bspp", side = 3, line = 0.5, adj = 0.5, font = 2, cex = 0.7)
 
 # atreeid
-plot(treeid_df2_bb$fit_atreeid, treeid_df2$fit_atreeid,
-     xlab = "budburst", ylab = "leafout", main = "atreeid", type = "n", frame = FALSE,
-     ylim = range(c(treeid_df2$fit_atreeid_per25, treeid_df2$fit_atreeid_per75)),
-     xlim = range(c(treeid_df2_bb$fit_atreeid_per25, treeid_df2_bb$fit_atreeid_per75)))
-arrows(x0 = treeid_df2_bb$fit_atreeid, y0 = treeid_df2$fit_atreeid_per25,
-       x1 = treeid_df2_bb$fit_atreeid, y1 = treeid_df2$fit_atreeid_per75,
+plot(treeid_df2_bb$mean, treeid_df2$mean,
+     xlab = "Budburst as SOS", ylab = "Leafout as SOS", 
+     type = "n", frame = FALSE,
+     ylim = range(c(treeid_df2$p25, treeid_df2$p75)),
+     xlim = range(c(treeid_df2_bb$p25, treeid_df2_bb$p75)))
+arrows(x0 = treeid_df2_bb$mean, y0 = treeid_df2$p25,
+       x1 = treeid_df2_bb$mean, y1 = treeid_df2$p75,
        angle = 90, code = 3, length = 0, lwd = 1.5, col = "darkgray")
-arrows(x0 = treeid_df2_bb$fit_atreeid_per25, y0 = treeid_df2$fit_atreeid,
-       x1 = treeid_df2_bb$fit_atreeid_per75, y1 = treeid_df2$fit_atreeid,
+arrows(x0 = treeid_df2_bb$p25, y0 = treeid_df2$mean,
+       x1 = treeid_df2_bb$p75, y1 = treeid_df2$mean,
        angle = 90, code = 3, length = 0, lwd = 1.5, col = "darkgray")
-points(treeid_df2_bb$fit_atreeid, treeid_df2$fit_atreeid,
+points(treeid_df2_bb$mean, treeid_df2$mean,
        pch = 16, col = wood_colors[treeid_df2$wood], cex = 1.2)
 abline(0, 1, lty = 2, col = "black", lwd = 2)
+mtext("atreeid", side = 3, line = 0.5, adj = 0.5, font = 2, cex = 0.7)
 
 # GSL --- --- --- --- --- ---
 plot(sigma_df2_bb_gsl$mean, sigma_df2_gsl$mean,
-     xlab = "budburst", ylab = "leafout", main = "sigmas", type = "n", frame = FALSE,
-     ylim = range(c(sigma_df2_gsl$mean_per25, sigma_df2_gsl$mean_per75)),
-     xlim = range(c(sigma_df2_bb_gsl$mean_per25, sigma_df2_bb_gsl$mean_per75)))
-arrows(x0 = sigma_df2_bb_gsl$mean, y0 = sigma_df2_gsl$mean_per25,
-       x1 = sigma_df2_bb_gsl$mean, y1 = sigma_df2_gsl$mean_per75,
+     xlab = "Budburst as SOS", ylab = "Leafout as SOS", 
+     type = "n", frame = FALSE,
+     ylim = range(c(sigma_df2_gsl$p25, sigma_df2_gsl$p75)),
+     xlim = range(c(sigma_df2_bb_gsl$p25, sigma_df2_bb_gsl$p75)))
+arrows(x0 = sigma_df2_bb_gsl$mean, y0 = sigma_df2_gsl$p25,
+       x1 = sigma_df2_bb_gsl$mean, y1 = sigma_df2_gsl$p75,
        angle = 90, code = 3, length = 0, lwd = 1.5, col = "darkgray")
-arrows(x0 = sigma_df2_bb_gsl$mean_per25, y0 = sigma_df2_gsl$mean,
-       x1 = sigma_df2_bb_gsl$mean_per75, y1 = sigma_df2_gsl$mean,
+arrows(x0 = sigma_df2_bb_gsl$p25, y0 = sigma_df2_gsl$mean,
+       x1 = sigma_df2_bb_gsl$p75, y1 = sigma_df2_gsl$mean,
        angle = 90, code = 3, length = 0, lwd = 1.5, col = "darkgray")
 points(sigma_df2_bb_gsl$mean, sigma_df2_gsl$mean,
        pch = 16, col = "black", cex = 1.2)
 abline(0, 1, lty = 2, col = "black", lwd = 2)
 points(sigma_df2_bb_gsl$mean, sigma_df2_gsl$mean, pch = 16, col = wood_colors[sigma_df2_gsl$wood], cex = 1.2)
-text(sigma_df2_bb_gsl$mean_per75, sigma_df2_gsl$mean_per25, labels = sigma_df2_bb_gsl$sigma, pos = c(3,3), cex = 0.75)
-
-mtext("(b) GSL", side = 3, adj = -0.5, font = 2, cex = 0.9)
+text(sigma_df2_bb_gsl$p75, sigma_df2_gsl$p25, labels = sigma_df2_bb_gsl$sigma, pos = c(3,3), cex = 0.75)
+mtext("sigmas", side = 3, line = -0.1, adj = 0.5, font = 2, cex = 0.7)
+mtext("(b) GSL", side = 3, adj = 0, line = 1, font = 2, cex = 0.9)
 
 # bspp
-plot(bspp_df2_bb_gsl$fit_bspp, bspp_df2_gsl$fit_bspp,
-     xlab = "budburst", ylab = "leafout", main = "bspp", type = "n", frame = FALSE,
-     ylim = range(c(bspp_df2_gsl$fit_bspp_per25, bspp_df2_gsl$fit_bspp_per75)),
-     xlim = range(c(bspp_df2_bb_gsl$fit_bspp_per25, bspp_df2_bb_gsl$fit_bspp_per75)))
-arrows(x0 = bspp_df2_bb_gsl$fit_bspp, y0 = bspp_df2_gsl$fit_bspp_per25,
-       x1 = bspp_df2_bb_gsl$fit_bspp, y1 = bspp_df2_gsl$fit_bspp_per75,
+plot(bspp_df2_bb_gsl$mean, bspp_df2_gsl$mean,
+     xlab = "Budburst as SOS", ylab = "Leafout as SOS", 
+     type = "n", frame = FALSE,
+     ylim = range(c(bspp_df2_gsl$p25, bspp_df2_gsl$p75)),
+     xlim = range(c(bspp_df2_bb_gsl$p25, bspp_df2_bb_gsl$p75)))
+arrows(x0 = bspp_df2_bb_gsl$mean, y0 = bspp_df2_gsl$p25,
+       x1 = bspp_df2_bb_gsl$mean, y1 = bspp_df2_gsl$p75,
        angle = 90, code = 3, length = 0, lwd = 1.5, col = "darkgray")
-arrows(x0 = bspp_df2_bb_gsl$fit_bspp_per25, y0 = bspp_df2_gsl$fit_bspp,
-       x1 = bspp_df2_bb_gsl$fit_bspp_per75, y1 = bspp_df2_gsl$fit_bspp,
+arrows(x0 = bspp_df2_bb_gsl$p25, y0 = bspp_df2_gsl$mean,
+       x1 = bspp_df2_bb_gsl$p75, y1 = bspp_df2_gsl$mean,
        angle = 90, code = 3, length = 0, lwd = 1.5, col = "darkgray")
-points(bspp_df2_bb_gsl$fit_bspp, bspp_df2_gsl$fit_bspp,
+points(bspp_df2_bb_gsl$mean, bspp_df2_gsl$mean,
        pch = 16, col = wood_colors[bspp_df2_gsl$wood], cex = 1.2)
 abline(0, 1, lty = 2, col = "black", lwd = 2)
+mtext("bspp", side = 3, line = 0.5, adj = 0.5, font = 2, cex = 0.7)
 
 # atreeid
-plot(treeid_df2_bb_gsl$fit_atreeid, treeid_df2_gsl$fit_atreeid,
-     xlab = "budburst", ylab = "leafout", main = "atreeid", type = "n", frame = FALSE,
-     ylim = range(c(treeid_df2_gsl$fit_atreeid_per25, treeid_df2_gsl$fit_atreeid_per75)),
-     xlim = range(c(treeid_df2_bb_gsl$fit_atreeid_per25, treeid_df2_bb_gsl$fit_atreeid_per75)))
-arrows(x0 = treeid_df2_bb_gsl$fit_atreeid, y0 = treeid_df2_gsl$fit_atreeid_per25,
-       x1 = treeid_df2_bb_gsl$fit_atreeid, y1 = treeid_df2_gsl$fit_atreeid_per75,
+plot(treeid_df2_bb_gsl$mean, treeid_df2_gsl$mean,
+     xlab = "Budburst as SOS", ylab = "Leafout as SOS", 
+     type = "n", frame = FALSE,
+     ylim = range(c(treeid_df2_gsl$p25, treeid_df2_gsl$p75)),
+     xlim = range(c(treeid_df2_bb_gsl$p25, treeid_df2_bb_gsl$p75)))
+arrows(x0 = treeid_df2_bb_gsl$mean, y0 = treeid_df2_gsl$p25,
+       x1 = treeid_df2_bb_gsl$mean, y1 = treeid_df2_gsl$p75,
        angle = 90, code = 3, length = 0, lwd = 1.5, col = "darkgray")
-arrows(x0 = treeid_df2_bb_gsl$fit_atreeid_per25, y0 = treeid_df2_gsl$fit_atreeid,
-       x1 = treeid_df2_bb_gsl$fit_atreeid_per75, y1 = treeid_df2_gsl$fit_atreeid,
+arrows(x0 = treeid_df2_bb_gsl$p25, y0 = treeid_df2_gsl$mean,
+       x1 = treeid_df2_bb_gsl$p75, y1 = treeid_df2_gsl$mean,
        angle = 90, code = 3, length = 0, lwd = 1.5, col = "darkgray")
-points(treeid_df2_bb_gsl$fit_atreeid, treeid_df2_gsl$fit_atreeid,
+points(treeid_df2_bb_gsl$mean, treeid_df2_gsl$mean,
        pch = 16, col = wood_colors[treeid_df2_gsl$wood], cex = 1.2)
 abline(0, 1, lty = 2, col = "black", lwd = 2)
+mtext("atreeid", side = 3, line = -0.1, adj = 0.5, font = 2, cex = 0.7)
 
 # SOS  --- --- --- --- --- ---
 plot(sigma_df2_bb_sos$mean, sigma_df2_sos$mean,
-     xlab = "budburst", ylab = "leafout", main = "sigmas", type = "n", frame = FALSE,
-     ylim = range(c(sigma_df2_sos$mean_per25, sigma_df2_sos$mean_per75)),
-     xlim = range(c(sigma_df2_bb_sos$mean_per25, sigma_df2_bb_sos$mean_per75)))
-arrows(x0 = sigma_df2_bb_sos$mean, y0 = sigma_df2_sos$mean_per25,
-       x1 = sigma_df2_bb_sos$mean, y1 = sigma_df2_sos$mean_per75,
+     xlab = "Budburst as SOS", ylab = "Leafout as SOS",  
+     type = "n", frame = FALSE,
+     ylim = range(c(sigma_df2_sos$p25, sigma_df2_sos$p75)),
+     xlim = range(c(sigma_df2_bb_sos$p25, sigma_df2_bb_sos$p75)))
+arrows(x0 = sigma_df2_bb_sos$mean, y0 = sigma_df2_sos$p25,
+       x1 = sigma_df2_bb_sos$mean, y1 = sigma_df2_sos$p75,
        angle = 90, code = 3, length = 0, lwd = 1.5, col = "darkgray")
-arrows(x0 = sigma_df2_bb_sos$mean_per25, y0 = sigma_df2_sos$mean,
-       x1 = sigma_df2_bb_sos$mean_per75, y1 = sigma_df2_sos$mean,
+arrows(x0 = sigma_df2_bb_sos$p25, y0 = sigma_df2_sos$mean,
+       x1 = sigma_df2_bb_sos$p75, y1 = sigma_df2_sos$mean,
        angle = 90, code = 3, length = 0, lwd = 1.5, col = "darkgray")
 points(sigma_df2_bb_sos$mean, sigma_df2_sos$mean,
        pch = 16, col = "black", cex = 1.2)
 abline(0, 1, lty = 2, col = "black", lwd = 2)
-points(sigma_df2_bb_sos$mean, sigma_df2_sos$mean, pch = 16, col = wood_colors[sigma_df2_sos$wood], cex = 1.2)
-text(sigma_df2_bb_sos$mean_per75, sigma_df2_sos$mean_per25, labels = sigma_df2_bb_sos$sigma, pos = c(3,3), cex = 0.75)
-
-mtext("(c) SOS", side = 3, adj = -0.5, font = 2, cex = 0.9)
+points(sigma_df2_bb_sos$mean, sigma_df2_sos$mean, pch = 16, 
+       col = wood_colors[sigma_df2_sos$wood], cex = 1.2)
+text(sigma_df2_bb_sos$p75, sigma_df2_sos$p25, labels = sigma_df2_bb_sos$sigma, pos = c(3,3), cex = 0.75)
+mtext("sigmas", side = 3, line = -0.1, adj = 0.5, font = 2, cex = 0.7)
+mtext("(c) SOS", side = 3, adj = 0.5, line = 1, font = 2, cex = 0.9)
 
 # bspp
-plot(bspp_df2_bb_sos$fit_bspp, bspp_df2_sos$fit_bspp,
-     xlab = "budburst", ylab = "leafout", main = "bspp", type = "n", frame = FALSE,
-     ylim = range(c(bspp_df2_sos$fit_bspp_per25, bspp_df2_sos$fit_bspp_per75)),
-     xlim = range(c(bspp_df2_bb_sos$fit_bspp_per25, bspp_df2_bb_sos$fit_bspp_per75)))
-arrows(x0 = bspp_df2_bb_sos$fit_bspp, y0 = bspp_df2_sos$fit_bspp_per25,
-       x1 = bspp_df2_bb_sos$fit_bspp, y1 = bspp_df2_sos$fit_bspp_per75,
+plot(bspp_df2_bb_sos$mean, bspp_df2_sos$mean,
+     xlab = "Budburst as SOS", ylab = "Leafout as SOS",  type = "n", frame = FALSE,
+     ylim = range(c(bspp_df2_sos$p25, bspp_df2_sos$p75)),
+     xlim = range(c(bspp_df2_bb_sos$p25, bspp_df2_bb_sos$p75)))
+arrows(x0 = bspp_df2_bb_sos$mean, y0 = bspp_df2_sos$p25,
+       x1 = bspp_df2_bb_sos$mean, y1 = bspp_df2_sos$p75,
        angle = 90, code = 3, length = 0, lwd = 1.5, col = "darkgray")
-arrows(x0 = bspp_df2_bb_sos$fit_bspp_per25, y0 = bspp_df2_sos$fit_bspp,
-       x1 = bspp_df2_bb_sos$fit_bspp_per75, y1 = bspp_df2_sos$fit_bspp,
+arrows(x0 = bspp_df2_bb_sos$p25, y0 = bspp_df2_sos$mean,
+       x1 = bspp_df2_bb_sos$p75, y1 = bspp_df2_sos$mean,
        angle = 90, code = 3, length = 0, lwd = 1.5, col = "darkgray")
-points(bspp_df2_bb_sos$fit_bspp, bspp_df2_sos$fit_bspp,
+points(bspp_df2_bb_sos$mean, bspp_df2_sos$mean,
        pch = 16, col = wood_colors[bspp_df2_sos$wood], cex = 1.2)
 abline(0, 1, lty = 2, col = "black", lwd = 2)
+mtext("bspp", side = 3, line = 0.5, adj = 0.5, font = 2, cex = 0.7)
 
 # atreeid
-plot(treeid_df2_bb_sos$fit_atreeid, treeid_df2_sos$fit_atreeid,
-     xlab = "budburst", ylab = "leafout", main = "atreeid", type = "n", frame = FALSE,
-     ylim = range(c(treeid_df2_sos$fit_atreeid_per25, treeid_df2_sos$fit_atreeid_per75)),
-     xlim = range(c(treeid_df2_bb_sos$fit_atreeid_per25, treeid_df2_bb_sos$fit_atreeid_per75)))
-arrows(x0 = treeid_df2_bb_sos$fit_atreeid, y0 = treeid_df2_sos$fit_atreeid_per25,
-       x1 = treeid_df2_bb_sos$fit_atreeid, y1 = treeid_df2_sos$fit_atreeid_per75,
+plot(treeid_df2_bb_sos$mean, treeid_df2_sos$mean,
+     xlab = "Budburst as SOS", ylab = "Leafout as SOS",  type = "n", frame = FALSE,
+     ylim = range(c(treeid_df2_sos$p25, treeid_df2_sos$p75)),
+     xlim = range(c(treeid_df2_bb_sos$p25, treeid_df2_bb_sos$p75)))
+arrows(x0 = treeid_df2_bb_sos$mean, y0 = treeid_df2_sos$p25,
+       x1 = treeid_df2_bb_sos$mean, y1 = treeid_df2_sos$p75,
        angle = 90, code = 3, length = 0, lwd = 1.5, col = "darkgray")
-arrows(x0 = treeid_df2_bb_sos$fit_atreeid_per25, y0 = treeid_df2_sos$fit_atreeid,
-       x1 = treeid_df2_bb_sos$fit_atreeid_per75, y1 = treeid_df2_sos$fit_atreeid,
+arrows(x0 = treeid_df2_bb_sos$p25, y0 = treeid_df2_sos$mean,
+       x1 = treeid_df2_bb_sos$p75, y1 = treeid_df2_sos$mean,
        angle = 90, code = 3, length = 0, lwd = 1.5, col = "darkgray")
-points(treeid_df2_bb_sos$fit_atreeid, treeid_df2_sos$fit_atreeid,
+points(treeid_df2_bb_sos$mean, treeid_df2_sos$mean, 
        pch = 16, col = wood_colors[treeid_df2_sos$wood], cex = 1.2)
 abline(0, 1, lty = 2, col = "black", lwd = 2)
+mtext("atreeid", side = 3, line = 0.5, adj = 0.5, font = 2, cex = 0.7)
 
 # legend once, in outer margin on the right
-par(fig = c(0, 1, 0, 1), oma = c(0, 0, 0, 0), mar = c(0, 0, 0, 0), new = TRUE)
+par(fig = c(0, 1, 0, 1), oma = c(0, 0, 0, 0), mar = c(0, 6, 0, 0), new = TRUE)
 plot(0, 0, type = "n", bty = "n", xaxt = "n", yaxt = "n")
 legend("right", legend = names(wood_colors), col = wood_colors,
        pch = 16, pt.cex = 1.2, bty = "n", title = "Wood anatomy", xpd = TRUE)
