@@ -1396,7 +1396,9 @@ fit <- readRDS("output/stanOutput/fitGrowthPreviousYear")
 # Setup color palette across all plots
 pal <- wes_palette("AsteroidCity1")[3:4]
 
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
 ##### Recover parameters #####
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
 df_fit <- as.data.frame(fit)
 
 # full posterior arrays for multi-line extraction
@@ -1598,20 +1600,350 @@ model <- stan_model("stan/TSmodelGrowth_z.stan")
 
 # Fit model GDD
 dgdd$covariate <- (emptscomp$fgsGDD5 - mean(emptscomp$fgsGDD5)) / sd(emptscomp$fgsGDD5)
-fitgdd <- sampling(model, data = dgdd,
-                   warmup = 1000, iter=2000, chains=4)
-saveRDS(fitgdd, "output/stanOutput/fitGrowthGDDZscored")
+fitgdd <- sampling(model, data = dgdd, warmup = 1000, iter=2000, chains=4)
+saveRDS(fitgdd, "output/stanOutput/fitGrowthGDD_budburst")
 diagnostics <- util$extract_hmc_diagnostics(fitgdd)
 util$check_all_hmc_diagnostics(diagnostics)
 
 # Fit model GSL
 dgsl$covariate <- (emptscomp$fgsGSL - mean(emptscomp$fgsGSL)) / sd(emptscomp$fgsGSL)
-fitgsl <- sampling(model, data = dgsl,
-                   warmup = 1000, iter = 2000, chains = 4)
-saveRDS(fitgsl, "output/stanOutput/fitGrowthGSLZscored")
+fitgsl <- sampling(model, data = dgsl, warmup = 1000, iter = 2000, chains = 4)
+saveRDS(fitgsl, "output/stanOutput/fitGrowthGSL_budburst")
 
 # Fit model SOS
 dsos$covariate <- (emptscomp$budburst - mean(emptscomp$budburst)) / sd(emptscomp$budburst)
-fitsos <- sampling(model, data = dsos,
-                   warmup = 1000, iter = 2000, chains=4)
-saveRDS(fitsos, "output/stanOutput/fitGrowthSOSZscored")
+fitsos <- sampling(model, data = dsos, warmup = 1000, iter = 2000, chains=4)
+saveRDS(fitsos, "output/stanOutput/fitGrowthSOS_budburst")
+
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+##### Recover models with budburst #####
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+df_fit <- as.data.frame(fitgdd)
+df_fitgsl <- as.data.frame(fitgsl)
+df_fitsos <- as.data.frame(fitsos)
+
+# posterior summaries
+sigma_df2_bb  <- extract_params(df_fit, "sigma", "mean", "sigma")
+bspp_df2_bb   <- extract_params(df_fit, "bsp", "fit_bsp", "spp", "bsp\\[(\\d+)\\]")
+treeid_df2_bb <- extract_params(df_fit, "atreeid", "fit_atreeid", "treeid", "atreeid\\[(\\d+)\\]")
+treeid_df2_bb <- subset(treeid_df2_bb, !grepl("z", treeid) & !grepl("sigma", treeid))
+aspp_df2_bb   <- extract_params(df_fit, "aspp", "fit_aspp", "spp", "aspp\\[(\\d+)\\]")
+ayear_df2_bb   <- extract_params(df_fit, "ayear", "fit_ayear", "year", "ayear\\[(\\d+)\\]")
+
+treeid_df2_bb$treeid_name <- empts$id[match(treeid_df2_bb$treeid, emptscomp$treeid_num)]
+aspp_df2_bb$spp_name <- emptscomp$latbi[match(aspp_df2_bb$spp, emptscomp$spp_num)]
+bspp_df2_bb$spp_name <- emptscomp$latbi[match(bspp_df2_bb$spp, emptscomp$spp_num)]
+ayear_df2_bb$year_name <- emptscomp$year[match(ayear_df2_bb$year, emptscomp$year_num)]
+
+# GSL posterior recovery
+# posterior summaries
+sigma_df2_bb_gsl  <- extract_params(df_fitgsl, "sigma", "mean", "sigma")
+bspp_df2_bb_gsl   <- extract_params(df_fitgsl, "bsp", "fit_bsp", 
+                                    "spp", "bsp\\[(\\d+)\\]")
+treeid_df2_bb_gsl <- extract_params(df_fitgsl, "atreeid", "fit_atreeid", 
+                                    "treeid", "atreeid\\[(\\d+)\\]")
+treeid_df2_bb_gsl <- subset(treeid_df2_bb_gsl, !grepl("z|sigma", treeid))
+aspp_df2_bb_gsl   <- extract_params(df_fitgsl, "aspp", "fit_aspp", 
+                                    "spp", "aspp\\[(\\d+)\\]")
+ayear_df2_bb_gsl   <- extract_params(df_fit, "ayear", "fit_ayear", 
+                                 "year", "ayear\\[(\\d+)\\]")
+
+treeid_df2_bb_gsl$treeid_name <- emptscomp$id[match(treeid_df2_bb_gsl$treeid, emptscomp$treeid_num)]
+bspp_df2_bb_gsl$spp_name <- emptscomp$latbi[match(bspp_df2_bb_gsl$spp, emptscomp$spp_num)]
+aspp_df2_bb_gsl$spp_name <- emptscomp$latbi[match(aspp_df2_bb_gsl$spp, emptscomp$spp_num)]
+ayear_df2_bb_gsl$year_name <- emptscomp$year[match(ayear_df2_bb$year, emptscomp$year_num)]
+
+# SOS posterior recovery
+# posterior summaries
+sigma_df2_bb_sos  <- extract_params(df_fitsos, "sigma", "mean", "sigma")
+bspp_df2_bb_sos   <- extract_params(df_fitsos, "bsp", "fit_bsp", 
+                                    "spp", "bsp\\[(\\d+)\\]")
+treeid_df2_bb_sos <- extract_params(df_fitsos, "atreeid", "fit_atreeid", 
+                                    "treeid", "atreeid\\[(\\d+)\\]")
+treeid_df2_bb_sos <- subset(treeid_df2_bb_sos, !grepl("z|sigma", treeid))
+aspp_df2_bb_sos   <- extract_params(df_fitsos, "aspp", "fit_aspp", 
+                                    "spp", "aspp\\[(\\d+)\\]")
+ayear_df2_bb_sos   <- extract_params(df_fit, "ayear", "fit_ayear", 
+                                 "year", "ayear\\[(\\d+)\\]")
+
+treeid_df2_bb_sos$treeid_name <- emptscomp$id[match(treeid_df2_bb_sos$treeid, emptscomp$treeid_num)]
+bspp_df2_bb_sos$spp_name <- emptscomp$latbi[match(bspp_df2_bb_sos$spp, emptscomp$spp_num)]
+aspp_df2_bb_sos$spp_name <- emptscomp$latbi[match(aspp_df2_bb_sos$spp, emptscomp$spp_num)]
+ayear_df2_bb_sos$year_name <- emptscomp$year[match(ayear_df2_bb_sos$year, emptscomp$year_num)]
+
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+##### Recover models with Leafout #####
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+# GDD posterior recovery
+fit <- readRDS("output/stanOutput/fitGrowthGDD")
+df_fit <- as.data.frame(fit)
+
+# posterior summaries
+sigma_df2  <- extract_params(df_fit, "sigma", "mean", "sigma")
+bspp_df2   <- extract_params(df_fit, "bsp", "fit_bspp", "spp", "bspp\\[(\\d+)\\]")
+treeid_df2 <- extract_params(df_fit, "atreeid", "fit_atreeid", "treeid", "atreeid\\[(\\d+)\\]")
+treeid_df2 <- subset(treeid_df2, !grepl("z", treeid) & !grepl("sigma", treeid))
+aspp_df2   <- extract_params(df_fit, "aspp", "fit_aspp", "spp", "aspp\\[(\\d+)\\]")
+ayear_df2  <- extract_params(df_fit, "ayear", "fit_ayear", "year", "ayear\\[(\\d+)\\]")
+
+treeid_df2$treeid_name <- emptscomp$id[match(treeid_df2$treeid, emptscomp$treeid_num)]
+aspp_df2$spp_name <- emptscomp$latbi[match(aspp_df2$spp, emptscomp$spp_num)]
+bspp_df2$spp_name <- emptscomp$latbi[match(bspp_df2$spp, emptscomp$spp_num)]
+ayear_df2$year_name <- emptscomp$year[match(ayear_df2$year, emptscomp$year_num)]
+
+# GSL posterior recovery
+fitgsl <- readRDS("output/stanOutput/fitGrowthGSL")
+
+df_fitgsl <- as.data.frame(fitgsl)
+
+# posterior summaries
+sigma_df2_gsl  <- extract_params(df_fitgsl, "sigma", "mean", "sigma")
+bspp_df2_gsl   <- extract_params(df_fitgsl, "bsp", "fit_bspp", 
+                                 "spp", "bspp\\[(\\d+)\\]")
+treeid_df2_gsl <- extract_params(df_fitgsl, "atreeid", "fit_atreeid", 
+                                 "treeid", "atreeid\\[(\\d+)\\]")
+treeid_df2_gsl <- subset(treeid_df2_gsl, !grepl("z|sigma", treeid))
+aspp_df2_gsl   <- extract_params(df_fitgsl, "aspp", "fit_aspp", 
+                                 "spp", "aspp\\[(\\d+)\\]")
+ayear_df2_gsl  <- extract_params(df_fit, "ayear", "fit_ayear", 
+                             "year", "ayear\\[(\\d+)\\]")
+
+treeid_df2_gsl$treeid_name <- emptscomp$id[match(treeid_df2_gsl$treeid, emptscomp$treeid_num)]
+bspp_df2_gsl$spp_name <- emptscomp$latbi[match(bspp_df2_gsl$spp, emptscomp$spp_num)]
+aspp_df2_gsl$spp_name <- emptscomp$latbi[match(aspp_df2_gsl$spp, emptscomp$spp_num)]
+ayear_df2_gsl$year_name <- emptscomp$year[match(ayear_df2_gsl$year, emptscomp$year_num)]
+
+# SOS posterior recovery
+fitsos <- readRDS("output/stanOutput/fitGrowthSOS")
+
+df_fitsos <- as.data.frame(fitsos)
+
+# posterior summaries
+sigma_df2_sos  <- extract_params(df_fitsos, "sigma", "mean", "sigma")
+bspp_df2_sos   <- extract_params(df_fitsos, "bsp", "fit_bspp", 
+                                 "spp", "bspp\\[(\\d+)\\]")
+treeid_df2_sos <- extract_params(df_fitsos, "atreeid", "fit_atreeid", 
+                                 "treeid", "atreeid\\[(\\d+)\\]")
+treeid_df2_sos <- subset(treeid_df2_sos, !grepl("z|sigma", treeid))
+aspp_df2_sos   <- extract_params(df_fitsos, "aspp", "fit_aspp", 
+                                 "spp", "aspp\\[(\\d+)\\]")
+ayear_df2_sos  <- extract_params(df_fit, "ayear", "fit_ayear", 
+                             "year", "ayear\\[(\\d+)\\]")
+
+treeid_df2_sos$treeid_name <- emptscomp$id[match(treeid_df2_sos$treeid, emptscomp$treeid_num)]
+bspp_df2_sos$spp_name <- emptscomp$latbi[match(bspp_df2_sos$spp, emptscomp$spp_num)]
+aspp_df2_sos$spp_name <- emptscomp$latbi[match(aspp_df2_sos$spp, emptscomp$spp_num)]
+ayear_df2_sos$year_name <- emptscomp$year[match(ayear_df2_sos$year, emptscomp$year_num)]
+
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+##### Figure for model comparison #####
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+jpeg("figures/growthModelsMain/budburstVSLeafout/DporousVSRporous.jpeg", width = 7, height = 6, units = "in", res = 300)
+
+# define colors
+wood_colors <- c("Diffuse-porous" = "#4e9af1",   # blue
+                 "Ring-porous"    = "#e07b3f")     # orange
+
+# GDD
+bspp_df2_bb$spp_name <- emptscomp$latbi[match(bspp_df2_bb$spp, emptscomp$spp_num)]
+treeid_df2$spp_name <- emptscomp$latbi[match(treeid_df2$treeid, emptscomp$treeid_num)]
+treeid_df2_bb$spp_name<- emptscomp$latbi[match(treeid_df2_bb$treeid, emptscomp$treeid_num)]
+
+# GSL
+bspp_df2_bb_gsl$spp_name<- emptscomp$latbi[match(bspp_df2_bb_gsl$spp,emptscomp$spp_num)]
+treeid_df2_gsl$spp_name <- emptscomp$latbi[match(treeid_df2_gsl$treeid, emptscomp$treeid_num)]
+treeid_df2_bb_gsl$spp_name<- emptscomp$latbi[match(treeid_df2_bb_gsl$treeid,emptscomp$treeid_num)]
+
+# SOS
+bspp_df2_bb_sos$spp_name <- emptscomp$latbi[match(bspp_df2_bb_sos$spp, emptscomp$spp_num)]
+treeid_df2_sos$spp_name <- emptscomp$latbi[match(treeid_df2_sos$treeid, emptscomp$treeid_num)]
+treeid_df2_bb_sos$spp_name <- emptscomp$latbi[match(treeid_df2_bb_sos$treeid, emptscomp$treeid_num)]
+
+porousness <- c(
+  "Tilia americana"        = "Diffuse-porous",
+  "Populus deltoides"      = "Diffuse-porous",
+  "Betula nigra"           = "Diffuse-porous",
+  "Betula alleghaniensis"  = "Diffuse-porous",
+  "Acer saccharum"         = "Diffuse-porous",
+  "Acer rubrum"            = "Diffuse-porous",
+  "Aesculus flava"         = "Diffuse-porous",
+  "Quercus rubra"          = "Ring-porous",
+  "Quercus alba"           = "Ring-porous",
+  "Carya glabra"           = "Ring-porous",
+  "Carya ovata"            = "Ring-porous"
+)
+
+bspp_df2$wood <- porousness[bspp_df2$spp_name]
+bspp_df2_bb$wood <- porousness[bspp_df2_bb$spp_name]
+treeid_df2$wood <- porousness[treeid_df2$spp_name]
+treeid_df2_bb$wood <- porousness[treeid_df2_bb$spp_name]
+
+bspp_df2_gsl$wood <- porousness[bspp_df2_gsl$spp_name]
+bspp_df2_bb_gsl$wood <- porousness[bspp_df2_bb_gsl$spp_name]
+treeid_df2_gsl$wood <- porousness[treeid_df2_gsl$spp_name]
+treeid_df2_bb_gsl$wood <- porousness[treeid_df2_bb_gsl$spp_name]
+
+bspp_df2_sos$wood <- porousness[bspp_df2_sos$spp_name]
+bspp_df2_bb_sos$wood <- porousness[bspp_df2_bb_sos$spp_name]
+treeid_df2_sos$wood <- porousness[treeid_df2_sos$spp_name]
+treeid_df2_bb_sos$wood <- porousness[treeid_df2_bb_sos$spp_name]
+
+par(mfrow = c(3,3), oma = c(0, 2, 0, 4))
+
+# GDD --- --- --- --- --- ---
+plot(sigma_df2_bb$mean, sigma_df2$mean,
+     xlab = "budburst", ylab = "leafout", main = "sigmas", type = "n", frame = FALSE,
+     ylim = range(c(sigma_df2$mean_per25, sigma_df2$mean_per75)),
+     xlim = range(c(sigma_df2_bb$mean_per25, sigma_df2_bb$mean_per75)))
+arrows(x0 = sigma_df2_bb$mean, y0 = sigma_df2$mean_per25,
+       x1 = sigma_df2_bb$mean, y1 = sigma_df2$mean_per75,
+       angle = 90, code = 3, length = 0, lwd = 1.5, col = "darkgray")
+arrows(x0 = sigma_df2_bb$mean_per25, y0 = sigma_df2$mean,
+       x1 = sigma_df2_bb$mean_per75, y1 = sigma_df2$mean,
+       angle = 90, code = 3, length = 0, lwd = 1.5, col = "darkgray")
+points(sigma_df2_bb$mean, sigma_df2$mean,
+       pch = 16, col = "black", cex = 1.2)
+abline(0, 1, lty = 2, col = "black", lwd = 2)
+points(sigma_df2_bb$mean, sigma_df2$mean, pch = 16, 
+       col = wood_colors[sigma_df2$wood], cex = 1.2)
+text(sigma_df2_bb$mean_per75, sigma_df2$mean_per25, labels = sigma_df2_bb$sigma, pos = c(3,3), cex = 0.75)
+
+mtext("(a) GDD", side = 3, adj = -0.5, font = 2, cex = 0.9)
+
+# bspp
+plot(bspp_df2_bb$fit_bspp, bspp_df2$fit_bspp,
+     xlab = "budburst", ylab = "leafout", main = "bspp", type = "n", frame = FALSE,
+     ylim = range(c(bspp_df2$fit_bspp_per25, bspp_df2$fit_bspp_per75)),
+     xlim = range(c(bspp_df2_bb$fit_bspp_per25, bspp_df2_bb$fit_bspp_per75)))
+arrows(x0 = bspp_df2_bb$fit_bspp, y0 = bspp_df2$fit_bspp_per25,
+       x1 = bspp_df2_bb$fit_bspp, y1 = bspp_df2$fit_bspp_per75,
+       angle = 90, code = 3, length = 0, lwd = 1.5, col = "darkgray")
+arrows(x0 = bspp_df2_bb$fit_bspp_per25, y0 = bspp_df2$fit_bspp,
+       x1 = bspp_df2_bb$fit_bspp_per75, y1 = bspp_df2$fit_bspp,
+       angle = 90, code = 3, length = 0, lwd = 1.5, col = "darkgray")
+points(bspp_df2_bb$fit_bspp, bspp_df2$fit_bspp,
+       pch = 16, col = wood_colors[bspp_df2$wood], cex = 1.2)
+abline(0, 1, lty = 2, col = "black", lwd = 2)
+
+# atreeid
+plot(treeid_df2_bb$fit_atreeid, treeid_df2$fit_atreeid,
+     xlab = "budburst", ylab = "leafout", main = "atreeid", type = "n", frame = FALSE,
+     ylim = range(c(treeid_df2$fit_atreeid_per25, treeid_df2$fit_atreeid_per75)),
+     xlim = range(c(treeid_df2_bb$fit_atreeid_per25, treeid_df2_bb$fit_atreeid_per75)))
+arrows(x0 = treeid_df2_bb$fit_atreeid, y0 = treeid_df2$fit_atreeid_per25,
+       x1 = treeid_df2_bb$fit_atreeid, y1 = treeid_df2$fit_atreeid_per75,
+       angle = 90, code = 3, length = 0, lwd = 1.5, col = "darkgray")
+arrows(x0 = treeid_df2_bb$fit_atreeid_per25, y0 = treeid_df2$fit_atreeid,
+       x1 = treeid_df2_bb$fit_atreeid_per75, y1 = treeid_df2$fit_atreeid,
+       angle = 90, code = 3, length = 0, lwd = 1.5, col = "darkgray")
+points(treeid_df2_bb$fit_atreeid, treeid_df2$fit_atreeid,
+       pch = 16, col = wood_colors[treeid_df2$wood], cex = 1.2)
+abline(0, 1, lty = 2, col = "black", lwd = 2)
+
+# GSL --- --- --- --- --- ---
+plot(sigma_df2_bb_gsl$mean, sigma_df2_gsl$mean,
+     xlab = "budburst", ylab = "leafout", main = "sigmas", type = "n", frame = FALSE,
+     ylim = range(c(sigma_df2_gsl$mean_per25, sigma_df2_gsl$mean_per75)),
+     xlim = range(c(sigma_df2_bb_gsl$mean_per25, sigma_df2_bb_gsl$mean_per75)))
+arrows(x0 = sigma_df2_bb_gsl$mean, y0 = sigma_df2_gsl$mean_per25,
+       x1 = sigma_df2_bb_gsl$mean, y1 = sigma_df2_gsl$mean_per75,
+       angle = 90, code = 3, length = 0, lwd = 1.5, col = "darkgray")
+arrows(x0 = sigma_df2_bb_gsl$mean_per25, y0 = sigma_df2_gsl$mean,
+       x1 = sigma_df2_bb_gsl$mean_per75, y1 = sigma_df2_gsl$mean,
+       angle = 90, code = 3, length = 0, lwd = 1.5, col = "darkgray")
+points(sigma_df2_bb_gsl$mean, sigma_df2_gsl$mean,
+       pch = 16, col = "black", cex = 1.2)
+abline(0, 1, lty = 2, col = "black", lwd = 2)
+points(sigma_df2_bb_gsl$mean, sigma_df2_gsl$mean, pch = 16, col = wood_colors[sigma_df2_gsl$wood], cex = 1.2)
+text(sigma_df2_bb_gsl$mean_per75, sigma_df2_gsl$mean_per25, labels = sigma_df2_bb_gsl$sigma, pos = c(3,3), cex = 0.75)
+
+mtext("(b) GSL", side = 3, adj = -0.5, font = 2, cex = 0.9)
+
+# bspp
+plot(bspp_df2_bb_gsl$fit_bspp, bspp_df2_gsl$fit_bspp,
+     xlab = "budburst", ylab = "leafout", main = "bspp", type = "n", frame = FALSE,
+     ylim = range(c(bspp_df2_gsl$fit_bspp_per25, bspp_df2_gsl$fit_bspp_per75)),
+     xlim = range(c(bspp_df2_bb_gsl$fit_bspp_per25, bspp_df2_bb_gsl$fit_bspp_per75)))
+arrows(x0 = bspp_df2_bb_gsl$fit_bspp, y0 = bspp_df2_gsl$fit_bspp_per25,
+       x1 = bspp_df2_bb_gsl$fit_bspp, y1 = bspp_df2_gsl$fit_bspp_per75,
+       angle = 90, code = 3, length = 0, lwd = 1.5, col = "darkgray")
+arrows(x0 = bspp_df2_bb_gsl$fit_bspp_per25, y0 = bspp_df2_gsl$fit_bspp,
+       x1 = bspp_df2_bb_gsl$fit_bspp_per75, y1 = bspp_df2_gsl$fit_bspp,
+       angle = 90, code = 3, length = 0, lwd = 1.5, col = "darkgray")
+points(bspp_df2_bb_gsl$fit_bspp, bspp_df2_gsl$fit_bspp,
+       pch = 16, col = wood_colors[bspp_df2_gsl$wood], cex = 1.2)
+abline(0, 1, lty = 2, col = "black", lwd = 2)
+
+# atreeid
+plot(treeid_df2_bb_gsl$fit_atreeid, treeid_df2_gsl$fit_atreeid,
+     xlab = "budburst", ylab = "leafout", main = "atreeid", type = "n", frame = FALSE,
+     ylim = range(c(treeid_df2_gsl$fit_atreeid_per25, treeid_df2_gsl$fit_atreeid_per75)),
+     xlim = range(c(treeid_df2_bb_gsl$fit_atreeid_per25, treeid_df2_bb_gsl$fit_atreeid_per75)))
+arrows(x0 = treeid_df2_bb_gsl$fit_atreeid, y0 = treeid_df2_gsl$fit_atreeid_per25,
+       x1 = treeid_df2_bb_gsl$fit_atreeid, y1 = treeid_df2_gsl$fit_atreeid_per75,
+       angle = 90, code = 3, length = 0, lwd = 1.5, col = "darkgray")
+arrows(x0 = treeid_df2_bb_gsl$fit_atreeid_per25, y0 = treeid_df2_gsl$fit_atreeid,
+       x1 = treeid_df2_bb_gsl$fit_atreeid_per75, y1 = treeid_df2_gsl$fit_atreeid,
+       angle = 90, code = 3, length = 0, lwd = 1.5, col = "darkgray")
+points(treeid_df2_bb_gsl$fit_atreeid, treeid_df2_gsl$fit_atreeid,
+       pch = 16, col = wood_colors[treeid_df2_gsl$wood], cex = 1.2)
+abline(0, 1, lty = 2, col = "black", lwd = 2)
+
+# SOS  --- --- --- --- --- ---
+plot(sigma_df2_bb_sos$mean, sigma_df2_sos$mean,
+     xlab = "budburst", ylab = "leafout", main = "sigmas", type = "n", frame = FALSE,
+     ylim = range(c(sigma_df2_sos$mean_per25, sigma_df2_sos$mean_per75)),
+     xlim = range(c(sigma_df2_bb_sos$mean_per25, sigma_df2_bb_sos$mean_per75)))
+arrows(x0 = sigma_df2_bb_sos$mean, y0 = sigma_df2_sos$mean_per25,
+       x1 = sigma_df2_bb_sos$mean, y1 = sigma_df2_sos$mean_per75,
+       angle = 90, code = 3, length = 0, lwd = 1.5, col = "darkgray")
+arrows(x0 = sigma_df2_bb_sos$mean_per25, y0 = sigma_df2_sos$mean,
+       x1 = sigma_df2_bb_sos$mean_per75, y1 = sigma_df2_sos$mean,
+       angle = 90, code = 3, length = 0, lwd = 1.5, col = "darkgray")
+points(sigma_df2_bb_sos$mean, sigma_df2_sos$mean,
+       pch = 16, col = "black", cex = 1.2)
+abline(0, 1, lty = 2, col = "black", lwd = 2)
+points(sigma_df2_bb_sos$mean, sigma_df2_sos$mean, pch = 16, col = wood_colors[sigma_df2_sos$wood], cex = 1.2)
+text(sigma_df2_bb_sos$mean_per75, sigma_df2_sos$mean_per25, labels = sigma_df2_bb_sos$sigma, pos = c(3,3), cex = 0.75)
+
+mtext("(c) SOS", side = 3, adj = -0.5, font = 2, cex = 0.9)
+
+# bspp
+plot(bspp_df2_bb_sos$fit_bspp, bspp_df2_sos$fit_bspp,
+     xlab = "budburst", ylab = "leafout", main = "bspp", type = "n", frame = FALSE,
+     ylim = range(c(bspp_df2_sos$fit_bspp_per25, bspp_df2_sos$fit_bspp_per75)),
+     xlim = range(c(bspp_df2_bb_sos$fit_bspp_per25, bspp_df2_bb_sos$fit_bspp_per75)))
+arrows(x0 = bspp_df2_bb_sos$fit_bspp, y0 = bspp_df2_sos$fit_bspp_per25,
+       x1 = bspp_df2_bb_sos$fit_bspp, y1 = bspp_df2_sos$fit_bspp_per75,
+       angle = 90, code = 3, length = 0, lwd = 1.5, col = "darkgray")
+arrows(x0 = bspp_df2_bb_sos$fit_bspp_per25, y0 = bspp_df2_sos$fit_bspp,
+       x1 = bspp_df2_bb_sos$fit_bspp_per75, y1 = bspp_df2_sos$fit_bspp,
+       angle = 90, code = 3, length = 0, lwd = 1.5, col = "darkgray")
+points(bspp_df2_bb_sos$fit_bspp, bspp_df2_sos$fit_bspp,
+       pch = 16, col = wood_colors[bspp_df2_sos$wood], cex = 1.2)
+abline(0, 1, lty = 2, col = "black", lwd = 2)
+
+# atreeid
+plot(treeid_df2_bb_sos$fit_atreeid, treeid_df2_sos$fit_atreeid,
+     xlab = "budburst", ylab = "leafout", main = "atreeid", type = "n", frame = FALSE,
+     ylim = range(c(treeid_df2_sos$fit_atreeid_per25, treeid_df2_sos$fit_atreeid_per75)),
+     xlim = range(c(treeid_df2_bb_sos$fit_atreeid_per25, treeid_df2_bb_sos$fit_atreeid_per75)))
+arrows(x0 = treeid_df2_bb_sos$fit_atreeid, y0 = treeid_df2_sos$fit_atreeid_per25,
+       x1 = treeid_df2_bb_sos$fit_atreeid, y1 = treeid_df2_sos$fit_atreeid_per75,
+       angle = 90, code = 3, length = 0, lwd = 1.5, col = "darkgray")
+arrows(x0 = treeid_df2_bb_sos$fit_atreeid_per25, y0 = treeid_df2_sos$fit_atreeid,
+       x1 = treeid_df2_bb_sos$fit_atreeid_per75, y1 = treeid_df2_sos$fit_atreeid,
+       angle = 90, code = 3, length = 0, lwd = 1.5, col = "darkgray")
+points(treeid_df2_bb_sos$fit_atreeid, treeid_df2_sos$fit_atreeid,
+       pch = 16, col = wood_colors[treeid_df2_sos$wood], cex = 1.2)
+abline(0, 1, lty = 2, col = "black", lwd = 2)
+
+# legend once, in outer margin on the right
+par(fig = c(0, 1, 0, 1), oma = c(0, 0, 0, 0), mar = c(0, 0, 0, 0), new = TRUE)
+plot(0, 0, type = "n", bty = "n", xaxt = "n", yaxt = "n")
+legend("right", legend = names(wood_colors), col = wood_colors,
+       pch = 16, pt.cex = 1.2, bty = "n", title = "Wood anatomy", xpd = TRUE)
+dev.off()
+
+
+dev.off()
