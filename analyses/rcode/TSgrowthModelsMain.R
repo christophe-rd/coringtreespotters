@@ -37,6 +37,7 @@ runfulldata <- FALSE
 runmodelnoayear <- FALSE
 fitmodelprvsyr <- FALSE
 runbudburst <- FALSE
+fit2xpriors <- FALSE
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 # Most restricted amount of data ####
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
@@ -895,7 +896,6 @@ dev.off()
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 if (runzscoredmodels) {
   
-
 # Fit model GDD
 dgdd$covariate <- (empts$pgsGDD5 - mean(empts$pgsGDD5)) / sd(empts$pgsGDD5)
 gddmodel <- stan_model("stan/TSmodelGrowth_z.stan")
@@ -2075,5 +2075,48 @@ plot(0, 0, type = "n", bty = "n", xaxt = "n", yaxt = "n")
 legend("right", legend = names(wood_colors), col = wood_colors,
        pch = 16, pt.cex = 1.2, bty = "n", title = "Wood anatomy", xpd = TRUE)
 dev.off()
+}
 
+# <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+# 2X PRIORS ####
+# <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+if (fit2xpriors){
+# Ill do this with 3x the priors so I don't have to change 3 scripts
+genericmodel <- stan_model("stan/TSmodelGrowthGDD_largerPriors.stan")
+
+# Fit model GDD
+gddz <- (empts$pgsGDD5 - mean(empts$pgsGDD5)) / sd(empts$pgsGDD5)
+dgddz <- dgdd[1:10]
+dgddz$covariate <- gddz
+
+fitgdd <- sampling(genericmodel, data = dgddz,
+                   warmup = 1000, iter=2000, chains=4)
+saveRDS(fitgdd, "output/stanOutput/fitGrowthGDDZscored_largerPriors")
+
+# Fit model GSL
+gslz <- (empts$pgsGSL - mean(empts$pgsGSL)) / sd(empts$pgsGSL)
+dgslz <- dgdd[1:10]
+dgslz$covariate <- gslz
+
+fitgsl <- sampling(genericmodel, data = dgslz,
+                   warmup = 1000, iter = 2000, chains = 4)
+saveRDS(fitgsl, "output/stanOutput/fitGrowthGSLZscored_largerPriors")
+
+# Fit model SOS
+sosz <- (empts$leafout - mean(empts$leafout)) / sd(empts$leafout)
+dsosz <- dgdd[1:10]
+dsosz$covariate <- sosz
+
+fitsos <- sampling(genericmodel, data = dsosz,
+                   warmup = 1000, iter = 2000, chains=4)
+saveRDS(fitsos, "output/stanOutput/fitGrowthSOSZscored_largerPriors")
+
+# Fit model EOS
+eosz <- (empts$coloredLeaves - mean(empts$coloredLeaves)) / sd(empts$coloredLeaves)
+deosz <- dgdd[1:10]
+deosz$covariate <- eosz
+
+fiteos <- sampling(genericmodel, data = deosz,
+                   warmup = 1000, iter = 2000, chains=4)
+saveRDS(fiteos, "output/stanOutput/fitGrowthEOSZscored_largerPriors")
 }

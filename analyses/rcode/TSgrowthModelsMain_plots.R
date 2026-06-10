@@ -21,7 +21,7 @@ if (length(grep("christophe_rouleau-desrochers", getwd())) > 0) {
 source("rcode/TSgrowthModelsMain.R")
 
 makeplots <- F
-runzscore <- F
+runzscore <- T
 
 # acronym latbi
 empts$latbi[empts$latbi == "Acer rubrum"]           <- "A. rubrum"
@@ -1422,7 +1422,7 @@ ayear_df2_ts_gdd$y_pos <- match(ayear_df2_ts_gdd$year_name, years_ordered)
 par(mar = c(4, 4, 4, 4))
 plot(ayear_df2_ts_gdd$mean, ayear_df2_ts_gdd$y_pos,
      xlim = c(-1.5, 1.), ylim = c(0.5, length(years_ordered) + 0.5),
-     xlab = "Ring width intercept values (mm)", ylab = "",
+     xlab = "Year effect", ylab = "",
      yaxt = "n", pch = 16, cex = 2, col = colsyr[ayear_df2_ts_gdd$year_name], 
      frame.plot = FALSE,
      panel.first = abline(v = 0, lty = 2, col = "black"))
@@ -2038,6 +2038,216 @@ par(mar = c(mumar))
 plot.new()
 legend("center",
        legend = sapply(unique(bspp_df2$spp_name),
+                       function(x) parse(text = paste0("italic('", x, "')"))),
+       col    = unique(tscolslatbi),
+       pch    = 16, pt.cex = 1.5, bty = "n", cex = 1.2,
+       title  = "Species", title.font = 2)
+dev.off()
+
+# <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+# Z-scored output WITH 2X PRIORS ####
+# <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+##### GDD posterior recovery #####
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+fitgdd <- readRDS("output/stanOutput/fitGrowthGDDZscored_largerPriors")
+
+df_fitgdd <- as.data.frame(fitgdd)
+
+# posterior summaries
+sigma_df2_z  <- extract_params(df_fitgdd, "sigma", "mean", "sigma")
+bspp_df2_z   <- extract_params(df_fitgdd, "bsp", "fit_bspp", 
+                               "spp", "bsp\\[(\\d+)\\]")
+treeid_df2_z <- extract_params(df_fitgdd, "atreeid", "fit_atreeid", 
+                               "treeid", "atreeid\\[(\\d+)\\]")
+treeid_df2_z <- subset(treeid_df2_z, !grepl("z|sigma", treeid))
+aspp_df2_z   <- extract_params(df_fitgdd, "aspp", "fit_aspp", 
+                               "spp", "aspp\\[(\\d+)\\]")
+
+treeid_df2_z$treeid_name <- empts$treeid[match(treeid_df2_z$treeid, empts$treeid_num)]
+bspp_df2_z$spp_name <- empts$latbi[match(bspp_df2_z$spp, empts$spp_num)]
+aspp_df2_z$spp_name <- empts$latbi[match(aspp_df2_z$spp, empts$spp_num)]
+
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+##### GSL posterior recovery #####
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+fitgsl <- readRDS("output/stanOutput/fitGrowthGSLZscored_largerPriors")
+
+df_fitgsl <- as.data.frame(fitgsl)
+
+# posterior summaries
+sigma_df2_z_gsl  <- extract_params(df_fitgsl, "sigma", "mean", "sigma")
+bspp_df2_z_gsl   <- extract_params(df_fitgsl, "bsp", "fit_bspp", 
+                                   "spp", "bsp\\[(\\d+)\\]")
+treeid_df2_z_gsl <- extract_params(df_fitgsl, "atreeid", "fit_atreeid", 
+                                   "treeid", "atreeid\\[(\\d+)\\]")
+treeid_df2_z_gsl <- subset(treeid_df2_z, !grepl("z|sigma", treeid))
+aspp_df2_z_gsl   <- extract_params(df_fitgsl, "aspp", "fit_aspp", 
+                                   "spp", "aspp\\[(\\d+)\\]")
+
+treeid_df2_z_gsl$treeid <- as.numeric(treeid_df2_z_gsl$treeid)
+treeid_df2_z_gsl$treeid_name <- empts$treeid[match(treeid_df2_z_gsl$treeid, empts$treeid_num)]
+bspp_df2_z_gsl$spp_name <- empts$latbi[match(bspp_df2_z_gsl$spp, empts$spp_num)]
+aspp_df2_z_gsl$spp_name <- empts$latbi[match(aspp_df2_z_gsl$spp, empts$spp_num)]
+
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+##### SOS posterior recovery #####
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+fitsos <- readRDS("output/stanOutput/fitGrowthSOSZscored_largerPriors")
+
+df_fitsos <- as.data.frame(fitsos)
+
+
+# posterior summaries
+sigma_df2_z_sos  <- extract_params(df_fitsos, "sigma", "mean", "sigma")
+bspp_df2_z_sos   <- extract_params(df_fitsos, "bsp", "fit_bspp", 
+                                   "spp", "bsp\\[(\\d+)\\]")
+treeid_df2_z_sos <- extract_params(df_fitsos, "atreeid", "fit_atreeid", 
+                                   "treeid", "atreeid\\[(\\d+)\\]")
+treeid_df2_z_sos <- subset(treeid_df2_z_sos, !grepl("z|sigma", treeid))
+aspp_df2_z_sos   <- extract_params(df_fitsos, "aspp", "fit_aspp", 
+                                   "spp", "aspp\\[(\\d+)\\]")
+
+treeid_df2_z_sos$treeid <- as.numeric(treeid_df2_z_sos$treeid)
+treeid_df2_z_sos$treeid_name <- empts$treeid[match(treeid_df2_z_sos$treeid, empts$treeid_num)]
+bspp_df2_z_sos$spp_name <- empts$latbi[match(bspp_df2_z_sos$spp, empts$spp_num)]
+aspp_df2_z_sos$spp_name <- empts$latbi[match(aspp_df2_z_sos$spp, empts$spp_num)]
+
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+##### EOS posterior recovery #####
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+fiteos <- readRDS("output/stanOutput/fitGrowthEOSZscored_largerPriors")
+
+df_fiteos <- as.data.frame(fiteos)
+
+# posterior summaries
+sigma_df2_z_eos  <- extract_params(df_fiteos, "sigma", "mean", "sigma")
+bspp_df2_z_eos   <- extract_params(df_fiteos, "bsp", "fit_bspp", 
+                                   "spp", "bsp\\[(\\d+)\\]")
+treeid_df2_z_eos <- extract_params(df_fiteos, "atreeid", "fit_atreeid", 
+                                   "treeid", "atreeid\\[(\\d+)\\]")
+treeid_df2_z_eos <- subset(treeid_df2_z_eos, !grepl("z|sigma", treeid))
+aspp_df2_z_eos   <- extract_params(df_fiteos, "aspp", "fit_aspp", 
+                                   "spp", "aspp\\[(\\d+)\\]")
+
+treeid_df2_z_eos$treeid <- as.numeric(treeid_df2_z_eos$treeid)
+treeid_df2_z_eos$treeid_name <- empts$treeid[match(treeid_df2_z_eos$treeid, empts$treeid_num)]
+bspp_df2_z_eos$spp_name <- empts$latbi[match(bspp_df2_z_eos$spp, empts$spp_num)]
+aspp_df2_z_eos$spp_name <- empts$latbi[match(aspp_df2_z_eos$spp, empts$spp_num)]
+
+# Add predictors and bind
+bspp_df2_z$pred <- "GDD"
+bspp_df2_z_gsl$pred <- "GSL"
+bspp_df2_z_sos$pred <- "SOS"
+bspp_df2_z_eos$pred <- "EOS"
+bspp_z_binded <- rbind(bspp_df2_z, bspp_df2_z_gsl, bspp_df2_z_sos, bspp_df2_z_eos)
+
+ainc_z <- subset(bspp_z_binded, spp_name %in% "A. incana")
+ball_z <- subset(bspp_z_binded, spp_name %in% "B. alleghaniensis")
+bpap_z <- subset(bspp_z_binded, spp_name %in% "B. papyrifera")
+bpop_z <- subset(bspp_z_binded, spp_name %in% "B. populifolia")
+
+bspp_z_binded$fit_bspp_abs <- abs(bspp_z_binded$mean)
+
+agg_z <- aggregate(fit_bspp_abs ~ spp_name, bspp_z_binded, function(f) abs(max(f)))
+
+# Aggregate to get only the max effect size for each species
+
+max_ES <- merge(agg_z, 
+                bspp_z_binded[, c("mean", "p5", "p95", "pred", "fit_bspp_abs", "spp_name")], 
+                by = c("spp_name", "fit_bspp_abs"))
+
+max_ES$fit_bspp_abs <- NULL
+
+max_ES <- max_ES[order(max_ES$pred),]
+
+
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+##### bspp Z-scored ##### 
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+pdf("figures/growthModelsMain/zscored/muALLbsppZ_largerP.pdf", width = 7.5, height = 6)
+
+layout(matrix(c(
+  1, 2, 5,
+  3, 4, 5
+), nrow = 2, byrow = TRUE), widths = c(2, 2, 1.2))
+
+mumar <- c(4, 1, 4, 1)
+
+# Panel 1: GDD
+par(mar = mumar)
+plot(bspp_df2_z$mean, y_pos,
+     xlim = c(-0.7, 0.8), ylim = c(0.5, n_spp + 0.5),
+     xlab = "GDD standardized effect size", ylab = "",
+     yaxt = "n", pch = 16, cex = 2, col = tscolslatbi, frame.plot = TRUE,
+     panel.first = abline(v = 0, lty = 2, col = "black"))
+segments(bspp_df2_z$p5,  y_pos, bspp_df2_z$p95, y_pos, col = tscolslatbi, lwd = 1.5)
+segments(bspp_df2_z$p25, y_pos, bspp_df2_z$p75, y_pos, col = tscolslatbi, lwd = 3)
+mtext("(a) Growing degree days", adj = 0, side = 3, line = 2.5, font = 2, cex = 0.9)
+# arrows(x0 = -0.05, y0 = n_spp + 0.85, x1 = -0.5, y1 = n_spp + 0.85, length = 0.1, xpd = TRUE)
+# text(-0.18, n_spp + 0.85, "Smaller/Cooler", pos = 3, xpd = TRUE, cex = 0.9)
+arrows(x0 = 0.05, y0 = n_spp + 0.85, x1 = 0.5, y1 = n_spp + 0.85, length = 0.1, xpd = TRUE)
+text(0.18, n_spp + 0.85, "Larger/Warmer", pos = 3, xpd = TRUE, cex = 0.9)
+usr <- par("usr")
+rasterImage(img_thermom, usr[1], usr[4] - diff(usr[3:4]) * 0.25, usr[1] + diff(usr[1:2]) * 0.20, usr[4])
+
+
+# Panel 3: SOS
+par(mar = mumar)
+plot(bspp_df2_z_sos$mean, y_pos,
+     xlim = c(-0.7, 0.8), ylim = c(0.5, n_spp + 0.5),
+     xlab = "SOS standardized effect size", ylab = "",
+     yaxt = "n", pch = 16, cex = 2, col = tscolslatbi, frame.plot = TRUE,
+     panel.first = abline(v = 0, lty = 2, col = "black"))
+segments(bspp_df2_z_sos$p5,  y_pos, bspp_df2_z_sos$p95, y_pos, col = tscolslatbi, lwd = 1.5)
+segments(bspp_df2_z_sos$p25, y_pos, bspp_df2_z_sos$p75, y_pos, col = tscolslatbi, lwd = 3)
+mtext("(b) Start of season", adj = 0, side = 3, line = 2.5, font = 2, cex = 0.9)
+arrows(x0 = -0.05, y0 = n_spp + 0.85, x1 = -0.5, y1 = n_spp + 0.85, length = 0.1, xpd = TRUE)
+text(-0.18, n_spp + 0.85, "Larger/Earlier", pos = 3, xpd = TRUE, cex = 0.9)
+# arrows(x0 = 0.05, y0 = n_spp + 0.85, x1 = 0.5, y1 = n_spp + 0.85, length = 0.1, xpd = TRUE)
+# text(0.18, n_spp + 0.85, "Larger/Later", pos = 3, xpd = TRUE, cex = 0.9)
+usr <- par("usr")
+rasterImage(img_leafout, usr[1], usr[4] - diff(usr[3:4]) * 0.35, usr[1] + diff(usr[1:2]) * 0.25, usr[4])
+
+# Panel 2: GSL
+par(mar = mumar)
+plot(bspp_df2_z_gsl$mean, y_pos,
+     xlim = c(-0.7, 0.8), ylim = c(0.5, n_spp + 0.5),
+     xlab = "GSL standardized effect size", ylab = "",
+     yaxt = "n", pch = 16, cex = 2, col = tscolslatbi, frame.plot = TRUE,
+     panel.first = abline(v = 0, lty = 2, col = "black"))
+segments(bspp_df2_z_gsl$p5,  y_pos, bspp_df2_z_gsl$p95, y_pos, col = tscolslatbi, lwd = 1.5)
+segments(bspp_df2_z_gsl$p25, y_pos, bspp_df2_z_gsl$p75, y_pos, col = tscolslatbi, lwd = 3)
+mtext("(c) Growing season length", adj = 0, side = 3, line = 2.5, font = 2, cex = 0.9)
+# arrows(x0 = -0.05, y0 = n_spp + 0.85, x1 = -0.5, y1 = n_spp + 0.85, length = 0.1, xpd = TRUE)
+# text(-0.18, n_spp + 0.85, "Smaller/Shorter", pos = 3, xpd = TRUE, cex = 0.9)
+arrows(x0 = 0.05, y0 = n_spp + 0.85, x1 = 0.5, y1 = n_spp + 0.85, length = 0.1, xpd = TRUE)
+text(0.18, n_spp + 0.85, "Larger/Longer", pos = 3, xpd = TRUE, cex = 0.9)
+usr <- par("usr")
+rasterImage(img_calenda, usr[1], usr[4] - diff(usr[3:4]) * 0.25, usr[1] + diff(usr[1:2]) * 0.20, usr[4])
+
+# Panel 4: EOS
+par(mar = mumar)
+plot(bspp_df2_z_eos$mean, y_pos,
+     xlim = c(-0.7, 0.8), ylim = c(0.5, n_spp + 0.5),
+     xlab = "EOS standardized effect size", ylab = "",
+     yaxt = "n", pch = 16, cex = 2, col = tscolslatbi, frame.plot = TRUE,
+     panel.first = abline(v = 0, lty = 2, col = "black"))
+segments(bspp_df2_z_eos$p5,  y_pos, bspp_df2_z_eos$p95, y_pos, col = tscolslatbi, lwd = 1.5)
+segments(bspp_df2_z_eos$p25, y_pos, bspp_df2_z_eos$p75, y_pos, col = tscolslatbi, lwd = 3)
+mtext("(d) End of season", adj = 0, side = 3, line = 2.5, font = 2, cex = 0.9)
+arrows(x0 = -0.05, y0 = n_spp + 0.85, x1 = -0.5, y1 = n_spp + 0.85, length = 0.1, xpd = TRUE)
+text(-0.18, n_spp + 0.85, "Larger/Earlier", pos = 3, xpd = TRUE, cex = 0.9)
+# arrows(x0 = 0.05, y0 = n_spp + 0.85, x1 = 0.5, y1 = n_spp + 0.85, length = 0.1, xpd = TRUE)
+# text(0.18, n_spp + 0.85, "Smaller/Later", pos = 3, xpd = TRUE, cex = 0.9)
+usr <- par("usr")
+rasterImage(img_budset, usr[1], usr[4] - diff(usr[3:4]) * 0.35, usr[1] + diff(usr[1:2]) * 0.25, usr[4])
+
+# Panel 5: species legend
+par(mar = c(mumar))
+plot.new()
+legend("center",
+       legend = sapply(unique(bspp_df2_z$spp_name),
                        function(x) parse(text = paste0("italic('", x, "')"))),
        col    = unique(tscolslatbi),
        pch    = 16, pt.cex = 1.5, bty = "n", cex = 1.2,
