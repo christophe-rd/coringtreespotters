@@ -51,7 +51,7 @@ logan$doy <- as.numeric(format(as.Date(logan$date), "%j"))
 logan <- logan[order(logan$year, logan$date), ]
 
 logan$GDD_5 <- gdd(tmax = logan$maxT, tmin = logan$minT, tbase = 5, type = "B")
-logan$meanTempC <- (logan$maxTempC + logan$maxTempC) /2
+logan$meanTempC <- (logan$maxTempC + logan$minTempC) /2
 
 # Initialize the GDD_5 column
 logan$GDD_5 <- NA
