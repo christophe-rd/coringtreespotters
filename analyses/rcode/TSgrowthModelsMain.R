@@ -32,7 +32,7 @@ source('mcmc_visualization_tools.R', local=util)
 source('/Users/christophe_rouleau-desrochers/github/wildchrokie/analyses/rcode/tools.R')
 
 runmodels <- F
-runzscoredmodels <- T
+runzscoredmodels <- F
 runfulldata <- FALSE
 runmodelnoayear <- FALSE
 fitmodelprvsyr <- FALSE
