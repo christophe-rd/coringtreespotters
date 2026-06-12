@@ -85,17 +85,17 @@ nrow(obsdataWithGDD[!is.na(obsdataWithGDD$leafout), ])
 obsdataWithGDD$idyear <- NULL
 
 # change the species names to abreviated genus
-empts$latbi[empts$latbi == "Acer rubrum"]           <- "A. rubrum"
-empts$latbi[empts$latbi == "Acer saccharum"]        <- "A. saccharum"
-empts$latbi[empts$latbi == "Aesculus flava"]        <- "Ae. flava"
-empts$latbi[empts$latbi == "Betula alleghaniensis"] <- "B. alleghaniensis"
-empts$latbi[empts$latbi == "Betula nigra"]          <- "B. nigra"
-empts$latbi[empts$latbi == "Carya glabra"]          <- "C. glabra"
-empts$latbi[empts$latbi == "Carya ovata"]           <- "C. ovata"
-empts$latbi[empts$latbi == "Populus deltoides"]     <- "P. deltoides"
-empts$latbi[empts$latbi == "Quercus alba"]          <- "Q. alba"
-empts$latbi[empts$latbi == "Quercus rubra"]         <- "Q. rubra"
-empts$latbi[empts$latbi == "Tilia americana"]       <- "T. americana"
+obsdataWithGDD$latbi[obsdataWithGDD$latbi == "Acer rubrum"]           <- "A. rubrum"
+obsdataWithGDD$latbi[obsdataWithGDD$latbi == "Acer saccharum"]        <- "A. saccharum"
+obsdataWithGDD$latbi[obsdataWithGDD$latbi == "Aesculus flava"]        <- "Ae. flava"
+obsdataWithGDD$latbi[obsdataWithGDD$latbi == "Betula alleghaniensis"] <- "B. alleghaniensis"
+obsdataWithGDD$latbi[obsdataWithGDD$latbi == "Betula nigra"]          <- "B. nigra"
+obsdataWithGDD$latbi[obsdataWithGDD$latbi == "Carya glabra"]          <- "C. glabra"
+obsdataWithGDD$latbi[obsdataWithGDD$latbi == "Carya ovata"]           <- "C. ovata"
+obsdataWithGDD$latbi[obsdataWithGDD$latbi == "Populus deltoides"]     <- "P. deltoides"
+obsdataWithGDD$latbi[obsdataWithGDD$latbi == "Quercus alba"]          <- "Q. alba"
+obsdataWithGDD$latbi[obsdataWithGDD$latbi == "Quercus rubra"]         <- "Q. rubra"
+obsdataWithGDD$latbi[obsdataWithGDD$latbi == "Tilia americana"]       <- "T. americana"
 
 # write csv
 write.csv(obsdataWithGDD, "output/empiricalDataMAIN.csv")
