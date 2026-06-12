@@ -75,8 +75,8 @@ The Tree Spotters was a citizen science program that started in 2015 and aimed t
 
 % Provenance map
 \begin{figure}[!ht]
-\includegraphics[width=0.8\textwidth]{/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/figures/empiricalData/treesMap.pdf}
-\caption{Locations of the trees in the arboretum. The colors of the dots match the model estimates of Figure \ref{fig:tsMap}.} 
+\includegraphics[width=0.8\textwidth]{/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/figures/empiricalData/tree_species_map.pdf}
+\caption{Map of the Arnold Arboretum of Harvard University with the locations of the trees depicted as the dots. The colors of the dots match the model estimates of model estimate figures (e.g. Figure \ref{fig:*}). We also show the location of the Weld Hill Research Building (black diamond), where the common garden from Chapter 1 took place.} 
 \label{fig:mapProv}
 \end{figure}
 
