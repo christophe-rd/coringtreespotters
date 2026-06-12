@@ -35,20 +35,6 @@ empts <- read.csv("output/empiricalDataMAIN.csv")
 # rw <- read.csv("output/wildchrokieRingWidth.csv")
 gdd <- read.csv("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/output/gddByYear.csv")
 
-
-empts$latbi[empts$latbi == "Acer rubrum"]           <- "A. rubrum"
-empts$latbi[empts$latbi == "Acer saccharum"]        <- "A. saccharum"
-empts$latbi[empts$latbi == "Aesculus flava"]        <- "Ae. flava"
-empts$latbi[empts$latbi == "Betula alleghaniensis"] <- "B. alleghaniensis"
-empts$latbi[empts$latbi == "Betula nigra"]          <- "B. nigra"
-empts$latbi[empts$latbi == "Carya glabra"]          <- "C. glabra"
-empts$latbi[empts$latbi == "Carya ovata"]           <- "C. ovata"
-empts$latbi[empts$latbi == "Populus deltoides"]     <- "P. deltoides"
-empts$latbi[empts$latbi == "Quercus alba"]          <- "Q. alba"
-empts$latbi[empts$latbi == "Quercus rubra"]         <- "Q. rubra"
-empts$latbi[empts$latbi == "Tilia americana"]       <- "T. americana"
-
-
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 # Most restricted amount of data ####
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>

@@ -23,25 +23,12 @@ source("rcode/TSgrowthModelsMain.R")
 makeplots <- F
 runzscore <- F
 
-# acronym latbi
-empts$latbi[empts$latbi == "Acer rubrum"]           <- "A. rubrum"
-empts$latbi[empts$latbi == "Acer saccharum"]        <- "A. saccharum"
-empts$latbi[empts$latbi == "Aesculus flava"]        <- "Ae. flava"
-empts$latbi[empts$latbi == "Betula alleghaniensis"] <- "B. alleghaniensis"
-empts$latbi[empts$latbi == "Betula nigra"]          <- "B. nigra"
-empts$latbi[empts$latbi == "Carya glabra"]          <- "C. glabra"
-empts$latbi[empts$latbi == "Carya ovata"]           <- "C. ovata"
-empts$latbi[empts$latbi == "Populus deltoides"]     <- "P. deltoides"
-empts$latbi[empts$latbi == "Quercus alba"]          <- "Q. alba"
-empts$latbi[empts$latbi == "Quercus rubra"]         <- "Q. rubra"
-empts$latbi[empts$latbi == "Tilia americana"]       <- "T. americana"
-
 # Load parameter summaries generated in growthModelsMain.R ####
 sigma_df2_ts_gdd  <- read.csv("output/GM_GDDparam_sigma.csv")
 bspp_df2_ts_gdd   <- read.csv("output/GM_GDDparam_bspp.csv")
 treeid_df2_ts_gdd <- read.csv("output/GM_GDDparam_treeid.csv")
 aspp_df2_ts_gdd   <- read.csv("output/GM_GDDparam_aspp.csv")
-ayear_df2_ts_gdd   <- read.csv("output/GM_GDDparam_ayear.csv")
+ayear_df2_ts_gdd  <- read.csv("output/GM_GDDparam_ayear.csv")
 
 treeid_df2_ts_gdd$id <- as.numeric(treeid_df2_ts_gdd$id)  
 treeid_df2_ts_gdd$treeid_name <- empts$id[match(treeid_df2_ts_gdd$id, empts$treeid_num)]

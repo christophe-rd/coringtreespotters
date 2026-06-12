@@ -36,18 +36,6 @@ longtermgdd5yr <- read.csv("output/longTermGDD5YrAvg.csv")
 empts$lengthMM <- empts$lengthCM * 10
 allringwidths$lengthMM <- allringwidths$lengthCM * 10
 
-empts$latbi[empts$latbi == "Acer rubrum"]           <- "A. rubrum"
-empts$latbi[empts$latbi == "Acer saccharum"]        <- "A. saccharum"
-empts$latbi[empts$latbi == "Aesculus flava"]        <- "Ae. flava"
-empts$latbi[empts$latbi == "Betula alleghaniensis"] <- "B. alleghaniensis"
-empts$latbi[empts$latbi == "Betula nigra"]          <- "B. nigra"
-empts$latbi[empts$latbi == "Carya glabra"]          <- "C. glabra"
-empts$latbi[empts$latbi == "Carya ovata"]           <- "C. ovata"
-empts$latbi[empts$latbi == "Populus deltoides"]     <- "P. deltoides"
-empts$latbi[empts$latbi == "Quercus alba"]          <- "Q. alba"
-empts$latbi[empts$latbi == "Quercus rubra"]         <- "Q. rubra"
-empts$latbi[empts$latbi == "Tilia americana"]       <- "T. americana"
-
 # from arboretum website most of the info is in the above dfs, just in case I want to look at other stuff
 coord <- read.csv("input/listTreesfromInteractiveMap.csv", header=TRUE)
 
