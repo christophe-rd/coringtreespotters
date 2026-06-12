@@ -151,7 +151,7 @@ ggplot(AEFL, aes(x = yearCor, y = lengthCM, color = id, group = idrep)) +
   )
 scale_color_manual(values = wes_palette("FantasticFox1"))
 
-ggsave("figures/acsaspaghetti_plot.jpeg", width = 10, height = 6, units = "in", dpi = 300)
+ggsave("figures/crossDating/acsaspaghetti_plot.jpeg", width = 10, height = 6, units = "in", dpi = 300)
 
 
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
@@ -178,7 +178,7 @@ ggplot(ACRU, aes(x = yearCor, y = lengthCM, color = id, group = idrep)) +
   )
 scale_color_manual(values = wes_palette("FantasticFox1"))
 
-ggsave("figures/acsaspaghetti_plot.jpeg", width = 10, height = 6, units = "in", dpi = 300)
+ggsave("figures/crossDating/acsaspaghetti_plot.jpeg", width = 10, height = 6, units = "in", dpi = 300)
 
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
 # ACSA ##### 
@@ -207,7 +207,7 @@ ggplot(ACSA, aes(x = yearCor, y = lengthCM, color = id, group = idrep)) +
   )
   scale_color_manual(values = wes_palette("FantasticFox1"))
 
-ggsave("figures/acsaspaghetti_plot.jpeg", width = 10, height = 6, units = "in", dpi = 300)
+ggsave("figures/crossDating/acsaspaghetti_plot.jpeg", width = 10, height = 6, units = "in", dpi = 300)
 
 
 
@@ -257,7 +257,7 @@ ggplot(betula, aes(x = yearCor, y = lengthCM, color = id, group = idrep)) +
        color = "Core ID") +
   facet_wrap(~id, nrow = length(unique(betula$id)), ncol = 1, scales = "free_y") +
   theme_minimal(base_size = 14)
-ggsave("figures/betulaspaghetti_plot.jpeg", width = 6, height = 8, units = "in", dpi = 300)
+ggsave("figures/crossDating/betulaspaghetti_plot.jpeg", width = 6, height = 8, units = "in", dpi = 300)
 
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
 # CAGL ##### 
@@ -311,7 +311,7 @@ ggplot(PODE, aes(x = yearCor, y = lengthCM, color = id, group = idrep)) +
   # ylim(0, 0.3) +
   # xlim(2000, 2024)
   scale_color_manual(values = wes_palette("FantasticFox1")) 
-ggsave("figures/podespaghetti_plot.jpeg", width = 10, height = 6, units = "in", dpi = 300)
+ggsave("figures/crossDating/podespaghetti_plot.jpeg", width = 10, height = 6, units = "in", dpi = 300)
 
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
 # QUAL ##### 
@@ -335,7 +335,7 @@ ggplot(QUAL, aes(x = yearCor, y = lengthCM, color = id, group = idrep)) +
     axis.text.x = element_text(angle = 45, hjust = 1)
   ) +
   scale_color_manual(values = wes_palette("FantasticFox1"))
-ggsave("figures/qualspaghetti_plot.jpeg", width = 10, height = 6, units = "in", dpi = 300)
+ggsave("figures/crossDating/qualspaghetti_plot.jpeg", width = 10, height = 6, units = "in", dpi = 300)
 
 
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
@@ -409,7 +409,7 @@ class(all_df) <- c("rwl", "data.frame")
 
 # plot ring width series
 # open jpeg device from the ggsave settings above
-jpeg(filename = "figures/fullspag_plot.jpeg",
+jpeg(filename = "figures/crossDating/fullspag_plot.jpeg",
      width = 16,       
      height = 8,      
      units = "in",    
@@ -417,7 +417,7 @@ jpeg(filename = "figures/fullspag_plot.jpeg",
 plot.rwl(qu_df, plot.type = "spag")  # spaghetti plot
 dev.off()
 
-jpeg(filename = "figures/fullspag_plot.jpeg",
+jpeg(filename = "figures/crossDating/fullspag_plot.jpeg",
      width = 20,       
      height = 8,      
      units = "in",    
@@ -446,7 +446,7 @@ seg_len <- max(seg_len, 3)  # at least 3 years
 bin_floor <- max(floor(seg_len / 3), 2)  # rule-of-thumb
 
 # Now run segment correlations safely
-jpeg(filename = "figures/segmentCorrelations.jpeg",
+jpeg(filename = "figures/crossDating/segmentCorrelations.jpeg",
      width = 8,       
      height = 8,      
      units = "in",    
