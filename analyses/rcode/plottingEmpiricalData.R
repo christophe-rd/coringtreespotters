@@ -33,7 +33,6 @@ allringwidths <- read.csv("output/ringWidthTS.csv")
 longtermgdd <- read.csv("output/longTermGDDperYear.csv")
 longtermgdd5yr <- read.csv("output/longTermGDD5YrAvg.csv")
 
-empts$lengthMM <- empts$lengthCM * 10
 allringwidths$lengthMM <- allringwidths$lengthCM * 10
 
 # from arboretum website most of the info is in the above dfs, just in case I want to look at other stuff
@@ -439,11 +438,11 @@ for(i in unique(suby$id)) { # i = "QUAL_21815_E"
   axis(1, at = seq(floor(min(sub$year)), floor(max(sub$year)), by = 1), tck = -0.02)
   
   # regression line per species
-  for(sp in unique(sub$latbi)) { # sp = "River birch"
-    ssp <- sub[sub$latbi == sp, ]
-    fit <- lm(lengthMM ~ year, data = ssp)
-    abline(fit, col = renoir[as.numeric(factor(sp, levels = levels(factor(empts$latbi))))], lwd =1.8) 
-  }
+  # for(sp in unique(sub$latbi)) { # sp = "River birch"
+  #   ssp <- sub[sub$latbi == sp, ]
+  #   fit <- lm(lengthMM ~ year, data = ssp)
+  #   abline(fit, col = renoir[as.numeric(factor(sp, levels = levels(factor(empts$latbi))))], lwd =1.8) 
+  # }
 }
 dev.off()
 
