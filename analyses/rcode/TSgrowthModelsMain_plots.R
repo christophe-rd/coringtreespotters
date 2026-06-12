@@ -21,7 +21,7 @@ if (length(grep("christophe_rouleau-desrochers", getwd())) > 0) {
 source("rcode/TSgrowthModelsMain.R")
 
 makeplots <- F
-runzscore <- T
+runzscore <- F
 
 # acronym latbi
 empts$latbi[empts$latbi == "Acer rubrum"]           <- "A. rubrum"
