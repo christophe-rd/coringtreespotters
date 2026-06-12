@@ -57,7 +57,20 @@ pgsGSLagg$pgsGSL <- round(pgsGSLagg$pgsGSL, 1)
 \section*{Introduction}
 % <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 \begin{enumerate}
-\item Climate change shifts phenology
+\item Climate change shift plant phenology
+  \begin{enumerate}
+  
+  \item Lengthens the growing season
+  
+  \item Trees might not grow more
+  
+  \item Mature trees store carbon so they are important
+  \end{enumerate}
+
+\item Importance of life-history strategies
+  \begin{enumerate}
+  \item Slow growth rate species may benefit more than slower growth rate
+  \end{enumerate}
 \end{enumerate}
 
 % <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
