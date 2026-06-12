@@ -84,6 +84,19 @@ obsdataWithGDD$pgsGSL <- obsdataWithGDD$coloredLeaves - obsdataWithGDD$leafout
 nrow(obsdataWithGDD[!is.na(obsdataWithGDD$leafout), ])
 obsdataWithGDD$idyear <- NULL
 
+# change the species names to abreviated genus
+empts$latbi[empts$latbi == "Acer rubrum"]           <- "A. rubrum"
+empts$latbi[empts$latbi == "Acer saccharum"]        <- "A. saccharum"
+empts$latbi[empts$latbi == "Aesculus flava"]        <- "Ae. flava"
+empts$latbi[empts$latbi == "Betula alleghaniensis"] <- "B. alleghaniensis"
+empts$latbi[empts$latbi == "Betula nigra"]          <- "B. nigra"
+empts$latbi[empts$latbi == "Carya glabra"]          <- "C. glabra"
+empts$latbi[empts$latbi == "Carya ovata"]           <- "C. ovata"
+empts$latbi[empts$latbi == "Populus deltoides"]     <- "P. deltoides"
+empts$latbi[empts$latbi == "Quercus alba"]          <- "Q. alba"
+empts$latbi[empts$latbi == "Quercus rubra"]         <- "Q. rubra"
+empts$latbi[empts$latbi == "Tilia americana"]       <- "T. americana"
+
 # write csv
 write.csv(obsdataWithGDD, "output/empiricalDataMAIN.csv")
 # 

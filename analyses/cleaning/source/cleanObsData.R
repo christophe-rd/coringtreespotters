@@ -307,7 +307,7 @@ temp %>%
   count(latbi)
 
 # uncleaned pheno observations
-if (false){
+if (FALSE){
 bb2 <- d2 %>%
   rename(
     lat = Latitude,
