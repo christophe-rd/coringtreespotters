@@ -405,22 +405,37 @@ for (sp in species_list) {
 dev.off()
 
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
-# Plot all tree together in one page by year ####
+# Plot all tree together in one page by year FOR PAPER ####
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+empts$newid <- paste0(empts$latbi, ": \n", substr(empts$id, 6, 15))
+vec <- unique(empts$newid)
+# one row per individual, with species attached
+treeInfo <- unique(empts[, c("newid", "latbi")])
+
+# 1 guaranteed individual per species
+oneEach <- tapply(treeInfo$newid, treeInfo$latbi, function(x) sample(x, 1))
+
+# fill remainder randomly from what's left
+remaining <- setdiff(treeInfo$newid, oneEach)
+fillN <- 20 - length(oneEach)
+extra <- sample(remaining, fillN)
+
+ids20 <- c(oneEach, extra)
+
+suby <- subset(empts, newid %in% ids20 & year > 2015 & year < 2025)
+
+ids <- unique(suby$newid)
+
 pdf("figures/empiricalData/rwXyearRestricted.pdf", width = 8, height = 10)
 
 empts$year <- as.integer(empts$year)
-vec <- unique(empts$id)
 
-set.seed(123)
-suby <- subset(empts, id %in% sample(vec, 20) & year > 2015 & year < 2025)
-
-par(mfrow = c(5,ceiling(length(unique(suby$id))/5)),
-    mar = c(3, 2, 1.5, 0.5),
+par(mfrow = c(5, 4),
+    mar = c(3, 2, 2, 0.5),
     mgp = c(1.5, 0.5, 0))
 
-for(i in unique(suby$id)) { # i = "QUAL_21815_E"
-  sub <- suby[suby$id == i, ]
+for(i in unique(suby$newid)) { # i = "QUAL_21815_E"
+  sub <- suby[suby$newid == i, ]
   if(nrow(sub) == 0) next
   col_vals <- renoir[as.numeric(factor(sub$latbi, levels = levels(factor(emp2$latbi))))]
   
