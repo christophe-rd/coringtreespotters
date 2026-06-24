@@ -66,20 +66,20 @@ pgsGSLagg$pgsGSL <- round(pgsGSLagg$pgsGSL, 1)
 \item Summary basic information
   \begin{enumerate}
 
-  \item Coringtreespotters includes 11 deciduous tree species with leaf phenology data spanning nine years (2016 to 2024) for a total of 
+  \item Dataset includes 11 deciduous tree species with leaf phenology data spanning nine years (2016 to 2024) for a total of 
   \Sexpr{nrow(empfullsosts)} leafout and 
-  \Sexpr{nrow(empfulleosts)} colored leaves   %emw22Jun -- leaf coloring
+  \Sexpr{nrow(empfulleosts)} leaf coloring
    observations, yielding 
   \Sexpr{nrow(empts)} complete growing seasons (GS) for 
   \Sexpr{length(unique(empts$id))} individuals. 
   
-  \item 
+  \item Mean summer temperatures spanned 
+  \Sexpr{tsjja$tmeanmean[which.min(tsjja$tmeanmean)]}$^\circ$C 
+  (\Sexpr{tsjja$year[which.min(tsjja$tmeanmean)]}) to 
+  \Sexpr{tsjja$tmeanmean[which.max(tsjja$tmeanmean)]}$^\circ$C 
+  (\Sexpr{tsjja$year[which.max(tsjja$tmeanmean)]}), with an average of
+  \Sexpr{mean(tsjja$tmeanmean)}$^\circ$C across the nine years.
     %emw22Jun -- change to: temps spanned XX (yr)  to YY (yr) with an average of TT across the nine years
-  \Sexpr{tsjja$year[which.min(tsjja$tmeanmean)]} was the coolest year
-  (\Sexpr{tsjja$tmeanmean[which.min(tsjja$tmeanmean)]}$^\circ$C), and   
-  \Sexpr{tsjja$year[which.max(tsjja$tmeanmean)]} was the warmest
-  (\Sexpr{tsjja$tmeanmean[which.max(tsjja$tmeanmean)]}$^\circ$C)
-  
   %emw22Jun -- fix as in wildcrokie, also why is 2016 separated out? Severe vs extreme? 
   \item 2020 and 2022 had moderate droughts, ramped up to severe in September. 
   
@@ -103,7 +103,7 @@ pgsGSLagg$pgsGSL <- round(pgsGSLagg$pgsGSL, 1)
   \Sexpr{empts$loCal[which.min(empts$leafout)]} ({\Afla} in 
   \Sexpr{empts$year[which.min(empts$leafout)]}) and the latest, 
   \Sexpr{empts$loCal[which.max(empts$leafout)]} ({\Cova} in 
-  \Sexpr{empts$year[which.max(empts$leafout)]}). The earliest colored leaves day of year was
+  \Sexpr{empts$year[which.max(empts$leafout)]}). The earliest leaf coloring day of year was
   \Sexpr{empts$clCal[which.min(empts$coloredLeaves)]} ({\Afla} in 
   \Sexpr{empts$year[which.min(empts$coloredLeaves)]}---same individual with earliest leafout) and the latest, 
   \Sexpr{empts$clCal[which.max(empts$coloredLeaves)]} ({\Tame} in
@@ -114,7 +114,6 @@ pgsGSLagg$pgsGSL <- round(pgsGSLagg$pgsGSL, 1)
   \Sexpr{max(empts$lengthMM)} mm ({\Tame} in \Sexpr{empts$year[which.max(empts$lengthMM)]}) (Figure \ref{fig:tsboxplot}).  %emw22Jun -- damn! > 1 cm?
  
 \end{enumerate}
-
 % Question 1 --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 \item Does tree growth increase with longer growing seasons?
   \begin{enumerate}
@@ -122,13 +121,12 @@ pgsGSLagg$pgsGSL <- round(pgsGSLagg$pgsGSL, 1)
   \item No clear trend of growing season length effect across our eleven species and season predictors.
 
 %emw22Jun -- we don't often say 'for no species' -- you could say 'for any species' Given your opening \item I would just change to: this did not increase growth, this did not increase growth .... 
-  \item Longer thermal season increased growth for no species and decreased growth for {\Ball} ($\beta = $
-  \Sexpr{bspp_df2_ts_gdd$mean[bspp_df2_ts_gdd$spp_name %in% "B. alleghaniensis"]}, $UI_{90}$
-  [\Sexpr{bspp_df2_ts_gdd$p5[bspp_df2_ts_gdd$spp_name %in% "B. alleghaniensis"]},
-  \Sexpr{bspp_df2_ts_gdd$p95[bspp_df2_ts_gdd$spp_name %in% "B. alleghaniensis"]}])
-  ) (Figure \ref{fig:tsmuplotbspp}a and e) (Table \ref{tab:ts_slope_table}).
+  \item Longer thermal season increased growth for no species and decreased growth for {\Ball} (
+  \Sexpr{bspp_df2_ts_gdd$mean[bspp_df2_ts_gdd$spp_name %in% "B. alleghaniensis"]}, UI:
+  \Sexpr{bspp_df2_ts_gdd$p5[bspp_df2_ts_gdd$spp_name %in% "B. alleghaniensis"]},
+  \Sexpr{bspp_df2_ts_gdd$p95[bspp_df2_ts_gdd$spp_name %in% "B. alleghaniensis"]} RW change per scaled GDD; Figure \ref{fig:tsmuplotbspp}a and e; Table \ref{tab:ts_slope_table}).
   
-  \item No species responded to longer calendar season (Figure \ref{fig:tsmuplotbspp}b and f) (Table \ref{tab:ts_slope_table}).
+  \item No species responded to longer calendar season (Figure \ref{fig:tsmuplotbspp}b and f; Table \ref{tab:ts_slope_table}).
 
   \end{enumerate}
 
@@ -136,40 +134,39 @@ pgsGSLagg$pgsGSL <- round(pgsGSLagg$pgsGSL, 1)
 \item Does a warmer thermal season increase growth in the following year?
   \begin{enumerate}
   
-  \item Previous year GDD increased growth for {\Ball} ($\beta = $
-  \Sexpr{bspp_df2_ts_prvs$mean[bspp_df2_ts_prvs$spp_name %in% "B. alleghaniensis"]}, $UI_{90}$
-  [\Sexpr{bspp_df2_ts_prvs$p5[bspp_df2_ts_prvs$spp_name %in% "B. alleghaniensis"]},
-  \Sexpr{bspp_df2_ts_prvs$p95[bspp_df2_ts_prvs$spp_name %in% "B. alleghaniensis"]}],
-  and decreased growth for {\Bnig} ($\beta = $
-  \Sexpr{bspp_df2_ts_prvs$mean[bspp_df2_ts_prvs$spp_name %in% "B. nigra"]}, $UI_{90}$
-  [\Sexpr{bspp_df2_ts_prvs$p5[bspp_df2_ts_prvs$spp_name %in% "B. nigra"]},
-  \Sexpr{bspp_df2_ts_prvs$p95[bspp_df2_ts_prvs$spp_name %in% "B. nigra"]}] (Figure \ref{fig:tsPrvsYr}b)
+  \item Previous year GDD increased growth for {\Ball} (
+  \Sexpr{bspp_df2_ts_prvs$mean[bspp_df2_ts_prvs$spp_name %in% "B. alleghaniensis"]}, UI:
+  \Sexpr{bspp_df2_ts_prvs$p5[bspp_df2_ts_prvs$spp_name %in% "B. alleghaniensis"]},
+  \Sexpr{bspp_df2_ts_prvs$p95[bspp_df2_ts_prvs$spp_name %in% "B. alleghaniensis"]} RW change per scaled GDD),
+  and decreased growth for {\Bnig} (
+  \Sexpr{bspp_df2_ts_prvs$mean[bspp_df2_ts_prvs$spp_name %in% "B. nigra"]}, UI:
+  \Sexpr{bspp_df2_ts_prvs$p5[bspp_df2_ts_prvs$spp_name %in% "B. nigra"]},
+  \Sexpr{bspp_df2_ts_prvs$p95[bspp_df2_ts_prvs$spp_name %in% "B. nigra"]} RW change per scaled GDD; Figure \ref{fig:tsPrvsYr}b)
   
-  \item Interestingly, {\Bnig} did not solely respond to current year's condition (Figure \ref{fig:tsmuplotbspp}a and e) (Table \ref{tab:ts_slope_table}), but grew more with warmer thermal season when the previous condition were considered ($\beta = $
-  \Sexpr{bspp_df2_ts_curr$mean[bspp_df2_ts_curr$spp_name %in% "B. nigra"]}, $UI_{90}$
-  [\Sexpr{bspp_df2_ts_curr$p5[bspp_df2_ts_curr$spp_name %in% "B. nigra"]},
-  \Sexpr{bspp_df2_ts_curr$p95[bspp_df2_ts_curr$spp_name %in% "B. nigra"]}]) (Figure \ref{fig:tsPrvsYr}a.
+  \item Interestingly, {\Bnig} did not solely respond to current year's condition (Figure \ref{fig:tsmuplotbspp}a and e; Table \ref{tab:ts_slope_table}), but grew more with warmer thermal season when the previous condition were considered (
+  \Sexpr{bspp_df2_ts_curr$mean[bspp_df2_ts_curr$spp_name %in% "B. nigra"]}, UI:
+  \Sexpr{bspp_df2_ts_curr$p5[bspp_df2_ts_curr$spp_name %in% "B. nigra"]},
+  \Sexpr{bspp_df2_ts_curr$p95[bspp_df2_ts_curr$spp_name %in% "B. nigra"]} RW change per scaled GDD; Figure \ref{fig:tsPrvsYr}a).
   \end{enumerate}
   
 % Question 3 --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 \item Did an earlier start and later end of season increase growth? 
 %emw22Jun -- remember that with a CI of 90% then 10% of the time you'll find a species that changes even if it did not ... so if these are small effects (close to 0) I would interpret them cautiously
   \begin{enumerate}
-  \item An earlier start of season increased growth for no species and decreased growth for {\Tame} ($\beta = $
-  \Sexpr{bspp_df2_ts_sos$mean[bspp_df2_ts_sos$spp_name %in% "T. americana"]}, $UI_{90}$
-  [\Sexpr{bspp_df2_ts_sos$p5[bspp_df2_ts_sos$spp_name %in% "T. americana"]},
-  \Sexpr{bspp_df2_ts_sos$p95[bspp_df2_ts_sos$spp_name %in% "T. americana"]}]), which did not respond to the thermal or the calendar season (Figure \ref{fig:tsmuplotbspp}c and g) (Table \ref{tab:ts_slope_table}). 
+  \item An earlier start of season increased growth for no species and decreased growth for {\Tame} (
+  \Sexpr{bspp_df2_ts_sos$mean[bspp_df2_ts_sos$spp_name %in% "T. americana"]}, UI:
+  \Sexpr{bspp_df2_ts_sos$p5[bspp_df2_ts_sos$spp_name %in% "T. americana"]},
+  \Sexpr{bspp_df2_ts_sos$p95[bspp_df2_ts_sos$spp_name %in% "T. americana"]} RW change per seven SOS days; Figure \ref{fig:tsmuplotbspp}c and g; Table \ref{tab:ts_slope_table}), which did not respond to the thermal or the calendar season.
 
-\item A later end of season increased growth for no species and decreased growth for {\Ball} ($\beta = $
-\Sexpr{bspp_df2_ts_eos$mean[bspp_df2_ts_eos$spp_name %in% "B. alleghaniensis"]}, $UI_{90}$
-[\Sexpr{bspp_df2_ts_eos$p5[bspp_df2_ts_eos$spp_name %in% "B. alleghaniensis"]},
-\Sexpr{bspp_df2_ts_eos$p95[bspp_df2_ts_eos$spp_name %in% "B. alleghaniensis"]}]), which concurrently decreased growth with warmer thermal season
-(Figure \ref{fig:tsmuplotbspp}d and h) (Table \ref{tab:ts_slope_table}). 
+\item A later end of season increased growth for no species and decreased growth for {\Ball} (
+\Sexpr{bspp_df2_ts_eos$mean[bspp_df2_ts_eos$spp_name %in% "B. alleghaniensis"]}, UI:
+\Sexpr{bspp_df2_ts_eos$p5[bspp_df2_ts_eos$spp_name %in% "B. alleghaniensis"]},
+\Sexpr{bspp_df2_ts_eos$p95[bspp_df2_ts_eos$spp_name %in% "B. alleghaniensis"]} RW change per seven EOS days; Figure \ref{fig:tsmuplotbspp}d and h; Table \ref{tab:ts_slope_table}), which concurrently decreased growth with warmer thermal season.
 
 \item The estimates were unchanged when using the full or restricted datasets (SOS $n =$
 \Sexpr{nrow(empfullsosts)} and EOS $n =$
 \Sexpr{nrow(empfulleosts)} vs $n=$
-\Sexpr{nrow(empts)} Figure \ref{fig:tsSOSEOScomparison}b), or when using budburst instead of leafout as the start of the growing season (Figure \ref{fig:buburstVSleafoutTS}c).
+\Sexpr{nrow(empts)}; Figure \ref{fig:tsSOSEOScomparison}b), or when using budburst instead of leafout as the start of the growing season (Figure \ref{fig:buburstVSleafoutTS}c).
 \end{enumerate}
 
 % Question 4 --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
@@ -179,7 +176,7 @@ pgsGSLagg$pgsGSL <- round(pgsGSLagg$pgsGSL, 1)
   \item We did not find any clear effect of year on growth (Figure \ref{fig:tsmuplotayear}) and there is no clear differences of growth across species (Figure \ref{fig:tsxyGDDyr} and Figure \ref{fig:tsxyGSLyr})
   
   \item Growth did not change across any tree id (Figure \ref{fig:tsmuplotatreeid}). %emw22Jun -- Do you have have spp partial pooling in this model? If so, you could compare the variance across species and tree ID a little. How different are species? How different are tree IDs compared to how different species are? (And compared to year?) ... looking at Fig S1 and S7 they look all sort of similar but I am not sure -- you can compare the sigma values. 
-  %emw22Jun -- Did earlier SOS lead to earlier EOS? 
+  %emw22Jun -- Did earlier SOS lead to earlier EOS?
 
   \end{enumerate}
 \end{enumerate}

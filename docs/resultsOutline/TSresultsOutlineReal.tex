@@ -90,26 +90,31 @@
 % <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 \section*{Results}
 % <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+%emw22Jun -- add units throughout (including supp, incl. tables)
 \begin{enumerate}
 \item Summary basic information
   \begin{enumerate}
-  \item Coringtreespotters includes 11 deciduous tree species with leaf phenology data spanning nine years (2016 to 2024) for a total of 
+
+  \item Dataset includes 11 deciduous tree species with leaf phenology data spanning nine years (2016 to 2024) for a total of 
   321 leafout and 
-  284 colored leaves observations, yielding 
+  284 leaf coloring
+   observations, yielding 
   278 complete growing seasons (GS) for 
   49 individuals. 
   
-  \item 
-  2017 was the coolest year
-  (21.53$^\circ$C), and   
-  2020 was the warmest
-  (23.07$^\circ$C)
-  
+  \item Mean summer temperatures spanned 
+  21.53$^\circ$C 
+  (2017) to 
+  23.07$^\circ$C 
+  (2020), with an average of
+  22.51$^\circ$C across the nine years.
+    %emw22Jun -- change to: temps spanned XX (yr)  to YY (yr) with an average of TT across the nine years
+  %emw22Jun -- fix as in wildcrokie, also why is 2016 separated out? Severe vs extreme? 
   \item 2020 and 2022 had moderate droughts, ramped up to severe in September. 
   
   \item Moderate drought in June 2016, ramped up to severe in July, then extreme in August/September. 
   
-  \item No droughts in the other years.
+ % \item No droughts in the other years. %emw22Jun --  obvious, cut this
   
   \item GSL ranged from 
   77 ({\Afla} in 
@@ -127,7 +132,7 @@
   08-Apr ({\Afla} in 
   2021) and the latest, 
   15-May ({\Cova} in 
-  2020). The earliest colored leaves day of year was
+  2020). The earliest leaf coloring day of year was
   15-Jul ({\Afla} in 
   2021---same individual with earliest leafout) and the latest, 
   06-Nov ({\Tame} in
@@ -135,23 +140,22 @@
   
   \item Annual ring widths across years varied from 
   0.43 mm ({\Asac} in 2019) to 
-  11.75 mm ({\Tame} in 2019) (Figure \ref{fig:tsboxplot}). 
+  11.75 mm ({\Tame} in 2019) (Figure \ref{fig:tsboxplot}).  %emw22Jun -- damn! > 1 cm?
  
 \end{enumerate}
-
 % Question 1 --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 \item Does tree growth increase with longer growing seasons?
   \begin{enumerate}
 
   \item No clear trend of growing season length effect across our eleven species and season predictors.
 
-  \item Longer thermal season increased growth for no species and decreased growth for {\Ball} ($\beta = $
-  -0.23, $UI_{90}$
-  [-0.36,
-  -0.1])
-  ) (Figure \ref{fig:tsmuplotbspp}a and e) (Table \ref{tab:ts_slope_table}).
+%emw22Jun -- we don't often say 'for no species' -- you could say 'for any species' Given your opening \item I would just change to: this did not increase growth, this did not increase growth .... 
+  \item Longer thermal season increased growth for no species and decreased growth for {\Ball} (
+  -0.23, UI:
+  -0.36,
+  -0.1 RW change per scaled GDD; Figure \ref{fig:tsmuplotbspp}a and e; Table \ref{tab:ts_slope_table}).
   
-  \item No species responded to longer calendar season (Figure \ref{fig:tsmuplotbspp}b and f) (Table \ref{tab:ts_slope_table}).
+  \item No species responded to longer calendar season (Figure \ref{fig:tsmuplotbspp}b and f; Table \ref{tab:ts_slope_table}).
 
   \end{enumerate}
 
@@ -159,56 +163,58 @@
 \item Does a warmer thermal season increase growth in the following year?
   \begin{enumerate}
   
-  \item Previous year GDD increased growth for {\Ball} ($\beta = $
-  0.15, $UI_{90}$
-  [0.03,
-  0.27],
-  and decreased growth for {\Bnig} ($\beta = $
-  -0.08, $UI_{90}$
-  [-0.16,
-  0] (Figure \ref{fig:tsPrvsYr}b)
+  \item Previous year GDD increased growth for {\Ball} (
+  0.15, UI:
+  0.03,
+  0.27 RW change per scaled GDD),
+  and decreased growth for {\Bnig} (
+  -0.08, UI:
+  -0.16,
+  0 RW change per scaled GDD; Figure \ref{fig:tsPrvsYr}b)
   
-  \item Interestingly, {\Bnig} did not solely respond to current year's condition (Figure \ref{fig:tsmuplotbspp}a and e) (Table \ref{tab:ts_slope_table}), but grew more with warmer thermal season when the previous condition were considered ($\beta = $
-  0.12, $UI_{90}$
-  [0.03,
-  0.21]) (Figure \ref{fig:tsPrvsYr}a.
+  \item Interestingly, {\Bnig} did not solely respond to current year's condition (Figure \ref{fig:tsmuplotbspp}a and e; Table \ref{tab:ts_slope_table}), but grew more with warmer thermal season when the previous condition were considered (
+  0.12, UI:
+  0.03,
+  0.21 RW change per scaled GDD; Figure \ref{fig:tsPrvsYr}a).
   \end{enumerate}
   
 % Question 3 --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 \item Did an earlier start and later end of season increase growth? 
+%emw22Jun -- remember that with a CI of 90% then 10% of the time you'll find a species that changes even if it did not ... so if these are small effects (close to 0) I would interpret them cautiously
   \begin{enumerate}
-  \item An earlier start of season increased growth for no species and decreased growth for {\Tame} ($\beta = $
-  0.15, $UI_{90}$
-  [0.03,
-  0.27]), which did not respond to the thermal or the calendar season (Figure \ref{fig:tsmuplotbspp}c and g) (Table \ref{tab:ts_slope_table}). 
+  \item An earlier start of season increased growth for no species and decreased growth for {\Tame} (
+  0.15, UI:
+  0.03,
+  0.27 RW change per seven SOS days; Figure \ref{fig:tsmuplotbspp}c and g; Table \ref{tab:ts_slope_table}), which did not respond to the thermal or the calendar season.
 
-\item A later end of season increased growth for no species and decreased growth for {\Ball} ($\beta = $
--0.09, $UI_{90}$
-[-0.16,
--0.01]), which concurrently decreased growth with warmer thermal season
-(Figure \ref{fig:tsmuplotbspp}d and h) (Table \ref{tab:ts_slope_table}). 
+\item A later end of season increased growth for no species and decreased growth for {\Ball} (
+-0.09, UI:
+-0.16,
+-0.01 RW change per seven EOS days; Figure \ref{fig:tsmuplotbspp}d and h; Table \ref{tab:ts_slope_table}), which concurrently decreased growth with warmer thermal season.
 
 \item The estimates were unchanged when using the full or restricted datasets (SOS $n =$
 321 and EOS $n =$
 284 vs $n=$
-278 Figure \ref{fig:tsSOSEOScomparison}b), or when using budburst instead of leafout as the start of the growing season (Figure \ref{fig:buburstVSleafoutTS}c).
+278; Figure \ref{fig:tsSOSEOScomparison}b), or when using budburst instead of leafout as the start of the growing season (Figure \ref{fig:buburstVSleafoutTS}c).
 \end{enumerate}
 
 % Question 4 --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 \item How did tree growth change across years and tree ids?
   \begin{enumerate}
   
-  \item We did not find any clear effect of year on growth (Figure \ref{fig:tsmuplotayear}) and there is no clear differences of growth looking across species (Figure \ref{fig:tsxyGDDyr} and Figure \ref{fig:tsxyGSLyr})
+  \item We did not find any clear effect of year on growth (Figure \ref{fig:tsmuplotayear}) and there is no clear differences of growth across species (Figure \ref{fig:tsxyGDDyr} and Figure \ref{fig:tsxyGSLyr})
   
-  \item Growth did not change across any tree id (Figure \ref{fig:tsmuplotatreeid}).
+  \item Growth did not change across any tree id (Figure \ref{fig:tsmuplotatreeid}). %emw22Jun -- Do you have have spp partial pooling in this model? If so, you could compare the variance across species and tree ID a little. How different are species? How different are tree IDs compared to how different species are? (And compared to year?) ... looking at Fig S1 and S7 they look all sort of similar but I am not sure -- you can compare the sigma values. 
+  %emw22Jun -- Did earlier SOS lead to earlier EOS?
 
   \end{enumerate}
 \end{enumerate}
 
 % Figure mu across all species and climate predictors
+%emw22Jun -- give the number of spp I think we can stick with the legends off the plots (as you have them now), but check for italic names and typos. 
 \begin{figure}[!ht]
 \includegraphics[width=0.8\textwidth]{../../analyses/figures/growthModelsMain/TSmuALLbsppWlines.jpeg}
-\caption{Model slope estimates representing ring width change as a function of four different predictors across four species. GDD represent the accumulated growing degree days between leafout and coloredLeaves and the models estimates shows ring width change per 7 average spring days GDD (176.87) (a). GSL is the number of days between leafout and coloredLeaves (b). SOS represent the start of season, which is leafout (c) and EOS, the end of season through coloredLeaves (d). All predictors were fit using the same model and number of observations, with only the independent variable changing. The dots represent the mean of each species and the lines, the 50\% and 90\% uncertainty intervals (UI). }
+\caption{Model slope estimates representing ring width change as a function of four different predictors across four species. GDD represent the accumulated growing degree days between leafout and coloredLeaves and the models estimates shows ring width change per 7 average spring days GDD (176.87) (a). GSL is the number of days between leafout and coloredLeaves (b). SOS represent the start of season, which is leafout (c) and EOS, the end of season through coloredLeaves (d). All predictors were fit using the same model and number of observations, with only the independent variable changing. The dots represent the mean of each species and the lines, the 50\% and 90\% uncertainty intervals (UI). } %emw22Jun -- maybe say this model does not include previous year GDD and see XX fig for that. 
 \label{fig:tsmuplotbspp}
 \end{figure}
 
@@ -223,6 +229,7 @@ The dots represent the mean of each species and the lines, the 50\% and 90\% unc
 % <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 % Supplemental results
 % <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+%emw22Jun -- add full model tables ... 
 \clearpage
 \section*{Supplemental results}
 
@@ -233,7 +240,7 @@ The dots represent the mean of each species and the lines, the 50\% and 90\% unc
 
 
 % latex table generated in R 4.5.1 by xtable 1.8-4 package
-% Fri Jun 19 15:30:16 2026
+% Wed Jun 24 14:26:45 2026
 \begin{table}[ht]
 \centering
 \caption{Species level slope parameters (mean and 90\% uncertainty intervals, in square brackets) across the four different predictors for Coringtreespotters. GDD: growing degree days, GSL: growing season length, SOS: start of season and EOS: end of season.} 
@@ -260,7 +267,7 @@ A. rubrum & 0.00 [-0.18, 0.19] & 0.05 [-0.05, 0.15] & -0.05 [-0.28, 0.17] & 0.04
 
 
 % latex table generated in R 4.5.1 by xtable 1.8-4 package
-% Fri Jun 19 15:30:16 2026
+% Wed Jun 24 14:26:45 2026
 \begin{table}[ht]
 \centering
 \caption{Posterior means and 90\% uncertainty intervals for all model parameters across predictors} 
