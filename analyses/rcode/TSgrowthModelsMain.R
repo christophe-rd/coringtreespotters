@@ -44,6 +44,7 @@ fit2xpriors <- FALSE
 # empts <- read.csv("output/empiricalDataMAIN.csv")
 # read empirical data with max phenology observations instead of mingit status
 empts <- read.csv("output/empiricalDataMAIN.csv")
+gddyr <- read.csv("output/gddByYear.csv")
 
 empts$loglength <- log(empts$lengthMM)
 
@@ -66,8 +67,6 @@ empts$clCal <- format(
   "%d-%b"
 )
 
-gdd <- read.csv("output/gddByYear.csv")
-
 lineplotseqlength <- 10
 # transform my groups to numeric values
 empts$spp_num <- match(empts$latbi, unique(empts$latbi))
@@ -89,9 +88,9 @@ temp <- temp[order(temp$year, temp$doy), ]
 
 temp$bin7 <- ave(temp$doy, temp$year, FUN = function(x) ceiling((x - min(x) + 1) / 7))
 gdd_7day <- aggregate(gdddiff ~ year + bin7, data = temp, sum)
-wcgddscale <- mean(gdd_7day$gdddiff)
+tsgddscale <- mean(gdd_7day$gdddiff)
 
-gddseq <- seq(min(emp$pgsGDD5), max(emp$pgsGDD5), length.out = lineplotseqlength)
+gddseq <- seq(min(empts$pgsGDD5), max(empts$pgsGDD5), length.out = lineplotseqlength)
 
 # data list for gdd
 
@@ -184,7 +183,7 @@ if(runmodels){
 # Fit model GDD
 gddmodel <- stan_model("stan/TSmodelGrowthGDD.stan")
 fitgdd <- sampling(gddmodel, data = dgdd,
-                   warmup = 500, iter=1000, chains=4)
+                   warmup = 1000, iter = 2000, chains=4)
 saveRDS(fitgdd, "output/stanOutput/fitGrowthGDD")
 
 diagnostics <- util$extract_hmc_diagnostics(fitgdd)
