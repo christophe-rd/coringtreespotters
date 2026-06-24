@@ -79,19 +79,19 @@ treeid_spp <- unique(empts[, c("treeid_num", "spp_num", "id", "latbi")])
 
 treeid_spp_ordered <- treeid_spp[order(treeid_spp$treeid_num), ]
 
+
 # scale gdd to how many gdd are in 10 average spring days
-temp <- subset(gdd, doy <151 & doy > 120)
+temp<- subset(gddyr, doy <151 & doy > 120)
 temp$mingddperiod <- ave(temp$GDD_5, temp$year, FUN = min)
-temp$gdddiff <- temp$GDD_5 - temp$mingddperiod
+temp$gdddiff <- temp$meanTempC - 5
 
 temp <- temp[order(temp$year, temp$doy), ]
 
-temp$bin10 <- ave(temp$doy, temp$year, FUN = function(x) ceiling((x - min(x) + 1) / 7))
-gdd_7day <- aggregate(gdddiff ~ year + bin10, data = temp, max)
-tsgddscale <- mean(gdd_7day$gdddiff)
+temp$bin7 <- ave(temp$doy, temp$year, FUN = function(x) ceiling((x - min(x) + 1) / 7))
+gdd_7day <- aggregate(gdddiff ~ year + bin7, data = temp, sum)
+wcgddscale <- mean(gdd_7day$gdddiff)
 
-# empts$pgsGDD5 <- empts$pgsGDD5 - 1500
-gddseq <- seq(min(empts$pgsGDD5), max(empts$pgsGDD5), length.out = lineplotseqlength)
+gddseq <- seq(min(emp$pgsGDD5), max(emp$pgsGDD5), length.out = lineplotseqlength)
 
 # data list for gdd
 

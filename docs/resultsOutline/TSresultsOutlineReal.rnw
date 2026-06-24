@@ -79,13 +79,9 @@ pgsGSLagg$pgsGSL <- round(pgsGSLagg$pgsGSL, 1)
   \Sexpr{tsjja$tmeanmean[which.max(tsjja$tmeanmean)]}$^\circ$C 
   (\Sexpr{tsjja$year[which.max(tsjja$tmeanmean)]}), with an average of
   \Sexpr{mean(tsjja$tmeanmean)}$^\circ$C across the nine years.
-    %emw22Jun -- change to: temps spanned XX (yr)  to YY (yr) with an average of TT across the nine years
+  
   %emw22Jun -- fix as in wildcrokie, also why is 2016 separated out? Severe vs extreme? 
-  \item 2020 and 2022 had moderate droughts, ramped up to severe in September. 
-  
-  \item Moderate drought in June 2016, ramped up to severe in July, then extreme in August/September. 
-  
- % \item No droughts in the other years. %emw22Jun --  obvious, cut this
+  \item 2020 and 2022 had moderate droughts in the summer (June, July and August) ramped up to severe in September. A moderate drought in June 2016, ramped up to severe in July, then extreme in August and September. 
   
   \item GSL ranged from 
   \Sexpr{min(empts$pgsGSL)} ({\Afla} in 
@@ -111,17 +107,16 @@ pgsGSLagg$pgsGSL <- round(pgsGSLagg$pgsGSL, 1)
   
   \item Annual ring widths across years varied from 
   \Sexpr{min(empts$lengthMM)} mm ({\Asac} in \Sexpr{empts$year[which.min(empts$lengthMM)]}) to 
-  \Sexpr{max(empts$lengthMM)} mm ({\Tame} in \Sexpr{empts$year[which.max(empts$lengthMM)]}) (Figure \ref{fig:tsboxplot}).  %emw22Jun -- damn! > 1 cm?
+  \Sexpr{max(empts$lengthMM)} mm ({\Tame} in \Sexpr{empts$year[which.max(empts$lengthMM)]}) (Figure \ref{fig:tsboxplot}).
  
 \end{enumerate}
 % Question 1 --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 \item Does tree growth increase with longer growing seasons?
   \begin{enumerate}
 
-  \item No clear trend of growing season length effect across our eleven species and season predictors.
+  \item No clear trend of growing season length effect across our eleven species and season predictors. We report results as means and 90\% uncertainty intervals (UI) that correspond to ring width change in mm on the log scale---henseforth "RW" per scaled predictor (one week (seven days) of average spring growing degree days (GDD); (\Sexpr{wcgddscale}) for the thermal season, one week of growing season length (GSL) for the calendar season, one week of leafout for the start of season (SOS) and one week of of budset for the end of season (EOS). % crd24June: copied from wildchrokie. Will change according to your edits/suggestions on units throughout.
 
-%emw22Jun -- we don't often say 'for no species' -- you could say 'for any species' Given your opening \item I would just change to: this did not increase growth, this did not increase growth .... 
-  \item Longer thermal season increased growth for no species and decreased growth for {\Ball} (
+  \item Longer thermal season did not increase growth for any species and decreased growth for {\Ball} (
   \Sexpr{bspp_df2_ts_gdd$mean[bspp_df2_ts_gdd$spp_name %in% "B. alleghaniensis"]}, UI:
   \Sexpr{bspp_df2_ts_gdd$p5[bspp_df2_ts_gdd$spp_name %in% "B. alleghaniensis"]},
   \Sexpr{bspp_df2_ts_gdd$p95[bspp_df2_ts_gdd$spp_name %in% "B. alleghaniensis"]} RW change per scaled GDD; Figure \ref{fig:tsmuplotbspp}a and e; Table \ref{tab:ts_slope_table}).
@@ -247,21 +242,25 @@ print(tab,
 <<Table combined all parameters and predictors, results='asis', echo = FALSE>>=
 options(digits = 2)
 
+a_df2_GDD      <- read.csv("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/output/GM_GDDparam_a.csv")
 sigma_df2_GDD  <- read.csv("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/output/GM_GDDparam_sigma.csv")
 bspp_df2_GDD   <- read.csv("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/output/GM_GDDparam_bspp.csv")
 aspp_df2_GDD   <- read.csv("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/output/GM_GDDparam_aspp.csv")
 ayear_df2_GDD  <- read.csv("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/output/GM_GDDparam_ayear.csv")
 
+a_df2_GSL      <- read.csv("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/output/GM_GSLparam_a.csv")
 sigma_df2_GSL  <- read.csv("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/output/GM_GSLparam_sigma.csv")
 bspp_df2_GSL   <- read.csv("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/output/GM_GSLparam_bspp.csv")
 aspp_df2_GSL   <- read.csv("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/output/GM_GSLparam_aspp.csv")
 ayear_df2_GSL  <- read.csv("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/output/GM_GSLparam_ayear.csv")
 
+a_df2_SOS      <- read.csv("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/output/GM_SOSparam_a.csv")
 sigma_df2_SOS  <- read.csv("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/output/GM_SOSparam_sigma.csv")
 bspp_df2_SOS   <- read.csv("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/output/GM_SOSparam_bspp.csv")
 aspp_df2_SOS   <- read.csv("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/output/GM_SOSparam_aspp.csv")
 ayear_df2_SOS  <- read.csv("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/output/GM_SOSparam_ayear.csv")
 
+a_df2_EOS      <- read.csv("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/output/GM_EOSparam_a.csv")
 sigma_df2_EOS  <- read.csv("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/output/GM_EOSparam_sigma.csv")
 bspp_df2_EOS   <- read.csv("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/output/GM_EOSparam_bspp.csv")
 aspp_df2_EOS   <- read.csv("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/output/GM_EOSparam_aspp.csv")
@@ -274,6 +273,7 @@ ayear_df2_GDD$year_name <- empts$year[match(ayear_df2_GDD$year, empts$year_num)]
 fmt <- function(df) sprintf("%.2f [%.2f, %.2f]", df$mean, df$p5, df$p95)
 
 param_labels <- c(
+  "$\\alpha$",
   "$\\sigma_{\\alpha_{tree}}$", "$\\sigma_{y}$",
   paste0("$\\beta_{spp_{",   bspp_df2_GDD$spp_name,  "}}$"),
   paste0("$\\alpha_{year_{", ayear_df2_GDD$year_name, "}}$"),
@@ -282,10 +282,10 @@ param_labels <- c(
 
 combined <- data.frame(
   "Parameter" = param_labels,
-  "GDD" = c(fmt(sigma_df2_GDD), fmt(bspp_df2_GDD), fmt(ayear_df2_GDD), fmt(aspp_df2_GDD)),
-  "GSL" = c(fmt(sigma_df2_GSL), fmt(bspp_df2_GSL), fmt(ayear_df2_GSL), fmt(aspp_df2_GSL)),
-  "SOS" = c(fmt(sigma_df2_SOS), fmt(bspp_df2_SOS), fmt(ayear_df2_SOS), fmt(aspp_df2_SOS)),
-  "EOS" = c(fmt(sigma_df2_EOS), fmt(bspp_df2_EOS), fmt(ayear_df2_EOS), fmt(aspp_df2_EOS)),
+  "GDD" = c(fmt(a_df2_GDD), fmt(sigma_df2_GDD), fmt(bspp_df2_GDD), fmt(ayear_df2_GDD), fmt(aspp_df2_GDD)),
+  "GSL" = c(fmt(a_df2_GSL), fmt(sigma_df2_GSL), fmt(bspp_df2_GSL), fmt(ayear_df2_GSL), fmt(aspp_df2_GSL)),
+  "SOS" = c(fmt(a_df2_SOS), fmt(sigma_df2_SOS), fmt(bspp_df2_SOS), fmt(ayear_df2_SOS), fmt(aspp_df2_SOS)),
+  "EOS" = c(fmt(a_df2_EOS), fmt(sigma_df2_EOS), fmt(bspp_df2_EOS), fmt(ayear_df2_EOS), fmt(aspp_df2_EOS)),
   check.names = FALSE
 )
 
