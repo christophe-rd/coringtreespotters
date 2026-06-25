@@ -2046,7 +2046,7 @@ mtext("(a) Growing degree days", adj = 0, side = 3, line = 2.5, font = 2, cex = 
 arrows(x0 = 0.05, y0 = n_spp + 0.85, x1 = 0.5, y1 = n_spp + 0.85, length = 0.1, xpd = TRUE)
 text(0.18, n_spp + 0.85, "Larger/Warmer", pos = 3, xpd = TRUE, cex = 0.9)
 usr <- par("usr")
-rasterImage(img_thermom, usr[1], usr[4] - diff(usr[3:4]) * 0.25, usr[1] + diff(usr[1:2]) * 0.20, usr[4])
+rasterImage(img_thermom, usr[1], usr[4] - diff(usr[3:4]) * 0.30, usr[1] + diff(usr[1:2]) * 0.20, usr[4])
 
 
 # Panel 3: SOS
@@ -2098,7 +2098,7 @@ text(-0.18, n_spp + 0.85, "Larger/Earlier", pos = 3, xpd = TRUE, cex = 0.9)
 # arrows(x0 = 0.05, y0 = n_spp + 0.85, x1 = 0.5, y1 = n_spp + 0.85, length = 0.1, xpd = TRUE)
 # text(0.18, n_spp + 0.85, "Smaller/Later", pos = 3, xpd = TRUE, cex = 0.9)
 usr <- par("usr")
-rasterImage(img_budset, usr[1], usr[4] - diff(usr[3:4]) * 0.35, usr[1] + diff(usr[1:2]) * 0.25, usr[4])
+rasterImage(img_budset, usr[1], usr[4] - diff(usr[3:4]) * 0.25, usr[1] + diff(usr[1:2]) * 0.15, usr[4])
 
 # Panel 5: species legend
 par(mar = c(mumar))

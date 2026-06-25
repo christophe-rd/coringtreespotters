@@ -17,6 +17,7 @@ array[N] real y;
 parameters{
 real a;		// mean intercept across everything
 real<lower=0> sigma_atreeid;
+// real<lower=0> sigma_aspp;
 real<lower=0> sigma_y; 	// measurement error, noise etc. 	
 vector[Ntreeid] zatreeid; // variation of intercept across tree ids, no-centered
 vector[Nspp] aspp;
@@ -27,6 +28,9 @@ vector[Nspp] bsp;
 transformed parameters{
 vector[Ntreeid] atreeid;
 atreeid = 0 + sigma_atreeid*zatreeid; // non-centered parameterization on atreeid
+
+// vector[Nspp] aspp;
+// aspp = 0 + sigma_aspp*zaspp;
 
 array[N] real ypred;
 for (i in 1:N){ // don't change this for reparameterization
@@ -44,8 +48,10 @@ model{
   a ~ normal(30, 6);
   zatreeid ~ normal(0, 1); // this creates the partial pooling on intercepts for tree ids, standard sigma for non-centered parameterization
   aspp ~ normal(0, 10);
+  // zaspp ~ normal(0, 1);
   ayear ~ normal(0, 4);
   bsp ~ normal(1, 1);
+  // sigma_aspp ~ normal(0, 1); 
   sigma_atreeid ~ normal(0, 1); 
   sigma_y ~ normal(0, 2);
   
@@ -67,6 +73,7 @@ generated quantities {
   // prior predictive samples
   real a_prior = normal_rng(30, 6);
   real sigma_atreeid_prior = abs(normal_rng(0, 1));  
+  real sigma_aspp_prior = abs(normal_rng(0, 1));  
   real sigma_y_prior = abs(normal_rng(0, 2));    
   real aspp_prior = normal_rng(0, 10);
   real ayear_prior = normal_rng(0, 4);
