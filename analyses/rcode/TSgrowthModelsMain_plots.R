@@ -20,7 +20,7 @@ if (length(grep("christophe_rouleau-desrochers", getwd())) > 0) {
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 source("rcode/TSgrowthModelsMain.R")
 
-makeplots <- T
+makeplots <- F
 runzscore <- F
 
 # Load parameter summaries generated in growthModelsMain.R ####
@@ -81,6 +81,12 @@ bspp_df2_ts_prvs  <- read.csv("output/GM_GDDparam_bsppYr_prvsYr.csv")
 
 bspp_df2_ts_curr$spp_name <- empts$latbi[match(bspp_df2_ts_curr$spp, empts$spp_num)]
 bspp_df2_ts_prvs$spp_name <- empts$latbi[match(bspp_df2_ts_prvs$spp, empts$spp_num)]
+
+# SOS on EOS model
+bspp_df2_ts_co   <- read.csv("output/SOSonEOS_param_bspp.csv")
+
+bspp_df2_ts_co$spp_name <- empts$latbi[match(bspp_df2_ts_co$spp, empts$spp_num)]
+
 
 if(makeplots) {
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
@@ -1594,6 +1600,32 @@ segments(bspp_df2_ts_prvs$p25, y_pos, bspp_df2_ts_prvs$p75, y_pos,
 mtext("(b) Previous year", side = 3, adj = 0, font = 2, cex = 1.3)
 dev.off()
 
+# <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+# SOS carry over on EOS ####
+# <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+pdf("figures/SOSonEOS/bsppSOSonEOS.pdf", width = 6, height = 6)
+par(mfrow = c(1,1), mar = c(4, 2, 2, 1))
+n_spp <- length(unique(bspp_df2_ts_curr$spp))
+y_pos <- rev(1:11)
+
+# Current year
+plot(bspp_df2_ts_co$mean, y_pos,
+     xlim = c(-0.3, 2), ylim = c(0.5, n_spp + 0.5), 
+     xlab = "EOS change per one day of SOS", ylab = "",
+     yaxt = "n", pch = 16, cex = 2, col = tscolslatbi, frame.plot = TRUE,
+     panel.first = abline(v = 0, lty = 2, col = "black"))
+segments(bspp_df2_ts_co$p5,  y_pos, bspp_df2_ts_co$p95, y_pos,
+         col = tscolslatbi, lwd = 1.5)
+segments(bspp_df2_ts_co$p25, y_pos, bspp_df2_ts_co$p75, y_pos,
+         col = tscolslatbi, lwd = 3)
+
+legend("topright",
+       legend = bspp_df2_ts_co$spp_name,
+       col    = tscolslatbi[bspp_df2_ts_co$spp_name],
+       pch = 16, pt.cex = 1.2, title = "Species", bty = "n")
+dev.off()
+
+
 ##### checks temporary for betall #####
 t <- subset(empts, latbi %in% "B. alleghaniensis")
 plot(t$loglength ~ t$pgsGDD5)
@@ -1751,8 +1783,6 @@ legend("topright",
        bty = "n")
 
 dev.off() 
-
-
 
 ##### checks temporary for BETNIG #####
 t <- subset(empts, latbi %in% "B. nigra")

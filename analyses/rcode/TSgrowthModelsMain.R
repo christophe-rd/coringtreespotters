@@ -38,6 +38,7 @@ runmodelnoayear <- FALSE
 fitmodelprvsyr <- FALSE
 runbudburst <- FALSE
 fit2xpriors <- FALSE
+runmodelSOSonEOS <- F
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 # Most restricted amount of data ####
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
@@ -2151,4 +2152,107 @@ deosz$covariate <- eosz
 fiteos <- sampling(genericmodel, data = deosz,
                    warmup = 1000, iter = 2000, chains=4)
 saveRDS(fiteos, "output/stanOutput/fitGrowthEOSZscored_largerPriors")
+}
+
+# <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+# EOS as a function of SOS ####
+# <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+if(runmodelSOSonEOS){
+dco <- list(
+  y = empts$coloredLeaves/7,
+  N = nrow(empts),
+  Nspp = length(unique(empts$spp_num)),
+  species = as.numeric(as.character(empts$spp_num)),
+  treeid = as.numeric(empts$treeid_num),
+  Ntreeid = length(unique(as.numeric(empts$treeid_num))),
+  year = as.numeric(empts$year_num),
+  Nyear = length(unique(empts$year_num)),
+  sos = empts$leafout/7
+)
+dco
+
+# fit carry over
+modeldco <- stan_model("stan/TSmodelGrowth_zEOSonSOS.stan")
+fitco <- sampling(modeldco, data = dco,
+                   warmup = 1000, iter = 2000, chains=4)
+saveRDS(fitco, "output/stanOutput/fitSOSonEOS")
+
+# Recover stuff
+fitco <- readRDS("output/stanOutput/fitSOSonEOS")
+
+# Setup color palette across all plots
+pal <- wes_palette("AsteroidCity1")[3:4]
+
+##### Recover parameters #####
+df_fitco <- as.data.frame(fitco)
+
+# full posterior arrays for multi-line extraction
+columns <- colnames(df_fitco)[!grepl("prior", colnames(df_fitco))]
+bspp_df <- df_fitco[, columns[grepl("bsp", columns)]]
+treeid_df <- df_fitco[, grepl("atreeid", columns) & !grepl("z|sigma", columns)]
+aspp_df <- df_fitco[, columns[grepl("aspp", columns)]]
+ayear_df <- df_fitco[, columns[grepl("ayear", columns) & !grepl("mean", columns)]]
+
+# change colnames to indexes for loop tracing
+colnames(bspp_df)  <- 1:ncol(bspp_df)
+colnames(treeid_df) <- 1:ncol(treeid_df)
+colnames(aspp_df)   <- 1:ncol(aspp_df)
+colnames(ayear_df)  <- 1:ncol(ayear_df)
+
+# posterior summaries
+sigma_df2  <- extract_params(df_fitco, "sigma", "mean", "sigma")
+bspp_df2   <- extract_params(df_fitco, "bsp", "fit_bsp", "spp", "bsp\\[(\\d+)\\]")
+treeid_df2 <- extract_params(df_fitco, "atreeid", "fit_atreeid", "id", "atreeid\\[(\\d+)\\]")
+treeid_df2 <- subset(treeid_df2, !grepl("z|sigma", id))
+aspp_df2   <- extract_params(df_fitco, "aspp", "fit_aspp", "spp", "aspp\\[(\\d+)\\]")
+ayear_df2  <- extract_params(df_fitco, "ayear", "fit_ayear", "year", "ayear\\[(\\d+)\\]")
+ayear_df2  <- subset(ayear_df2, !grepl("mean", year))
+a_df2      <- extract_params(df_fitco, "a", "fit_a",
+                             "grandmean", "a\\[(\\d+)\\]")
+a_df2      <- subset(a_df2, grandmean == "a")
+
+# save csvs
+write.csv(sigma_df2,  "output/SOSonEOS_param_sigma.csv",  row.names = FALSE)
+write.csv(bspp_df2,   "output/SOSonEOS_param_bspp.csv",   row.names = FALSE)
+write.csv(treeid_df2, "output/SOSonEOS_param_treeid.csv", row.names = FALSE)
+write.csv(aspp_df2,   "output/SOSonEOS_param_aspp.csv",   row.names = FALSE)
+write.csv(ayear_df2,  "output/SOSonEOS_param_ayear.csv",  row.names = FALSE)
+write.csv(a_df2,      "output/SOSonEOS_param_a.csv",      row.names = FALSE)
+
+##### Plot posterior vs priors for gdd fit #####
+pdf(file = "figures/SOSonEOS/SOSonEOSPriorVSPosterior.pdf", width = 8, height = 10)
+par(mfrow = c(3, 2))
+
+# a
+plot(density(df_fitco[, "a_prior"]), col = pal[1], lwd = 2, main = "priorVSposterior_a", xlab = "a", ylim = c(0, 0.5))
+lines(density(df_fitco[, "a"]), col = pal[2], lwd = 2)
+legend("topright", legend = c("Prior", "Posterior"), col = pal, lwd = 2)
+
+# sigma_atreeid
+plot(density(df_fitco[, "sigma_atreeid_prior"]), col = pal[1], lwd = 2, main = "priorVSposterior_sigma_atreeid", xlab = "sigma_atreeid", ylim = c(0, 2))
+lines(density(df_fitco[, "sigma_atreeid"]), col = pal[2], lwd = 2)
+legend("topright", legend = c("Prior", "Posterior"), col = pal, lwd = 2)
+
+# sigma_y
+plot(density(df_fitco[, "sigma_y_prior"]), col = pal[1], lwd = 2, main = "priorVSposterior_sigma_y", xlab = "sigma_y", ylim = c(0, 2))
+lines(density(df_fitco[, "sigma_y"]), col = pal[2], lwd = 2)
+legend("topright", legend = c("Prior", "Posterior"), col = pal, lwd = 2)
+
+# aspp
+plot(density(df_fitco[, "aspp_prior"]), col = pal[1], lwd = 2, 
+     main = "priorVSposterior_aspp", xlab = "aspp", xlim = c(-30, 30), ylim = c(0, 0.1))
+for (col in colnames(aspp_df)) { lines(density(aspp_df[, col]), col = pal[2], lwd = 1) } 
+legend("topright", legend = c("Prior", "Posterior"), col = pal, lwd = 2)
+
+# bsp
+plot(density(df_fitco[, "bsp_prior"]), col = pal[1], lwd = 2, main = "priorVSposterior_bsp", xlab = "bsp", ylim = c(0, 1.8))
+for (col in colnames(bspp_df)) { lines(density(bspp_df[, col]), col = pal[2], lwd = 1) }
+legend("topright", legend = c("Prior", "Posterior"), col = pal, lwd = 2)
+
+# ayear
+plot(density(df_fitco[, "ayear_prior"]), col = pal[1], lwd = 2, main = "priorVSposterior_ayear", xlab = "ayear", xlim = c(-10, 10), ylim = c(0, 0.5))
+for (col in colnames(ayear_df)) { lines(density(ayear_df[, col]), col = pal[2], lwd = 1) }
+legend("topright", legend = c("Prior", "Posterior"), col = pal, lwd = 2)
+
+dev.off()
 }
