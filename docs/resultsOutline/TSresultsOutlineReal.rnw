@@ -85,6 +85,7 @@ pgsGSLagg$pgsGSL <- round(pgsGSLagg$pgsGSL, 1)
   %emw22Jun -- fix as in wildcrokie, also why is 2016 separated out? Severe vs extreme? ok
   \item 2020 and 2022 had moderate droughts in the summer (June, July and August) ramped up to severe in September. A moderate drought in June 2016, ramped up to severe in July, then extreme in August and September. 
   
+  %emw25Jun -- somewhere in the methods you should say how you checked these early seasons -- or maybe 77 is not really an outlier? Small issue we can fix with a git issue if you need help. 
   \item GSL ranged from 
   \Sexpr{min(empts$pgsGSL)} days ({\Afla} in 
   \Sexpr{empts$year[which.min(empts$pgsGSL)]}) to 
@@ -116,8 +117,8 @@ pgsGSLagg$pgsGSL <- round(pgsGSLagg$pgsGSL, 1)
 \item Does tree growth increase with longer growing seasons?
   \begin{enumerate}
 
-  \item No clear trend of growing season length effect across our eleven species and season predictors. 
-  
+  \item No clear trend of growing season length effect across our eleven species and season predictors. %emw25Jun -- 'effect' is stats, not biology, fix this when you make it full text
+  %emw25Jun -- all my comments on units (and $z$-score etc.) on wildcrokie apply here also -- I understand RW is easier for you, but I think mm/GSL or such may be easier for your audience; if you feel strongly though and or see this approach in lots of papers, let me know and I will let it go. 
   \item Results reported as means and 90\% uncertainty intervals (UI) that correspond to ring width change in mm on the log scale---henseforth "RW" per scaled predictor (one week (seven days) of average spring growing degree days (GDD); (\Sexpr{tsgddscale}) for the thermal season, one week of growing season length (GSL) for the calendar season, one week of leafout for the start of season (SOS) and one week of of budset for the end of season (EOS). % crd24June: copied from wildchrokie. Will change according to your edits/suggestions on units throughout.
 
   \item Longer thermal season did not increase growth for any species and decreased growth for {\Ball} (
@@ -144,7 +145,7 @@ pgsGSLagg$pgsGSL <- round(pgsGSLagg$pgsGSL, 1)
   \Sexpr{bspp_df2_ts_prvs$p5[bspp_df2_ts_prvs$spp_name %in% "B. nigra"]},
   \Sexpr{bspp_df2_ts_prvs$p95[bspp_df2_ts_prvs$spp_name %in% "B. nigra"]} RW change per scaled GDD; Figure \ref{fig:tsPrvsYr}b)
   
-  \item Interestingly, {\Bnig} did not solely respond to current year's condition (Figure \ref{fig:tsmuplotbspp}a and e; Table \ref{tab:ts_slope_table}), but grew more with warmer thermal season when the previous condition were considered (
+  \item Interestingly, {\Bnig} did not solely respond to current year's conditions (Figure \ref{fig:tsmuplotbspp}a and e; Table \ref{tab:ts_slope_table}), but grew more with warmer thermal season when the previous conditions were considered (
   \Sexpr{bspp_df2_ts_curr$mean[bspp_df2_ts_curr$spp_name %in% "B. nigra"]}, UI:
   \Sexpr{bspp_df2_ts_curr$p5[bspp_df2_ts_curr$spp_name %in% "B. nigra"]},
   \Sexpr{bspp_df2_ts_curr$p95[bspp_df2_ts_curr$spp_name %in% "B. nigra"]} RW change per scaled GDD; Figure \ref{fig:tsPrvsYr}a).
@@ -163,7 +164,7 @@ pgsGSLagg$pgsGSL <- round(pgsGSLagg$pgsGSL, 1)
 \item A later end of season did not increase growth for any species and decreased growth for {\Ball} (
 \Sexpr{bspp_df2_ts_eos$mean[bspp_df2_ts_eos$spp_name %in% "B. alleghaniensis"]}, UI:
 \Sexpr{bspp_df2_ts_eos$p5[bspp_df2_ts_eos$spp_name %in% "B. alleghaniensis"]},
-\Sexpr{bspp_df2_ts_eos$p95[bspp_df2_ts_eos$spp_name %in% "B. alleghaniensis"]} RW change per seven EOS days; Figure \ref{fig:tsmuplotbspp}d and h; Table \ref{tab:ts_slope_table}), which concurrently decreased growth with warmer thermal season.
+\Sexpr{bspp_df2_ts_eos$p95[bspp_df2_ts_eos$spp_name %in% "B. alleghaniensis"]} RW change per seven EOS days; Figure \ref{fig:tsmuplotbspp}d and h; Table \ref{tab:ts_slope_table}), which also decreased growth with warmer thermal season.
 
 \item The estimates were unchanged when using the full or restricted datasets (SOS $n =$
 \Sexpr{nrow(empfullsosts)} and EOS $n =$
@@ -181,9 +182,9 @@ pgsGSLagg$pgsGSL <- round(pgsGSLagg$pgsGSL, 1)
 \item How did tree growth change across years and tree ids?
   \begin{enumerate}
   
-  \item We did not find any clear effect of year on growth (Figure \ref{fig:tsmuplotayear}) and there is no clear differences of growth across species (Figure \ref{fig:tsxyGDDyr} and Figure \ref{fig:tsxyGSLyr})
+  \item We did not find any clear effect of year on growth (Figure \ref{fig:tsmuplotayear}) and no clear differences of growth across species (Figure \ref{fig:tsxyGDDyr} and Figure \ref{fig:tsxyGSLyr})
   
-  \item Growth did not change across any tree id (Figure \ref{fig:tsmuplotatreeid}).
+  \item Growth was similar across individual trees (Figure \ref{fig:tsmuplotatreeid}).
 
   \end{enumerate}
 \end{enumerate}
