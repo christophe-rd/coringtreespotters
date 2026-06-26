@@ -81,8 +81,7 @@ pgsGSLagg$pgsGSL <- round(pgsGSLagg$pgsGSL, 1)
   \Sexpr{tsjja$tmeanmean[which.max(tsjja$tmeanmean)]}$^\circ$C 
   (\Sexpr{tsjja$year[which.max(tsjja$tmeanmean)]}), with an average of
   \Sexpr{mean(tsjja$tmeanmean)}$^\circ$C across the nine years.
-  
-  %emw22Jun -- fix as in wildcrokie, also why is 2016 separated out? Severe vs extreme? ok
+
   \item 2020 and 2022 had moderate droughts in the summer (June, July and August) ramped up to severe in September. A moderate drought in June 2016, ramped up to severe in July, then extreme in August and September. 
   
   %emw25Jun -- somewhere in the methods you should say how you checked these early seasons -- or maybe 77 is not really an outlier? Small issue we can fix with a git issue if you need help. 
