@@ -695,6 +695,9 @@ saveRDS(fiteosfull, "output/stanOutput/fitGrowthEOSFull")
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 ##### Recover and plot parameters SOS restricted vs full #####
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+fitsosfull <- readRDS("output/stanOutput/fitGrowthSOSFull")
+fiteosfull <- readRDS("output/stanOutput/fitGrowthEOSFull")
+
 # SOS restricted
 df_fitsos <- as.data.frame(fitsosfull)
 
@@ -757,12 +760,13 @@ aspp_df2_eos$spp_name <- empts$latbi[match(aspp_df2_eos$spp, empts$spp_num)]
 ayear_df2_eos$year_name <- empts$year[match(ayear_df2_eos$year, empts$year_num)]
 
 
-jpeg("figures/growthModelsMain/FullVSRestricted.jpeg", width = 9, height = 6, units = "in", res = 300)
+pdf("figures/growthModelsMain/FullVSRestricted.pdf", width = 9, height = 6)
 par(mfrow = c(2, 4), oma = c(2, 2, 2, 0))
 
 
 plot(sigma_df2_sos$mean, sigma_df2_sos_full$mean,
-     xlab = "Restricted dataset", ylab = "Full dataset", main = "sigmas",
+     xlab = "Restricted dataset", ylab = "Full dataset", 
+     main = bquote(sigma),
      type = "n", frame = FALSE,
      ylim = range(c(sigma_df2_sos_full$p25, sigma_df2_sos_full$p75)),
      xlim = range(c(sigma_df2_sos$p25, sigma_df2_sos$p75)))
@@ -776,11 +780,13 @@ points(sigma_df2_sos$mean, sigma_df2_sos_full$mean,
        pch = 16, col = "#0a6a3c", cex = 1.5)
 abline(0, 1, lty = 2, col = "black", lwd = 2)
 points(sigma_df2_sos$mean, sigma_df2_sos_full$mean, pch = 16, col = "#0a6a3c", cex = 1.5)
-text(sigma_df2_sos$p75, sigma_df2_sos_full$p25, labels = sigma_df2_sos$sigma, pos = c(3,3), cex = 0.75)
-
+text(sigma_df2_sos$p25, sigma_df2_sos_full$p75,
+     labels = parse(text = c("sigma[atreeid]", "sigma[y]")),
+     pos = c(4,4), cex = 1)
 # bspp
 plot(bspp_df2_sos$mean, bspp_df2_sos_full$mean,
-     xlab = "Restricted dataset", ylab = "Full dataset", main = "bspp", 
+     xlab = "Restricted dataset", ylab = "Full dataset", 
+     main = lapply("species", function(s) bquote(beta[.(s)])), 
      type = "n", frame = FALSE,
      ylim = range(c(bspp_df2_sos_full$p25, bspp_df2_sos_full$p75)),
      xlim = range(c(bspp_df2_sos$p25, bspp_df2_sos$p75)))
@@ -796,7 +802,8 @@ abline(0, 1, lty = 2, col = "black", lwd = 2)
 
 # aspp
 plot(aspp_df2_sos$mean, aspp_df2_sos_full$mean,
-     xlab = "Restricted dataset", ylab = "Full dataset", main = "aspp", 
+     xlab = "Restricted dataset", ylab = "Full dataset", 
+     main = lapply("species", function(s) bquote(alpha[.(s)])), 
      type = "n", frame = FALSE, 
      ylim = range(c(aspp_df2_sos_full$p25, aspp_df2_sos_full$p75)),
      xlim = range(c(aspp_df2_sos$p25, aspp_df2_sos$p75)))
@@ -812,7 +819,8 @@ abline(0, 1, lty = 2, col = "black", lwd = 2)
 
 # aspp
 plot(ayear_df2_sos$mean, ayear_df2_sos_full$mean,
-     xlab = "Restricted dataset", ylab = "Full dataset", main = "ayear", 
+     xlab = "Restricted dataset", ylab = "Full dataset", 
+     main = lapply("year", function(s) bquote(alpha[.(s)])), 
      type = "n", frame = FALSE, 
      ylim = range(c(ayear_df2_sos_full$p25, ayear_df2_sos_full$p75)),
      xlim = range(c(ayear_df2_sos$p25, ayear_df2_sos$p75)))
@@ -827,10 +835,10 @@ points(ayear_df2_sos$mean, ayear_df2_sos_full$mean,
 abline(0, 1, lty = 2, col = "black", lwd = 2)
 
 
-
 # EOS
 plot(sigma_df2_eos$mean, sigma_df2_eos_full$mean,
-     xlab = "Restricted dataset", ylab = "Full dataset", main = "sigmas", 
+     xlab = "Restricted dataset", ylab = "Full dataset", 
+     main = bquote(sigma),
      type = "n", frame = FALSE,
      ylim = range(c(sigma_df2_eos_full$p25, sigma_df2_eos_full$p75)),
      xlim = range(c(sigma_df2_eos$p25, sigma_df2_eos$p75)))
@@ -844,11 +852,14 @@ points(sigma_df2_eos$mean, sigma_df2_eos_full$mean,
        pch = 16, col = "#d39822", cex = 1.5)
 abline(0, 1, lty = 2, col = "black", lwd = 2)
 points(sigma_df2_eos$mean, sigma_df2_eos_full$mean, pch = 16, col = "#d39822", cex = 1.5)
-text(sigma_df2_eos$p75, sigma_df2_eos_full$p25, labels = sigma_df2_eos$sigma, pos = c(3,3), cex = 0.75)
+text(sigma_df2_sos$p25, sigma_df2_sos_full$p75,
+     labels = parse(text = c("sigma[atreeid]", "sigma[y]")),
+     pos = c(4,4), cex = 1)
 
 # bspp
 plot(bspp_df2_eos$mean, bspp_df2_eos_full$mean,
-     xlab = "Restricted dataset", ylab = "Full dataset", main = "bspp", 
+     xlab = "Restricted dataset", ylab = "Full dataset", 
+     main = lapply("species", function(s) bquote(beta[.(s)])),
      type = "n", frame = FALSE,
      ylim = range(c(bspp_df2_eos_full$p25, bspp_df2_eos_full$p75)),
      xlim = range(c(bspp_df2_eos$p25, bspp_df2_eos$p75)))
@@ -864,7 +875,8 @@ abline(0, 1, lty = 2, col = "black", lwd = 2)
 
 # aspp
 plot(aspp_df2_eos$mean, aspp_df2_eos_full$mean,
-     xlab = "Restricted dataset", ylab = "Full dataset", main = "aspp", 
+     xlab = "Restricted dataset", ylab = "Full dataset", 
+     main = lapply("species", function(s) bquote(alpha[.(s)])),
      type = "n", frame = FALSE,
      ylim = range(c(aspp_df2_eos_full$p25, aspp_df2_eos_full$p75)),
      xlim = range(c(aspp_df2_eos$p25, aspp_df2_eos$p75)))
@@ -880,7 +892,8 @@ abline(0, 1, lty = 2, col = "black", lwd = 2)
 
 # ayear
 plot(ayear_df2_eos$mean, ayear_df2_eos_full$mean,
-     xlab = "Restricted dataset", ylab = "Full dataset", main = "ayear", 
+     xlab = "Restricted dataset", ylab = "Full dataset", 
+     main = lapply("year", function(s) bquote(alpha[.(s)])),
      type = "n", frame = FALSE,
      ylim = range(c(ayear_df2_eos_full$p25, ayear_df2_eos_full$p75)),
      xlim = range(c(ayear_df2_eos$p25, ayear_df2_eos$p75)))
@@ -1910,17 +1923,17 @@ treeid_df2_sos$spp_name <- emptscomp$latbi[match(treeid_df2_sos$treeid, emptscom
 treeid_df2_bb_sos$spp_name <- emptscomp$latbi[match(treeid_df2_bb_sos$treeid, emptscomp$treeid_num)]
 
 porousness <- c(
-  "Tilia americana"        = "Diffuse-porous",
-  "Populus deltoides"      = "Diffuse-porous",
-  "Betula nigra"           = "Diffuse-porous",
-  "Betula alleghaniensis"  = "Diffuse-porous",
-  "Acer saccharum"         = "Diffuse-porous",
-  "Acer rubrum"            = "Diffuse-porous",
-  "Aesculus flava"         = "Diffuse-porous",
-  "Quercus rubra"          = "Ring-porous",
-  "Quercus alba"           = "Ring-porous",
-  "Carya glabra"           = "Ring-porous",
-  "Carya ovata"            = "Ring-porous"
+  "T. americana"      = "Diffuse-porous",
+  "P. deltoides"      = "Diffuse-porous",
+  "B. nigra"          = "Diffuse-porous",
+  "B. alleghaniensis" = "Diffuse-porous",
+  "A. saccharum"      = "Diffuse-porous",
+  "A. rubrum"         = "Diffuse-porous",
+  "Ae. flava"         = "Diffuse-porous",
+  "Q. rubra"          = "Ring-porous",
+  "Q. alba"           = "Ring-porous",
+  "C. glabra"         = "Ring-porous",
+  "C. ovata"          = "Ring-porous"
 )
 
 bspp_df2$wood <- porousness[bspp_df2$spp_name]
@@ -1937,7 +1950,7 @@ bspp_df2_sos$wood <- porousness[bspp_df2_sos$spp_name]
 bspp_df2_bb_sos$wood <- porousness[bspp_df2_bb_sos$spp_name]
 treeid_df2_sos$wood <- porousness[treeid_df2_sos$spp_name]
 treeid_df2_bb_sos$wood <- porousness[treeid_df2_bb_sos$spp_name]
-jpeg("figures/growthModelsMain/budburstVSLeafout/DporousVSRporous.jpeg", width = 7, height = 6, units = "in", res = 300)
+pdf("figures/growthModelsMain/budburstVSLeafout/DporousVSRporous.pdf", width = 7, height = 6)
 par(mfrow = c(3,3), mar = c(4, 4, 4, 4)) 
 
 # GDD --- --- --- --- --- ---
@@ -1957,8 +1970,10 @@ points(sigma_df2_bb$mean, sigma_df2$mean,
 abline(0, 1, lty = 2, col = "black", lwd = 2)
 points(sigma_df2_bb$mean, sigma_df2$mean, pch = 16, 
        col = wood_colors[sigma_df2$wood], cex = 1.2)
-text(sigma_df2_bb$p75, sigma_df2$p25, labels = sigma_df2_bb$sigma, pos = c(3,3), cex = 0.75)
-mtext("sigmas", side = 3, line = -0.1, adj = 0.5, font = 2, cex = 0.7)
+text(sigma_df2_sos$p25, sigma_df2_sos_full$p75,
+     labels = parse(text = c("sigma[atreeid]", "sigma[y]")),
+     pos = c(4,4), cex = 1)
+mtext(bquote(sigma), side = 3, line = -0.1, adj = 0.5, font = 2, cex = 1.2)
 mtext("(a) GDD", side = 3, adj = 0, line = 1, font = 2, cex = 0.9)
 
 # bspp
@@ -1976,7 +1991,8 @@ arrows(x0 = bspp_df2_bb$p25, y0 = bspp_df2$mean,
 points(bspp_df2_bb$mean, bspp_df2$mean,
        pch = 16, col = wood_colors[bspp_df2$wood], cex = 1.2)
 abline(0, 1, lty = 2, col = "black", lwd = 2)
-mtext("bspp", side = 3, line = 0.5, adj = 0.5, font = 2, cex = 0.7)
+mtext(expression(beta[species]), 
+      side = 3, line = 0.5, adj = 0.5, font = 2, cex = 1.2)
 
 # atreeid
 plot(treeid_df2_bb$mean, treeid_df2$mean,
@@ -1993,7 +2009,9 @@ arrows(x0 = treeid_df2_bb$p25, y0 = treeid_df2$mean,
 points(treeid_df2_bb$mean, treeid_df2$mean,
        pch = 16, col = wood_colors[treeid_df2$wood], cex = 1.2)
 abline(0, 1, lty = 2, col = "black", lwd = 2)
-mtext("atreeid", side = 3, line = 0.5, adj = 0.5, font = 2, cex = 0.7)
+mtext(expression(alpha[treeid]), 
+      side = 3, line = 0.5, adj = 0.5, font = 2, cex = 1.2)
+
 
 # GSL --- --- --- --- --- ---
 plot(sigma_df2_bb_gsl$mean, sigma_df2_gsl$mean,
@@ -2011,8 +2029,10 @@ points(sigma_df2_bb_gsl$mean, sigma_df2_gsl$mean,
        pch = 16, col = "black", cex = 1.2)
 abline(0, 1, lty = 2, col = "black", lwd = 2)
 points(sigma_df2_bb_gsl$mean, sigma_df2_gsl$mean, pch = 16, col = wood_colors[sigma_df2_gsl$wood], cex = 1.2)
-text(sigma_df2_bb_gsl$p75, sigma_df2_gsl$p25, labels = sigma_df2_bb_gsl$sigma, pos = c(3,3), cex = 0.75)
-mtext("sigmas", side = 3, line = -0.1, adj = 0.5, font = 2, cex = 0.7)
+text(sigma_df2_bb_gsl$p25, sigma_df2_gsl$p75,
+     labels = parse(text = c("sigma[atreeid]", "sigma[y]")),
+     pos = c(4,4), cex = 1)
+mtext(bquote(sigma), side = 3, line = -0.1, adj = 0.5, font = 2, cex = 1.2)
 mtext("(b) GSL", side = 3, adj = 0, line = 1, font = 2, cex = 0.9)
 
 # bspp
@@ -2030,7 +2050,9 @@ arrows(x0 = bspp_df2_bb_gsl$p25, y0 = bspp_df2_gsl$mean,
 points(bspp_df2_bb_gsl$mean, bspp_df2_gsl$mean,
        pch = 16, col = wood_colors[bspp_df2_gsl$wood], cex = 1.2)
 abline(0, 1, lty = 2, col = "black", lwd = 2)
-mtext("bspp", side = 3, line = 0.5, adj = 0.5, font = 2, cex = 0.7)
+mtext(expression(beta[species]), 
+      side = 3, line = 0.5, adj = 0.5, font = 2, cex = 1.2)
+
 
 # atreeid
 plot(treeid_df2_bb_gsl$mean, treeid_df2_gsl$mean,
@@ -2047,7 +2069,9 @@ arrows(x0 = treeid_df2_bb_gsl$p25, y0 = treeid_df2_gsl$mean,
 points(treeid_df2_bb_gsl$mean, treeid_df2_gsl$mean,
        pch = 16, col = wood_colors[treeid_df2_gsl$wood], cex = 1.2)
 abline(0, 1, lty = 2, col = "black", lwd = 2)
-mtext("atreeid", side = 3, line = -0.1, adj = 0.5, font = 2, cex = 0.7)
+mtext(expression(alpha[treeid]), 
+      side = 3, line = 0.5, adj = 0.5, font = 2, cex = 1.2)
+
 
 # SOS  --- --- --- --- --- ---
 plot(sigma_df2_bb_sos$mean, sigma_df2_sos$mean,
@@ -2066,9 +2090,11 @@ points(sigma_df2_bb_sos$mean, sigma_df2_sos$mean,
 abline(0, 1, lty = 2, col = "black", lwd = 2)
 points(sigma_df2_bb_sos$mean, sigma_df2_sos$mean, pch = 16, 
        col = wood_colors[sigma_df2_sos$wood], cex = 1.2)
-text(sigma_df2_bb_sos$p75, sigma_df2_sos$p25, labels = sigma_df2_bb_sos$sigma, pos = c(3,3), cex = 0.75)
-mtext("sigmas", side = 3, line = -0.1, adj = 0.5, font = 2, cex = 0.7)
-mtext("(c) SOS", side = 3, adj = 0.5, line = 1, font = 2, cex = 0.9)
+text(sigma_df2_bb_sos$p25, sigma_df2_sos$p75,
+     labels = parse(text = c("sigma[atreeid]", "sigma[y]")),
+     pos = c(4,4), cex = 1)
+mtext(bquote(sigma), side = 3, line = -0.1, adj = 0.5, font = 2, cex = 1.2)
+mtext("(c) SOS", side = 3, adj = 0, line = 1, font = 2, cex = 0.9)
 
 # bspp
 plot(bspp_df2_bb_sos$mean, bspp_df2_sos$mean,
@@ -2084,7 +2110,8 @@ arrows(x0 = bspp_df2_bb_sos$p25, y0 = bspp_df2_sos$mean,
 points(bspp_df2_bb_sos$mean, bspp_df2_sos$mean,
        pch = 16, col = wood_colors[bspp_df2_sos$wood], cex = 1.2)
 abline(0, 1, lty = 2, col = "black", lwd = 2)
-mtext("bspp", side = 3, line = 0.5, adj = 0.5, font = 2, cex = 0.7)
+mtext(expression(beta[species]), 
+      side = 3, line = 0.5, adj = 0.5, font = 2, cex = 1.2)
 
 # atreeid
 plot(treeid_df2_bb_sos$mean, treeid_df2_sos$mean,
@@ -2100,10 +2127,11 @@ arrows(x0 = treeid_df2_bb_sos$p25, y0 = treeid_df2_sos$mean,
 points(treeid_df2_bb_sos$mean, treeid_df2_sos$mean, 
        pch = 16, col = wood_colors[treeid_df2_sos$wood], cex = 1.2)
 abline(0, 1, lty = 2, col = "black", lwd = 2)
-mtext("atreeid", side = 3, line = 0.5, adj = 0.5, font = 2, cex = 0.7)
+mtext(expression(alpha[treeid]), 
+      side = 3, line = 0.5, adj = 0.5, font = 2, cex = 1.2)
 
 # legend once, in outer margin on the right
-par(fig = c(0, 1, 0, 1), oma = c(0, 0, 0, 0), mar = c(0, 6, 0, 0), new = TRUE)
+par(fig = c(0, 1, 0, 1), oma = c(0, 0, 0, 0), mar = c(0, 6, 1, 0), new = TRUE)
 plot(0, 0, type = "n", bty = "n", xaxt = "n", yaxt = "n")
 legend("right", legend = names(wood_colors), col = wood_colors,
        pch = 16, pt.cex = 1.2, bty = "n", title = "Wood anatomy", xpd = TRUE)
