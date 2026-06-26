@@ -20,8 +20,8 @@ if (length(grep("christophe_rouleau-desrochers", getwd())) > 0) {
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 source("rcode/TSgrowthModelsMain.R")
 
-makeplots <- T
-runzscore <- T
+makeplots <- F
+runzscore <- F
 
 # Load parameter summaries generated in growthModelsMain.R ####
 sigma_df2_ts_gdd  <- read.csv("output/GM_GDDparam_sigma.csv")
@@ -1919,8 +1919,88 @@ dev.off()
 }
 
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
-# Ring width summaries ####
+# Some empirical data ####
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+##### Box plots across all predictors #####
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+pdf("figures/growthModelsMain/boxplotPredictorsAll.pdf", width = 12, height = 8)
+vars <- c("pgsGDD5", "pgsGSL", "leafout", "coloredLeaves")
+var_labs <- c("Thermal season (GDD)", "Calendar season (GSL)", "Start of season (SOS)", "End of season (EOS)")
+ylab <- c("Growing degree days (GDD)", "Growing season length (days)",
+          "Leafout day of year (doy)", "Budset day of year (doy)")
+alphabet <- c("(a)", "(b)", "(c)", "(d)")
+
+species  <- sort(unique(as.character(empts$latbi)))
+years    <- sort(unique(empts$year))
+n_sp <- length(species); n_yr <- length(years); gap <- 2
+latbi_ch <- as.character(empts$latbi)
+
+par(mfrow = c(1, 1), mar = c(5, 5, 2, 1))
+
+for(vi in seq_along(vars)) {
+  v <- vars[vi]
+  bdat <- list(); at_vec <- c(); cvec <- c(); yr_labels <- c(); sp_centres <- c()
+  k <- 1
+  for(i in seq_len(n_sp)) {
+    pos_this_sp <- c()
+    for(j in seq_len(n_yr)) {
+      vals <- empts[[v]][which(latbi_ch == species[i] & empts$year == years[j])]
+      vals <- vals[!is.na(vals)]
+      if(length(vals) > 0) {
+        bdat[[length(bdat)+1]] <- vals
+        at_vec    <- c(at_vec, k)
+        cvec      <- c(cvec, colsyr[as.character(years[j])])
+        yr_labels <- c(yr_labels, years[j])
+        pos_this_sp <- c(pos_this_sp, k)
+        k <- k + 1
+      }
+    }
+    sp_centres <- c(sp_centres, if(length(pos_this_sp)) mean(pos_this_sp) else NA)
+    k <- k + gap
+  }
+  col_alpha <- adjustcolor(cvec, alpha.f = 0.5)
+  boxplot(bdat, at = at_vec, xaxt = "n", xlab = "", ylab = ylab[vi],
+          col = col_alpha, border = col_alpha, medcol = "black",
+          whisklty = 1, staplewex = 0, medlty = 1,
+          outpch = 16, outcex = 0.7, outcol = "black",
+          xlim = c(0.5, max(at_vec) + 0.5))
+  mtext(paste(alphabet[vi], var_labs[vi]), side = 3, adj = -0.1, line = 0.5, cex = 1.1)
+  for(m in seq_along(bdat)) {
+    stripchart(bdat[[m]], at = at_vec[m], method = "jitter", jitter = 0.08,
+               pch = 16, cex = 0.7, col = "black", vertical = TRUE, add = TRUE)
+  }
+  axis(1, at = at_vec, labels = yr_labels, tick = -0.8, cex.axis = mysizeaxis * 0.75, line = 0)
+  for(i in seq_len(n_sp)) {
+    if(!is.na(sp_centres[i]))
+      mtext(bquote(italic(.(species[i]))), side = 1, at = sp_centres[i], line = 2.5, cex = 0.8)
+  }
+}
+dev.off()
+
+##### Histograms of predictors #####
+pdf("figures/growthModelsMain/histPredictorsBySpecies.pdf", width = 10, height = 8)
+
+vars     <- c("pgsGDD5", "pgsGSL", "leafout", "coloredLeaves")
+var_labs <- c("GDD", "GSL", "SOS", "EOS")
+species  <- sort(unique(as.character(empts$latbi)))
+
+for(vi in seq_along(vars)) {
+  par(mfrow = c(3, 4), mar = c(3, 3, 2, 1))
+  for(sp in species) {
+    vals <- empts[[vars[vi]]][as.character(empts$latbi) == sp]
+    vals <- vals[!is.na(vals)]
+    hist(vals, main = bquote(italic(.(sp))), xlab = var_labs[vi],
+         col = tscolslatbi[sp], border = "white", breaks = 15)
+  }
+  plot.new()  # empty 12th panel
+  mtext(var_labs[vi], outer = TRUE, side = 3, cex = 1.2)
+}
+
+dev.off()
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+##### Ring width summaries #####
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
 rwmints <- aggregate(lengthMM ~ latbi, empts, FUN = min)
 rwmeannts <- aggregate(lengthMM ~ latbi, empts, FUN = mean)
 rwmaxts <- aggregate(lengthMM ~ latbi, empts, FUN = max)
