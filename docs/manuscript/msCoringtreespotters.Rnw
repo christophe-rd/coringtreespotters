@@ -133,99 +133,73 @@ We also fit the models for SOS and EOS using the full vs restricted datasets. As
 % <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 % \clearpage
 \section*{Results}
-
-\subsection*{Summary basic information}
-
-Dataset includes 11 deciduous tree species with leaf phenology data spanning nine years (2016 to 2024) for a total of 
+% Paragraph
+Our dataset includes 11 deciduous tree species with leaf phenology data spanning nine years (2016 to 2024) for a total of 
 \Sexpr{nrow(empfullsosts)} leafout and 
 \Sexpr{nrow(empfulleosts)} leaf coloring
 observations, yielding 
 \Sexpr{nrow(empts)} complete growing seasons (GS) for 
-\Sexpr{length(unique(empts$id))} individuals. 
-
-Mean summer temperatures spanned 
+\Sexpr{length(unique(empts$id))} individuals. Throughout the duration of the study, mean summer temperatures spanned 
 \Sexpr{tsjja$tmeanmean[which.min(tsjja$tmeanmean)]}$^\circ$C 
 (\Sexpr{tsjja$year[which.min(tsjja$tmeanmean)]}) to 
 \Sexpr{tsjja$tmeanmean[which.max(tsjja$tmeanmean)]}$^\circ$C 
 (\Sexpr{tsjja$year[which.max(tsjja$tmeanmean)]}), with an average of
-\Sexpr{mean(tsjja$tmeanmean)}$^\circ$C across the nine years.
-
-2020 and 2022 had moderate droughts in the summer (June, July and August) ramped up to severe in September. A moderate drought in June 2016, ramped up to severe in July, then extreme in August and September. 
-
+\Sexpr{mean(tsjja$tmeanmean)}$^\circ$C. 2020 and 2022 had moderate droughts in the summer (June, July and August), which ramped up to severe in September. A moderate drought in June 2016, ramped up to severe in July, then extreme in August and September. 
 %emw25Jun -- somewhere in the methods you should say how you checked these early seasons -- or maybe 77 is not really an outlier? Small issue we can fix with a git issue if you need help. 
-
-GSL ranged from 
+The calendar season (GSL) ranged from 
 \Sexpr{min(empts$pgsGSL)} days ({\Afla} in 
 \Sexpr{empts$year[which.min(empts$pgsGSL)]}) to 
 \Sexpr{max(empts$pgsGSL)} days ({\Asac} in 
-\Sexpr{empts$year[which.max(empts$pgsGSL)]})
-
-GS thermal sum ranged from 
+\Sexpr{empts$year[which.max(empts$pgsGSL)]}), while the thermal season (GDD) ranged from 
 \Sexpr{round(min(empts$pgsGDD5),1)} GDD ({\Afla} in 
 \Sexpr{empts$year[which.min(empts$pgsGDD5)]}) to 
 \Sexpr{round(max(empts$pgsGDD5),1)} GDD ({\Tame} in 
-\Sexpr{empts$year[which.max(empts$pgsGDD5)]})
-
-The earliest leafout day of year was 
+\Sexpr{empts$year[which.max(empts$pgsGDD5)]}). The earliest start of season (leafout) was 
 \Sexpr{empts$loCal[which.min(empts$leafout)]} ({\Afla} in 
 \Sexpr{empts$year[which.min(empts$leafout)]}) and the latest, 
 \Sexpr{empts$loCal[which.max(empts$leafout)]} ({\Cova} in 
-\Sexpr{empts$year[which.max(empts$leafout)]}). The earliest leaf coloring day of year was
+\Sexpr{empts$year[which.max(empts$leafout)]}), while the earliest leaf coloring day of year was
 \Sexpr{empts$clCal[which.min(empts$coloredLeaves)]} ({\Afla} in 
 \Sexpr{empts$year[which.min(empts$coloredLeaves)]}---same individual with earliest leafout) and the latest, 
 \Sexpr{empts$clCal[which.max(empts$coloredLeaves)]} ({\Tame} in
-\Sexpr{empts$year[which.max(empts$coloredLeaves)]}) 
-
-Annual ring widths across years varied from 
+\Sexpr{empts$year[which.max(empts$coloredLeaves)]}). Annual ring widths across years varied from 
 \Sexpr{min(empts$lengthMM)} mm ({\Asac} in \Sexpr{empts$year[which.min(empts$lengthMM)]}) to 
 \Sexpr{max(empts$lengthMM)} mm ({\Tame} in \Sexpr{empts$year[which.max(empts$lengthMM)]}) (Figure \ref{fig:tsboxplot}).
 
-
-\subsection*{Does tree growth increase with longer growing seasons?}
-
-No clear trend of growing season length effect across our eleven species and season predictors. %emw25Jun -- 'effect' is stats, not biology, fix this when you make it full text
+% Paragraph
+Across our eleven species and season predictors, we did not find any clear response of the growing season length on growth. %emw25Jun -- 'effect' is stats, not biology, fix this when you make it full text
 %emw25Jun -- all my comments on units (and $z$-score etc.) on wildcrokie apply here also -- I understand RW is easier for you, but I think mm/GSL or such may be easier for your audience; if you feel strongly though and or see this approach in lots of papers, let me know and I will let it go. 
-
-Results reported as means and 90\% uncertainty intervals (UI) that correspond to ring width change in mm on the log scale---henseforth "RW" per scaled predictor (one week (seven days) of average spring growing degree days (GDD); (\Sexpr{tsgddscale}) for the thermal season, one week of growing season length (GSL) for the calendar season, one week of leafout for the start of season (SOS) and one week of of budset for the end of season (EOS). % crd24June: copied from wildchrokie. Will change according to your edits/suggestions on units throughout.
-
-Longer thermal season did not increase growth for any species and decreased growth for {\Ball} (
-\Sexpr{bspp_df2_ts_gdd$mean[bspp_df2_ts_gdd$spp_name %in% "B. alleghaniensis"]}, UI:
+We report estimates as means and 90\% uncertainty intervals (UI) that correspond to ring width change in mm on the log scale---henseforth "RW" per scaled predictor (see methods for details on predictor scaling).
+Longer thermal season did not increase growth for any species and decreased growth for {\Ball}
+(\Sexpr{bspp_df2_ts_gdd$mean[bspp_df2_ts_gdd$spp_name %in% "B. alleghaniensis"]}, UI:
 \Sexpr{bspp_df2_ts_gdd$p5[bspp_df2_ts_gdd$spp_name %in% "B. alleghaniensis"]},
-\Sexpr{bspp_df2_ts_gdd$p95[bspp_df2_ts_gdd$spp_name %in% "B. alleghaniensis"]} RW change per scaled GDD; Figure \ref{fig:tsmuplotbspp}a and e; Table \ref{tab:ts_slope_table}).
+\Sexpr{bspp_df2_ts_gdd$p95[bspp_df2_ts_gdd$spp_name %in% "B. alleghaniensis"]} $\Delta$ RW/scaled GDD; Figure \ref{fig:tsmuplotbspp}a and e; Table \ref{tab:ts_slope_table}). Longer calendar season did not change growth for any species (Figure \ref{fig:tsmuplotbspp}b and f; Table \ref{tab:ts_slope_table}). Finally, on a scaled axis ($z$-scored), both GDD and GSL were similarly predictive (Figure \ref{fig:bsppZscored})
 
-No species responded to longer calendar season (Figure \ref{fig:tsmuplotbspp}b and f; Table \ref{tab:ts_slope_table}).
-
-On a scaled axis (z-scored), both GDD and GSL were similarly predictive (Figure \ref{fig:bsppZscored})
-
-
-\subsection*{Does a warmer thermal season increase growth in the following year?}
-
-Previous year GDD increased growth for {\Ball} (
-\Sexpr{bspp_df2_ts_prvs$mean[bspp_df2_ts_prvs$spp_name %in% "B. alleghaniensis"]}, UI:
+% Paragraph
+Previous year GDD increased growth for {\Ball}
+(\Sexpr{bspp_df2_ts_prvs$mean[bspp_df2_ts_prvs$spp_name %in% "B. alleghaniensis"]}, UI:
 \Sexpr{bspp_df2_ts_prvs$p5[bspp_df2_ts_prvs$spp_name %in% "B. alleghaniensis"]},
-\Sexpr{bspp_df2_ts_prvs$p95[bspp_df2_ts_prvs$spp_name %in% "B. alleghaniensis"]} RW change per scaled GDD),
-and decreased growth for {\Bnig} (
-\Sexpr{bspp_df2_ts_prvs$mean[bspp_df2_ts_prvs$spp_name %in% "B. nigra"]}, UI:
+\Sexpr{bspp_df2_ts_prvs$p95[bspp_df2_ts_prvs$spp_name %in% "B. alleghaniensis"]} $\Delta$ RW/scaled GDD),
+and decreased growth for {\Bnig}
+(\Sexpr{bspp_df2_ts_prvs$mean[bspp_df2_ts_prvs$spp_name %in% "B. nigra"]}, UI:
 \Sexpr{bspp_df2_ts_prvs$p5[bspp_df2_ts_prvs$spp_name %in% "B. nigra"]},
-\Sexpr{bspp_df2_ts_prvs$p95[bspp_df2_ts_prvs$spp_name %in% "B. nigra"]} RW change per scaled GDD; Figure \ref{fig:tsPrvsYr}b)
+\Sexpr{bspp_df2_ts_prvs$p95[bspp_df2_ts_prvs$spp_name %in% "B. nigra"]} $\Delta$ RW/scaled GDD; Figure \ref{fig:tsPrvsYr}b; Table \ref{tab:tab_PrvsYr})
 
-Interestingly, {\Bnig} did not solely respond to current year's conditions (Figure \ref{fig:tsmuplotbspp}a and e; Table \ref{tab:ts_slope_table}), but grew more with warmer thermal season when the previous conditions were considered (
-\Sexpr{bspp_df2_ts_curr$mean[bspp_df2_ts_curr$spp_name %in% "B. nigra"]}, UI:
+Interestingly, {\Bnig} did not solely respond to current year's conditions (Figure \ref{fig:tsmuplotbspp}a and e; Table \ref{tab:ts_slope_table}), but grew more with warmer thermal season when the previous conditions were considered
+(\Sexpr{bspp_df2_ts_curr$mean[bspp_df2_ts_curr$spp_name %in% "B. nigra"]}, UI:
 \Sexpr{bspp_df2_ts_curr$p5[bspp_df2_ts_curr$spp_name %in% "B. nigra"]},
-\Sexpr{bspp_df2_ts_curr$p95[bspp_df2_ts_curr$spp_name %in% "B. nigra"]} RW change per scaled GDD; Figure \ref{fig:tsPrvsYr}a).
+\Sexpr{bspp_df2_ts_curr$p95[bspp_df2_ts_curr$spp_name %in% "B. nigra"]} $\Delta$ RW/scaled GDD; Figure \ref{fig:tsPrvsYr}a; Table \ref{tab:tab_PrvsYr}).
 
-
-\subsection*{Did an earlier start and later end of season increase growth?}
-
+% Paragraph
 An earlier start of season did not increase growth for any species and decreased growth for {\Tame} (
 \Sexpr{bspp_df2_ts_sos$mean[bspp_df2_ts_sos$spp_name %in% "T. americana"]}, UI:
 \Sexpr{bspp_df2_ts_sos$p5[bspp_df2_ts_sos$spp_name %in% "T. americana"]},
-\Sexpr{bspp_df2_ts_sos$p95[bspp_df2_ts_sos$spp_name %in% "T. americana"]} RW change per seven SOS days; Figure \ref{fig:tsmuplotbspp}c and g; Table \ref{tab:ts_slope_table}), which did not respond to the thermal or the calendar season.
+\Sexpr{bspp_df2_ts_sos$p95[bspp_df2_ts_sos$spp_name %in% "T. americana"]} $\Delta$ RW/scaled SOS; Figure \ref{fig:tsmuplotbspp}c and g; Table \ref{tab:ts_slope_table}), which did not respond to the thermal or the calendar season.
 
 A later end of season did not increase growth for any species and decreased growth for {\Ball} (
 \Sexpr{bspp_df2_ts_eos$mean[bspp_df2_ts_eos$spp_name %in% "B. alleghaniensis"]}, UI:
 \Sexpr{bspp_df2_ts_eos$p5[bspp_df2_ts_eos$spp_name %in% "B. alleghaniensis"]},
-\Sexpr{bspp_df2_ts_eos$p95[bspp_df2_ts_eos$spp_name %in% "B. alleghaniensis"]} RW change per seven EOS days; Figure \ref{fig:tsmuplotbspp}d and h; Table \ref{tab:ts_slope_table}), which also decreased growth with warmer thermal season.
+\Sexpr{bspp_df2_ts_eos$p95[bspp_df2_ts_eos$spp_name %in% "B. alleghaniensis"]} $\Delta$ RW/scaled EOS; Figure \ref{fig:tsmuplotbspp}d and h; Table \ref{tab:ts_slope_table}), which also decreased growth with warmer thermal season.
 
 The estimates were unchanged when using the full or restricted datasets (SOS $n =$
 \Sexpr{nrow(empfullsosts)} and EOS $n =$
@@ -235,14 +209,31 @@ The estimates were unchanged when using the full or restricted datasets (SOS $n 
 A later SOS delayed EOS only for {\Pdel} 
 (\Sexpr{bspp_df2_ts_co$mean[bspp_df2_ts_co$spp_name %in% "P. deltoides"]}, UI:
 \Sexpr{bspp_df2_ts_co$p5[bspp_df2_ts_co$spp_name %in% "P. deltoides"]},
-\Sexpr{bspp_df2_ts_co$p95[bspp_df2_ts_co$spp_name %in% "P. deltoides"]} EOS change in days per SOS day; Figure \ref{fig:SOSonEOS}
+\Sexpr{bspp_df2_ts_co$p95[bspp_df2_ts_co$spp_name %in% "P. deltoides"]} $\Delta$ EOS/SOS; Figure \ref{fig:SOSonEOS}
 
 
 \subsection*{How did tree growth change across years and tree ids?}
 
-We did not find any clear effect of year on growth (Figure \ref{fig:tsmuplotayear}) and no clear differences of growth across species (Figure \ref{fig:tsxyGDDyr} and Figure \ref{fig:tsxyGSLyr})
+We did not find any clear difference of growth across years (Figure \ref{fig:tsmuplotayear}; Table) and no clear differences of growth across species (Figure \ref{fig:tsxyGDDyr} and \ref{fig:tsxyGSLyr})
 
 Growth was similar across individual trees (Figure \ref{fig:tsmuplotatreeid}).
+
+
+% Figure mu across all species and climate predictors
+\begin{figure}[!ht]
+\includegraphics[width=0.8\textwidth]{../../analyses/figures/growthModelsMain/TSmuALLbsppWlines.pdf}
+\caption{Estimates of ring width change as a function of four different predictors (growing degree days, GDD (mean daily temperature above 5\degree C); growing season length, GSL; start of season, SOS; end of season, EOS) across our eleven species. The species colors are the same throughout the figures. Panels (a) to (d) represent the model slope estimates for each species, for each predictor, which we represent through ring width change on the log scale per seven average spring days GDD (\Sexpr{tsgddscale} GDD; panel a), seven days of GSL (panel b), seven days of leafout (SOS; panel c) and seven days of leaf colouring (EOS; panel d). The dots represent the mean of each species and the lines, the 50\% and 90\% uncertainty intervals (UI; see Table \ref{tab:ts_slope_table} for parameter estimates). Panels (e) to (h) represent the simulated response curves of ring width as a function of each predictor, with the lines depicting the mean response at each simulated predictor value, and the shaded area, the interquantile ranges (25\% and 75\% UI). These model do not include a slope on the previous year GDD (see Figure \ref{fig:tsPrvsYr} for these estimates).}
+\label{fig:tsmuplotbspp}
+\end{figure}
+
+% Figure mu previous year and current year
+\begin{figure}[!ht]
+\includegraphics[width=0.6\textwidth]{../../analyses/figures/growthPreviousYearModel/bsppCurrentVSpreviousYR.jpeg}
+\caption{Model slope estimates representing ring width change as a function of the current year growing degree days (GDD; a) and the previous year GDD (b). GDD represent the accumulated growing degree days between leafout and leaf colouring and the models estimates shows ring width change (on the log scale) per seven average spring days GDD (\Sexpr{tsgddscale}; see data analyses for more details).
+The dots represent the mean of each species and the lines, the 50\% and 90\% uncertainty intervals (UI). }
+\label{fig:tsPrvsYr}
+\end{figure}
+
 % <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 % DISCUSSION
 % <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
@@ -445,7 +436,17 @@ ayear_df2_EOS  <- read.csv("/Users/christophe_rouleau-desrochers/github/coringtr
 
 bspp_df2_GDD$spp_name  <- empts$latbi[match(bspp_df2_GDD$spp, empts$spp_num)]
 aspp_df2_GDD$spp_name  <- empts$latbi[match(aspp_df2_GDD$spp, empts$spp_num)]
+
 ayear_df2_GDD$year_name <- empts$year[match(ayear_df2_GDD$year, empts$year_num)]
+ayear_df2_GSL$year_name <- empts$year[match(ayear_df2_GSL$year, empts$year_num)]
+ayear_df2_SOS$year_name <- empts$year[match(ayear_df2_SOS$year, empts$year_num)]
+ayear_df2_EOS$year_name <- empts$year[match(ayear_df2_EOS$year, empts$year_num)]
+
+# Reorder years
+ayear_df2_GDD <- ayear_df2_GDD[order(ayear_df2_GDD$year_name),]
+ayear_df2_GSL <- ayear_df2_GSL[order(ayear_df2_GSL$year_name),]
+ayear_df2_SOS <- ayear_df2_SOS[order(ayear_df2_SOS$year_name),]
+ayear_df2_EOS <- ayear_df2_EOS[order(ayear_df2_EOS$year_name),]
 
 fmt <- function(df) sprintf("%.2f [%.2f, %.2f]", df$mean, df$p5, df$p95)
 
@@ -459,16 +460,57 @@ param_labels <- c(
 
 combined <- data.frame(
   "Parameter" = param_labels,
-  "GDD" = c(fmt(a_df2_GDD), fmt(sigma_df2_GDD), fmt(bspp_df2_GDD), fmt(ayear_df2_GDD), fmt(aspp_df2_GDD)),
-  "GSL" = c(fmt(a_df2_GSL), fmt(sigma_df2_GSL), fmt(bspp_df2_GSL), fmt(ayear_df2_GSL), fmt(aspp_df2_GSL)),
-  "SOS" = c(fmt(a_df2_SOS), fmt(sigma_df2_SOS), fmt(bspp_df2_SOS), fmt(ayear_df2_SOS), fmt(aspp_df2_SOS)),
-  "EOS" = c(fmt(a_df2_EOS), fmt(sigma_df2_EOS), fmt(bspp_df2_EOS), fmt(ayear_df2_EOS), fmt(aspp_df2_EOS)),
+  "GDD" = c(fmt(a_df2_GDD), fmt(sigma_df2_GDD), fmt(bspp_df2_GDD), fmt(aspp_df2_GDD), fmt(ayear_df2_GDD)),
+  "GSL" = c(fmt(a_df2_GSL), fmt(sigma_df2_GSL), fmt(bspp_df2_GSL), fmt(aspp_df2_GSL), fmt(ayear_df2_GSL)),
+  "SOS" = c(fmt(a_df2_SOS), fmt(sigma_df2_SOS), fmt(bspp_df2_SOS), fmt(aspp_df2_SOS), fmt(ayear_df2_SOS)),
+  "EOS" = c(fmt(a_df2_EOS), fmt(sigma_df2_EOS), fmt(bspp_df2_EOS), fmt(aspp_df2_EOS), fmt(ayear_df2_EOS)),
   check.names = FALSE
 )
 
 print(xtable(combined,
              caption = "Summary output of each parameter from our four predictors, using ring width (on the log scale) as the reponse variable. We report estimates as mean and 90\\% uncertainty intervals (in square brackets) across our four different predictors (GDD: growing degree days, GSL: growing season length, SOS: start of season and EOS: end of season). See data analyses section for more details.",
              label = "tab:tab_all"),
+      include.rownames = FALSE, sanitize.text.function = identity, caption.placement = "top")
+@
+
+<<Table combined previous year model, results='asis', echo = FALSE>>=
+options(digits = 2)
+
+a_df2      <- read.csv("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/output/GM_GDDparam_a_prvsYr.csv")
+sigma_df2  <- read.csv("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/output/GM_GDDparam_sigma_prvsYr.csv")
+bspp_df2   <- read.csv("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/output/GM_GDDparam_bspp_prvsYr.csv")
+bspp_df2Yr <- read.csv("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/output/GM_GDDparam_bsppYr_prvsYr.csv")
+aspp_df2   <- read.csv("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/output/GM_GDDparam_aspp_prvsYr.csv")
+ayear_df2  <- read.csv("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/output/GM_GDDparam_ayear_prvsYr.csv")
+
+bspp_df2$spp_name  <- empts$latbi[match(bspp_df2$spp, empts$spp_num)]
+bspp_df2Yr$spp_name  <- empts$latbi[match(bspp_df2Yr$spp, empts$spp_num)]
+aspp_df2$spp_name  <- empts$latbi[match(aspp_df2$spp, empts$spp_num)]
+ayear_df2$year_name <- empts$year[match(ayear_df2$year, empts$year_num)]
+
+# Reorder years
+ayear_df2 <- ayear_df2[order(ayear_df2$year_name),]
+
+fmt <- function(df) sprintf("%.2f [%.2f, %.2f]", df$mean, df$p5, df$p95)
+
+param_labels <- c(
+  "$\\alpha$",
+  "$\\sigma_{\\alpha_{tree}}$", "$\\sigma_{y}$",
+  paste0("$\\beta_{\\text{species}_{", bspp_df2$spp_name,   "}}^{\\text{current}}$"),
+  paste0("$\\beta_{\\text{species}_{", bspp_df2Yr$spp_name, "}}^{\\text{previous}}$"),
+  paste0("$\\alpha_{\\text{year}_{",   ayear_df2$year_name, "}}$"),
+  paste0("$\\alpha_{\\text{spp}_{",    aspp_df2$spp_name,   "}}$")
+)
+
+combined <- data.frame(
+  "Parameter" = param_labels,
+  "Estimate" = c(fmt(a_df2), fmt(sigma_df2), fmt(bspp_df2), fmt(bspp_df2Yr), fmt(aspp_df2), fmt(ayear_df2)),
+  check.names = FALSE
+)
+
+print(xtable(combined,
+             caption = "Summary output of each parameter from the previous year model using ring width (on the log scale) as the reponse variable. We report estimates as mean and 90\\% uncertainty intervals (in square brackets). See data analyses section for more details.",
+             label = "tab:tab_PrvsYr"),
       include.rownames = FALSE, sanitize.text.function = identity, caption.placement = "top")
 @
 
@@ -523,14 +565,14 @@ print(xtable(combined,
 
 % Full vs restricted data comparison for Coringtreespotters
 \begin{figure}[!ht]
-\includegraphics[width=1\textwidth]{/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/figures/growthModelsMain/FullVSRestricted.jpeg}
+\includegraphics[width=1\textwidth]{/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/figures/growthModelsMain/FullVSRestricted.pdf}
 \caption{Full vs most restricted rows of data for the model with SOS (a) EOS (b) as the predictor. Each pannel represent the different parameters used to fit the models (see data analyses for more details).}
 \label{fig:tsSOSEOScomparison}
 \end{figure}
 
 % Budburst vs leafout for CoringTreespotters
 \begin{figure}[!ht]
-\includegraphics[width=0.8\textwidth]{/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/figures/growthModelsMain/budburstVSLeafout/DporousVSRporous.jpeg}
+\includegraphics[width=0.8\textwidth]{/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/figures/growthModelsMain/budburstVSLeafout/DporousVSRporous.pdf}
 \caption{Parameter estimates when calculating the GDD (a), GSL (b) from leafout vs budburst, to leaf coloring. (c) shows the model estimates when taking leafout vs budburst as the SOS (see data analyses for more details).}
 \label{fig:buburstVSleafoutTS}
 \end{figure}
@@ -538,7 +580,7 @@ print(xtable(combined,
 % Z-scored slope results
 \begin{figure}[!ht]
 \includegraphics[width=0.8\textwidth]{../../analyses/figures/growthModelsMain/zscored/muALLbsppZ.pdf}
-\caption{Effect size of each predictors across our eleven species. We depict ring width (on the log scale) change per scaled (z-scored; see data analyses section for more details) predictor for each species. We report estimates as mean and 90\% uncertainty intervals (in square brackets) across our four different predictors (GDD: growing degree days, GSL: growing season length, SOS: start of season and EOS: end of season).}
+\caption{Effect size of each predictors across our eleven species. We depict ring width (on the log scale) change per scaled ($z$-scored; see data analyses section for more details) predictor for each species. We report estimates as mean and 90\% uncertainty intervals (in square brackets) across our four different predictors (GDD: growing degree days, GSL: growing season length, SOS: start of season and EOS: end of season).}
 \label{fig:bsppZscored}
 \end{figure}
 
