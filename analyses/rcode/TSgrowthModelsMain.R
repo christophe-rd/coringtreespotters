@@ -1602,6 +1602,8 @@ colnames(aspp_df) <- 1:ncol(aspp_df)
 colnames(ayear_df) <- 1:ncol(ayear_df)
 
 # posterior summaries
+a_df2  <- extract_params(df_fit, "a", "mean", "parameter")
+a_df2 <- subset(a_df2, !grepl("raw|sigma|z|treeid|spp|year", parameter))
 sigma_df2  <- extract_params(df_fit, "sigma", "mean", "sigma")
 bspp_df2_curr <- extract_params(df_fit, "bsp", "fit_bsp", "spp", "bsp\\[(\\d+)\\]")
 bspp_df2_curr <- subset(bspp_df2_curr, !grepl("yr", spp))
@@ -1613,12 +1615,13 @@ ayear_df2  <- extract_params(df_fit, "ayear", "fit_ayear", "year", "ayear\\[(\\d
 ayear_df2  <- subset(ayear_df2, !grepl("mean", year))
 
 # save csvs
-write.csv(sigma_df2,  "output/GM_GDDparam_sigma_prvsYr.csv",  row.names = FALSE)
-write.csv(bspp_df2_curr, "output/GM_GDDparam_bspp_prvsYr.csv",   row.names = FALSE)
+write.csv(a_df2,         "output/GM_GDDparam_a_prvsYr.csv",        row.names = FALSE)
+write.csv(sigma_df2,     "output/GM_GDDparam_sigma_prvsYr.csv",    row.names = FALSE)
+write.csv(bspp_df2_curr, "output/GM_GDDparam_bspp_prvsYr.csv",     row.names = FALSE)
 write.csv(bspp_df2_prvs, "output/GM_GDDparam_bsppYr_prvsYr.csv",   row.names = FALSE)
-write.csv(treeid_df2, "output/GM_GDDparam_treeid_prvsYr.csv", row.names = FALSE)
-write.csv(aspp_df2,   "output/GM_GDDparam_aspp_prvsYr.csv",   row.names = FALSE)
-write.csv(ayear_df2,  "output/GM_GDDparam_ayear.csv",  row.names = FALSE)
+write.csv(treeid_df2,    "output/GM_GDDparam_treeid_prvsYr.csv",   row.names = FALSE)
+write.csv(aspp_df2,      "output/GM_GDDparam_aspp_prvsYr.csv",     row.names = FALSE)
+write.csv(ayear_df2,     "output/GM_GDDparam_ayear_prvsYr.csv",    row.names = FALSE)
 
 jpeg("figures/growthPreviousYearModel/gddModelPriorVSPosteriorPrvsYr.jpeg", 
      width =2400, height = 2400, res =300)
