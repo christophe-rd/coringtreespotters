@@ -78,12 +78,7 @@
 \newcommand{\Tame}{\textit{T. americana}}   
 
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error:\\\#\# ! object 'mysizeaxis' not found}}\end{kframe}
-\end{knitrout}
 
 % <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 \section*{Research questions}
@@ -98,115 +93,129 @@
 % <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 \section*{Results}
 % <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
-\subsection*{Summary basic information}
+\begin{enumerate}
+\item Summary basic information
+  \begin{enumerate}
 
-Dataset includes 11 deciduous tree species with leaf phenology data spanning nine years (2016 to 2024) for a total of 
-321 leafout and 
-284 leaf coloring
-observations, yielding 
-278 complete growing seasons (GS) for 
-49 individuals. 
+  \item Dataset includes 11 deciduous tree species with leaf phenology data spanning nine years (2016 to 2024) for a total of 
+  321 leafout and 
+  284 leaf coloring
+   observations, yielding 
+  278 complete growing seasons (GS) for 
+  49 individuals. 
+  
+  \item Mean summer temperatures spanned 
+  21.53$^\circ$C 
+  (2017) to 
+  23.07$^\circ$C 
+  (2020), with an average of
+  22.51$^\circ$C across the nine years.
 
-Mean summer temperatures spanned 
-21.53$^\circ$C 
-(2017) to 
-23.07$^\circ$C 
-(2020), with an average of
-22.51$^\circ$C across the nine years.
+  \item 2020 and 2022 had moderate droughts in the summer (June, July and August) ramped up to severe in September. A moderate drought in June 2016, ramped up to severe in July, then extreme in August and September. 
+  
+  %emw25Jun -- somewhere in the methods you should say how you checked these early seasons -- or maybe 77 is not really an outlier? Small issue we can fix with a git issue if you need help. 
+  \item GSL ranged from 
+  77 days ({\Afla} in 
+  2018) to 
+  194 days ({\Asac} in 
+  2021)
 
-2020 and 2022 had moderate droughts in the summer (June, July and August) ramped up to severe in September. A moderate drought in June 2016, ramped up to severe in July, then extreme in August and September. 
+  \item GS thermal sum ranged from 
+  1048.8 GDD ({\Afla} in 
+  2020) to 
+  2634.7 GDD ({\Tame} in 
+  2016)
+  
+  \item The earliest leafout day of year was 
+  08-Apr ({\Afla} in 
+  2021) and the latest, 
+  15-May ({\Cova} in 
+  2020). The earliest leaf coloring day of year was
+  15-Jul ({\Afla} in 
+  2021---same individual with earliest leafout) and the latest, 
+  06-Nov ({\Tame} in
+  2016) 
+  
+  \item Annual ring widths across years varied from 
+  0.43 mm ({\Asac} in 2019) to 
+  11.75 mm ({\Tame} in 2019) (Figure \ref{fig:tsboxplot}).
+ 
+\end{enumerate}
+% Question 1 --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+\item Does tree growth increase with longer growing seasons?
+  \begin{enumerate}
 
-%emw25Jun -- somewhere in the methods you should say how you checked these early seasons -- or maybe 77 is not really an outlier? Small issue we can fix with a git issue if you need help. 
+  \item No clear trend of growing season length effect across our eleven species and season predictors. %emw25Jun -- 'effect' is stats, not biology, fix this when you make it full text
+  %emw25Jun -- all my comments on units (and $z$-score etc.) on wildcrokie apply here also -- I understand RW is easier for you, but I think mm/GSL or such may be easier for your audience; if you feel strongly though and or see this approach in lots of papers, let me know and I will let it go. 
+  \item Results reported as means and 90\% uncertainty intervals (UI) that correspond to ring width change in mm on the log scale---henseforth "RW" per scaled predictor (one week (seven days) of average spring growing degree days (GDD); (58.32) for the thermal season, one week of growing season length (GSL) for the calendar season, one week of leafout for the start of season (SOS) and one week of of budset for the end of season (EOS). % crd24June: copied from wildchrokie. Will change according to your edits/suggestions on units throughout.
 
-GSL ranged from 
-77 days ({\Afla} in 
-2018) to 
-194 days ({\Asac} in 
-2021)
+  \item Longer thermal season did not increase growth for any species and decreased growth for {\Ball} (
+  -0.08, UI:
+  -0.12,
+  -0.03 RW change per scaled GDD; Figure \ref{fig:tsmuplotbspp}a and e; Table \ref{tab:ts_slope_table}).
+  
+  \item No species responded to longer calendar season (Figure \ref{fig:tsmuplotbspp}b and f; Table \ref{tab:ts_slope_table}).
 
-GS thermal sum ranged from 
-1048.8 GDD ({\Afla} in 
-2020) to 
-2634.7 GDD ({\Tame} in 
-2016)
+  \item On a scaled axis (z-scored), both GDD and GSL were similarly predictive (Figure \ref{fig:bsppZscored})
 
-The earliest leafout day of year was 
-08-Apr ({\Afla} in 
-2021) and the latest, 
-15-May ({\Cova} in 
-2020). The earliest leaf coloring day of year was
-15-Jul ({\Afla} in 
-2021---same individual with earliest leafout) and the latest, 
-06-Nov ({\Tame} in
-2016) 
+  \end{enumerate}
 
-Annual ring widths across years varied from 
-0.43 mm ({\Asac} in 2019) to 
-11.75 mm ({\Tame} in 2019) (Figure \ref{fig:tsboxplot}).
+% Question 2 --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+\item Does a warmer thermal season increase growth in the following year?
+  \begin{enumerate}
+  
+  \item Previous year GDD increased growth for {\Ball} (
+  0.15, UI:
+  0.03,
+  0.27 RW change per scaled GDD),
+  and decreased growth for {\Bnig} (
+  -0.08, UI:
+  -0.16,
+  0 RW change per scaled GDD; Figure \ref{fig:tsPrvsYr}b)
+  
+  \item Interestingly, {\Bnig} did not solely respond to current year's conditions (Figure \ref{fig:tsmuplotbspp}a and e; Table \ref{tab:ts_slope_table}), but grew more with warmer thermal season when the previous conditions were considered (
+  0.12, UI:
+  0.03,
+  0.21 RW change per scaled GDD; Figure \ref{fig:tsPrvsYr}a).
+  
+  \end{enumerate}
+  
+% Question 3 --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+\item Did an earlier start and later end of season increase growth? 
 
+  \begin{enumerate}
+  \item An earlier start of season did not increase growth for any species and decreased growth for {\Tame} (
+  0.15, UI:
+  0.03,
+  0.27 RW change per seven SOS days; Figure \ref{fig:tsmuplotbspp}c and g; Table \ref{tab:ts_slope_table}), which did not respond to the thermal or the calendar season.
 
-\subsection*{Does tree growth increase with longer growing seasons?}
-
-No clear trend of growing season length effect across our eleven species and season predictors. %emw25Jun -- 'effect' is stats, not biology, fix this when you make it full text
-%emw25Jun -- all my comments on units (and $z$-score etc.) on wildcrokie apply here also -- I understand RW is easier for you, but I think mm/GSL or such may be easier for your audience; if you feel strongly though and or see this approach in lots of papers, let me know and I will let it go. 
-
-Results reported as means and 90\% uncertainty intervals (UI) that correspond to ring width change in mm on the log scale---henseforth "RW" per scaled predictor (one week (seven days) of average spring growing degree days (GDD); (58.32) for the thermal season, one week of growing season length (GSL) for the calendar season, one week of leafout for the start of season (SOS) and one week of of budset for the end of season (EOS). % crd24June: copied from wildchrokie. Will change according to your edits/suggestions on units throughout.
-
-Longer thermal season did not increase growth for any species and decreased growth for {\Ball} (
--0.08, UI:
--0.12,
--0.03 RW change per scaled GDD; Figure \ref{fig:tsmuplotbspp}a and e; Table \ref{tab:ts_slope_table}).
-
-No species responded to longer calendar season (Figure \ref{fig:tsmuplotbspp}b and f; Table \ref{tab:ts_slope_table}).
-
-On a scaled axis (z-scored), both GDD and GSL were similarly predictive (Figure \ref{fig:bsppZscored})
-
-
-\subsection*{Does a warmer thermal season increase growth in the following year?}
-
-Previous year GDD increased growth for {\Ball} (
-0.15, UI:
-0.03,
-0.27 RW change per scaled GDD),
-and decreased growth for {\Bnig} (
--0.08, UI:
--0.16,
-0 RW change per scaled GDD; Figure \ref{fig:tsPrvsYr}b)
-
-Interestingly, {\Bnig} did not solely respond to current year's conditions (Figure \ref{fig:tsmuplotbspp}a and e; Table \ref{tab:ts_slope_table}), but grew more with warmer thermal season when the previous conditions were considered (
-0.12, UI:
-0.03,
-0.21 RW change per scaled GDD; Figure \ref{fig:tsPrvsYr}a).
-
-
-\subsection*{Did an earlier start and later end of season increase growth?}
-
-An earlier start of season did not increase growth for any species and decreased growth for {\Tame} (
-0.15, UI:
-0.03,
-0.27 RW change per seven SOS days; Figure \ref{fig:tsmuplotbspp}c and g; Table \ref{tab:ts_slope_table}), which did not respond to the thermal or the calendar season.
-
-A later end of season did not increase growth for any species and decreased growth for {\Ball} (
+\item A later end of season did not increase growth for any species and decreased growth for {\Ball} (
 -0.09, UI:
 -0.16,
 -0.01 RW change per seven EOS days; Figure \ref{fig:tsmuplotbspp}d and h; Table \ref{tab:ts_slope_table}), which also decreased growth with warmer thermal season.
 
-The estimates were unchanged when using the full or restricted datasets (SOS $n =$
+\item The estimates were unchanged when using the full or restricted datasets (SOS $n =$
 321 and EOS $n =$
 284 vs $n=$
 278; Figure \ref{fig:tsSOSEOScomparison}b), or when using budburst instead of leafout as the start of the growing season (Figure \ref{fig:buburstVSleafoutTS}c).
 
-A later SOS delayed EOS only for {\Pdel} 
+
+\item A later SOS delayed EOS only for {\Pdel} 
 (1.04, UI:
 0.41,
-1.68 EOS change in days per SOS day; Figure \ref{fig:SOSonEOS})
+1.68 EOS change in days per SOS day; Figure \ref{fig:SOSonEOS}
+\end{enumerate}
 
+% Question 4 --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+\item How did tree growth change across years and tree ids?
+  \begin{enumerate}
+  
+  \item We did not find any clear effect of year on growth (Figure \ref{fig:tsmuplotayear}) and no clear differences of growth across species (Figure \ref{fig:tsxyGDDyr} and Figure \ref{fig:tsxyGSLyr})
+  
+  \item Growth was similar across individual trees (Figure \ref{fig:tsmuplotatreeid}).
 
-\subsection*{How did tree growth change across years and tree ids?}
-
-We did not find any clear effect of year on growth (Figure \ref{fig:tsmuplotayear}) and no clear differences of growth across species (Figure \ref{fig:tsxyGDDyr} and Figure \ref{fig:tsxyGSLyr})
-
-Growth was similar across individual trees (Figure \ref{fig:tsmuplotatreeid}).
+  \end{enumerate}
+\end{enumerate}
 
 % Figure mu across all species and climate predictors
 \begin{figure}[!ht]
@@ -237,7 +246,7 @@ The dots represent the mean of each species and the lines, the 50\% and 90\% unc
 
 
 % latex table generated in R 4.5.1 by xtable 1.8-4 package
-% Fri Jun 26 14:30:02 2026
+% Fri Jun 26 16:53:47 2026
 \begin{table}[ht]
 \centering
 \caption{Species level slope parameters which represent ring width change (on the log scale), per scaled predictor (see data analyses section for more details). We report estimates as mean and 90\% uncertainty intervals (in square brackets) across our four different predictors (GDD: growing degree days, GSL: growing season length, SOS: start of season and EOS: end of season).} 
@@ -264,7 +273,7 @@ A. rubrum & 0.00 [-0.06, 0.06] & 0.05 [-0.05, 0.15] & -0.05 [-0.28, 0.17] & 0.04
 
 
 % latex table generated in R 4.5.1 by xtable 1.8-4 package
-% Fri Jun 26 14:30:02 2026
+% Fri Jun 26 16:53:47 2026
 \begin{table}[ht]
 \centering
 \caption{Summary output of each parameter from our four predictors, using ring width (on the log scale) as the reponse variable. We report estimates as mean and 90\% uncertainty intervals (in square brackets) across our four different predictors (GDD: growing degree days, GSL: growing season length, SOS: start of season and EOS: end of season). See data analyses section for more details.} 
