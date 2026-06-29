@@ -72,12 +72,12 @@ pgsGSLagg$pgsGSL <- round(pgsGSLagg$pgsGSL, 1)
 % Citizen science
 %-------------------------------------------------------------------------------
 \subsection*{Citizen science program}
-The Tree Spotters was a citizen science program that started in 2015 and aimed to train citizen scientists for accurate and rigorous phenological monitoring at the Arnold Arboretum of Harvard University (42.30 \degree N, -71.12 \degree W) (Figure \ref{fig:wildSpottersMap}). From 2015 to 2024, hundreds of citizen scientists monitored 77 individual trees and shrubs of 14 species. They regularly followed those individuals from budburst in the spring to leaf colouring in the fall using the National Phenology Netword (NPN) phenophases \citep{denny_standardized_2014}: Leaves (483), Colored leaves (498), Fruits (516), Ripe Fruits (390), Falling leaves(471), Recent fruit or seed drop (504), Increasing leaf size (467), Breaking leaf buds (371), Flowers or flower buds (500), Open flowers (501), Pollen release (502). Not all phenophases were recorded for every tree, for every year, and some trees miss several years of data. However, here, we use leafout to colored leaves (or leaf coloring) to define the growing season length. Taken together, our dataset comprises \Sexpr{nrow(empfullsosts)} leafout and \Sexpr{nrow(empfulleosts)} budset observations (which we refer to as the `full datasets'), but we did not have both observations for all trees in all years, so our total of matched full growing season durations (which we refer to as the `restricted dataset') is \Sexpr{nrow(empts)}. \\
+The Tree Spotters was a citizen science program that started in 2015 and aimed to train citizen scientists for accurate and rigorous phenological monitoring at the Arnold Arboretum of Harvard University (42.30 \degree N, -71.12 \degree W) (Figure \ref{fig:mapProv}). From 2015 to 2024, hundreds of citizen scientists monitored 77 individual trees and shrubs of 14 species. They regularly followed those individuals from budburst in the spring to leaf coloring in the fall using the National Phenology Network (NPN) phenophases \citep{denny_standardized_2014}: Leaves (483), Colored leaves (498), Fruits (516), Ripe Fruits (390), Falling leaves(471), Recent fruit or seed drop (504), Increasing leaf size (467), Breaking leaf buds (371), Flowers or flower buds (500), Open flowers (501), Pollen release (502). Not all phenophases were recorded for every tree, for every year, and some trees miss several years of data. However, here we use leafout to colored leaves (or leaf coloring) to define the growing season length. Taken together, our dataset comprises \Sexpr{nrow(empfullsosts)} leafout and \Sexpr{nrow(empfulleosts)} budset observations (which we refer to as the `full datasets'), but we did not have both observations for all trees in all years, so our total of matched full growing season durations (which we refer to as the `restricted dataset') is \Sexpr{nrow(empts)}. \\
 
 % Provenance map
 \begin{figure}[!ht]
 \includegraphics[width=0.8\textwidth]{/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/figures/empiricalData/tree_species_map.pdf}
-\caption{Map of the Arnold Arboretum of Harvard University with the locations of the trees depicted as the dots. The colors of the dots match the model estimates of model estimate figures (e.g. Figure \ref{fig:*}). We also show the location of the Weld Hill Research Building (black diamond), where the common garden from Chapter 1 took place.} 
+\caption{Map of the Arnold Arboretum of Harvard University with the locations of the trees depicted as the dots. The colors of the dots match the model estimates of model estimate figures (e.g. Figure \ref{fig:tsmuplotbspp}). We also show the location of the Weld Hill Research Building (black diamond), where the common garden from Chapter 1 took place.} 
 \label{fig:mapProv}
 \end{figure}
 
@@ -85,20 +85,20 @@ The Tree Spotters was a citizen science program that started in 2015 and aimed t
 % Phenological monitoring and sample collection
 %-------------------------------------------------------------------------------
 \subsection*{Phenological monitoring and sample collection}
-From 20 to 22 April 2025, we collected tree ring samples only for the tree species that were previously monitored for phenology---excluding \textit{Fagus grandifolia} because of beach bark disease concerns---for a total of 49 individuals (Table \ref{tab:tsCount}). For this, we collected two 5-mm diameter cores, 15-cm length at 1.3 meters above ground, using an increment borer (*Mora Borer, Haglöfs Sweden, Bromma, Stockholm, Sweden). We collected the cores perpendicular to the slope and at 180 degrees from each other, cleaning the increment borer with alcohol (70\% ethanol) and the inside with a brush before collecting each core. We stored the cores in modified plastic straws to allow aeration and were left to dry at ambient temperature for three months.  \\
+From 20 to 22 April 2025, we collected tree ring samples only for the tree species that were previously monitored for phenology---excluding \textit{Fagus grandifolia} because of beach bark disease concerns---for a total of 49 individuals (Table \ref{tab:tsCount}). Thus, we sampled four or five individuals for 11 species: Red maple (\textit{Acer rubrum}), Sugar maple (\textit{Acer saccharum}), Yellow buckeye (\textit{Aesculus flava}), Yellow birch (\textit{Betula alleghaniensis}), River birch (\textit{Betula nigra}), Pignut hickory (\textit{Carya glabra}), Shagbark hickory (\textit{Carya ovata}), Eastern cottonwood (\textit{Populus deltoides}), White oak (\textit{Quercus alba}), Northern red oak (\textit{Quercus rubra}) and American basswood (\textit{Tilia americana}). For this, we collected two 5-mm diameter cores, 15-cm length at 1.3 meters above ground, using an increment borer (*Mora Borer, Haglöfs Sweden, Bromma, Stockholm, Sweden). We collected the cores perpendicular to the slope and at 180 degrees from each other, cleaning the increment borer with alcohol (70\% ethanol) and the inside with a brush before collecting each core. We stored the cores in modified plastic straws to allow aeration and were left to dry at ambient temperature for three months.  \\
 
 %-------------------------------------------------------------------------------
 % Sample processing, imaging and measuring
 %-------------------------------------------------------------------------------
 \subsection*{Sample processing, imaging and measuring}
-We used wooden mounts to stabilize the cores that were then sanded using coarse to fine sandpaper grit, by roughly 150 increments from 150 to 1000. We then used a high resolution scanner to scan the cores at a resolution of 6250 dpi (Fong, unpublished), and used those images to the ring widths using ImageJ (*Scheinder2012). \\
+We used wooden mounts to stabilize the cores that were then sanded using progressively finer sandpaper grit, by roughly increments of 150 from 150 to 1000. We then used a high-resolution scanner to scan the cores at a resolution of 6250 dpi (Fong, unpublished), and used those images to measure the ring widths using ImageJ (*Scheinder2012). \\
 
-We visually cross-dating the ring width chronologies by assigning a calendar year to each ring and compare yearly variation of trends across the different individuals of the same species (Cook et Kairiutkstis1990). Our short chronologies, but even more so our low species replication prevented us to performing statistical cross-dating. We also did not detrend our chronologies because the ring widths during our study period (nine years) showed no consistent allometric trend (Figure \ref{fig:allom}). We included year in our models to control for effects of different years.
+We visually cross-dated the ring width chronologies by assigning a calendar year to each ring and comparing yearly variation of trends across the different individuals of the same species (Cook et Kairiutkstis1990). Our short chronologies and our low species replication prevented us to performing statistical cross-dating. We also did not detrend our chronologies because the ring widths during our study period (nine years) showed no consistent allometric trend (Figure \ref{fig:allom}). We included year in our models to control for effects of different years.
 
 \subsection*{Data analyses}
-We used Bayesian hierarchical models to understand how growth shifted with four different season metrics: GDD, GSL, SOS and EOS. We used growing degree days (GDD; mean daily temperature above 5\degree C) between leafout and leaf coloring to calculate the thermal season and the number of days between leafout and leaf coloring for the calendar season (growing season length; GSL). Then, we used leafout for the start of season (SOS) and leaf coloring for the end of season (EOS). To better illustrate ring widths responses to our season metrics, we report ring width change (on the log scale) as the number of GDDs accumulated in an average week (seven days) of May (day of year 121 to 150 from 2016 to 2024) for the thermal season. Similarly, we report ring width change per week of season length, leafout and leaf coloring for GSL, SOS and EOS, respectively. For the additional model for which we accounted for the previous year conditions, we used the previous year GDD accumulated between leafout and leaf coloring (e.g. for year 2020, we used the GDDa of 2019 as the previous year GDD). We report effects when the 90\% UI do not overlap with zero across all models. \\
+We used Bayesian hierarchical models to understand how growth shifted with four different season metrics: GDD, GSL, SOS and EOS. We used growing degree days (GDD; mean daily temperature above 5\degree C) between leafout and leaf coloring to calculate the thermal season and the number of days between leafout and leaf coloring for the calendar season (growing season length; GSL). Then, we used leafout for the start of season (SOS) and leaf coloring for the end of season (EOS). To better illustrate ring widths responses to our season metrics, we report ring width change (log(mm)) as the number of GDDs accumulated in an average week (seven days) of May (day of year 121 to 150 from 2016 to 2024; \Sexpr{tsgddscale} GDD) for the thermal season. Similarly, we report ring width change per week of season length, leafout and leaf coloring for GSL, SOS and EOS, respectively. We report effects when the 90\% UI do not overlap with zero across all models.\\
 
-We combined daily climate data from two sources for the duration of our study (2016-2024). From 2016-2019, we used the Weld Hill research station climate station and the "Boston (Weld Hill)" station for the remaining years (2020-2024) (*Caroll2025Network). Both are located right next to the arboretum. We determined drought occurence at the arboretum using the North American Drought Monitor Maps and used the proposed drought intensity index to qualify their intensity (*National Centers for Environmental Information (NCEI), 2026). \\
+We combined daily climate data from two sources for the duration of our study (2016-2024). From 2016-2019, we used the Weld Hill research station climate station (*REF) and the "Boston (Weld Hill)" station for the remaining years (2020-2024) (*Caroll2025Network). Both are located right next to the Arboretum. We determined drought occurrence at the arboretum using the North American Drought Monitor Maps and used the proposed drought index to qualify their intensity (*National Centers for Environmental Information (NCEI), 2026). \\
 
 Thus for each season predictor, we estimated its effect on ring width observed for each tree in each year as:
 
@@ -112,7 +112,7 @@ ln(ringwidth)_i &\sim N(\mu, \sigma_y) \\
 
 With this model, we can estimate a species-specific effect of each season predictor on growth ($\beta_{species}$), but we also controlled for variation due to species ($\alpha_{species}$), individual tree ($\alpha_{treeid}$) and year ($\alpha_{year}$). We first ran the models using natural units and then scaled the predictors through $z$-scoring so we could directly compare their effect size. We report estimates as means and 90\% uncertainty intervals (UI).
 
-We also estimated the effect previous year thermal season on the current year's growth as:
+We used an additional model to account the previous year conditions. For this, we used the GDD accumulated between leafout and leaf coloring from the previous year (e.g. for year 2020, we used the GDDa of 2019 as the previous year GDD), alongside the GDD accumulated during the current year. Thus, we also estimated the previous and current year thermal season effect on the current year's growth as:
 
 \[
 \begin{aligned} 
@@ -125,9 +125,8 @@ We also estimated the effect previous year thermal season on the current year's 
 \]
 
 While controlling for the same variation across species, individual tree and year, this model allowed us to account for the effect of the thermal season during the current year ($\beta_{\text{species}}^{\text{current}}$), but also during the previous year ($\beta_{\text{species}}^{\text{previous}}$). \\
-\par
-We also fit the models for SOS and EOS using the full vs restricted datasets. As a supplementary analyses, we ran the models using budburst instead instead of leafout as the SOS to test whether our model responses diverged across diffuse vs ring porous species.
 
+We also fit the models for SOS and EOS using the full vs restricted datasets. As a supplementary analyses, we ran the models using budburst instead instead of leafout as the SOS to test whether our model responses diverged across diffuse vs ring porous species.
 
 % <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 % RESULTS
@@ -135,7 +134,7 @@ We also fit the models for SOS and EOS using the full vs restricted datasets. As
 % \clearpage
 \section*{Results}
 % Paragraph
-Our dataset includes 11 deciduous tree species with leaf phenology data spanning nine years (2016 to 2024) for a total of 
+Our dataset comprised 11 deciduous tree species with leaf phenology data spanning nine years (2016 to 2024) for a total of 
 \Sexpr{nrow(empfullsosts)} leafout and 
 \Sexpr{nrow(empfulleosts)} leaf coloring
 observations, yielding 
@@ -146,7 +145,7 @@ observations, yielding
 \Sexpr{tsjja$tmeanmean[which.max(tsjja$tmeanmean)]}$^\circ$C 
 (\Sexpr{tsjja$year[which.max(tsjja$tmeanmean)]}), with an average of
 \Sexpr{mean(tsjja$tmeanmean)}$^\circ$C. 2020 and 2022 had moderate droughts in the summer (June, July and August), which ramped up to severe in September. A moderate drought in June 2016, ramped up to severe in July, then extreme in August and September. 
-%emw25Jun -- somewhere in the methods you should say how you checked these early seasons -- or maybe 77 is not really an outlier? Small issue we can fix with a git issue if you need help. 
+%emw25Jun -- somewhere in Methods you should say how you checked these early seasons -- or maybe 77 is not really an outlier? Small issue we can fix with a git issue if you need help. 
 The calendar season (GSL) ranged from 
 \Sexpr{min(empts$pgsGSL)} days ({\Afla} in 
 \Sexpr{empts$year[which.min(empts$pgsGSL)]}) to 
@@ -170,7 +169,7 @@ The calendar season (GSL) ranged from
 % Paragraph
 Across our eleven species and season predictors, we did not find any clear response of the growing season length on growth. %emw25Jun -- 'effect' is stats, not biology, fix this when you make it full text
 %emw25Jun -- all my comments on units (and $z$-score etc.) on wildcrokie apply here also -- I understand RW is easier for you, but I think mm/GSL or such may be easier for your audience; if you feel strongly though and or see this approach in lots of papers, let me know and I will let it go. 
-We report estimates as means and 90\% uncertainty intervals (UI) that correspond to ring width change in mm on the log scale---henceforth `\RW scaled predictor' (see methods for details on predictor scaling).
+We report estimates as means and 90\% uncertainty intervals (UI) that correspond to ring width change in mm on the log scale---henceforth `\RW scaled predictor' (see `Data analyses' section in Methods for more details on predictor scaling).
 Longer thermal season did not increase growth for any species and decreased growth for {\Ball}
 ($\beta =$ \Sexpr{bspp_df2_ts_gdd$mean[bspp_df2_ts_gdd$spp_name %in% "B. alleghaniensis"]}, UI:
 \Sexpr{bspp_df2_ts_gdd$p5[bspp_df2_ts_gdd$spp_name %in% "B. alleghaniensis"]},
@@ -199,27 +198,27 @@ A later end of season did not increase growth for any species and decreased grow
 $\beta =$ \Sexpr{bspp_df2_ts_eos$mean[bspp_df2_ts_eos$spp_name %in% "B. alleghaniensis"]}, UI:
 \Sexpr{bspp_df2_ts_eos$p5[bspp_df2_ts_eos$spp_name %in% "B. alleghaniensis"]},
 \Sexpr{bspp_df2_ts_eos$p95[bspp_df2_ts_eos$spp_name %in% "B. alleghaniensis"]} \RW scaled EOS; Figure \ref{fig:tsmuplotbspp}d and h; Table \ref{tab:ts_slope_table}), which also decreased growth with warmer thermal season. \\
-The estimates were unchanged when using the full or restricted datasets (SOS $n =$
-\Sexpr{nrow(empfullsosts)} and EOS $n =$
+The estimates were unchanged when using the full or restricted datasets (SOS: $n =$
+\Sexpr{nrow(empfullsosts)} and EOS: $n =$
 \Sexpr{nrow(empfulleosts)} vs $n =$
 \Sexpr{nrow(empts)}; Figure \ref{fig:tsSOSEOScomparison}b), or when using budburst instead of leafout as the start of the growing season (Figure \ref{fig:buburstVSleafoutTS}c).
 A later SOS delayed EOS only for {\Pdel} 
 ($\beta$: \Sexpr{bspp_df2_ts_co$mean[bspp_df2_ts_co$spp_name %in% "P. deltoides"]}, UI:
 \Sexpr{bspp_df2_ts_co$p5[bspp_df2_ts_co$spp_name %in% "P. deltoides"]},
 \Sexpr{bspp_df2_ts_co$p95[bspp_df2_ts_co$spp_name %in% "P. deltoides"]} $\Delta$ EOS/SOS; Figure \ref{fig:SOSonEOS} \\
-We did not find any clear difference of growth across years (Figure \ref{fig:tsmuplotayear}; Table) and no clear differences of growth across species (Figure \ref{fig:tsxyGDDyr} and \ref{fig:tsxyGSLyr}). Growth was similar across individual trees (Figure \ref{fig:tsmuplotatreeid}).
+We did not find any clear difference on baseline growth across years (Figure \ref{fig:tsmuplotayear}; Table) and between species (Figure \ref{fig:tsxyGDDyr} and \ref{fig:tsxyGSLyr}). Growth was similar across individual trees (Figure \ref{fig:tsmuplotatreeid}).
 
 % Figure mu across all species and climate predictors
 \begin{figure}[!ht]
 \includegraphics[width=0.8\textwidth]{../../analyses/figures/growthModelsMain/TSmuALLbsppWlines.pdf}
-\caption{Estimates of ring width change as a function of four different predictors (growing degree days, GDD (mean daily temperature above 5\degree C); growing season length, GSL; start of season, SOS; end of season, EOS) across our eleven species. The species colors are the same throughout the figures. Panels (a) to (d) represent the model slope estimates for each species, for each predictor, which we represent through ring width change on the log scale per seven average spring days GDD (\Sexpr{tsgddscale} GDD; panel a), seven days of GSL (panel b), seven days of leafout (SOS; panel c) and seven days of leaf colouring (EOS; panel d). The dots represent the mean of each species and the lines, the 50\% and 90\% uncertainty intervals (UI; see Table \ref{tab:ts_slope_table} for parameter estimates). Panels (e) to (h) represent the simulated response curves of ring width as a function of each predictor, with the lines depicting the mean response at each simulated predictor value, and the shaded area, the interquantile ranges (25\% and 75\% UI). These model do not include a slope on the previous year GDD (see Figure \ref{fig:tsPrvsYr} for these estimates).}
+\caption{Estimates of ring width change (log(mm)) as a function of four different phenological predictors: growing degree days of the growing season, GDD (mean daily temperature above 5\degree C); growing season length, GSL; start of season (SOS); end of season (EOS) across 11 species (Red maple (\textit{Acer rubrum}), Sugar maple (\textit{Acer saccharum}), Yellow buckeye (\textit{Aesculus flava}), Yellow birch (\textit{Betula alleghaniensis}), River birch (\textit{Betula nigra}), Pignut hickory (\textit{Carya glabra}), Shagbark hickory (\textit{Carya ovata}), Eastern cottonwood (\textit{Populus deltoides}), White oak (\textit{Quercus alba}), Northern red oak (\textit{Quercus rubra}) and American basswood (\textit{Tilia americana})); species colors are the same across the panels). Panels (a) to (d) represent the model slope estimates for each species, for each predictor, which we represent through \RW scaled predictor (see `Data analyses' section in Methods for more details on predictor scaling). The dots represent the mean of each species and the lines, the 50\% and 90\% uncertainty intervals (UI; see Table \ref{tab:ts_slope_table} for parameter estimates). Panels (e) to (h) represent the simulated response curves of ring width as a function of each predictor, with the lines depicting the mean response at each simulated predictor value, and the shaded area, the interquantile ranges (50\% UI). These model do not include a slope on the previous year GDD (see Figure \ref{fig:tsPrvsYr} for these estimates).}
 \label{fig:tsmuplotbspp}
 \end{figure}
 
 % Figure mu previous year and current year
 \begin{figure}[!ht]
 \includegraphics[width=0.6\textwidth]{../../analyses/figures/growthPreviousYearModel/bsppCurrentVSpreviousYR.jpeg}
-\caption{Model slope estimates representing ring width change as a function of the current year growing degree days (GDD; a) and the previous year GDD (b). GDD represent the accumulated growing degree days between leafout and leaf colouring and the models estimates shows ring width change (on the log scale) per seven average spring days GDD (\Sexpr{tsgddscale}; see data analyses for more details).
+\caption{Model slope estimates representing ring width change as a function of the current year growing degree days (GDD; a) and the previous year GDD (b). GDD represent the accumulated growing degree days between leafout and leaf colouring and the models estimates shows ring width change (log(mm)) per seven average spring days GDD (\Sexpr{tsgddscale}; see `Data analyses' section in Methods).
 The dots represent the mean of each species and the lines, the 50\% and 90\% uncertainty intervals (UI). }
 \label{fig:tsPrvsYr}
 \end{figure}
@@ -386,7 +385,7 @@ colnames(df_all)[1] <- "Species"
 
 # Print table
 tab <- xtable(df_all,
-              caption = "Species level slope parameters which represent ring width change (on the log scale), per scaled predictor (see data analyses section for more details). We report estimates as mean and 90\\% uncertainty intervals (in square brackets) across our four different predictors (GDD: growing degree days, GSL: growing season length, SOS: start of season and EOS: end of season).",
+              caption = "Species level slope parameters which represent ring width change (log(mm)), per scaled predictor (see `Data analyses' section in Methods for more details on predictor scaling). We report estimates as mean and 90\\% uncertainty intervals (in square brackets) across our four different predictors (GDD: growing degree days, GSL: growing season length, SOS: start of season and EOS: end of season).",
               label = "tab:ts_slope_table"
 )
 
@@ -443,9 +442,9 @@ fmt <- function(df) sprintf("%.2f [%.2f, %.2f]", df$mean, df$p5, df$p95)
 param_labels <- c(
   "$\\alpha$",
   "$\\sigma_{\\alpha_{tree}}$", "$\\sigma_{y}$",
-  paste0("$\\beta_{spp_{",   bspp_df2_GDD$spp_name,  "}}$"),
+  paste0("$\\beta_{species_{",   bspp_df2_GDD$spp_name,  "}}$"),
   paste0("$\\alpha_{year_{", ayear_df2_GDD$year_name, "}}$"),
-  paste0("$\\alpha_{spp_{",  aspp_df2_GDD$spp_name,  "}}$")
+  paste0("$\\alpha_{species_{",  aspp_df2_GDD$spp_name,  "}}$")
 )
 
 combined <- data.frame(
@@ -458,7 +457,7 @@ combined <- data.frame(
 )
 
 print(xtable(combined,
-             caption = "Summary output of each parameter from our four predictors, using ring width (on the log scale) as the reponse variable. We report estimates as mean and 90\\% uncertainty intervals (in square brackets) across our four different predictors (GDD: growing degree days, GSL: growing season length, SOS: start of season and EOS: end of season). See data analyses section for more details.",
+             caption = "Summary output of each parameter from our four predictors, using ring width (log(mm)) as the reponse variable. We report estimates as mean and 90\\% uncertainty intervals (in square brackets) across our four different predictors (GDD: growing degree days, GSL: growing season length, SOS: start of season and EOS: end of season). See `Data analyses' section in Methods for more details.",
              label = "tab:tab_all"),
       include.rownames = FALSE, sanitize.text.function = identity, caption.placement = "top")
 @
@@ -499,7 +498,7 @@ combined <- data.frame(
 )
 
 print(xtable(combined,
-             caption = "Summary output of each parameter from the previous year model using ring width (on the log scale) as the reponse variable. We report estimates as mean and 90\\% uncertainty intervals (in square brackets). See data analyses section for more details.",
+             caption = "Summary output of each parameter from the previous year model using ring width (log(mm)) as the reponse variable. We report estimates as mean and 90\\% uncertainty intervals (in square brackets). see `Data analyses' section in Methods for more details",
              label = "tab:tab_PrvsYr"),
       include.rownames = FALSE, sanitize.text.function = identity, caption.placement = "top")
 @
@@ -507,7 +506,7 @@ print(xtable(combined,
 % Coringtreespotters year mu plot
 \begin{figure}[!ht]
 \includegraphics[width=0.5\textwidth]{../../analyses/figures/growthModelsMain/TSmuayear}
-\caption{Ring width (on the log scale) deviations from the grand mean for each year using the GDD model (Table \ref{tab:tab_all}). The dots are the mean of the posterior distribution and the thick and thin lines, the 50 and 90\% UI.}
+\caption{Ring width (log(mm)) deviations from the grand mean for each year using the GDD model (Table \ref{tab:tab_all}). The dots are the mean of the posterior distribution and the thick and thin lines, the 50 and 90\% UI.}
 \label{fig:tsmuplotayear}
 \end{figure}
 
@@ -521,56 +520,56 @@ print(xtable(combined,
 % XY facetted by species GDD shaped by tree id
 \begin{figure}[!ht]
 \includegraphics[width=0.8\textwidth]{../../analyses/figures/growthModelsMain/TSgrowthModelSlopesperSppFacetGDDtree.jpeg}
-\caption{Ring width (on the log scale) trends in response to thermal season (GDD). The plots are the reconstructed species estimates posterior distribution with error. The lines represent the mean of the posterior distribution and the shaded area, the 50\% UI. The dots are the empirical data shaped by treeids.}
+\caption{Ring width (log(mm)) trends in response to thermal season (GDD). The plots are the reconstructed species estimates posterior distribution with error. The lines represent the mean of the posterior distribution and the shaded area, the 50\% UI. The dots are the empirical data shaped by treeids.}
 \label{fig:tsxyGDDtree}
 \end{figure}
 
 % XY facetted by species GSL shaped by tree id
 \begin{figure}[!ht]
 \includegraphics[width=0.8\textwidth]{../../analyses/figures/growthModelsMain/TSgrowthModelSlopesperSppFacetGSLtree.jpeg}
-\caption{Ring width trends (on the log scale) in response to calendar season (GSL). The plots are the reconstructed species estimates posterior distribution with error. The lines represent the mean of the posterior distribution and the shaded area, the 50\% UI. The dots are the empirical data shaped by treeids.}
+\caption{Ring width trends (log(mm)) in response to calendar season (GSL). The plots are the reconstructed species estimates posterior distribution with error. The lines represent the mean of the posterior distribution and the shaded area, the 50\% UI. The dots are the empirical data shaped by treeids.}
 \label{fig:tsxyGSLtree}
 \end{figure}
 
 % XY facetted by species GDD shaped by year
 \begin{figure}[!ht]
 \includegraphics[width=0.8\textwidth]{../../analyses/figures/growthModelsMain/TSgrowthModelSlopesperSppFacetGDDyr.jpeg}
-\caption{Ring width trends (on the log scale) in response to thermal season (GDD). The plots are the reconstructed species estimates posterior distribution with error. The lines represent the mean of the posterior distribution and the shaded area, the 50\% UI. The dots are the empirical data shaped by year.}
+\caption{Ring width trends (log(mm)) in response to thermal season (GDD). The plots are the reconstructed species estimates posterior distribution with error. The lines represent the mean of the posterior distribution and the shaded area, the 50\% UI. The dots are the empirical data shaped by year.}
 \label{fig:tsxyGDDyr}
 \end{figure}
 
 % XY facetted by species GSL shaped by year
 \begin{figure}[!ht]
 \includegraphics[width=0.8\textwidth]{../../analyses/figures/growthModelsMain/TSgrowthModelSlopesperSppFacetGSLyr.jpeg}
-\caption{Ring width trends (on the log scale) in response to calendar season (GSL). The plots are the reconstructed species estimates posterior distribution with error. The lines represent the mean of the posterior distribution and the shaded area, the 50\% UI. The dots are the empirical data shaped by year.}
+\caption{Ring width trends (log(mm)) in response to calendar season (GSL). The plots are the reconstructed species estimates posterior distribution with error. The lines represent the mean of the posterior distribution and the shaded area, the 50\% UI. The dots are the empirical data shaped by year.}
 \label{fig:tsxyGSLyr}
 \end{figure}
 
 % Figure mu atreeid full
 \begin{figure}[!ht]
 \includegraphics[width=0.8\textwidth]{../../analyses/figures/growthModelsMain/TSmeanPlotGrowthGDD_treeidBYspp.pdf}
-\caption{Ring width (on the log scale) deviations from the grand mean for each grouping factor of the GDD model. The different tree id values represent the combined intercepts of tree id, species and averaged year intercepts. The larger dots and lines represent the species intercepts which are the species level estimates averaged across all of their tree ids. The dots are the mean of the posterior distribution and the thick and thin lines, the 50 and 90\% UI.}
+\caption{Ring width (log(mm)) deviations from the grand mean for each grouping factor of the GDD model. The different tree id values represent the combined intercepts of tree id, species and averaged year intercepts. The larger dots and lines represent the species intercepts which are the species level estimates averaged across all of their tree ids. The dots are the mean of the posterior distribution and the thick and thin lines, the 50 and 90\% UI.}
 \label{fig:tsmuplotatreeid}
 \end{figure}
 
 % Full vs restricted data comparison for Coringtreespotters
 \begin{figure}[!ht]
 \includegraphics[width=1\textwidth]{/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/figures/growthModelsMain/FullVSRestricted.pdf}
-\caption{Full vs, most restricted rows of data for the model with start of season (SOS; a) and end of season (EOS; b) as the predictor. Each panel represent the different parameters used to fit the models. $\alpha_{species}$ and $\alpha_{year}$ represent the ring width (on the log scale) for species and year, respectively. $\beta_{species}$ represent the change in ring width (on the log scale) per scaled predictor for each species (see data analyses section for more details).} 
+\caption{Full vs, most restricted rows of data for the model with start of season (SOS; a) and end of season (EOS; b) as the predictor. Each panel represent the different parameters used to fit the models. $\alpha_{species}$ and $\alpha_{year}$ represent the ring width (log(mm)) for species and year, respectively. $\beta_{species}$ represent the change in ring width (log(mm)) per scaled predictor for each species (see `Data analyses' section in Methods for more details on predictor scaling).} 
 \label{fig:tsSOSEOScomparison}
 \end{figure}
 
 % Budburst vs leafout for CoringTreespotters
 \begin{figure}[!ht]
 \includegraphics[width=0.8\textwidth]{/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/figures/growthModelsMain/budburstVSLeafout/DporousVSRporous.pdf}
-\caption{Parameter estimates when calculating the GDD (a), GSL (b) from leafout vs budburst, to leaf coloring. (c) shows the model estimates when taking leafout vs budburst as the SOS (see data analyses for more details).}
+\caption{Parameter estimates when calculating the GDD (a), GSL (b) from leafout vs budburst, to leaf coloring. (c) shows the model estimates when taking leafout vs budburst as the SOS (see `Data analyses' section in Methods for more details).}
 \label{fig:buburstVSleafoutTS}
 \end{figure}
 
 % Z-scored slope results
 \begin{figure}[!ht]
 \includegraphics[width=0.8\textwidth]{../../analyses/figures/growthModelsMain/zscored/muALLbsppZ.pdf}
-\caption{Effect size of each predictors across our eleven species. We depict ring width (on the log scale) change per scaled ($z$-scored; see data analyses section for more details) predictor for each species. We report estimates as mean and 90\% uncertainty intervals (in square brackets) across our four different predictors (GDD: growing degree days, GSL: growing season length, SOS: start of season and EOS: end of season).}
+\caption{Effect size of each predictors across our eleven species. We depict ring width (log(mm)) change per scaled ($z$-scored; see `Data analyses' section in Methods for more details) predictor for each species. We report estimates as mean and 90\% uncertainty intervals (in square brackets) across our four different predictors (GDD: growing degree days, GSL: growing season length, SOS: start of season and EOS: end of season).}
 \label{fig:bsppZscored}
 \end{figure}
 
