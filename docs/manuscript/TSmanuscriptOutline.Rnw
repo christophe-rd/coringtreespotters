@@ -73,7 +73,7 @@ pgsGSLagg$pgsGSL <- round(pgsGSLagg$pgsGSL, 1)
 % Paragraph
 \item Increased growth with longer seasons may not happen
   \begin{enumerate}
-  \item Evidence shows trees don't grow more with longer seasons
+  \item Some new evidence shows trees don't grow more with longer seasons
   
   \item This could mislead carbon models
   
@@ -87,20 +87,21 @@ pgsGSLagg$pgsGSL <- round(pgsGSLagg$pgsGSL, 1)
   
   \item Diffuse vs ring porous species start growth at different time---experience different temperature throughout the season
   
-  \item Longer seasons may benefit slow growth species $>$ fast growth species
+  \item Longer seasons may benefit slow growth species $>$ fast growth species %emwJun29 -- how/why? Should the reader understand this? 
   
-  \item Different carbon allocation strategies may mute short term growth responses
+  \item Different carbon allocation strategies may mute short term growth responses %emwJun29 -- is this the reason? I would FLIP them then or rethink a little. 
   
   \end{enumerate}
   
-% Paragraph
+% Paragraph 
+%emwJun29 -- be sure you transition into this from the previous paragraph; this should be easy I think
 \item Previous year conditions can affect the following year's growth
   \begin{enumerate}
   \item Deciduous trees use stored carbon at the beginning of the season
   
   \item Mature trees especially are known to rely on stored carbon for early growth 
   
-  \item Thus, effect of environmental conditions on yearly growth can be blurred by a multi-year lag effect
+  \item Thus, effect of environmental conditions on yearly growth can be blurred by a multi-year lag effect %emwJun29 -- nice!
   
   \end{enumerate}
   
@@ -111,7 +112,7 @@ pgsGSLagg$pgsGSL <- round(pgsGSLagg$pgsGSL, 1)
   
   \item Growth with tree rings and SOS and EOS with leaf phenology from citizen scientists 
   
-  \item Will look at 11 species of mature trees across nine years.
+  \item Will look at 11 species of mature trees across nine years. %emwJun29 -- given the order of your intro, I think this may fit best toward the START of this paragraph ... 
   \end{enumerate}
 \end{enumerate}
 
@@ -147,7 +148,7 @@ pgsGSLagg$pgsGSL <- round(pgsGSLagg$pgsGSL, 1)
   \begin{enumerate}
   \item Thermal or calendar season had no effect on any species except for one
   
-  \item {\Ball} decrease in growth reveal that this species growth is inhibited with warmer seasons
+  \item {\Ball} decrease in growth reveal that this species growth may be inhibited by warmer seasons
   
   \item {\Ball} response to thermal season is consequential with more growth with earlier EOS: period of high GDD accumulation
   
