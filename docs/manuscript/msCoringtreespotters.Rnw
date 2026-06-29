@@ -29,6 +29,7 @@
 \newcommand{\Qrub}{\textit{Q. rubra}}
 \newcommand{\Tame}{\textit{T. americana}}   
 
+\newcommand{\RW}{$\Delta$ RW/}
 
 <<Setup, echo=FALSE, message=FALSE, warning=FALSE>>=
 library(xtable)
@@ -71,7 +72,7 @@ pgsGSLagg$pgsGSL <- round(pgsGSLagg$pgsGSL, 1)
 % Citizen science
 %-------------------------------------------------------------------------------
 \subsection*{Citizen science program}
-The Tree Spotters was a citizen science program that started in 2015 and aimed to train citizen scientists for accurate and rigorous phenological monitoring at the Arnold Arboretum of Harvard University (42.30 \degree N, -71.12 \degree W) (Figure \ref{fig:wildSpottersMap}). From 2015 to 2024, hundreds of citizen scientists monitored 77 individual trees and shrubs of 14 species. They regularly followed those individuals from budburst in the spring to leaf colouring in the fall using the National Phenology Netword (NPN) phenophases \citep{denny_standardized_2014}: Leaves (483), Colored leaves (498), Fruits (516), Ripe Fruits (390), Falling leaves(471), Recent fruit or seed drop (504), Increasing leaf size (467), Breaking leaf buds (371), Flowers or flower buds (500), Open flowers (501), Pollen release (502). Not all phenophases were recorded for every tree, for every year, and some trees miss several years of data. \\
+The Tree Spotters was a citizen science program that started in 2015 and aimed to train citizen scientists for accurate and rigorous phenological monitoring at the Arnold Arboretum of Harvard University (42.30 \degree N, -71.12 \degree W) (Figure \ref{fig:wildSpottersMap}). From 2015 to 2024, hundreds of citizen scientists monitored 77 individual trees and shrubs of 14 species. They regularly followed those individuals from budburst in the spring to leaf colouring in the fall using the National Phenology Netword (NPN) phenophases \citep{denny_standardized_2014}: Leaves (483), Colored leaves (498), Fruits (516), Ripe Fruits (390), Falling leaves(471), Recent fruit or seed drop (504), Increasing leaf size (467), Breaking leaf buds (371), Flowers or flower buds (500), Open flowers (501), Pollen release (502). Not all phenophases were recorded for every tree, for every year, and some trees miss several years of data. However, here, we use leafout to colored leaves (or leaf coloring) to define the growing season length. Taken together, our dataset comprises \Sexpr{nrow(empfullsos)} leafout and \Sexpr{nrow(empfulleos)} budset observations (which we refer to as the `full datasets'), but we did not have both observations for all trees in all years, so our total of matched full growing season durations (which we refer to as the `restricted dataset') is \Sexpr{nrow(empts)}. \\
 
 % Provenance map
 \begin{figure}[!ht]
@@ -164,52 +165,49 @@ The calendar season (GSL) ranged from
 \Sexpr{empts$clCal[which.max(empts$coloredLeaves)]} ({\Tame} in
 \Sexpr{empts$year[which.max(empts$coloredLeaves)]}). Annual ring widths across years varied from 
 \Sexpr{min(empts$lengthMM)} mm ({\Asac} in \Sexpr{empts$year[which.min(empts$lengthMM)]}) to 
-\Sexpr{max(empts$lengthMM)} mm ({\Tame} in \Sexpr{empts$year[which.max(empts$lengthMM)]}) (Figure \ref{fig:tsboxplot}).
+\Sexpr{max(empts$lengthMM)} mm ({\Tame} in \Sexpr{empts$year[which.max(empts$lengthMM)]}) (Figure \ref{fig:tsboxplot}). \\
 
 % Paragraph
 Across our eleven species and season predictors, we did not find any clear response of the growing season length on growth. %emw25Jun -- 'effect' is stats, not biology, fix this when you make it full text
 %emw25Jun -- all my comments on units (and $z$-score etc.) on wildcrokie apply here also -- I understand RW is easier for you, but I think mm/GSL or such may be easier for your audience; if you feel strongly though and or see this approach in lots of papers, let me know and I will let it go. 
-We report estimates as means and 90\% uncertainty intervals (UI) that correspond to ring width change in mm on the log scale---henseforth "RW" per scaled predictor (see methods for details on predictor scaling).
+We report estimates as means and 90\% uncertainty intervals (UI) that correspond to ring width change in mm on the log scale---henceforth `\RW scaled predictor' (see methods for details on predictor scaling).
 Longer thermal season did not increase growth for any species and decreased growth for {\Ball}
 (\Sexpr{bspp_df2_ts_gdd$mean[bspp_df2_ts_gdd$spp_name %in% "B. alleghaniensis"]}, UI:
 \Sexpr{bspp_df2_ts_gdd$p5[bspp_df2_ts_gdd$spp_name %in% "B. alleghaniensis"]},
-\Sexpr{bspp_df2_ts_gdd$p95[bspp_df2_ts_gdd$spp_name %in% "B. alleghaniensis"]} $\Delta$ RW/scaled GDD; Figure \ref{fig:tsmuplotbspp}a and e; Table \ref{tab:ts_slope_table}). Longer calendar season did not change growth for any species (Figure \ref{fig:tsmuplotbspp}b and f; Table \ref{tab:ts_slope_table}). Finally, on a scaled axis ($z$-scored), both GDD and GSL were similarly predictive (Figure \ref{fig:bsppZscored})
+\Sexpr{bspp_df2_ts_gdd$p95[bspp_df2_ts_gdd$spp_name %in% "B. alleghaniensis"]} \RW scaled GDD; Figure \ref{fig:tsmuplotbspp}a and e; Table \ref{tab:ts_slope_table}). Longer calendar season did not change growth for any species (Figure \ref{fig:tsmuplotbspp}b and f; Table \ref{tab:ts_slope_table}). Finally, on a scaled axis ($z$-scored), both GDD and GSL were similarly predictive (Figure \ref{fig:bsppZscored}) \\
 
 % Paragraph
 Previous year GDD increased growth for {\Ball}
 (\Sexpr{bspp_df2_ts_prvs$mean[bspp_df2_ts_prvs$spp_name %in% "B. alleghaniensis"]}, UI:
 \Sexpr{bspp_df2_ts_prvs$p5[bspp_df2_ts_prvs$spp_name %in% "B. alleghaniensis"]},
-\Sexpr{bspp_df2_ts_prvs$p95[bspp_df2_ts_prvs$spp_name %in% "B. alleghaniensis"]} $\Delta$ RW/scaled GDD),
+\Sexpr{bspp_df2_ts_prvs$p95[bspp_df2_ts_prvs$spp_name %in% "B. alleghaniensis"]} \RW scaled GDD),
 and decreased growth for {\Bnig}
 (\Sexpr{bspp_df2_ts_prvs$mean[bspp_df2_ts_prvs$spp_name %in% "B. nigra"]}, UI:
 \Sexpr{bspp_df2_ts_prvs$p5[bspp_df2_ts_prvs$spp_name %in% "B. nigra"]},
-\Sexpr{bspp_df2_ts_prvs$p95[bspp_df2_ts_prvs$spp_name %in% "B. nigra"]} $\Delta$ RW/scaled GDD; Figure \ref{fig:tsPrvsYr}b; Table \ref{tab:tab_PrvsYr})
-
+\Sexpr{bspp_df2_ts_prvs$p95[bspp_df2_ts_prvs$spp_name %in% "B. nigra"]} \RW scaled GDD; Figure \ref{fig:tsPrvsYr}b; Table \ref{tab:tab_PrvsYr}).
 Interestingly, {\Bnig} did not solely respond to current year's conditions (Figure \ref{fig:tsmuplotbspp}a and e; Table \ref{tab:ts_slope_table}), but grew more with warmer thermal season when the previous conditions were considered
 (\Sexpr{bspp_df2_ts_curr$mean[bspp_df2_ts_curr$spp_name %in% "B. nigra"]}, UI:
 \Sexpr{bspp_df2_ts_curr$p5[bspp_df2_ts_curr$spp_name %in% "B. nigra"]},
-\Sexpr{bspp_df2_ts_curr$p95[bspp_df2_ts_curr$spp_name %in% "B. nigra"]} $\Delta$ RW/scaled GDD; Figure \ref{fig:tsPrvsYr}a; Table \ref{tab:tab_PrvsYr}).
+\Sexpr{bspp_df2_ts_curr$p95[bspp_df2_ts_curr$spp_name %in% "B. nigra"]} \RW scaled GDD; Figure \ref{fig:tsPrvsYr}a; Table \ref{tab:tab_PrvsYr}). \\
 
 % Paragraph
 An earlier start of season did not increase growth for any species and decreased growth for {\Tame} (
 \Sexpr{bspp_df2_ts_sos$mean[bspp_df2_ts_sos$spp_name %in% "T. americana"]}, UI:
 \Sexpr{bspp_df2_ts_sos$p5[bspp_df2_ts_sos$spp_name %in% "T. americana"]},
-\Sexpr{bspp_df2_ts_sos$p95[bspp_df2_ts_sos$spp_name %in% "T. americana"]} $\Delta$ RW/scaled SOS; Figure \ref{fig:tsmuplotbspp}c and g; Table \ref{tab:ts_slope_table}), which did not respond to the thermal or the calendar season.
-
+\Sexpr{bspp_df2_ts_sos$p95[bspp_df2_ts_sos$spp_name %in% "T. americana"]} \RW scaled SOS; Figure \ref{fig:tsmuplotbspp}c and g; Table \ref{tab:ts_slope_table}), which did not respond to the thermal or the calendar season.
 A later end of season did not increase growth for any species and decreased growth for {\Ball} (
 \Sexpr{bspp_df2_ts_eos$mean[bspp_df2_ts_eos$spp_name %in% "B. alleghaniensis"]}, UI:
 \Sexpr{bspp_df2_ts_eos$p5[bspp_df2_ts_eos$spp_name %in% "B. alleghaniensis"]},
-\Sexpr{bspp_df2_ts_eos$p95[bspp_df2_ts_eos$spp_name %in% "B. alleghaniensis"]} $\Delta$ RW/scaled EOS; Figure \ref{fig:tsmuplotbspp}d and h; Table \ref{tab:ts_slope_table}), which also decreased growth with warmer thermal season.
+\Sexpr{bspp_df2_ts_eos$p95[bspp_df2_ts_eos$spp_name %in% "B. alleghaniensis"]} \RW scaled EOS; Figure \ref{fig:tsmuplotbspp}d and h; Table \ref{tab:ts_slope_table}), which also decreased growth with warmer thermal season. \\
 
 The estimates were unchanged when using the full or restricted datasets (SOS $n =$
 \Sexpr{nrow(empfullsosts)} and EOS $n =$
 \Sexpr{nrow(empfulleosts)} vs $n=$
 \Sexpr{nrow(empts)}; Figure \ref{fig:tsSOSEOScomparison}b), or when using budburst instead of leafout as the start of the growing season (Figure \ref{fig:buburstVSleafoutTS}c).
-
 A later SOS delayed EOS only for {\Pdel} 
 (\Sexpr{bspp_df2_ts_co$mean[bspp_df2_ts_co$spp_name %in% "P. deltoides"]}, UI:
 \Sexpr{bspp_df2_ts_co$p5[bspp_df2_ts_co$spp_name %in% "P. deltoides"]},
-\Sexpr{bspp_df2_ts_co$p95[bspp_df2_ts_co$spp_name %in% "P. deltoides"]} $\Delta$ EOS/SOS; Figure \ref{fig:SOSonEOS}
+\Sexpr{bspp_df2_ts_co$p95[bspp_df2_ts_co$spp_name %in% "P. deltoides"]} $\Delta$ EOS/SOS; Figure \ref{fig:SOSonEOS} \\
 
 
 \subsection*{How did tree growth change across years and tree ids?}

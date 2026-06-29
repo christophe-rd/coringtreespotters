@@ -1611,6 +1611,7 @@ bspp_df2_prvs <- extract_params(df_fit, "bspyr", "fit_bsp", "spp", "bspyr\\[(\\d
 treeid_df2 <- extract_params(df_fit, "atreeid", "fit_atreeid", "id", "atreeid\\[(\\d+)\\]")
 treeid_df2 <- subset(treeid_df2, !grepl("z|sigma", id))
 aspp_df2   <- extract_params(df_fit, "aspp", "fit_aspp", "spp", "aspp\\[(\\d+)\\]")
+aspp_df2  <- subset(aspp_df2, !grepl("raw", spp))
 ayear_df2  <- extract_params(df_fit, "ayear", "fit_ayear", "year", "ayear\\[(\\d+)\\]")
 ayear_df2  <- subset(ayear_df2, !grepl("mean", year))
 
