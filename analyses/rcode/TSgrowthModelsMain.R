@@ -909,7 +909,7 @@ abline(0, 1, lty = 2, col = "black", lwd = 2)
 
 mtext("(a) Start of season (SOS)",
       side = 3, outer = TRUE, at = 0, adj = 0, font = 2, las = 1, line = -0.5)
-mtext("(b) End of season",
+mtext("(b) End of season (EOS)",
       side = 3, outer = TRUE, at = 0, adj = 0, font = 2, las = 1, line = -22)
 dev.off()
 
