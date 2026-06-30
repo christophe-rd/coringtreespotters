@@ -76,7 +76,12 @@ hist(coloredleaves3$First_Yes_DOY)
 
 d <- d[(d$NumDays_Since_Prior_No>=0 & d$NumDays_Since_Prior_No<=14),] ## And this limits to data where a no is followed by a yes, so that it is a new observation/new phenophase but has been detected within a reasonable timeframe
 
-
+# Temporary check for aesculus flava
+afla <- subset(d, Genus ==  "Aesculus")
+subby <- afla[which(afla$plantNickname %in% c("12651*C", "12651*I", "925-79*B") &
+            afla$Phenophase_Description == "Leaves"),]
+subby$
+subby$ObservedBy_Person_ID
 coloredleaves3 <- subset(d, Phenophase_Description == "Colored leaves")
 hist(coloredleaves3$First_Yes_DOY)
 

@@ -20,7 +20,7 @@ if (length(grep("christophe_rouleau-desrochers", getwd())) > 0) {
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 source("rcode/TSgrowthModelsMain.R")
 
-makeplots <- F
+makeplots <- T
 runzscore <- F
 
 # Load parameter summaries generated in growthModelsMain.R ####
@@ -1975,6 +1975,104 @@ for(vi in seq_along(vars)) {
     if(!is.na(sp_centres[i]))
       mtext(bquote(italic(.(species[i]))), side = 1, at = sp_centres[i], line = 2.5, cex = 0.8)
   }
+}
+dev.off()
+
+
+# single and col coded by species:
+pdf("figures/growthModelsMain/boxplotPredictorsAll.pdf", width = 12, height = 8)
+vars <- c("pgsGDD5", "pgsGSL", "leafout", "coloredLeaves")
+var_labs <- c("Thermal season (GDD)", "Calendar season (GSL)", "Start of season (SOS)", "End of season (EOS)")
+ylab <- c("Growing degree days (GDD)", "Growing season length (days)",
+          "Leafout day of year (doy)", "Budset day of year (doy)")
+alphabet <- c("(a)", "(b)", "(c)", "(d)")
+species  <- sort(unique(as.character(empts$latbi)))
+years    <- sort(unique(empts$year))
+n_sp <- length(species); n_yr <- length(years)
+latbi_ch <- as.character(empts$latbi)
+par(mfrow = c(1, 1), mar = c(5, 5, 2, 1))
+for(vi in seq_along(vars)) {
+  v <- vars[vi]
+  bdat <- list(); at_vec <- c()
+  for(j in seq_len(n_yr)) {
+    vals <- empts[[v]][empts$year == years[j]]
+    vals <- vals[!is.na(vals)]
+    bdat[[j]] <- vals
+    at_vec <- c(at_vec, j)
+  }
+  boxplot(bdat, at = at_vec, xaxt = "n", xlab = "", ylab = ylab[vi],
+          col = adjustcolor("grey70", alpha.f = 0.4), border = "grey40",
+          medcol = "black", whisklty = 1, staplewex = 0, medlty = 1,
+          outpch = NA, xlim = c(0.5, n_yr + 0.5))
+  mtext(paste(alphabet[vi], var_labs[vi]), side = 3, adj = -0.1, line = 0.5, cex = 1.1)
+  for(j in seq_len(n_yr)) {
+    for(i in seq_len(n_sp)) {
+      vals <- empts[[v]][which(latbi_ch == species[i] & empts$year == years[j])]
+      vals <- vals[!is.na(vals)]
+      if(length(vals) > 0)
+        stripchart(vals, at = j, method = "jitter", jitter = 0.16,
+                   pch = 16, cex = 0.7, col = tscolslatbi[i], vertical = TRUE, add = TRUE)
+    }
+  }
+  axis(1, at = at_vec, labels = years, cex.axis = mysizeaxis * 0.75, line = 0)
+}
+dev.off()
+# check that ae flava
+afla <- subset(empts, genus == "Aesculus")
+subset(afla, pgsGSL < 115)
+
+
+# Other boxplot:
+pdf("figures/growthModelsMain/boxplotPredictorsAll.pdf", width = 12, height = 8)
+vars <- c(
+  # "pgsGDD5", 
+  "pgsGSL" 
+  # "leafout", 
+  # "coloredLeaves"
+)
+var_labs <- c(
+  # "Thermal season (GDD)", 
+  "Calendar season (GSL)" 
+  # "Start of season (SOS)", 
+  # "End of season (EOS)"
+)
+ylab <- c(
+  # "Growing degree days (GDD)", 
+  "Growing season length (days)"
+  # "Leafout day of year (doy)", 
+  # "Budset day of year (doy)"
+)
+alphabet <- c("(a)", "(b)", "(c)", "(d)")
+species  <- sort(unique(as.character(empts$latbi)))
+years    <- sort(unique(empts$year))
+n_sp <- length(species); n_yr <- length(years)
+latbi_ch <- as.character(empts$latbi)
+par(mfrow = c(1, 1), mar = c(5, 5, 2, 1))
+for(vi in seq_along(vars)) {
+  v <- vars[vi]
+  bdat <- list(); at_vec <- c()
+  for(j in seq_len(n_yr)) {
+    vals <- empts[[v]][empts$year == years[j]]
+    vals <- vals[!is.na(vals)]
+    bdat[[j]] <- vals
+    at_vec <- c(at_vec, j)
+  }
+  boxplot(bdat, at = at_vec, xaxt = "n", xlab = "", ylab = ylab[vi],
+          col = adjustcolor("grey70", alpha.f = 0.4), border = "grey40",
+          medcol = "black", whisklty = 1, staplewex = 0, medlty = 1,
+          outpch = NA, xlim = c(0.5, n_yr + 0.5))
+  mtext(paste(alphabet[vi], var_labs[vi]), side = 3, adj = -0.1, line = 0.5, cex = 1.1)
+  for(j in seq_len(n_yr)) {
+    for(i in seq_len(n_sp)) {
+      vals <- empts[[v]][which(latbi_ch == species[i] & empts$year == years[j])]
+      vals <- vals[!is.na(vals)]
+      if(length(vals) > 0)
+        stripchart(vals, at = j, method = "jitter", jitter = 0.16,
+                   pch = 16, cex = 1, col = tscolslatbi[i], vertical = TRUE, add = TRUE)
+    }
+  }
+  axis(1, at = at_vec, labels = years, cex.axis = mysizeaxis * 0.75, line = 0)
+  legend("bottomright", legend = species, text.font = 3, fill = tscolslatbi, bty = "n", cex = 0.8)
 }
 dev.off()
 
