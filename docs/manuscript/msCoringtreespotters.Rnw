@@ -283,17 +283,17 @@ spptable <- data.frame(
     "Yellow buckeye (\\textit{Aesculus flava})"
   ),
   LifeHistory = c(
-    "Fast-growth, moderate life",
-    "Fast-growth, short life",
-    "Moderate-growth, long life",
-    "Slow-growth, long life",
-    "Slow-growth, long life",
-    "Slow-growth, long life",
-    "Fast-growth, short life",
-    "Moderate-growth, moderate life",
-    "Slow-growth, long life",
-    "Slow-growth, long life",
-    "Moderate-growth, moderate life"
+    "Fast",
+    "Fast",
+    "Moderate",
+    "Slow",
+    "Slow",
+    "Moderate",
+    "Fast",
+    "Slow",
+    "Slow",
+    "Moderate",
+    "Moderate"
   ),
   WoodAnatomy = c(
     "Diffuse-porous",
@@ -331,7 +331,7 @@ header <- list(
     paste0(
       # "\\multicolumn{4}{c}{\\textbf{Deciduous Trees}} \\\\\n",
       "\\hline\n",
-      "Common Name (Latin) & Life History Strategy & Wood Anatomy & $n$ \\\\\n",
+      "Common Name (Latin binomial) & Growth speed & Wood Anatomy & $n$ \\\\\n",
       "\\hline\n"
     )
 )
@@ -346,8 +346,8 @@ tab <- xtable(
     "r"
   ),
   caption = paste0(
-    "Treespotters species grouped by tree type, life history, and wood anatomy. ",
-    "A total of ", n_total, " individual trees were sampled."
+    "Treespotters species grouped by tree type, growth speed, and wood anatomy. We collected the growth speed information for each species from \\cite{burns_silvics_1990}",
+    "We sampled a total of ", n_total, " individual trees"
   ),
   label = "tab:tsCount"
 )
@@ -366,7 +366,6 @@ print(
 %-------------------------------------------------------------------------------
 % Supplemental Results
 %-------------------------------------------------------------------------------
-%emw22Jun -- add full model tables ... 
 \clearpage
 \section*{Supplemental results}
 
@@ -391,9 +390,11 @@ df_all <- Reduce(function(x, y) merge(x, y, by = "spp_name", all = TRUE),
 colnames(df_all)[1] <- "Species"
 # df_all$Species <- tstablespp[df_all$Species]
 
+df_all$Species <- paste0("\\textit{", df_all$Species, "}")
+
 # Print table
 tab <- xtable(df_all,
-              caption = "Species level slope parameters which represent ring width change (log(mm)), per scaled predictor (see `Data analyses' section in Methods for more details on predictor scaling). We report estimates as mean and 90\\% uncertainty intervals (in square brackets) across our four different predictors (GDD: growing degree days, GSL: growing season length, SOS: start of season and EOS: end of season).",
+              caption = "Species level slope parameters which represent ring width change (log(mm)), per scaled predictor (see `Data analyses' section in Methods for more details on predictor scaling). We report estimates as mean and 90\\% uncertainty intervals (in square brackets) across our four different predictors (GDD: growing degree days, GSL: growing season length, SOS: start of season and EOS: end of season). Table \\ref{tab:tab_all} reports all the models parameters.",
               label = "tab:ts_slope_table"
 )
 

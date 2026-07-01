@@ -1,10 +1,17 @@
-\begin{thebibliography}{5}
+\begin{thebibliography}{8}
 \expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
 
 \bibitem[{{Arnold Arboretum}(2026)}]{arnoldarboretum_weather_2026}
 {Arnold Arboretum} (2026).
 \newblock Weather {Data} at the {Arnold} {Arboretum}.
 \newblock Accessed: 2025-09-24.
+
+\bibitem[{Burns \emph{et~al.}(1990)Burns, Honkala \& {[Technical
+  coordinators]}}]{burns_silvics_1990}
+Burns, R.M., Honkala, B.H. \& {[Technical coordinators]} (1990).
+\newblock \emph{Silvics of {North} {America}: 2. {Hardwoods}}.
+\newblock United States Department of Agriculture (USDA), Forest Service,
+  Agriculture Handbook 654.
 
 \bibitem[{Carroll \emph{et~al.}(2026)Carroll, Weigle \&
   Petzoldt}]{carroll_network_2026}
@@ -17,6 +24,20 @@ Carroll, J., Weigle, T. \& Petzoldt, C. (2026).
 Cook, E.R. \& Kairiukstis, L.A. (eds.)  (1990).
 \newblock \emph{Methods of {Dendrochronology}}.
 \newblock Springer Netherlands, Dordrecht.
+
+\bibitem[{Fong \emph{et~al.}(2026)Fong, Curry, Zhang \&
+  Wolkovich}]{fong_tim_2026}
+Fong, A., Curry, C., Zhang, Y. \& Wolkovich, E. (2026).
+\newblock {TIM}: {Tree} {Imaging} {Machine} for high resolution rapid digital
+  images of tree cores and cookies.
+\newblock \emph{Unpublished}.
+
+\bibitem[{Gelman \& Hill(2006)}]{gelman_data_2006}
+Gelman, A. \& Hill, J. (2006).
+\newblock \emph{Data {Analysis} {Using} {Regression} and
+  {Multilevel}/{Hierarchical} {Models}}.
+\newblock 1st edn.
+\newblock Cambridge University Press.
 
 \bibitem[{{National Centers for Environmental Information
   (NCEI)}(2026)}]{nationalcentersforenvironmentalinformationncei_north_2026}

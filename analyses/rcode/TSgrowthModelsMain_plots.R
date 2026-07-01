@@ -21,7 +21,7 @@ if (length(grep("christophe_rouleau-desrochers", getwd())) > 0) {
 source("rcode/TSgrowthModelsMain.R")
 
 makeplots <- T
-runzscore <- T
+runzscore <- F
 
 # Load parameter summaries generated in growthModelsMain.R ####
 sigma_df2_ts_gdd  <- read.csv("output/GM_GDDparam_sigma.csv")
@@ -291,7 +291,7 @@ for (i in seq_along(treeidvecnum)) { # i = 1
   # empty plot first
   plot(empts$pgsGDD5, dgdd$y, type = "n",
        ylim = range(c(emp_treeid$loglength, y_low, y_high), na.rm = TRUE),
-       xlab = "Primary growing season GDD", ylab = "log(ring width)",
+       xlab = "Primary growing season GDD", ylab = "ring width (log(mm))",
        frame = FALSE,
        main = tree_col_name)
   
@@ -346,7 +346,7 @@ for (i in seq_along(sppvecnum)) { # i = 1
        type = "n",
        ylim = ylim_spp,
        xlab = "Growing season growing degree days (GDD)",
-       ylab = "log(ring width)",
+       ylab = "ring width (log(mm))",
        frame = FALSE,
        main = bquote(italic(.(spp_name))))
   
@@ -417,7 +417,7 @@ for (i in seq_along(sppvecnum)) { # i = 1
        type = "n",
        ylim = ylim_spp,
        xlab = "Growing season growing degree days (GDD)",
-       ylab = "log(ring width)",
+       ylab = "ring width (log(mm))",
        frame = FALSE,
        main = bquote(italic(.(spp_name))))
   
@@ -478,7 +478,7 @@ for (i in seq_along(sppvecnum)) { # i = 1
        type = "n",
        ylim = ylim_spp,
        xlab = "Growing season growing degree days (GDD)",
-       ylab = "log(ring width)",
+       ylab = "ring width (log(mm))",
        frame = FALSE,
        main = bquote(italic(.(spp_name))))
   
@@ -532,7 +532,7 @@ par(mar = c(4, 4, 2, 1))
 
 plot(empts$pgsGDD5, dgdd$y, type = "n",
      ylim = range(min(empts$loglength), max(empts$loglength)),
-     xlab = "Primary growing season GDD", ylab = "log(ring width)",
+     xlab = "Primary growing season GDD", ylab = "ring width (log(mm))",
      main = "species growth responses")
 
 for (i in seq_along(sppvecnum)) { # i = 1
@@ -604,7 +604,7 @@ for (i in seq_along(sppvecnum)) { # i = 1
        type = "n",
        ylim = ylim_spp,
        xlab = "Growing season length (days)",
-       ylab = "log(ring width)",
+       ylab = "ring width (log(mm))",
        frame = FALSE,
        main = bquote(italic(.(spp_name))))
   
@@ -658,7 +658,7 @@ for (i in seq_along(sppvecnum)) { # i = 1
        type = "n",
        ylim = ylim_spp,
        xlab = "Growing season growing degree days (GDD)",
-       ylab = "log(ring width)",
+       ylab = "ring width (log(mm))",
        frame = FALSE,
        main = bquote(italic(.(spp_name))))
   
@@ -741,7 +741,7 @@ for (i in seq_along(sppvecnum)) { # i = 1
        type = "n",
        ylim = ylim_spp,
        xlab = "Leafout day of year",
-       ylab = "log(ring width)",
+       ylab = "ring width (log(mm))",
        frame = FALSE,
        main = bquote(italic(.(spp_name))))
   
@@ -773,7 +773,7 @@ par(mar = c(4, 4, 2, 1))
 
 plot(empts$leafout, dsos$y, type = "n", frame = FALSE,
      ylim = range(min(empts$loglength), max(empts$loglength)),
-     xlab = "Leafout day of year", ylab = "log(ring width)",
+     xlab = "Leafout day of year", ylab = "ring width (log(mm))",
      main = "")
 
 for (i in seq_along(sppvecnum)) { # i = 1
@@ -845,7 +845,7 @@ for (i in seq_along(sppvecnum)) { # i = 1
        type = "n",
        ylim = ylim_spp,
        xlab = "Budset day of year",
-       ylab = "log(ring width)",
+       ylab = "ring width (log(mm))",
        frame = FALSE,
        main = bquote(italic(.(spp_name))))
   
@@ -877,7 +877,7 @@ par(mar = c(4, 4, 2, 1))
 
 plot(empts$coloredLeaves, deos$y, type = "n", frame = FALSE,
      ylim = range(min(empts$loglength), max(empts$loglength)),
-     xlab = "Budset day of year", ylab = "log(ring width)",
+     xlab = "Budset day of year", ylab = "ring width (log(mm))",
      main = "")
 
 for (i in seq_along(sppvecnum)) { # i = 1
@@ -926,7 +926,7 @@ mumar <- c(4, 1, 4, 1)
 par(mar = mumar)
 plot(bspp_df2_ts_gdd$mean, y_pos,
      xlim = c(-0.7, 1.2), ylim = c(0.5, n_spp + 0.5),
-     xlab = "log(ring width) change per 7 spring days GDD", ylab = "",
+     xlab = "ring width (log(mm)) change per 7 spring days GDD", ylab = "",
      yaxt = "n", pch = 16, cex = 2, col = tscolslatbi, frame.plot = TRUE,
      panel.first = abline(v = 0, lty = 2, col = "black"))
 segments(bspp_df2_ts_gdd$p5,  y_pos, bspp_df2_ts_gdd$p95, y_pos, col = tscolslatbi, lwd = 1.5)
@@ -944,7 +944,7 @@ rasterImage(img_thermom, usr[1], usr[4] - diff(usr[3:4]) * 0.25, usr[1] + diff(u
 par(mar = mumar)
 plot(bspp_df2_ts_sos$mean, y_pos,
      xlim = c(-0.5, 0.6), ylim = c(0.5, n_spp + 0.5),
-     xlab = "log(ring width) change per 7 days of leafout", ylab = "",
+     xlab = "ring width (log(mm)) change per 7 days of leafout", ylab = "",
      yaxt = "n", pch = 16, cex = 2, col = tscolslatbi, frame.plot = TRUE,
      panel.first = abline(v = 0, lty = 2, col = "black"))
 segments(bspp_df2_ts_sos$p5,  y_pos, bspp_df2_ts_sos$p95, y_pos, col = tscolslatbi, lwd = 1.5)
@@ -961,7 +961,7 @@ rasterImage(img_leafout, usr[1], usr[4] - diff(usr[3:4]) * 0.35, usr[1] + diff(u
 par(mar = mumar)
 plot(bspp_df2_ts_gsl$mean, y_pos,
      xlim = c(-0.5, 1.2), ylim = c(0.5, n_spp + 0.5),
-     xlab = "log(ring width) change per 7 days of GSL", ylab = "",
+     xlab = "ring width (log(mm)) change per 7 days of GSL", ylab = "",
      yaxt = "n", pch = 16, cex = 2, col = tscolslatbi, frame.plot = TRUE,
      panel.first = abline(v = 0, lty = 2, col = "black"))
 segments(bspp_df2_ts_gsl$p5,  y_pos, bspp_df2_ts_gsl$p95, y_pos, col = tscolslatbi, lwd = 1.5)
@@ -978,7 +978,7 @@ rasterImage(img_calenda, usr[1], usr[4] - diff(usr[3:4]) * 0.25, usr[1] + diff(u
 par(mar = mumar)
 plot(bspp_df2_ts_eos$mean, y_pos,
      xlim = c(-0.5, 0.6), ylim = c(0.5, n_spp + 0.5),
-     xlab = "log(ring width) change per 7 days of budset", ylab = "",
+     xlab = "ring width (log(mm)) change per 7 days of budset", ylab = "",
      yaxt = "n", pch = 16, cex = 2, col = tscolslatbi, frame.plot = TRUE,
      panel.first = abline(v = 0, lty = 2, col = "black"))
 segments(bspp_df2_ts_eos$p5,  y_pos, bspp_df2_ts_eos$p95, y_pos, col = tscolslatbi, lwd = 1.5)
@@ -1008,7 +1008,7 @@ dev.off()
 custommar <- c(4, 4, 3, 1.2)
 
 pdf(file = "figures/growthModelsMain/TSmuALLbsppWlines.pdf",
-    width = 8, height = 9)
+    width = 8.5, height = 9)
 
 layout(matrix(c(
   1, 5, 9,
@@ -1023,7 +1023,8 @@ widths = c(1.1, 1.2, 0.6))
 par(mar = custommar)
 plot(bspp_df2_ts_gdd$mean, y_pos,
      xlim = c(-0.15, 0.15), ylim = c(0.5, n_spp + 0.5),
-     xlab = "log(ring width) change in averaged GDD of 7 spring days", ylab = "",
+     xlab = expression(Delta * "ring width (log(mm))/scaled GDD"), 
+     ylab = "",
      yaxt = "n", pch = 16, cex = 2, col = tscolslatbi, frame.plot = TRUE, 
      panel.first = abline(v = 0, lty = 2, col = "black"))
 segments(bspp_df2_ts_gdd$p5,  y_pos, bspp_df2_ts_gdd$p95, y_pos,
@@ -1053,7 +1054,7 @@ rasterImage(
 par(mar = custommar)
 plot(bspp_df2_ts_gsl$mean, y_pos,
      xlim = c(-0.15, 0.15), ylim = c(0.5, n_spp + 0.5),
-     xlab = "log(ring width) change per 7 days of GSL", ylab = "",
+     xlab = expression(Delta * "ring width (log(mm))/scaled GSL"), ylab = "",
      yaxt = "n", pch = 16, cex = 2, col = tscolslatbi, frame.plot = TRUE, 
      panel.first = abline(v = 0, lty = 2, col = "black"))
 segments(bspp_df2_ts_gsl$p5,  y_pos, bspp_df2_ts_gsl$p95, y_pos,
@@ -1082,7 +1083,7 @@ rasterImage(
 par(mar = custommar)
 plot(bspp_df2_ts_sos$mean, y_pos,
      xlim = c(-0.4, 0.4), ylim = c(0.5, n_spp + 0.5),
-     xlab = "log(ring width) change per 7 days of leafout", ylab = "",
+     xlab = expression(Delta * "ring width (log(mm))/scaled SOS"), ylab = "",
      yaxt = "n", pch = 16, cex = 2, col = tscolslatbi, frame.plot = TRUE, 
      panel.first = abline(v = 0, lty = 2, col = "black"))
 segments(bspp_df2_ts_sos$p5,  y_pos, bspp_df2_ts_sos$p95, y_pos,
@@ -1111,7 +1112,7 @@ rasterImage(
 par(mar = custommar)
 plot(bspp_df2_ts_eos$mean, y_pos,
      xlim = c(-0.2, 0.2), ylim = c(0.5, n_spp + 0.5),
-     xlab = "log(ring width) change per 7 days of leaf coloring", ylab = "",
+     xlab = expression(Delta * "ring width (log(mm))/scaled EOS"), ylab = "",
      yaxt = "n", pch = 16, cex = 2, col = tscolslatbi, frame.plot = TRUE, 
      panel.first = abline(v = 0, lty = 2, col = "black"))
 segments(bspp_df2_ts_eos$p5,  y_pos, bspp_df2_ts_eos$p95, y_pos,
@@ -1141,7 +1142,7 @@ rasterImage(
 par(mar = custommar)
 plot(empts$pgsGDD5, dgdd$y, type = "n", frame = FALSE,
      ylim = range(min(empts$loglength), max(empts$loglength)), 
-     xlab = "Growing degree days (GDD)", ylab = "log(ring width)",
+     xlab = "Growing degree days (GDD)", ylab = "ring width (log(mm))",
      main = "")
 mtext("(e)", side = 3, adj = 0, font = 2, cex = 0.9)
 
@@ -1171,7 +1172,7 @@ for (i in seq_along(sppvecnum)) {
 par(mar = custommar)
 plot(empts$pgsGSL, dgsl$y, type = "n", frame = FALSE,
      ylim = range(min(empts$loglength), max(empts$loglength)), 
-     xlab = "Growing season length (days)", ylab = "log(ring width)",
+     xlab = "Growing season length (days)", ylab = "ring width (log(mm))",
      main = "")
 mtext("(f)", side = 3, adj = 0, font = 2, cex = 0.9)
 
@@ -1200,7 +1201,7 @@ for (i in seq_along(sppvecnum)) {
 par(mar = custommar)
 plot(empts$leafout, dsos$y, type = "n", frame = FALSE,
      ylim = range(min(empts$loglength), max(empts$loglength)), 
-     xlab = "Leafout (day of year)", ylab = "log(ring width)",
+     xlab = "Start of season (day of year)", ylab = "ring width (log(mm))",
      main = "")
 mtext("(g)", side = 3, adj = 0, font = 2, cex = 0.9)
 
@@ -1229,7 +1230,7 @@ for (i in seq_along(sppvecnum)) {
 par(mar = custommar)
 plot(empts$coloredLeaves, deos$y, type = "n", frame = FALSE,
      ylim = range(min(empts$loglength), max(empts$loglength)), 
-     xlab = "Leaf coloring (day of year)", ylab = "log(ring width)",
+     xlab = "End of season (day of year)", ylab = "ring width (log(mm))",
      main = "")
 mtext("(h)", side = 3, adj = 0, font = 2, cex = 0.9)
 
@@ -1497,7 +1498,7 @@ y_pos_yr <- ayear_df2_ts_gdd$year
 
 plot(ayear_df2_ts_gdd$mean, ayear_df2_ts_gdd$y_pos,
      xlim = c(-1, 1), ylim = c(0.5, length(years_ordered) + 0.5),
-     xlab = "log(ring width) intercept values (mm)", ylab = "",
+     xlab = "ring width (log(mm)) intercept values (mm)", ylab = "",
      yaxt = "n", pch = 16, cex = 2, 
      col = colsyr[as.character(ayear_df2_ts_gdd$year_name)],
      frame.plot = TRUE,
@@ -1565,7 +1566,7 @@ dev.off()
 
 ##### Previous year model #####
 # Load parameter summaries generated in growthModelsMain.R ####
-jpeg("figures/growthPreviousYearModel/bsppCurrentVSpreviousYR.jpeg", width = 6, height = 9, units = "in", res = 300)
+pdf("figures/growthPreviousYearModel/bsppCurrentVSpreviousYR.pdf", width = 6, height = 9)
 par(mfrow = c(2,1), mar = c(4, 2, 2, 1))
 n_spp <- length(unique(bspp_df2_ts_curr$spp))
 y_pos <- rev(1:11)
@@ -1573,31 +1574,32 @@ y_pos <- rev(1:11)
 # Current year
 plot(bspp_df2_ts_curr$mean, y_pos,
      xlim = c(-0.4, 0.6), ylim = c(0.5, n_spp + 0.5), 
-     xlab = "slope current year", ylab = "",
+     xlab = "ring width (log(mm)) change in averaged GDD of 7 spring days", ylab = "",
      yaxt = "n", pch = 16, cex = 2, col = tscolslatbi, frame.plot = TRUE,
      panel.first = abline(v = 0, lty = 2, col = "black"))
 segments(bspp_df2_ts_curr$p5,  y_pos, bspp_df2_ts_curr$p95, y_pos,
          col = tscolslatbi, lwd = 1.5)
 segments(bspp_df2_ts_curr$p25, y_pos, bspp_df2_ts_curr$p75, y_pos,
          col = tscolslatbi, lwd = 3)
-mtext("(a) Current year", side = 3, adj = 0, font = 2, cex = 1.3)
+mtext("(a) Current year", side = 3, adj = 0, line = 0.2, font = 2, cex = 1.3)
 
 legend("topright",
-       legend = bspp_df2_ts_prvs$spp_name,
+       legend = sapply(unique(bspp_df2_ts_curr$spp_name), 
+                       function(x) parse(text = paste0("italic('", x, "')"))),
        col    = tscolslatbi[bspp_df2_ts_prvs$spp_name],
        pch = 16, pt.cex = 1.2, title = "Species", bty = "n")
 
 # Row 2: Previous year
 plot(bspp_df2_ts_prvs$mean, y_pos,
      xlim = c(-0.4, 0.6), ylim = c(0.5, n_spp + 0.5),
-     xlab = "slope previous year", ylab = "",
+     xlab = "ring width (log(mm)) change in averaged GDD of 7 spring days", ylab = "",
      yaxt = "n", pch = 16, cex = 2, col = tscolslatbi, frame.plot = TRUE,      
      panel.first = abline(v = 0, lty = 2, col = "black"))
 segments(bspp_df2_ts_prvs$p5,  y_pos, bspp_df2_ts_prvs$p95, y_pos,
          col = tscolslatbi, lwd = 1.5)
 segments(bspp_df2_ts_prvs$p25, y_pos, bspp_df2_ts_prvs$p75, y_pos,
          col = tscolslatbi, lwd = 3)
-mtext("(b) Previous year", side = 3, adj = 0, font = 2, cex = 1.3)
+mtext("(b) Previous year", side = 3, adj = 0, line = 0.2, font = 2, cex = 1.3)
 dev.off()
 
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
@@ -1611,7 +1613,7 @@ y_pos <- rev(1:11)
 # Current year
 plot(bspp_df2_ts_co$mean, y_pos,
      xlim = c(-0.3, 2), ylim = c(0.5, n_spp + 0.5), 
-     xlab = "EOS change per one day of SOS", ylab = "",
+     xlab = "EOS (days) change per one day of SOS (days)", ylab = "",
      yaxt = "n", pch = 16, cex = 2, col = tscolslatbi, frame.plot = TRUE,
      panel.first = abline(v = 0, lty = 2, col = "black"))
 segments(bspp_df2_ts_co$p5,  y_pos, bspp_df2_ts_co$p95, y_pos,
@@ -1620,11 +1622,11 @@ segments(bspp_df2_ts_co$p25, y_pos, bspp_df2_ts_co$p75, y_pos,
          col = tscolslatbi, lwd = 3)
 
 legend("topright",
-       legend = bspp_df2_ts_co$spp_name,
+       legend = sapply(unique(bspp_df2_ts_co$spp_name), 
+                       function(x) parse(text = paste0("italic('", x, "')"))),
        col    = tscolslatbi[bspp_df2_ts_co$spp_name],
        pch = 16, pt.cex = 1.2, title = "Species", bty = "n")
 dev.off()
-
 
 ##### checks temporary for betall #####
 t <- subset(empts, latbi %in% "B. alleghaniensis")
@@ -1636,7 +1638,7 @@ y_pos <- rev(1:n_spp)
 par(mfrow=c(1,2))
 plot(bspp_df2_ts_gdd$mean, y_pos,
      xlim = c(-0.5, 1.2), ylim = c(0.5, n_spp + 0.5),
-     xlab = "log(ring width) change per 7 spring days GDD", ylab = "",
+     xlab = "ring width (log(mm)) change per 7 spring days GDD", ylab = "",
      yaxt = "n", pch = 16, cex = 2, col = tscolslatbi, frame.plot = TRUE,
      panel.first = abline(v = 0, lty = 2, col = "black"))
 segments(bspp_df2_ts_gdd$p5,  y_pos, bspp_df2_ts_gdd$p95, y_pos, col = tscolslatbi, lwd = 1.5)
@@ -1654,7 +1656,7 @@ legend(
 
 plot(aspp_df2_ts_gdd$mean, y_pos,
      xlim = c(-5, 5), ylim = c(0.5, n_spp + 0.5),
-     xlab = "log(ring width) change per 7 spring days GDD", ylab = "",
+     xlab = "ring width (log(mm)) change per 7 spring days GDD", ylab = "",
      yaxt = "n", pch = 16, cex = 2, col = tscolslatbi, frame.plot = TRUE,
      panel.first = abline(v = 0, lty = 2, col = "black"))
 segments(aspp_df2_ts_gdd$p5,  y_pos, aspp_df2_ts_gdd$p95, y_pos, col = tscolslatbi, lwd = 1.5)
@@ -1686,7 +1688,7 @@ plot(emp_spp$pgsGDD5, emp_spp$loglength,
      type = "n",
      ylim = ylim_spp,
      xlab = "Growing season growing degree days (GDD)",
-     ylab = "log(ring width)",
+     ylab = "ring width (log(mm))",
      frame = FALSE,
      main = bquote(italic(.(spp_name))))
 
@@ -1741,7 +1743,7 @@ plot(emp_spp$pgsGDD5, emp_spp$loglength,
      type = "n",
      ylim = ylim_spp,
      xlab = "Growing season growing degree days (GDD)",
-     ylab = "log(ring width)",
+     ylab = "ring width (log(mm))",
      frame = FALSE,
      main = bquote(italic(.(spp_name))))
 
@@ -1815,7 +1817,7 @@ plot(emp_spp$pgsGDD5, emp_spp$loglength,
      type = "n",
      ylim = ylim_spp,
      xlab = "Growing season growing degree days (GDD)",
-     ylab = "log(ring width)",
+     ylab = "ring width (log(mm))",
      frame = FALSE,
      main = bquote(italic(.(spp_name))))
 
@@ -1870,7 +1872,7 @@ plot(emp_spp$pgsGDD5, emp_spp$loglength,
      type = "n",
      ylim = ylim_spp,
      xlab = "Growing season growing degree days (GDD)",
-     ylab = "log(ring width)",
+     ylab = "ring width (log(mm))",
      frame = FALSE,
      main = bquote(italic(.(spp_name))))
 

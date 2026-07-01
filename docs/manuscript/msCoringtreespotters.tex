@@ -99,7 +99,7 @@
 % Citizen science
 %-------------------------------------------------------------------------------
 \subsection*{Citizen science program}
-The Tree Spotters was a citizen science program that started in 2015 and aimed to train citizen scientists for accurate and rigorous phenological monitoring at the Arnold Arboretum of Harvard University (42.30 \degree N, -71.12 \degree W) (Figure \ref{fig:mapProv}). From 2015 to 2024, hundreds of citizen scientists monitored 77 individual trees and shrubs of 14 species. They regularly followed those individuals from budburst in the spring to leaf coloring in the fall using the National Phenology Network (NPN) phenophases \citep{denny_standardized_2014}: Leaves (483), Colored leaves (498), Fruits (516), Ripe Fruits (390), Falling leaves(471), Recent fruit or seed drop (504), Increasing leaf size (467), Breaking leaf buds (371), Flowers or flower buds (500), Open flowers (501), Pollen release (502). Not all phenophases were recorded for every tree, for every year, and some trees miss several years of data. However, here we use leafout to colored leaves (or leaf coloring) to define the growing season length. Taken together, our dataset comprises 321 leafout and 284 budset observations (which we refer to as the `full datasets'), but we did not have both observations for all trees in all years, so our total of matched full growing season durations (which we refer to as the `restricted dataset') is 278. \\
+The Tree Spotters was a citizen science program that started in 2015 and aimed to train citizen scientists for accurate and rigorous phenological monitoring at the Arnold Arboretum of Harvard University (42.30 \degree N, -71.12 \degree W) (Figure \ref{fig:mapProv}). From 2015 to 2024, hundreds of citizen scientists monitored 77 individual trees and shrubs of 14 species. They regularly followed those individuals from budburst in the spring to leaf coloring in the fall using the National Phenology Network (NPN) phenophases \citep{denny_standardized_2014}: Leaves (483), Colored leaves (498), Fruits (516), Ripe Fruits (390), Falling leaves(471), Recent fruit or seed drop (504), Increasing leaf size (467), Breaking leaf buds (371), Flowers or flower buds (500), Open flowers (501), Pollen release (502). Not all phenophases were recorded for every tree, for every year, and some trees miss several years of data. However, here we use leafout to colored leaves (or leaf coloring) to define the growing season length. Taken together, our dataset comprises 321 leafout and 284 budset observations (which we refer to as the `full datasets'), but we did not have both observations for all trees in all years, so our total of matched full growing seasons duration (which we refer to as the `restricted dataset') is 278. We visually checked for SOS, EOS and GSL outliers and verified that there was no observation bias potentially caused by a particular observer or in a particular year. \\
 
 % Provenance map
 \begin{figure}[!ht]
@@ -112,15 +112,15 @@ The Tree Spotters was a citizen science program that started in 2015 and aimed t
 % Phenological monitoring and sample collection
 %-------------------------------------------------------------------------------
 \subsection*{Phenological monitoring and sample collection}
-From 20 to 22 April 2025, we collected tree ring samples only for the tree species that were previously monitored for phenology---excluding \textit{Fagus grandifolia} because of beach bark disease concerns---for a total of 49 individuals (Table \ref{tab:tsCount}). Thus, we sampled four or five individuals for 11 species: Red maple (\textit{Acer rubrum}), Sugar maple (\textit{Acer saccharum}), Yellow buckeye (\textit{Aesculus flava}), Yellow birch (\textit{Betula alleghaniensis}), River birch (\textit{Betula nigra}), Pignut hickory (\textit{Carya glabra}), Shagbark hickory (\textit{Carya ovata}), Eastern cottonwood (\textit{Populus deltoides}), White oak (\textit{Quercus alba}), Northern red oak (\textit{Quercus rubra}) and American basswood (\textit{Tilia americana}). For this, we collected two 5-mm diameter cores, 15-cm length at 1.3 meters above ground, using an increment borer (Mora Borer, Haglöfs Sweden, Bromma, Stockholm, Sweden). We collected the cores perpendicular to the slope and at 180 degrees from each other, cleaning the increment borer with alcohol (70\% ethanol) and the inside with a brush before collecting each core. We stored the cores in modified plastic straws to allow aeration and were left to dry at ambient temperature for three months.  \\
+From 20 to 22 April 2025, we collected tree ring samples only for the tree species that were previously monitored for phenology---excluding \textit{Fagus grandifolia} because of beach bark disease concerns---for a total of 49 individuals (Table \ref{tab:tsCount}).  Thus, we sampled four or five individuals for 11 species: Red maple (\textit{Acer rubrum}), Sugar maple (\textit{Acer saccharum}), Yellow buckeye (\textit{Aesculus flava}), Yellow birch (\textit{Betula alleghaniensis}), River birch (\textit{Betula nigra}), Pignut hickory (\textit{Carya glabra}), Shagbark hickory (\textit{Carya ovata}), Eastern cottonwood (\textit{Populus deltoides}), White oak (\textit{Quercus alba}), Northern red oak (\textit{Quercus rubra}) and American basswood (\textit{Tilia americana}). For this, we collected two 5-mm diameter cores, 15-cm length at 1.3 meters above ground, perpendicular to the slope and at 180 degrees from each other, using an increment borer (Mora Borer, Haglöfs Sweden, Bromma, Stockholm, Sweden). We cleaned the increment borer with alcohol (70\% ethanol) and the inside with a brush before collecting each core. We stored the cores in modified plastic straws to allow aeration and were left to dry at ambient temperature for three months.  \\
 
 %-------------------------------------------------------------------------------
 % Sample processing, imaging and measuring
 %-------------------------------------------------------------------------------
 \subsection*{Sample processing, imaging and measuring}
-We used wooden mounts to stabilize the cores that were then sanded using progressively finer sandpaper grit, by roughly increments of 150 from 150 to 1000. We then used a high-resolution scanner to scan the cores at a resolution of 6250 dpi (Fong, unpublished), and used those images to measure the ring widths using ImageJ \citep{schneider_nih_2012}. \\
+We used wooden mounts to stabilize the cores that were then sanded using progressively finer sandpaper grit, by increments of roughly 150 from 150 to 1000. We then used a high-resolution scanner to scan the cores at a resolution of 6250 dpi \citep{fong_tim_2026}, and used those images to measure the ring widths using ImageJ \citep{schneider_nih_2012}. \\
 
-We visually cross-dated the ring width chronologies by assigning a calendar year to each ring and comparing yearly variation of trends across the different individuals of the same species \citep{cook_methods_1990}. Our short chronologies and our low species replication prevented us to performing statistical cross-dating. We also did not detrend our chronologies because the ring widths during our study period (nine years) showed no consistent allometric trend (Figure \ref{fig:allom}). We included year in our models to control for effects of different years.
+We visually cross-dated the ring width chronologies by assigning a calendar year to each ring and comparing yearly variation of trends across the different individuals of the same species \citep{cook_methods_1990}. Our short chronologies and our low species replication prevented us from performing statistical cross-dating. We also did not detrend our chronologies because the ring widths during our study period (nine years) showed no consistent allometric trend (Figure \ref{fig:allom}). We included year in our models to control for effects of different years.
 
 \subsection*{Data analyses}
 We used Bayesian hierarchical models to understand how growth shifted with four different season metrics: GDD, GSL, SOS and EOS. We used growing degree days (GDD; mean daily temperature above 5\degree C) between leafout and leaf coloring to calculate the thermal season and the number of days between leafout and leaf coloring for the calendar season (growing season length; GSL). Then, we used leafout for the start of season (SOS) and leaf coloring for the end of season (EOS). To better illustrate ring widths responses to our season metrics, we report ring width change (log(mm)) as the number of GDDs accumulated in an average week (seven days) of May (day of year 121 to 150 from 2016 to 2024; 58.32 GDD) for the thermal season. Similarly, we report ring width change per week of season length, leafout and leaf coloring for GSL, SOS and EOS, respectively. We report effects when the 90\% UI do not overlap with zero across all models.\\
@@ -138,9 +138,9 @@ ln(ringwidth)_i &\sim Normal(\mu, \sigma_y) \\
 \label{eq:mainMdl}
 \end{equation}
 
-With this model, we can estimate a species-specific effect of each season predictor on growth ($\beta_{species}$), but we also controlled for variation due to species ($\alpha_{species}$), individual tree ($\alpha_{treeid}$) and year ($\alpha_{year}$). We first ran the models using natural units and then scaled the predictors through $z$-scoring so we could directly compare their effect size. We report estimates as means and 90\% uncertainty intervals (UI). \\
+With this model, we estimated a species-specific effect of each season predictor on growth ($\beta_{species}$), but we also controlled for variation due to species ($\alpha_{species}$), individual tree ($\alpha_{treeid}$) and year ($\alpha_{year}$). We first ran the models using natural units and then scaled the predictors through $z$-scoring so we could directly compare their effect size \citep{gelman_data_2006}. We report estimates as means and 90\% uncertainty intervals (UI). We also fit the models for SOS and EOS using the full vs restricted datasets. As a supplementary analyses, we ran the models using budburst instead instead of leafout as the SOS to test whether our model responses diverged across diffuse vs ring porous species.\\
 
-We used an additional model to account the previous year conditions. For this, we used the GDD accumulated between leafout and leaf coloring from the previous year (e.g. for year 2020, we used the GDD of 2019 as the previous year GDD), alongside the GDD accumulated during the current year. For interpretability, we also report ring width change (log(mm)) as the number of GDDs (for both years) accumulated in an average week (seven days) of May (day of year 121 to 150 from 2016 to 2024; 58.32 GDD). Thus, we also estimated the previous and current year thermal season effect on the current year's growth as:
+We used an additional model to account for the previous year thermal conditions. For this, we used the GDD accumulated between leafout and leaf coloring from the previous year (e.g. for growth year of 2020, we used the GDD of 2019 as the previous year GDD), alongside the GDD accumulated during the current year. For interpretability, we also report ring width change (log(mm)) as the number of GDDs (for both years) accumulated in an average week (seven days) of May (day of year 121 to 150 from 2016 to 2024; 58.32 GDD). Thus, we estimated the previous and current year thermal season effect on the current year's growth as:
 
 \begin{equation}
 \begin{aligned} 
@@ -155,15 +155,13 @@ We used an additional model to account the previous year conditions. For this, w
 
 While controlling for the same variation across species, individual tree and year, this model allowed us to account for the effect of the thermal season during the current year ($\beta_{\text{species}}^{\text{current}}$), but also during the previous year ($\beta_{\text{species}}^{\text{previous}}$). \\
 
-We also fit the models for SOS and EOS using the full vs restricted datasets. As a supplementary analyses, we ran the models using budburst instead instead of leafout as the SOS to test whether our model responses diverged across diffuse vs ring porous species. \\
-
 Finally, we used a third Bayesian hierarchical model to determine whether the SOS and EOS of our species were related during the current year (we did not consider the effect of the EOS on the following year's SOS). For this, we estimated the effect of the SOS on the EOS on each tree, in each year as: 
 
 \begin{equation}
 \begin{aligned}
-\ln(\text{ring width})_i &\sim Normal(\mu_i, \sigma_y) \\
-\mu_i &= \alpha + \alpha_{\text{species}[i]} + \alpha_{\text{treeid}[i]} + \alpha_{\text{year}[i]} + \beta_{\text{species}[i]} \times \text{SOS} \\[4pt]
-\alpha_{\text{treeid}} &\sim N(0, \sigma_{\alpha_{\text{treeid}}}) \\
+\text{EOS}_i &\sim Normal(\mu_i, \sigma_y) \\
+\mu_i &= \alpha + \alpha_{\text{species}} + \alpha_{\text{treeid}} + \alpha_{\text{year}} + \beta_{\text{species}} \times \text{SOS} \\[4pt]
+\alpha_{\text{treeid}} &\sim Normal(0, \sigma_{\alpha_{\text{treeid}}}) \\
 \end{aligned}
 \label{eq:SOSonEOSMdl}
 \end{equation}
@@ -217,12 +215,12 @@ Longer thermal season did not increase growth for any species and decreased grow
 % Paragraph
 Previous year GDD increased growth for {\Ball}
 ($\beta =$ 0.15, UI:
-0.03,
-0.27 \RW scaled GDD) but the current year GDD did not change its growth, unlike the observed response when the previous year conditions were not considered. {\Ball}'s congeneric {\Bnig}, also grew less with previous year GDD
-($\beta =$ -0.08, UI:
--0.16,
-0 \RW scaled GDD; Figure \ref{fig:tsPrvsYr}b; Table \ref{tab:tab_PrvsYr}) but in contrast, current year GDD increased growth for that species
-($\beta =$ 0.12, UI:
+0.02,
+0.28 \RW scaled GDD) but the current year GDD did not change its growth, unlike the observed response when the previous year conditions were not considered. {\Ball}'s congeneric {\Bnig}, also grew less with previous year GDD ($\beta =$ 
+-0.08, UI:
+-0.17,
+-0.00 \RW scaled GDD; Figure \ref{fig:tsPrvsYr}b; Table \ref{tab:tab_PrvsYr}) but in contrast, current year GDD increased growth for that species ($\beta =$ 
+0.12, UI:
 0.03,
 0.21 \RW scaled GDD; Figure \ref{fig:tsPrvsYr}a; Table \ref{tab:tab_PrvsYr}).
 Interestingly, {\Bnig} did not solely respond to current year's conditions (Figure \ref{fig:tsmuplotbspp}a and e; Table \ref{tab:ts_slope_table}), but grew more with warmer thermal season when the previous conditions were considered. \\
@@ -230,7 +228,7 @@ Interestingly, {\Bnig} did not solely respond to current year's conditions (Figu
 % Paragraph
 An earlier start of season did not increase growth for any species and decreased growth for {\Tame} (
 $\beta =$ 0.15, UI:
-0.03,
+0.02,
 0.27 \RW scaled SOS; Figure \ref{fig:tsmuplotbspp}c and g; Table \ref{tab:ts_slope_table}), which did not respond to the thermal or the calendar season. Additionally, a later end of season did not increase growth for any species and decreased growth for {\Ball}
 ($\beta =$ -0.09, UI:
 -0.16,
@@ -241,8 +239,8 @@ $\beta =$ 0.15, UI:
 
 Finally, a later SOS delayed EOS only for {\Pdel} 
 ($\beta$: 1.04, UI:
-0.41,
-1.68 $\Delta$ EOS/SOS; Figure \ref{fig:SOSonEOS}. We did not find any clear difference on baseline growth across years (Figure \ref{fig:tsmuplotayear}; Table \ref{tab:tab_all}) and between species (Figure \ref{fig:tsxyGDDyr};\ref{fig:tsxyGSLyr}). Growth was similar across individual trees (Figure \ref{fig:tsmuplotatreeid}).
+0.39,
+1.7 $\Delta$ EOS/SOS; Figure \ref{fig:SOSonEOS}. We did not find any clear difference on baseline growth across years (Figure \ref{fig:tsmuplotayear}; Table \ref{tab:tab_all}) and between species (Figure \ref{fig:tsxyGDDyr};\ref{fig:tsxyGSLyr}). Growth was similar across individual trees (Figure \ref{fig:tsmuplotatreeid}).
 
 
 
@@ -297,27 +295,27 @@ Finally, a later SOS delayed EOS only for {\Pdel}
 \end{figure}
 
 % latex table generated in R 4.5.1 by xtable 1.8-4 package
-% Wed Jul  1 12:10:12 2026
+% Wed Jul  1 13:56:11 2026
 \begin{table}[ht]
 \centering
-\caption{Treespotters species grouped by tree type, life history, and wood anatomy. A total of 49 individual trees were sampled.} 
+\caption{Treespotters species grouped by tree type, growth speed, and wood anatomy. We collected the growth speed information for each species from \cite{burns_silvics_1990}We sampled a total of 49 individual trees} 
 \label{tab:tsCount}
 \begin{tabular}{p{7cm}p{5cm}p{3cm}r}
   \hline
-Common Name (Latin) & Life History Strategy & Wood Anatomy & $n$ \\
+Common Name (Latin binomial) & Growth speed & Wood Anatomy & $n$ \\
 \hline
  \hline
- American basswood (\textit{Tilia americana}) & Fast-growth, moderate life & Diffuse-porous &   5 \\ 
-  Eastern cottonwood (\textit{Populus deltoides}) & Fast-growth, short life & Diffuse-porous &   4 \\ 
-  Northern red oak (\textit{Quercus rubra}) & Moderate-growth, long life & Ring-porous &   4 \\ 
-  White oak (\textit{Quercus alba}) & Slow-growth, long life & Ring-porous &   5 \\ 
-  Pignut hickory (\textit{Carya glabra}) & Slow-growth, long life & Ring-porous &   4 \\ 
-  Shagbark hickory (\textit{Carya ovata}) & Slow-growth, long life & Ring-porous &   5 \\ 
-  River birch (\textit{Betula nigra}) & Fast-growth, short life & Diffuse-porous &   4 \\ 
-  Yellow birch (\textit{Betula alleghaniensis}) & Moderate-growth, moderate life & Diffuse-porous &   4 \\ 
-  Sugar maple (\textit{Acer saccharum}) & Slow-growth, long life & Diffuse-porous &   5 \\ 
-  Red maple (\textit{Acer rubrum}) & Slow-growth, long life & Diffuse-porous &   4 \\ 
-  Yellow buckeye (\textit{Aesculus flava}) & Moderate-growth, moderate life & Diffuse-porous &   5 \\ 
+ American basswood (\textit{Tilia americana}) & Fast & Diffuse-porous &   5 \\ 
+  Eastern cottonwood (\textit{Populus deltoides}) & Fast & Diffuse-porous &   4 \\ 
+  Northern red oak (\textit{Quercus rubra}) & Moderate & Ring-porous &   4 \\ 
+  White oak (\textit{Quercus alba}) & Slow & Ring-porous &   5 \\ 
+  Pignut hickory (\textit{Carya glabra}) & Slow & Ring-porous &   4 \\ 
+  Shagbark hickory (\textit{Carya ovata}) & Moderate & Ring-porous &   5 \\ 
+  River birch (\textit{Betula nigra}) & Fast & Diffuse-porous &   4 \\ 
+  Yellow birch (\textit{Betula alleghaniensis}) & Slow & Diffuse-porous &   4 \\ 
+  Sugar maple (\textit{Acer saccharum}) & Slow & Diffuse-porous &   5 \\ 
+  Red maple (\textit{Acer rubrum}) & Moderate & Diffuse-porous &   4 \\ 
+  Yellow buckeye (\textit{Aesculus flava}) & Moderate & Diffuse-porous &   5 \\ 
    \hline
 \end{tabular}
 \end{table}
@@ -326,31 +324,30 @@ Common Name (Latin) & Life History Strategy & Wood Anatomy & $n$ \\
 %-------------------------------------------------------------------------------
 % Supplemental Results
 %-------------------------------------------------------------------------------
-%emw22Jun -- add full model tables ... 
 \clearpage
 \section*{Supplemental results}
 
 % latex table generated in R 4.5.1 by xtable 1.8-4 package
-% Wed Jul  1 12:10:12 2026
+% Wed Jul  1 13:56:11 2026
 \begin{table}[ht]
 \centering
-\caption{Species level slope parameters which represent ring width change (log(mm)), per scaled predictor (see `Data analyses' section in Methods for more details on predictor scaling). We report estimates as mean and 90\% uncertainty intervals (in square brackets) across our four different predictors (GDD: growing degree days, GSL: growing season length, SOS: start of season and EOS: end of season).} 
+\caption{Species level slope parameters which represent ring width change (log(mm)), per scaled predictor (see `Data analyses' section in Methods for more details on predictor scaling). We report estimates as mean and 90\% uncertainty intervals (in square brackets) across our four different predictors (GDD: growing degree days, GSL: growing season length, SOS: start of season and EOS: end of season). Table \ref{tab:tab_all} reports all the models parameters.} 
 \label{tab:ts_slope_table}
 \begin{tabular}{lllll}
   \hline
 Species & GDD & GSL & SOS & EOS \\ 
   \hline
-A. rubrum & 0.00 [-0.06, 0.06] & 0.05 [-0.05, 0.15] & -0.05 [-0.28, 0.17] & 0.04 [-0.06, 0.15] \\ 
-  A. saccharum & 0.03 [-0.01, 0.07] & 0.00 [-0.04, 0.05] & 0.08 [-0.02, 0.17] & 0.03 [-0.03, 0.09] \\ 
-  Ae. flava & 0.01 [-0.01, 0.02] & 0.02 [-0.01, 0.05] & -0.04 [-0.21, 0.13] & 0.02 [-0.01, 0.05] \\ 
-  B. alleghaniensis & -0.08 [-0.12, -0.03] & -0.05 [-0.12, 0.02] & -0.07 [-0.23, 0.07] & -0.09 [-0.17, -0.01] \\ 
-  B. nigra & 0.03 [-0.00, 0.05] & 0.03 [-0.02, 0.07] & 0.03 [-0.10, 0.17] & 0.03 [-0.02, 0.08] \\ 
-  C. glabra & 0.02 [-0.02, 0.06] & 0.03 [-0.03, 0.08] & 0.08 [-0.08, 0.23] & 0.04 [-0.02, 0.09] \\ 
-  C. ovata & -0.00 [-0.05, 0.04] & -0.01 [-0.08, 0.05] & 0.10 [-0.03, 0.24] & 0.01 [-0.07, 0.08] \\ 
-  P. deltoides & 0.00 [-0.02, 0.03] & 0.02 [-0.03, 0.06] & 0.07 [-0.08, 0.22] & 0.02 [-0.02, 0.06] \\ 
-  Q. alba & 0.02 [-0.06, 0.11] & 0.03 [-0.05, 0.12] & -0.00 [-0.18, 0.17] & 0.05 [-0.07, 0.16] \\ 
-  Q. rubra & 0.03 [-0.03, 0.09] & 0.03 [-0.08, 0.14] & 0.09 [-0.10, 0.28] & 0.05 [-0.06, 0.15] \\ 
-  T. americana & -0.01 [-0.03, 0.01] & -0.02 [-0.05, 0.01] & 0.15 [0.03, 0.27] & -0.01 [-0.05, 0.02] \\ 
+\textit{A. rubrum} & 0.00 [-0.06, 0.06] & 0.05 [-0.05, 0.15] & -0.05 [-0.28, 0.18] & 0.04 [-0.07, 0.14] \\ 
+  \textit{A. saccharum} & 0.03 [-0.01, 0.07] & 0.00 [-0.04, 0.05] & 0.08 [-0.02, 0.17] & 0.03 [-0.03, 0.08] \\ 
+  \textit{Ae. flava} & 0.01 [-0.01, 0.02] & 0.02 [-0.01, 0.05] & -0.04 [-0.22, 0.13] & 0.02 [-0.01, 0.05] \\ 
+  \textit{B. alleghaniensis} & -0.08 [-0.12, -0.03] & -0.05 [-0.12, 0.02] & -0.08 [-0.23, 0.07] & -0.09 [-0.16, -0.01] \\ 
+  \textit{B. nigra} & 0.03 [-0.00, 0.05] & 0.03 [-0.02, 0.07] & 0.03 [-0.10, 0.16] & 0.03 [-0.02, 0.08] \\ 
+  \textit{C. glabra} & 0.02 [-0.02, 0.06] & 0.03 [-0.03, 0.08] & 0.08 [-0.07, 0.23] & 0.04 [-0.02, 0.09] \\ 
+  \textit{C. ovata} & -0.00 [-0.05, 0.04] & -0.01 [-0.07, 0.05] & 0.10 [-0.03, 0.24] & 0.01 [-0.06, 0.08] \\ 
+  \textit{P. deltoides} & 0.00 [-0.02, 0.03] & 0.02 [-0.03, 0.06] & 0.07 [-0.09, 0.22] & 0.02 [-0.02, 0.06] \\ 
+  \textit{Q. alba} & 0.02 [-0.06, 0.10] & 0.03 [-0.06, 0.13] & 0.00 [-0.18, 0.18] & 0.05 [-0.07, 0.16] \\ 
+  \textit{Q. rubra} & 0.03 [-0.03, 0.09] & 0.03 [-0.08, 0.14] & 0.09 [-0.10, 0.28] & 0.05 [-0.06, 0.15] \\ 
+  \textit{T. americana} & -0.01 [-0.03, 0.01] & -0.02 [-0.05, 0.01] & 0.15 [0.02, 0.27] & -0.01 [-0.04, 0.02] \\ 
    \hline
 \end{tabular}
 \end{table}
@@ -358,7 +355,7 @@ A. rubrum & 0.00 [-0.06, 0.06] & 0.05 [-0.05, 0.15] & -0.05 [-0.28, 0.17] & 0.04
 
 
 % latex table generated in R 4.5.1 by xtable 1.8-4 package
-% Wed Jul  1 12:10:12 2026
+% Wed Jul  1 13:56:12 2026
 \begin{table}[ht]
 \centering
 \caption{Summary output of each parameter from our four predictors, using ring width (log(mm)) as the reponse variable. We report estimates as mean and 90\% uncertainty intervals (in square brackets) across our four different predictors (GDD: growing degree days, GSL: growing season length, SOS: start of season and EOS: end of season). See `Data analyses' section in Methods for more details.} 
@@ -367,47 +364,47 @@ A. rubrum & 0.00 [-0.06, 0.06] & 0.05 [-0.05, 0.15] & -0.05 [-0.28, 0.17] & 0.04
   \hline
 Parameter & GDD & GSL & SOS & EOS \\ 
   \hline
-$\alpha$ & 0.52 [-2.07, 3.15] & 0.48 [-2.22, 3.17] & 0.23 [-2.53, 2.90] & 0.11 [-2.57, 2.83] \\ 
-  $\sigma_{\alpha_{tree}}$ & 0.55 [0.44, 0.68] & 0.55 [0.45, 0.67] & 0.54 [0.44, 0.66] & 0.55 [0.45, 0.67] \\ 
+$\alpha$ & 0.61 [-2.08, 3.25] & 0.49 [-2.09, 3.03] & 0.24 [-2.39, 2.94] & 0.23 [-2.48, 2.98] \\ 
+  $\sigma_{\alpha_{tree}}$ & 0.55 [0.45, 0.67] & 0.55 [0.45, 0.68] & 0.54 [0.44, 0.66] & 0.55 [0.45, 0.67] \\ 
   $\sigma_{y}$ & 0.31 [0.29, 0.34] & 0.32 [0.29, 0.34] & 0.32 [0.29, 0.34] & 0.32 [0.29, 0.34] \\ 
-  $\beta_{species_{A. rubrum}}$ & 0.00 [-0.06, 0.06] & 0.05 [-0.05, 0.15] & -0.05 [-0.28, 0.17] & 0.04 [-0.06, 0.15] \\ 
-  $\beta_{species_{A. saccharum}}$ & 0.03 [-0.01, 0.07] & 0.00 [-0.04, 0.05] & 0.08 [-0.02, 0.17] & 0.03 [-0.03, 0.09] \\ 
-  $\beta_{species_{Ae. flava}}$ & 0.01 [-0.01, 0.02] & 0.02 [-0.01, 0.05] & -0.04 [-0.21, 0.13] & 0.02 [-0.01, 0.05] \\ 
-  $\beta_{species_{B. alleghaniensis}}$ & -0.08 [-0.12, -0.03] & -0.05 [-0.12, 0.02] & -0.07 [-0.23, 0.07] & -0.09 [-0.17, -0.01] \\ 
-  $\beta_{species_{B. nigra}}$ & 0.03 [-0.00, 0.05] & 0.03 [-0.02, 0.07] & 0.03 [-0.10, 0.17] & 0.03 [-0.02, 0.08] \\ 
-  $\beta_{species_{C. glabra}}$ & 0.02 [-0.02, 0.06] & 0.03 [-0.03, 0.08] & 0.08 [-0.08, 0.23] & 0.04 [-0.02, 0.09] \\ 
-  $\beta_{species_{C. ovata}}$ & -0.00 [-0.05, 0.04] & -0.01 [-0.08, 0.05] & 0.10 [-0.03, 0.24] & 0.01 [-0.07, 0.08] \\ 
-  $\beta_{species_{P. deltoides}}$ & 0.00 [-0.02, 0.03] & 0.02 [-0.03, 0.06] & 0.07 [-0.08, 0.22] & 0.02 [-0.02, 0.06] \\ 
-  $\beta_{species_{Q. alba}}$ & 0.02 [-0.06, 0.11] & 0.03 [-0.05, 0.12] & -0.00 [-0.18, 0.17] & 0.05 [-0.07, 0.16] \\ 
+  $\beta_{species_{A. rubrum}}$ & 0.00 [-0.06, 0.06] & 0.05 [-0.05, 0.15] & -0.05 [-0.28, 0.18] & 0.04 [-0.07, 0.14] \\ 
+  $\beta_{species_{A. saccharum}}$ & 0.03 [-0.01, 0.07] & 0.00 [-0.04, 0.05] & 0.08 [-0.02, 0.17] & 0.03 [-0.03, 0.08] \\ 
+  $\beta_{species_{Ae. flava}}$ & 0.01 [-0.01, 0.02] & 0.02 [-0.01, 0.05] & -0.04 [-0.22, 0.13] & 0.02 [-0.01, 0.05] \\ 
+  $\beta_{species_{B. alleghaniensis}}$ & -0.08 [-0.12, -0.03] & -0.05 [-0.12, 0.02] & -0.08 [-0.23, 0.07] & -0.09 [-0.16, -0.01] \\ 
+  $\beta_{species_{B. nigra}}$ & 0.03 [-0.00, 0.05] & 0.03 [-0.02, 0.07] & 0.03 [-0.10, 0.16] & 0.03 [-0.02, 0.08] \\ 
+  $\beta_{species_{C. glabra}}$ & 0.02 [-0.02, 0.06] & 0.03 [-0.03, 0.08] & 0.08 [-0.07, 0.23] & 0.04 [-0.02, 0.09] \\ 
+  $\beta_{species_{C. ovata}}$ & -0.00 [-0.05, 0.04] & -0.01 [-0.07, 0.05] & 0.10 [-0.03, 0.24] & 0.01 [-0.06, 0.08] \\ 
+  $\beta_{species_{P. deltoides}}$ & 0.00 [-0.02, 0.03] & 0.02 [-0.03, 0.06] & 0.07 [-0.09, 0.22] & 0.02 [-0.02, 0.06] \\ 
+  $\beta_{species_{Q. alba}}$ & 0.02 [-0.06, 0.10] & 0.03 [-0.06, 0.13] & 0.00 [-0.18, 0.18] & 0.05 [-0.07, 0.16] \\ 
   $\beta_{species_{Q. rubra}}$ & 0.03 [-0.03, 0.09] & 0.03 [-0.08, 0.14] & 0.09 [-0.10, 0.28] & 0.05 [-0.06, 0.15] \\ 
-  $\beta_{species_{T. americana}}$ & -0.01 [-0.03, 0.01] & -0.02 [-0.05, 0.01] & 0.15 [0.03, 0.27] & -0.01 [-0.05, 0.02] \\ 
-  $\alpha_{year_{2016}}$ & 0.07 [-3.34, 3.30] & -0.98 [-4.23, 2.23] & 1.27 [-3.08, 5.74] & -1.03 [-5.61, 3.52] \\ 
-  $\alpha_{year_{2017}}$ & -0.80 [-3.69, 2.13] & 0.43 [-2.48, 3.32] & -0.54 [-3.56, 2.49] & -0.29 [-3.73, 3.20] \\ 
-  $\alpha_{year_{2018}}$ & -0.38 [-3.05, 2.26] & -0.45 [-3.23, 2.33] & 0.94 [-2.80, 4.58] & -0.40 [-3.31, 2.42] \\ 
-  $\alpha_{year_{2019}}$ & 2.44 [-0.64, 5.45] & 0.61 [-2.36, 3.54] & 1.14 [-2.38, 4.73] & 3.38 [-0.43, 7.10] \\ 
-  $\alpha_{year_{2020}}$ & -0.59 [-3.38, 2.19] & -0.11 [-2.95, 2.64] & 0.17 [-3.24, 3.55] & -0.41 [-3.55, 2.73] \\ 
-  $\alpha_{year_{2021}}$ & -0.78 [-3.73, 2.12] & -0.62 [-3.53, 2.15] & -1.13 [-4.68, 2.41] & -1.09 [-4.52, 2.22] \\ 
-  $\alpha_{year_{2022}}$ & -0.20 [-3.13, 2.73] & -0.07 [-2.94, 2.90] & -1.92 [-5.26, 1.38] & -0.24 [-4.01, 3.46] \\ 
-  $\alpha_{year_{2023}}$ & -0.27 [-3.03, 2.47] & -0.38 [-3.19, 2.40] & -1.05 [-4.66, 2.57] & -0.38 [-3.31, 2.55] \\ 
-  $\alpha_{year_{2024}}$ & -0.75 [-4.61, 3.14] & -0.54 [-3.72, 2.59] & 0.45 [-3.46, 4.32] & -1.30 [-6.35, 3.71] \\ 
-  $\alpha_{species_{A. rubrum}}$ & -0.98 [-4.29, 2.32] & -0.44 [-3.96, 3.07] & -1.07 [-5.06, 2.96] & -1.32 [-6.09, 3.36] \\ 
-  $\alpha_{species_{A. saccharum}}$ & 0.39 [-2.27, 3.05] & 0.60 [-2.16, 3.32] & -2.02 [-5.13, 1.25] & 1.01 [-1.96, 3.85] \\ 
-  $\alpha_{species_{Ae. flava}}$ & -0.22 [-0.78, 0.33] & -0.22 [-0.80, 0.34] & -0.26 [-0.81, 0.28] & -0.23 [-0.79, 0.35] \\ 
-  $\alpha_{species_{B. alleghaniensis}}$ & -0.04 [-0.59, 0.51] & -0.06 [-0.62, 0.51] & -0.00 [-0.55, 0.54] & -0.05 [-0.61, 0.53] \\ 
-  $\alpha_{species_{B. nigra}}$ & 0.03 [-0.52, 0.57] & 0.03 [-0.54, 0.58] & -0.01 [-0.55, 0.53] & 0.04 [-0.52, 0.60] \\ 
-  $\alpha_{species_{C. glabra}}$ & 0.08 [-0.47, 0.61] & 0.06 [-0.51, 0.62] & 0.07 [-0.48, 0.61] & 0.08 [-0.48, 0.65] \\ 
-  $\alpha_{species_{C. ovata}}$ & -0.06 [-0.61, 0.48] & -0.07 [-0.64, 0.49] & -0.13 [-0.68, 0.42] & -0.05 [-0.61, 0.53] \\ 
-  $\alpha_{species_{P. deltoides}}$ & -0.00 [-0.56, 0.55] & -0.00 [-0.57, 0.55] & 0.01 [-0.55, 0.54] & 0.01 [-0.55, 0.58] \\ 
-  $\alpha_{species_{Q. alba}}$ & -0.06 [-0.62, 0.50] & -0.08 [-0.65, 0.49] & -0.08 [-0.64, 0.48] & -0.06 [-0.61, 0.51] \\ 
-  $\alpha_{species_{Q. rubra}}$ & 0.19 [-0.36, 0.74] & 0.18 [-0.39, 0.76] & 0.20 [-0.36, 0.73] & 0.19 [-0.37, 0.77] \\ 
-  $\alpha_{species_{T. americana}}$ & 0.08 [-0.48, 0.63] & 0.08 [-0.51, 0.65] & 0.07 [-0.49, 0.62] & 0.10 [-0.48, 0.68] \\ 
+  $\beta_{species_{T. americana}}$ & -0.01 [-0.03, 0.01] & -0.02 [-0.05, 0.01] & 0.15 [0.02, 0.27] & -0.01 [-0.04, 0.02] \\ 
+  $\alpha_{year_{2016}}$ & -0.05 [-3.40, 3.35] & -0.95 [-4.12, 2.17] & 1.23 [-3.23, 5.60] & -1.08 [-5.62, 3.44] \\ 
+  $\alpha_{year_{2017}}$ & -0.90 [-3.86, 2.10] & 0.43 [-2.34, 3.17] & -0.57 [-3.59, 2.35] & -0.37 [-3.79, 3.02] \\ 
+  $\alpha_{year_{2018}}$ & -0.49 [-3.20, 2.19] & -0.46 [-3.09, 2.14] & 0.93 [-2.69, 4.47] & -0.49 [-3.33, 2.38] \\ 
+  $\alpha_{year_{2019}}$ & 2.32 [-0.68, 5.34] & 0.61 [-2.29, 3.46] & 1.17 [-2.34, 4.58] & 3.25 [-0.47, 6.96] \\ 
+  $\alpha_{year_{2020}}$ & -0.68 [-3.54, 2.12] & -0.13 [-2.82, 2.58] & 0.17 [-3.18, 3.40] & -0.50 [-3.65, 2.67] \\ 
+  $\alpha_{year_{2021}}$ & -0.89 [-3.89, 2.06] & -0.64 [-3.44, 2.12] & -1.17 [-4.65, 2.33] & -1.16 [-4.46, 2.12] \\ 
+  $\alpha_{year_{2022}}$ & -0.32 [-3.35, 2.74] & -0.07 [-2.88, 2.73] & -1.96 [-5.42, 1.40] & -0.35 [-4.01, 3.29] \\ 
+  $\alpha_{year_{2023}}$ & -0.38 [-3.14, 2.40] & -0.39 [-3.09, 2.26] & -1.04 [-4.60, 2.52] & -0.49 [-3.54, 2.50] \\ 
+  $\alpha_{year_{2024}}$ & -0.85 [-4.70, 3.03] & -0.56 [-3.66, 2.52] & 0.40 [-3.47, 4.32] & -1.44 [-6.32, 3.48] \\ 
+  $\alpha_{species_{A. rubrum}}$ & -1.09 [-4.47, 2.23] & -0.43 [-3.80, 2.96] & -1.08 [-4.98, 2.91] & -1.44 [-6.04, 3.22] \\ 
+  $\alpha_{species_{A. saccharum}}$ & 0.30 [-2.41, 3.02] & 0.59 [-1.98, 3.18] & -2.02 [-5.24, 1.14] & 0.92 [-1.93, 3.81] \\ 
+  $\alpha_{species_{Ae. flava}}$ & -0.21 [-0.77, 0.34] & -0.22 [-0.76, 0.35] & -0.25 [-0.80, 0.31] & -0.25 [-0.81, 0.29] \\ 
+  $\alpha_{species_{B. alleghaniensis}}$ & -0.03 [-0.58, 0.52] & -0.06 [-0.59, 0.52] & 0.00 [-0.54, 0.56] & -0.07 [-0.63, 0.48] \\ 
+  $\alpha_{species_{B. nigra}}$ & 0.04 [-0.52, 0.59] & 0.02 [-0.52, 0.59] & -0.00 [-0.55, 0.56] & 0.01 [-0.54, 0.56] \\ 
+  $\alpha_{species_{C. glabra}}$ & 0.09 [-0.46, 0.64] & 0.06 [-0.48, 0.63] & 0.07 [-0.47, 0.64] & 0.06 [-0.50, 0.62] \\ 
+  $\alpha_{species_{C. ovata}}$ & -0.06 [-0.60, 0.49] & -0.07 [-0.61, 0.50] & -0.12 [-0.66, 0.45] & -0.07 [-0.63, 0.47] \\ 
+  $\alpha_{species_{P. deltoides}}$ & 0.00 [-0.55, 0.56] & -0.00 [-0.55, 0.57] & 0.01 [-0.54, 0.58] & -0.01 [-0.58, 0.54] \\ 
+  $\alpha_{species_{Q. alba}}$ & -0.05 [-0.61, 0.50] & -0.07 [-0.63, 0.50] & -0.07 [-0.63, 0.49] & -0.08 [-0.65, 0.48] \\ 
+  $\alpha_{species_{Q. rubra}}$ & 0.20 [-0.36, 0.76] & 0.18 [-0.38, 0.75] & 0.20 [-0.35, 0.78] & 0.17 [-0.40, 0.72] \\ 
+  $\alpha_{species_{T. americana}}$ & 0.08 [-0.47, 0.64] & 0.07 [-0.47, 0.66] & 0.07 [-0.48, 0.64] & 0.08 [-0.49, 0.64] \\ 
    \hline
 \end{tabular}
 \end{table}
 
 
 % latex table generated in R 4.5.1 by xtable 1.8-4 package
-% Wed Jul  1 12:10:12 2026
+% Wed Jul  1 13:56:12 2026
 \begin{table}[ht]
 \centering
 \caption{Summary output of each parameter from the previous year model using ring width (log(mm)) as the reponse variable. We report estimates as mean and 90\% uncertainty intervals (in square brackets). see `Data analyses' section in Methods for more details} 
@@ -416,51 +413,100 @@ $\alpha$ & 0.52 [-2.07, 3.15] & 0.48 [-2.22, 3.17] & 0.23 [-2.53, 2.90] & 0.11 [
   \hline
 Parameter & Estimate \\ 
   \hline
-$\alpha$ & 0.20 [-1.06, 1.43] \\ 
-  $\sigma_{\alpha_{tree}}$ & 0.59 [0.47, 0.72] \\ 
+$\alpha$ & 0.20 [-1.10, 1.48] \\ 
+  $\sigma_{\alpha_{tree}}$ & 0.58 [0.47, 0.72] \\ 
   $\sigma_{y}$ & 0.29 [0.26, 0.32] \\ 
   $\beta_{\text{species}_{A. rubrum}}^{\text{current}}$ & -0.07 [-0.25, 0.12] \\ 
-  $\beta_{\text{species}_{A. saccharum}}^{\text{current}}$ & 0.11 [-0.01, 0.24] \\ 
+  $\beta_{\text{species}_{A. saccharum}}^{\text{current}}$ & 0.11 [-0.01, 0.23] \\ 
   $\beta_{\text{species}_{Ae. flava}}^{\text{current}}$ & 0.04 [-0.02, 0.09] \\ 
-  $\beta_{\text{species}_{B. alleghaniensis}}^{\text{current}}$ & -0.15 [-0.28, -0.01] \\ 
+  $\beta_{\text{species}_{B. alleghaniensis}}^{\text{current}}$ & -0.15 [-0.29, -0.01] \\ 
   $\beta_{\text{species}_{B. nigra}}^{\text{current}}$ & 0.12 [0.03, 0.21] \\ 
   $\beta_{\text{species}_{C. glabra}}^{\text{current}}$ & -0.01 [-0.18, 0.15] \\ 
-  $\beta_{\text{species}_{C. ovata}}^{\text{current}}$ & -0.06 [-0.21, 0.09] \\ 
-  $\beta_{\text{species}_{P. deltoides}}^{\text{current}}$ & -0.01 [-0.10, 0.09] \\ 
-  $\beta_{\text{species}_{Q. alba}}^{\text{current}}$ & 0.00 [-0.30, 0.32] \\ 
-  $\beta_{\text{species}_{Q. rubra}}^{\text{current}}$ & 0.09 [-0.15, 0.31] \\ 
-  $\beta_{\text{species}_{T. americana}}^{\text{current}}$ & -0.05 [-0.12, 0.02] \\ 
-  $\beta_{\text{species}_{A. rubrum}}^{\text{previous}}$ & 0.05 [-0.15, 0.24] \\ 
-  $\beta_{\text{species}_{A. saccharum}}^{\text{previous}}$ & 0.11 [-0.01, 0.22] \\ 
+  $\beta_{\text{species}_{C. ovata}}^{\text{current}}$ & -0.06 [-0.20, 0.08] \\ 
+  $\beta_{\text{species}_{P. deltoides}}^{\text{current}}$ & -0.01 [-0.10, 0.08] \\ 
+  $\beta_{\text{species}_{Q. alba}}^{\text{current}}$ & 0.01 [-0.32, 0.32] \\ 
+  $\beta_{\text{species}_{Q. rubra}}^{\text{current}}$ & 0.08 [-0.14, 0.32] \\ 
+  $\beta_{\text{species}_{T. americana}}^{\text{current}}$ & -0.05 [-0.12, 0.03] \\ 
+  $\beta_{\text{species}_{A. rubrum}}^{\text{previous}}$ & 0.05 [-0.15, 0.25] \\ 
+  $\beta_{\text{species}_{A. saccharum}}^{\text{previous}}$ & 0.11 [-0.01, 0.23] \\ 
   $\beta_{\text{species}_{Ae. flava}}^{\text{previous}}$ & -0.01 [-0.07, 0.04] \\ 
-  $\beta_{\text{species}_{B. alleghaniensis}}^{\text{previous}}$ & 0.15 [0.03, 0.27] \\ 
+  $\beta_{\text{species}_{B. alleghaniensis}}^{\text{previous}}$ & 0.15 [0.02, 0.28] \\ 
   $\beta_{\text{species}_{B. nigra}}^{\text{previous}}$ & -0.08 [-0.17, -0.00] \\ 
   $\beta_{\text{species}_{C. glabra}}^{\text{previous}}$ & 0.01 [-0.13, 0.15] \\ 
-  $\beta_{\text{species}_{C. ovata}}^{\text{previous}}$ & -0.04 [-0.17, 0.10] \\ 
-  $\beta_{\text{species}_{P. deltoides}}^{\text{previous}}$ & 0.02 [-0.06, 0.10] \\ 
-  $\beta_{\text{species}_{Q. alba}}^{\text{previous}}$ & -0.04 [-0.40, 0.32] \\ 
-  $\beta_{\text{species}_{Q. rubra}}^{\text{previous}}$ & 0.10 [-0.27, 0.47] \\ 
-  $\beta_{\text{species}_{T. americana}}^{\text{previous}}$ & 0.01 [-0.05, 0.06] \\ 
-  $\alpha_{\text{year}_{2016}}$ & 0.51 [-2.86, 3.85] \\ 
-  $\alpha_{\text{year}_{2017}}$ & -2.21 [-4.79, 0.37] \\ 
-  $\alpha_{\text{year}_{2018}}$ & 0.01 [-1.50, 1.51] \\ 
-  $\alpha_{\text{year}_{2019}}$ & -0.11 [-2.60, 2.39] \\ 
-  $\alpha_{\text{year}_{2020}}$ & 0.29 [-1.37, 1.91] \\ 
-  $\alpha_{\text{year}_{2021}}$ & 0.16 [-1.83, 2.10] \\ 
-  $\alpha_{\text{year}_{2022}}$ & 1.16 [-1.18, 3.51] \\ 
-  $\alpha_{\text{year}_{2023}}$ & -0.00 [-1.93, 1.93] \\ 
-  $\alpha_{\text{year}_{2024}}$ & 1.14 [-5.51, 7.64] \\ 
-  $\alpha_{\text{spp}_{A. rubrum}}$ & -1.88 [-8.13, 4.40] \\ 
-  $\alpha_{\text{spp}_{A. saccharum}}$ & 0.92 [-0.65, 2.49] \\ 
-  $\alpha_{\text{spp}_{Ae. flava}}$ & 0.07 [-0.47, 0.63] \\ 
-  $\alpha_{\text{spp}_{B. alleghaniensis}}$ & 0.06 [-0.48, 0.62] \\ 
-  $\alpha_{\text{spp}_{B. nigra}}$ & -0.29 [-1.00, 0.44] \\ 
-  $\alpha_{\text{spp}_{C. glabra}}$ & -0.03 [-0.57, 0.53] \\ 
-  $\alpha_{\text{spp}_{C. ovata}}$ & 0.01 [-0.54, 0.57] \\ 
-  $\alpha_{\text{spp}_{P. deltoides}}$ & 0.00 [-0.56, 0.58] \\ 
-  $\alpha_{\text{spp}_{Q. alba}}$ & 0.17 [-0.38, 0.75] \\ 
-  $\alpha_{\text{spp}_{Q. rubra}}$ & 0.01 [-0.54, 0.58] \\ 
-  $\alpha_{\text{spp}_{T. americana}}$ & -0.05 [-0.60, 0.51] \\ 
+  $\beta_{\text{species}_{C. ovata}}^{\text{previous}}$ & -0.04 [-0.17, 0.09] \\ 
+  $\beta_{\text{species}_{P. deltoides}}^{\text{previous}}$ & 0.02 [-0.05, 0.10] \\ 
+  $\beta_{\text{species}_{Q. alba}}^{\text{previous}}$ & -0.03 [-0.38, 0.33] \\ 
+  $\beta_{\text{species}_{Q. rubra}}^{\text{previous}}$ & 0.09 [-0.27, 0.46] \\ 
+  $\beta_{\text{species}_{T. americana}}^{\text{previous}}$ & 0.00 [-0.06, 0.06] \\ 
+  $\alpha_{\text{year}_{2016}}$ & 0.44 [-3.10, 3.90] \\ 
+  $\alpha_{\text{year}_{2017}}$ & -2.20 [-4.79, 0.36] \\ 
+  $\alpha_{\text{year}_{2018}}$ & 0.04 [-1.53, 1.59] \\ 
+  $\alpha_{\text{year}_{2019}}$ & -0.06 [-2.61, 2.44] \\ 
+  $\alpha_{\text{year}_{2020}}$ & 0.30 [-1.39, 1.99] \\ 
+  $\alpha_{\text{year}_{2021}}$ & 0.18 [-1.77, 2.13] \\ 
+  $\alpha_{\text{year}_{2022}}$ & 1.16 [-1.18, 3.47] \\ 
+  $\alpha_{\text{year}_{2023}}$ & -0.01 [-1.92, 1.90] \\ 
+  $\alpha_{\text{year}_{2024}}$ & 0.97 [-5.55, 7.68] \\ 
+  $\alpha_{\text{species}_{A. rubrum}}$ & -1.73 [-8.12, 4.60] \\ 
+  $\alpha_{\text{species}_{A. saccharum}}$ & 0.93 [-0.65, 2.50] \\ 
+  $\alpha_{\text{species}_{Ae. flava}}$ & 0.07 [-0.48, 0.62] \\ 
+  $\alpha_{\text{species}_{B. alleghaniensis}}$ & 0.06 [-0.50, 0.61] \\ 
+  $\alpha_{\text{species}_{B. nigra}}$ & -0.30 [-1.02, 0.42] \\ 
+  $\alpha_{\text{species}_{C. glabra}}$ & -0.04 [-0.58, 0.53] \\ 
+  $\alpha_{\text{species}_{C. ovata}}$ & 0.00 [-0.55, 0.56] \\ 
+  $\alpha_{\text{species}_{P. deltoides}}$ & -0.00 [-0.56, 0.56] \\ 
+  $\alpha_{\text{species}_{Q. alba}}$ & 0.17 [-0.40, 0.73] \\ 
+  $\alpha_{\text{species}_{Q. rubra}}$ & 0.01 [-0.56, 0.58] \\ 
+  $\alpha_{\text{species}_{T. americana}}$ & -0.05 [-0.60, 0.51] \\ 
+   \hline
+\end{tabular}
+\end{table}
+
+
+% latex table generated in R 4.5.1 by xtable 1.8-4 package
+% Wed Jul  1 13:56:12 2026
+\begin{table}[ht]
+\centering
+\caption{Summary output of each parameter from the model on the effect of SOS on EOS. We report estimates as mean and 90\% uncertainty intervals (in square brackets). see `Data analyses' section in Methods for more details} 
+\label{tab:tab_PrvsYr}
+\begin{tabular}{ll}
+  \hline
+Parameter & Estimate \\ 
+  \hline
+$\alpha$ & 29.51 [23.54, 35.39] \\ 
+  $\sigma_{\alpha_{treeid}}$ & 1.18 [0.83, 1.56] \\ 
+  $\sigma_{y}$ & 2.06 [1.90, 2.23] \\ 
+  $\beta_{\text{species}_{A. rubrum}}$ & 0.63 [-0.14, 1.42] \\ 
+  $\beta_{\text{species}_{A. saccharum}}$ & 0.18 [-0.29, 0.66] \\ 
+  $\beta_{\text{species}_{Ae. flava}}$ & 0.38 [-0.32, 1.08] \\ 
+  $\beta_{\text{species}_{B. alleghaniensis}}$ & 0.50 [-0.15, 1.16] \\ 
+  $\beta_{\text{species}_{B. nigra}}$ & 0.44 [-0.16, 1.06] \\ 
+  $\beta_{\text{species}_{C. glabra}}$ & 0.48 [-0.17, 1.15] \\ 
+  $\beta_{\text{species}_{C. ovata}}$ & 0.40 [-0.22, 1.01] \\ 
+  $\beta_{\text{species}_{P. deltoides}}$ & 1.04 [0.39, 1.70] \\ 
+  $\beta_{\text{species}_{Q. alba}}$ & 0.35 [-0.34, 1.04] \\ 
+  $\beta_{\text{species}_{Q. rubra}}$ & 0.50 [-0.19, 1.22] \\ 
+  $\beta_{\text{species}_{T. americana}}$ & 0.46 [-0.14, 1.05] \\ 
+  $\alpha_{\text{year}_{2016}}$ & -2.26 [-15.00, 10.18] \\ 
+  $\alpha_{\text{year}_{2017}}$ & 7.21 [-1.83, 16.23] \\ 
+  $\alpha_{\text{year}_{2018}}$ & 0.36 [-10.75, 11.25] \\ 
+  $\alpha_{\text{year}_{2019}}$ & -0.23 [-11.38, 10.91] \\ 
+  $\alpha_{\text{year}_{2020}}$ & 0.27 [-10.43, 10.84] \\ 
+  $\alpha_{\text{year}_{2021}}$ & -0.20 [-11.26, 10.69] \\ 
+  $\alpha_{\text{year}_{2022}}$ & 1.92 [-9.19, 13.03] \\ 
+  $\alpha_{\text{year}_{2023}}$ & -11.53 [-23.17, 0.25] \\ 
+  $\alpha_{\text{year}_{2024}}$ & 3.61 [-8.48, 15.48] \\ 
+  $\alpha_{\text{species}_{A. rubrum}}$ & 0.14 [-12.16, 12.19] \\ 
+  $\alpha_{\text{species}_{A. saccharum}}$ & -0.27 [-10.42, 9.76] \\ 
+  $\alpha_{\text{species}_{Ae. flava}}$ & 1.86 [-0.38, 4.14] \\ 
+  $\alpha_{\text{species}_{B. alleghaniensis}}$ & 1.17 [-1.06, 3.41] \\ 
+  $\alpha_{\text{species}_{B. nigra}}$ & 0.47 [-1.80, 2.72] \\ 
+  $\alpha_{\text{species}_{C. glabra}}$ & -0.42 [-2.70, 1.80] \\ 
+  $\alpha_{\text{species}_{C. ovata}}$ & -1.02 [-3.27, 1.27] \\ 
+  $\alpha_{\text{species}_{P. deltoides}}$ & -0.23 [-2.54, 2.06] \\ 
+  $\alpha_{\text{species}_{Q. alba}}$ & -0.87 [-3.21, 1.45] \\ 
+  $\alpha_{\text{species}_{Q. rubra}}$ & -0.28 [-2.63, 2.06] \\ 
+  $\alpha_{\text{species}_{T. americana}}$ & -1.50 [-3.85, 0.81] \\ 
    \hline
 \end{tabular}
 \end{table}
