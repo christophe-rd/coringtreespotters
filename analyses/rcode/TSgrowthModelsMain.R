@@ -31,14 +31,18 @@ source('mcmc_visualization_tools.R', local=util)
 # my function to extract parameters
 source('/Users/christophe_rouleau-desrochers/github/wildchrokie/analyses/rcode/tools.R')
 
+wrmUp <- 2000
+itrns <- 4000
+
 runmodels <- F
 runzscoredmodels <- F
-runfulldata <- FALSE
-runmodelnoayear <- FALSE
-fitmodelprvsyr <- FALSE
-runbudburst <- FALSE
-fit2xpriors <- FALSE
+runfulldata <- F
+runmodelnoayear <- F
+fitmodelprvsyr <- F
+runbudburst <- F
+fit2xpriors <- F
 runmodelSOSonEOS <- F
+
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 # Most restricted amount of data ####
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
@@ -184,7 +188,7 @@ if(runmodels){
 # Fit model GDD
 gddmodel <- stan_model("stan/TSmodelGrowthGDD.stan")
 fitgdd <- sampling(gddmodel, data = dgdd,
-                   warmup = 1000, iter = 2000, chains=4)
+                   warmup = wrmUp, iter = itrns, chains=4)
 saveRDS(fitgdd, "output/stanOutput/fitGrowthGDD")
 
 diagnostics <- util$extract_hmc_diagnostics(fitgdd)
@@ -193,19 +197,19 @@ util$check_all_hmc_diagnostics(diagnostics)
 # Fit model GSL
 gslmodel <- stan_model("stan/TSmodelGrowthGSL.stan")
 fitgsl <- sampling(gslmodel, data = dgsl,
-                   warmup = 1000, iter = 2000, chains = 4)
+                   warmup = wrmUp, iter = itrns, chains = 4)
 saveRDS(fitgsl, "output/stanOutput/fitGrowthGSL")
 
 # Fit model SOS
 sosmodel <- stan_model("stan/TSmodelGrowthSOS.stan")
 fitsos <- sampling(sosmodel, data = dsos,
-                   warmup = 1000, iter = 2000, chains=4)
+                   warmup = wrmUp, iter = itrns, chains=4)
 saveRDS(fitsos, "output/stanOutput/fitGrowthSOS")
 
 # Fit model EOS
 eosmodel <- stan_model("stan/TSmodelGrowthEOS.stan")
 fiteos <- sampling(eosmodel, data = deos,
-                   warmup = 1000, iter = 2000, chains=4)
+                   warmup = wrmUp, iter = itrns, chains=4)
 saveRDS(fiteos, "output/stanOutput/fitGrowthEOS")
 
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
@@ -683,13 +687,13 @@ deos <- list(
 if(runfulldata) {
 sosmodel <- stan_model("stan/TSmodelGrowthSOS.stan")
 fitsosfull <- sampling(sosmodel, data = dsos,
-                       warmup = 1000, iter = 2000, chains=4)
+                       warmup = wrmUp, iter = itrns, chains=4)
 saveRDS(fitsosfull, "output/stanOutput/fitGrowthSOSFull")
 
 # Fit model EOS
 eosmodel <- stan_model("stan/TSmodelGrowthEOS.stan")
 fiteosfull <- sampling(eosmodel, data = deos,
-                       warmup = 1000, iter = 2000, chains=4)
+                       warmup = wrmUp, iter = itrns, chains=4)
 saveRDS(fiteosfull, "output/stanOutput/fitGrowthEOSFull")
 
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
@@ -929,7 +933,7 @@ if (runzscoredmodels) {
 dgdd$covariate <- (empts$pgsGDD5 - mean(empts$pgsGDD5)) / sd(empts$pgsGDD5)
 gddmodel <- stan_model("stan/TSmodelGrowth_z.stan")
 fitgdd <- sampling(gddmodel, data = dgdd,
-                   warmup = 1000, iter=2000, chains=4)
+                   warmup = wrmUp, iter = itrns, chains=4)
 saveRDS(fitgdd, "output/stanOutput/fitGrowthGDDZscored")
 
 diagnostics <- util$extract_hmc_diagnostics(fitgdd)
@@ -939,14 +943,14 @@ util$check_all_hmc_diagnostics(diagnostics)
 dgsl$covariate <- (empts$pgsGSL - mean(empts$pgsGSL)) / sd(empts$pgsGSL)
 gslmodel <- stan_model("stan/TSmodelGrowth_z.stan")
 fitgsl <- sampling(gslmodel, data = dgsl,
-                   warmup = 1000, iter = 2000, chains = 4)
+                   warmup = wrmUp, iter = itrns, chains = 4)
 saveRDS(fitgsl, "output/stanOutput/fitGrowthGSLZscored")
 
 # Fit model SOS
 dsos$covariate <- (empts$leafout - mean(empts$leafout)) / sd(empts$leafout)
 sosmodel <- stan_model("stan/TSmodelGrowth_z.stan")
 fitsos <- sampling(sosmodel, data = dsos,
-                   warmup = 1000, iter = 2000, chains=4)
+                   warmup = wrmUp, iter = itrns, chains=4)
 saveRDS(fitsos, "output/stanOutput/fitGrowthSOSZscored")
 
 # Fit model EOS
@@ -954,7 +958,7 @@ deos$covariate <- (empts$coloredLeaves - mean(empts$coloredLeaves)) /
   sd(empts$coloredLeaves)
 eosmodel <- stan_model("stan/TSmodelGrowth_z.stan")
 fiteos <- sampling(eosmodel, data = deos,
-                   warmup = 1000, iter = 2000, chains=4)
+                   warmup = wrmUp, iter = itrns, chains=4)
 saveRDS(fiteos, "output/stanOutput/fitGrowthEOSZscored")
 
 # Plot GDD fit
@@ -1393,7 +1397,7 @@ dev.off()
 if(runmodelnoayear){
 gddmodel <- stan_model("stan/TSmodelGrowthGDD_noayear.stan")
 fitgdd <- sampling(gddmodel, data = dgdd,
-                   warmup = 1000, iter=2000, chains=4)
+                   warmup = wrmUp, iter = itrns, chains=4)
 saveRDS(fitgdd, "output/stanOutput/fitGrowthGDD_noayear")
 fitgdd <- readRDS("output/stanOutput/fitGrowthGDD_noayear")
 # Recover parameters
@@ -1525,7 +1529,7 @@ dgddyr <- list(
 
 # Fit model GDD with previous year GDD
 gddmodel <- stan_model("stan/TSmodelGrowthPreviousYear.stan")
-fit <- sampling(gddmodel, data = dgddyr, iter = 2000, chains = 4, 
+fit <- sampling(gddmodel, data = dgddyr, iter = itrns, chains = 4, 
                 control = list(max_treedepth = 12))
 saveRDS(fit, "output/stanOutput/fitGrowthPreviousYear")
 diagnostics <- util$extract_hmc_diagnostics(fit) 
@@ -1790,19 +1794,19 @@ model <- stan_model("stan/TSmodelGrowth_z.stan")
 
 # Fit model GDD
 dgdd$covariate <- (emptscomp$fgsGDD5 - mean(emptscomp$fgsGDD5)) / sd(emptscomp$fgsGDD5)
-fitgdd <- sampling(model, data = dgdd, warmup = 1000, iter=2000, chains=4)
+fitgdd <- sampling(model, data = dgdd, warmup = wrmUp, iter = itrns, chains=4)
 saveRDS(fitgdd, "output/stanOutput/fitGrowthGDD_budburst")
 diagnostics <- util$extract_hmc_diagnostics(fitgdd)
 util$check_all_hmc_diagnostics(diagnostics)
 
 # Fit model GSL
 dgsl$covariate <- (emptscomp$fgsGSL - mean(emptscomp$fgsGSL)) / sd(emptscomp$fgsGSL)
-fitgsl <- sampling(model, data = dgsl, warmup = 1000, iter = 2000, chains = 4)
+fitgsl <- sampling(model, data = dgsl, warmup = wrmUp, iter = itrns, chains = 4)
 saveRDS(fitgsl, "output/stanOutput/fitGrowthGSL_budburst")
 
 # Fit model SOS
 dsos$covariate <- (emptscomp$budburst - mean(emptscomp$budburst)) / sd(emptscomp$budburst)
-fitsos <- sampling(model, data = dsos, warmup = 1000, iter = 2000, chains=4)
+fitsos <- sampling(model, data = dsos, warmup = wrmUp, iter = itrns, chains=4)
 saveRDS(fitsos, "output/stanOutput/fitGrowthSOS_budburst")
 }
 
@@ -2155,7 +2159,7 @@ dgddz <- dgdd[1:10]
 dgddz$covariate <- gddz
 
 fitgdd <- sampling(genericmodel, data = dgddz,
-                   warmup = 1000, iter=2000, chains=4)
+                   warmup = wrmUp, iter = itrns, chains=4)
 saveRDS(fitgdd, "output/stanOutput/fitGrowthGDDZscored_largerPriors")
 
 # Fit model GSL
@@ -2164,7 +2168,7 @@ dgslz <- dgdd[1:10]
 dgslz$covariate <- gslz
 
 fitgsl <- sampling(genericmodel, data = dgslz,
-                   warmup = 1000, iter = 2000, chains = 4)
+                   warmup = wrmUp, iter = itrns, chains = 4)
 saveRDS(fitgsl, "output/stanOutput/fitGrowthGSLZscored_largerPriors")
 
 # Fit model SOS
@@ -2173,7 +2177,7 @@ dsosz <- dgdd[1:10]
 dsosz$covariate <- sosz
 
 fitsos <- sampling(genericmodel, data = dsosz,
-                   warmup = 1000, iter = 2000, chains=4)
+                   warmup = wrmUp, iter = itrns, chains=4)
 saveRDS(fitsos, "output/stanOutput/fitGrowthSOSZscored_largerPriors")
 
 # Fit model EOS
@@ -2182,7 +2186,7 @@ deosz <- dgdd[1:10]
 deosz$covariate <- eosz
 
 fiteos <- sampling(genericmodel, data = deosz,
-                   warmup = 1000, iter = 2000, chains=4)
+                   warmup = wrmUp, iter = itrns, chains=4)
 saveRDS(fiteos, "output/stanOutput/fitGrowthEOSZscored_largerPriors")
 }
 
@@ -2190,6 +2194,19 @@ saveRDS(fiteos, "output/stanOutput/fitGrowthEOSZscored_largerPriors")
 # EOS as a function of SOS ####
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 if(runmodelSOSonEOS){
+empts <- empts[!is.na(empts$pgsGDD5) & !is.na(empts$lengthMM),]  
+
+lineplotseqlength <- 10
+# transform my groups to numeric values
+empts$spp_num <- match(empts$latbi, unique(empts$latbi))
+empts$treeid_num <- match(empts$id, unique(empts$id))
+empts$year_num <- match(empts$year, unique(empts$year))
+
+# order by tree id
+treeid_spp <- unique(empts[, c("treeid_num", "spp_num", "id", "latbi")])
+
+treeid_spp_ordered <- treeid_spp[order(treeid_spp$treeid_num), ]
+
 dco <- list(
   y = empts$coloredLeaves/7,
   N = nrow(empts),
@@ -2206,7 +2223,7 @@ dco
 # fit carry over
 modeldco <- stan_model("stan/TSmodelGrowth_zEOSonSOS.stan")
 fitco <- sampling(modeldco, data = dco,
-                   warmup = 1000, iter = 2000, chains=4)
+                   warmup = wrmUp, iter = itrns, chains=4)
 saveRDS(fitco, "output/stanOutput/fitSOSonEOS")
 
 # Recover stuff

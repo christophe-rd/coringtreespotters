@@ -21,7 +21,7 @@ if (length(grep("christophe_rouleau-desrochers", getwd())) > 0) {
 source("rcode/TSgrowthModelsMain.R")
 
 makeplots <- T
-runzscore <- F
+runzscore <- T
 
 # Load parameter summaries generated in growthModelsMain.R ####
 sigma_df2_ts_gdd  <- read.csv("output/GM_GDDparam_sigma.csv")
@@ -2302,7 +2302,7 @@ df_fitgdd <- as.data.frame(fitgdd)
 
 # posterior summaries
 sigma_df2_z  <- extract_params(df_fitgdd, "sigma", "mean", "sigma")
-bspp_df2_z   <- extract_params(df_fitgdd, "bsp", "fit_bspp", 
+bspp_df2_z   <- extract_params(df_fitgdd, "bsp", "fit_bsp", 
                                "spp", "bsp\\[(\\d+)\\]")
 treeid_df2_z <- extract_params(df_fitgdd, "atreeid", "fit_atreeid", 
                                "treeid", "atreeid\\[(\\d+)\\]")

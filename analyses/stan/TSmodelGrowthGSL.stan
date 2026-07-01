@@ -14,7 +14,7 @@ array[Ntreeid] int treeid_species; // species index for each treeid
 array[Nspp] int Ntreeid_per_spp;
 int<lower=0> Ngslseq;
 vector[Ngslseq] gslseq;
-real gslscale; # scale
+real gslscale; // scale
 vector[N] gsl;     // gsl (predictor for slope)
 array[N] real y;         // ring width (response)
 }
@@ -101,7 +101,7 @@ generated quantities {
     treeid_slope[t] = bspp[treeid_species[t]];
   }
   
-  # Sim for each tree id, at each gslseq
+  // Sim for each tree id, at each gslseq
   matrix[Ngslseq, Ntreeid] y_post;
 
   for (t in 1:Ntreeid) {
@@ -110,7 +110,7 @@ generated quantities {
     }
   }
   
-  # Sim for each species
+  // Sim for each species
   matrix[Ngslseq, Nspp] spp_mean;
   matrix[Ngslseq, Nspp] spp_post;
 
