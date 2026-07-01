@@ -20,7 +20,7 @@ if (length(grep("christophe_rouleau-desrochers", getwd())) > 0) {
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 source("rcode/TSgrowthModelsMain.R")
 
-makeplots <- T
+makeplots <- F
 runzscore <- F
 
 # Load parameter summaries generated in growthModelsMain.R ####
@@ -1612,7 +1612,7 @@ y_pos <- rev(1:11)
 
 # Current year
 plot(bspp_df2_ts_co$mean, y_pos,
-     xlim = c(-0.3, 2), ylim = c(0.5, n_spp + 0.5), 
+     xlim = c(-0.4, 2.5), ylim = c(0.5, n_spp + 0.5), 
      xlab = "EOS (days) change per one day of SOS (days)", ylab = "",
      yaxt = "n", pch = 16, cex = 2, col = tscolslatbi, frame.plot = TRUE,
      panel.first = abline(v = 0, lty = 2, col = "black"))

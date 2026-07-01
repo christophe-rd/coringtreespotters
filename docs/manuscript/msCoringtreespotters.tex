@@ -99,7 +99,7 @@
 % Citizen science
 %-------------------------------------------------------------------------------
 \subsection*{Citizen science program}
-The Tree Spotters was a citizen science program that started in 2015 and aimed to train citizen scientists for accurate and rigorous phenological monitoring at the Arnold Arboretum of Harvard University (42.30 \degree N, -71.12 \degree W) (Figure \ref{fig:mapProv}). From 2015 to 2024, hundreds of citizen scientists monitored 77 individual trees and shrubs of 14 species. They regularly followed those individuals from budburst in the spring to leaf coloring in the fall using the National Phenology Network (NPN) phenophases \citep{denny_standardized_2014}: Leaves (483), Colored leaves (498), Fruits (516), Ripe Fruits (390), Falling leaves(471), Recent fruit or seed drop (504), Increasing leaf size (467), Breaking leaf buds (371), Flowers or flower buds (500), Open flowers (501), Pollen release (502). Not all phenophases were recorded for every tree, for every year, and some trees miss several years of data. However, here we use leafout to colored leaves (or leaf coloring) to define the growing season length. Taken together, our dataset comprises 321 leafout and 284 budset observations (which we refer to as the `full datasets'), but we did not have both observations for all trees in all years, so our total of matched full growing seasons duration (which we refer to as the `restricted dataset') is 278. We visually checked for SOS, EOS and GSL outliers and verified that there was no observation bias potentially caused by a particular observer or in a particular year. \\
+The Tree Spotters was a citizen science program that started in 2015 and aimed to train citizen scientists for accurate and rigorous phenological monitoring at the Arnold Arboretum of Harvard University (42.30 \degree N, -71.12 \degree W; Figure \ref{fig:mapProv}). From 2015 to 2024, hundreds of citizen scientists monitored 77 individual trees and shrubs of 14 species. They regularly followed those individuals from budburst in the spring to leaf coloring in the fall using the National Phenology Network (NPN) phenophases \citep{denny_standardized_2014}: Leaves (483), Colored leaves (498), Fruits (516), Ripe Fruits (390), Falling leaves(471), Recent fruit or seed drop (504), Increasing leaf size (467), Breaking leaf buds (371), Flowers or flower buds (500), Open flowers (501), Pollen release (502). Not all phenophases were recorded for every tree, for every year, and some trees miss several years of data. However, here we use leafout to colored leaves (or leaf coloring) to define the growing season length. Taken together, our dataset comprises 321 leafout and 284 colored leaves observations (which we refer to as the `full datasets'), but we did not have both observations for all trees in all years, so our total of matched full growing seasons duration (which we refer to as the `restricted dataset') is 278. We visually checked for SOS, EOS and GSL outliers and verified that there was no observation bias potentially caused by a particular observer or in a particular year.
 
 % Provenance map
 \begin{figure}[!ht]
@@ -112,18 +112,18 @@ The Tree Spotters was a citizen science program that started in 2015 and aimed t
 % Phenological monitoring and sample collection
 %-------------------------------------------------------------------------------
 \subsection*{Phenological monitoring and sample collection}
-From 20 to 22 April 2025, we collected tree ring samples only for the tree species that were previously monitored for phenology---excluding \textit{Fagus grandifolia} because of beach bark disease concerns---for a total of 49 individuals (Table \ref{tab:tsCount}).  Thus, we sampled four or five individuals for 11 species: Red maple (\textit{Acer rubrum}), Sugar maple (\textit{Acer saccharum}), Yellow buckeye (\textit{Aesculus flava}), Yellow birch (\textit{Betula alleghaniensis}), River birch (\textit{Betula nigra}), Pignut hickory (\textit{Carya glabra}), Shagbark hickory (\textit{Carya ovata}), Eastern cottonwood (\textit{Populus deltoides}), White oak (\textit{Quercus alba}), Northern red oak (\textit{Quercus rubra}) and American basswood (\textit{Tilia americana}). For this, we collected two 5-mm diameter cores, 15-cm length at 1.3 meters above ground, perpendicular to the slope and at 180 degrees from each other, using an increment borer (Mora Borer, Haglöfs Sweden, Bromma, Stockholm, Sweden). We cleaned the increment borer with alcohol (70\% ethanol) and the inside with a brush before collecting each core. We stored the cores in modified plastic straws to allow aeration and were left to dry at ambient temperature for three months.  \\
+From 20 to 22 April 2025, we collected tree ring samples only for the tree species that were previously monitored for phenology---excluding \textit{Fagus grandifolia} because of beach bark disease concerns---for a total of 49 individuals (Table \ref{tab:tsCount}).  Thus, we sampled four or five individuals for 11 species: Red maple (\textit{Acer rubrum}), Sugar maple (\textit{Acer saccharum}), Yellow buckeye (\textit{Aesculus flava}), Yellow birch (\textit{Betula alleghaniensis}), River birch (\textit{Betula nigra}), Pignut hickory (\textit{Carya glabra}), Shagbark hickory (\textit{Carya ovata}), Eastern cottonwood (\textit{Populus deltoides}), White oak (\textit{Quercus alba}), Northern red oak (\textit{Quercus rubra}) and American basswood (\textit{Tilia americana}). For this, we collected two 5-mm diameter cores, 15-cm length at 1.3 meters above ground, perpendicular to the slope and at 180 degrees from each other, using an increment borer (Mora Borer, Haglöfs Sweden, Bromma, Stockholm, Sweden). We cleaned the increment borer with alcohol (70\% ethanol) and the inside with a brush before collecting each core. We stored the cores in modified plastic straws to allow aeration and were left to dry at ambient temperature for three months.
 
 %-------------------------------------------------------------------------------
 % Sample processing, imaging and measuring
 %-------------------------------------------------------------------------------
 \subsection*{Sample processing, imaging and measuring}
-We used wooden mounts to stabilize the cores that were then sanded using progressively finer sandpaper grit, by increments of roughly 150 from 150 to 1000. We then used a high-resolution scanner to scan the cores at a resolution of 6250 dpi \citep{fong_tim_2026}, and used those images to measure the ring widths using ImageJ \citep{schneider_nih_2012}. \\
+We used wooden mounts to stabilize the cores that were then sanded using progressively finer sandpaper grit (from 150 to 1000) by increments of roughly 150. We then used a high-resolution scanner to scan the cores at a resolution of 6250 dpi \citep{fong_tim_2026}, and used those images to measure the ring widths using ImageJ \citep{schneider_nih_2012}. \\
 
-We visually cross-dated the ring width chronologies by assigning a calendar year to each ring and comparing yearly variation of trends across the different individuals of the same species \citep{cook_methods_1990}. Our short chronologies and our low species replication prevented us from performing statistical cross-dating. We also did not detrend our chronologies because the ring widths during our study period (nine years) showed no consistent allometric trend (Figure \ref{fig:allom}). We included year in our models to control for effects of different years.
+We visually cross-dated the ring width chronologies by assigning a calendar year to each ring and comparing yearly variation of trends across the different individuals of the same species \citep{cook_methods_1990}. Our short chronologies and low species replication prevented us from performing statistical cross-dating. We also did not detrend our chronologies because the ring widths during our study period (nine years) showed no consistent allometric trend (Figure \ref{fig:allom}). We included year in our models to control for effects of different years.
 
 \subsection*{Data analyses}
-We used Bayesian hierarchical models to understand how growth shifted with four different season metrics: GDD, GSL, SOS and EOS. We used growing degree days (GDD; mean daily temperature above 5\degree C) between leafout and leaf coloring to calculate the thermal season and the number of days between leafout and leaf coloring for the calendar season (growing season length; GSL). Then, we used leafout for the start of season (SOS) and leaf coloring for the end of season (EOS). To better illustrate ring widths responses to our season metrics, we report ring width change (log(mm)) as the number of GDDs accumulated in an average week (seven days) of May (day of year 121 to 150 from 2016 to 2024; 58.32 GDD) for the thermal season. Similarly, we report ring width change per week of season length, leafout and leaf coloring for GSL, SOS and EOS, respectively. We report effects when the 90\% UI do not overlap with zero across all models.\\
+We used Bayesian hierarchical models to understand how growth shifted with four different season metrics: GDD, GSL, SOS and EOS. We used growing degree days (GDD; mean daily temperature above 5\degree C) between leafout and leaf coloring to calculate the thermal season and the number of days between leafout and leaf coloring for the calendar season (growing season length; GSL). Then, we used leafout for the start of season (SOS) and leaf coloring for the end of season (EOS). To better illustrate ring width responses to our season metrics, we report ring width change (log(mm)) in response to the number of GDDs accumulated in an average week (seven days) of May (day of year 121 to 150 from 2016 to 2024; 58.32 GDD) for the thermal season. Similarly, we report ring width change per week of season length, leafout and leaf coloring for GSL, SOS and EOS, respectively. We report effects when the 90\% UI do not overlap with zero across all models.\\
 
 We combined daily climate data from two sources for the duration of our study (2016-2024). From 2016-2019, we used the Weld Hill research station climate station \citep{arnoldarboretum_weather_2026} and the "Boston (Weld Hill)" station for the remaining years \citep[2020-2024;][]{carroll_network_2026}. Both are located right next to the Arboretum. We determined drought occurrence at the arboretum using the North American Drought Monitor Maps and used the proposed drought index to qualify their intensity \citep{nationalcentersforenvironmentalinformationncei_north_2026}. \\
 
@@ -138,7 +138,7 @@ ln(ringwidth)_i &\sim Normal(\mu, \sigma_y) \\
 \label{eq:mainMdl}
 \end{equation}
 
-With this model, we estimated a species-specific effect of each season predictor on growth ($\beta_{species}$), but we also controlled for variation due to species ($\alpha_{species}$), individual tree ($\alpha_{treeid}$) and year ($\alpha_{year}$). We first ran the models using natural units and then scaled the predictors through $z$-scoring so we could directly compare their effect size \citep{gelman_data_2006}. We report estimates as means and 90\% uncertainty intervals (UI). We also fit the models for SOS and EOS using the full vs restricted datasets. As a supplementary analyses, we ran the models using budburst instead instead of leafout as the SOS to test whether our model responses diverged across diffuse vs ring porous species.\\
+With this model, we estimated a species-specific effect of each season predictor on growth ($\beta_{species}$), but we also controlled for variation due to species ($\alpha_{species}$), individual tree ($\alpha_{treeid}$) and year ($\alpha_{year}$). We first ran the models using natural units and then scaled the predictors through $z$-scoring so we could directly compare their effect size \citep{gelman_data_2006}. We report estimates as means and 90\% uncertainty intervals (UI). We also fit the models for SOS and EOS using the full vs restricted datasets. Finally, because the SOS diverge across species with different wood anatomy, we ran the models using budburst instead of leafout as the SOS---allowing us to test whether our model responses diverged across diffuse vs ring porous species (Table \ref{tab:tsCount}).\\
 
 We used an additional model to account for the previous year thermal conditions. For this, we used the GDD accumulated between leafout and leaf coloring from the previous year (e.g. for growth year of 2020, we used the GDD of 2019 as the previous year GDD), alongside the GDD accumulated during the current year. For interpretability, we also report ring width change (log(mm)) as the number of GDDs (for both years) accumulated in an average week (seven days) of May (day of year 121 to 150 from 2016 to 2024; 58.32 GDD). Thus, we estimated the previous and current year thermal season effect on the current year's growth as:
 
@@ -182,8 +182,7 @@ observations, yielding
 (2017) to 
 23.07$^\circ$C 
 (2020), with an average of
-22.51$^\circ$C. 2020 and 2022 had moderate droughts in the summer (June, July and August), which ramped up to severe in September. However, a moderate drought in June 2016, ramped up to severe in July, then extreme in August and September. 
-%emw25Jun -- somewhere in Methods you should say how you checked these early seasons -- or maybe 77 is not really an outlier? Small issue we can fix with a git issue if you need help. 
+22.51$^\circ$C. 2020 and 2022 had moderate droughts in the summer (June, July and August), which ramped up to severe in September. Additionally, a moderate drought in June 2016, ramped up to severe in July, then extreme in August and September. 
 The calendar season (GSL) ranged from 
 77 days ({\Afla} in 
 2018) to 
@@ -216,7 +215,7 @@ Longer thermal season did not increase growth for any species and decreased grow
 Previous year GDD increased growth for {\Ball}
 ($\beta =$ 0.15, UI:
 0.02,
-0.28 \RW scaled GDD) but the current year GDD did not change its growth, unlike the observed response when the previous year conditions were not considered. {\Ball}'s congeneric {\Bnig}, also grew less with previous year GDD ($\beta =$ 
+0.28 \RW scaled GDD), and the current year GDD decreased its growth, like the observed response when the previous year conditions were not considered. {\Ball}'s congeneric {\Bnig}, also grew less with previous year GDD ($\beta =$ 
 -0.08, UI:
 -0.17,
 -0.00 \RW scaled GDD; Figure \ref{fig:tsPrvsYr}b; Table \ref{tab:tab_PrvsYr}) but in contrast, current year GDD increased growth for that species ($\beta =$ 
@@ -237,23 +236,21 @@ $\beta =$ 0.15, UI:
 284 vs $n =$
 278; Figure \ref{fig:tsSOSEOScomparison}b), or when using budburst instead of leafout as the start of the growing season (Figure \ref{fig:buburstVSleafoutTS}c). \\
 
-Finally, a later SOS delayed EOS only for {\Pdel} 
-($\beta$: 1.04, UI:
+Finally, a later SOS delayed EOS only for {\Pdel} ($\beta$: 
+1.04, UI:
 0.39,
-1.7 $\Delta$ EOS/SOS; Figure \ref{fig:SOSonEOS}. We did not find any clear difference on baseline growth across years (Figure \ref{fig:tsmuplotayear}; Table \ref{tab:tab_all}) and between species (Figure \ref{fig:tsxyGDDyr};\ref{fig:tsxyGSLyr}). Growth was similar across individual trees (Figure \ref{fig:tsmuplotatreeid}).
-
-
+1.70 $\Delta$ EOS/SOS; Figure \ref{fig:SOSonEOS}. We did not find any clear difference on baseline growth across years (Figure \ref{fig:tsmuplotayear}; Table \ref{tab:tab_all}) and between species (Figure \ref{fig:tsxyGDDyr}; \ref{fig:tsxyGSLyr}). Growth was similar across individual trees (Figure \ref{fig:tsmuplotatreeid}).
 
 % Figure mu across all species and climate predictors
 \begin{figure}[!ht]
 \includegraphics[width=0.8\textwidth]{../../analyses/figures/growthModelsMain/TSmuALLbsppWlines.pdf}
-\caption{Estimates of ring width change (log(mm)) as a function of four different phenological predictors: growing degree days of the growing season, GDD (mean daily temperature above 5\degree C); growing season length, GSL; start of season (SOS); end of season (EOS) across 11 species (Red maple (\textit{Acer rubrum}), Sugar maple (\textit{Acer saccharum}), Yellow buckeye (\textit{Aesculus flava}), Yellow birch (\textit{Betula alleghaniensis}), River birch (\textit{Betula nigra}), Pignut hickory (\textit{Carya glabra}), Shagbark hickory (\textit{Carya ovata}), Eastern cottonwood (\textit{Populus deltoides}), White oak (\textit{Quercus alba}), Northern red oak (\textit{Quercus rubra}) and American basswood (\textit{Tilia americana})); species colors are the same across the panels). Panels (a) to (d) represent the model slope estimates for each species, for each predictor, which we represent through \RW scaled predictor (see `Data analyses' section in Methods for more details on predictor scaling). The dots represent the mean of each species and the lines, the 50\% and 90\% uncertainty intervals (UI; see Table \ref{tab:ts_slope_table} for parameter estimates). Panels (e) to (h) represent the simulated response curves of ring width as a function of each predictor, with the lines depicting the mean response at each simulated predictor value, and the shaded area, the interquantile ranges (50\% UI). These model do not include a slope on the previous year GDD (see Figure \ref{fig:tsPrvsYr} for these estimates).}
+\caption{Estimates of ring width change (log(mm)) as a function of four different phenological predictors: growing degree days of the growing season (mean daily temperature above 5\degree C); growing season length; start of season; end of season across 11 species: (Red maple (\textit{Acer rubrum}), Sugar maple (\textit{Acer saccharum}), Yellow buckeye (\textit{Aesculus flava}), Yellow birch (\textit{Betula alleghaniensis}), River birch (\textit{Betula nigra}), Pignut hickory (\textit{Carya glabra}), Shagbark hickory (\textit{Carya ovata}), Eastern cottonwood (\textit{Populus deltoides}), White oak (\textit{Quercus alba}), Northern red oak (\textit{Quercus rubra}) and American basswood (\textit{Tilia americana})); species colors are the same across the panels). Panels (a) to (d) represent the model slope estimates for each species, for each predictor, which we represent through \RW scaled predictor (see `Data analyses' section in Methods for more details on predictor scaling). The dots represent the mean of each species and the lines, the 50\% and 90\% uncertainty intervals (UI; see Table \ref{tab:ts_slope_table} for parameter estimates). Panels (e) to (h) represent the simulated response curves of ring width as a function of each predictor, with the lines depicting the mean response at each simulated predictor value, and the shaded area, the interquantile ranges (50\% UI). These models do not include a slope on the previous year GDD (see Figure \ref{fig:tsPrvsYr} for these estimates).}
 \label{fig:tsmuplotbspp}
 \end{figure}
 
 % Figure mu previous year and current year
 \begin{figure}[!ht]
-\includegraphics[width=0.6\textwidth]{../../analyses/figures/growthPreviousYearModel/bsppCurrentVSpreviousYR.jpeg}
+\includegraphics[width=0.6\textwidth]{../../analyses/figures/growthPreviousYearModel/bsppCurrentVSpreviousYR.pdf}
 \caption{Model slope estimates representing ring width change (log(mm)) as a function of the current year growing degree days (GDD; a) and the previous year GDD (b). GDD represent the accumulated growing degree days (mean daily temperature above 5\degree C)) between leafout and leaf colouring and the models estimates shows ring width change (log(mm)) per scaled GDD (see `Data analyses' section in Methods). The dots represent the mean of each species and the lines, the 50\% and 90\% uncertainty intervals (UI).}
 \label{fig:tsPrvsYr}
 \end{figure}
@@ -295,7 +292,7 @@ Finally, a later SOS delayed EOS only for {\Pdel}
 \end{figure}
 
 % latex table generated in R 4.5.1 by xtable 1.8-4 package
-% Wed Jul  1 13:56:11 2026
+% Wed Jul  1 15:00:13 2026
 \begin{table}[ht]
 \centering
 \caption{Treespotters species grouped by tree type, growth speed, and wood anatomy. We collected the growth speed information for each species from \cite{burns_silvics_1990}We sampled a total of 49 individual trees} 
@@ -328,7 +325,7 @@ Common Name (Latin binomial) & Growth speed & Wood Anatomy & $n$ \\
 \section*{Supplemental results}
 
 % latex table generated in R 4.5.1 by xtable 1.8-4 package
-% Wed Jul  1 13:56:11 2026
+% Wed Jul  1 15:00:13 2026
 \begin{table}[ht]
 \centering
 \caption{Species level slope parameters which represent ring width change (log(mm)), per scaled predictor (see `Data analyses' section in Methods for more details on predictor scaling). We report estimates as mean and 90\% uncertainty intervals (in square brackets) across our four different predictors (GDD: growing degree days, GSL: growing season length, SOS: start of season and EOS: end of season). Table \ref{tab:tab_all} reports all the models parameters.} 
@@ -355,10 +352,10 @@ Species & GDD & GSL & SOS & EOS \\
 
 
 % latex table generated in R 4.5.1 by xtable 1.8-4 package
-% Wed Jul  1 13:56:12 2026
+% Wed Jul  1 15:00:13 2026
 \begin{table}[ht]
 \centering
-\caption{Summary output of each parameter from our four predictors, using ring width (log(mm)) as the reponse variable. We report estimates as mean and 90\% uncertainty intervals (in square brackets) across our four different predictors (GDD: growing degree days, GSL: growing season length, SOS: start of season and EOS: end of season). See `Data analyses' section in Methods for more details.} 
+\caption{Summary output of each parameter from our four predictors, using ring width (log(mm)) as the reponse variable (See equation \ref{eq:mainMdl}). We report estimates as mean and 90\% uncertainty intervals (in square brackets) across our four different predictors (GDD: growing degree days, GSL: growing season length, SOS: start of season and EOS: end of season). See `Data analyses' section in Methods for more details.} 
 \label{tab:tab_all}
 \begin{tabular}{lllll}
   \hline
@@ -404,10 +401,10 @@ $\alpha$ & 0.61 [-2.08, 3.25] & 0.49 [-2.09, 3.03] & 0.24 [-2.39, 2.94] & 0.23 [
 
 
 % latex table generated in R 4.5.1 by xtable 1.8-4 package
-% Wed Jul  1 13:56:12 2026
+% Wed Jul  1 15:00:13 2026
 \begin{table}[ht]
 \centering
-\caption{Summary output of each parameter from the previous year model using ring width (log(mm)) as the reponse variable. We report estimates as mean and 90\% uncertainty intervals (in square brackets). see `Data analyses' section in Methods for more details} 
+\caption{Summary output of each parameter from the previous year model (Equation \ref{eq:prvsYrMdl}) using ring width (log(mm)) as the reponse variable. We report estimates as mean and 90\% uncertainty intervals (in square brackets). see `Data analyses' section in Methods for more details} 
 \label{tab:tab_PrvsYr}
 \begin{tabular}{ll}
   \hline
@@ -464,10 +461,10 @@ $\alpha$ & 0.20 [-1.10, 1.48] \\
 
 
 % latex table generated in R 4.5.1 by xtable 1.8-4 package
-% Wed Jul  1 13:56:12 2026
+% Wed Jul  1 15:00:13 2026
 \begin{table}[ht]
 \centering
-\caption{Summary output of each parameter from the model on the effect of SOS on EOS. We report estimates as mean and 90\% uncertainty intervals (in square brackets). see `Data analyses' section in Methods for more details} 
+\caption{Summary output of each parameter from the model on the effect of SOS (days) on EOS (days; Equation \ref{eq:SOSonEOSMdl}). We report estimates as mean and 90\% uncertainty intervals (in square brackets). see `Data analyses' section in Methods for more details} 
 \label{tab:tab_PrvsYr}
 \begin{tabular}{ll}
   \hline
