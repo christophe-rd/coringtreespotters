@@ -1,14 +1,33 @@
-\begin{thebibliography}{1}
+\begin{thebibliography}{5}
 \expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
 
-\bibitem[{Denny \emph{et~al.}(2014)Denny, Gerst, Miller-Rushing, Tierney,
-  Crimmins, Enquist, Guertin, Rosemartin, Schwartz, Thomas \&
-  Weltzin}]{denny_standardized_2014}
-Denny, E.G., Gerst, K.L., Miller-Rushing, A.J., Tierney, G.L., Crimmins, T.M.,
-  Enquist, C.A.F., Guertin, P., Rosemartin, A.H., Schwartz, M.D., Thomas, K.A.
-  \& Weltzin, J.F. (2014).
-\newblock Standardized phenology monitoring methods to track plant and animal
-  activity for science and resource management applications.
-\newblock \emph{International Journal of Biometeorology}, 58, 591--601.
+\bibitem[{{Arnold Arboretum}(2026)}]{arnoldarboretum_weather_2026}
+{Arnold Arboretum} (2026).
+\newblock Weather {Data} at the {Arnold} {Arboretum}.
+\newblock Accessed: 2025-09-24.
+
+\bibitem[{Carroll \emph{et~al.}(2026)Carroll, Weigle \&
+  Petzoldt}]{carroll_network_2026}
+Carroll, J., Weigle, T. \& Petzoldt, C. (2026).
+\newblock The {Network} for {Environment} and {Weather} {Applications}
+  ({NEWA}).
+\newblock Accessed: 2025-09-24.
+
+\bibitem[{Cook \& Kairiukstis(1990)}]{cook_methods_1990}
+Cook, E.R. \& Kairiukstis, L.A. (eds.)  (1990).
+\newblock \emph{Methods of {Dendrochronology}}.
+\newblock Springer Netherlands, Dordrecht.
+
+\bibitem[{{National Centers for Environmental Information
+  (NCEI)}(2026)}]{nationalcentersforenvironmentalinformationncei_north_2026}
+{National Centers for Environmental Information (NCEI)} (2026).
+\newblock North {American} {Drought} {Monitor}.
+\newblock Shortauthor: NCEI Accessed: 2026-04-22.
+
+\bibitem[{Schneider \emph{et~al.}(2012)Schneider, Rasband \&
+  Eliceiri}]{schneider_nih_2012}
+Schneider, C.A., Rasband, W.S. \& Eliceiri, K.W. (2012).
+\newblock {NIH} {Image} to {ImageJ}: 25 years of image analysis.
+\newblock \emph{Nature Methods}, 9, 671--675.
 
 \end{thebibliography}
