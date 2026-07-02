@@ -87,15 +87,14 @@ pgsGSLagg$pgsGSL <- round(pgsGSLagg$pgsGSL, 1)
   
   \item Diffuse vs ring porous species start growth at different time---experience different temperature throughout the season
   
-  \item Longer seasons may benefit slow growth species $>$ fast growth species: slow growth rate under good conditions for a long time = increased growth 
+  \item Longer seasons may benefit slow growth species $>$ fast growth species %emwJun29 -- how/why? Should the reader understand this? 
   
-  \item Different carbon allocation strategies may mute short term growth responses: storage investment vs opportunistic growth
-  
-  \item Increased C storage in current year, but stored instead of invested in growth: importance of considering multiple years
+  \item Different carbon allocation strategies may mute short term growth responses %emwJun29 -- is this the reason? I would FLIP them then or rethink a little. 
   
   \end{enumerate}
   
 % Paragraph 
+%emwJun29 -- be sure you transition into this from the previous paragraph; this should be easy I think
 \item Previous year conditions can affect the following year's growth
   \begin{enumerate}
   \item Deciduous trees use stored carbon at the beginning of the season
@@ -109,12 +108,11 @@ pgsGSLagg$pgsGSL <- round(pgsGSLagg$pgsGSL, 1)
 % Paragraph
 \item Look at growth and GSL relationship in an urban arboretum where drought and competition are limited
   \begin{enumerate}
-  \item Will look at 11 species of mature trees across nine years. 
-  
   \item GS number of days vs temperature conditions
   
   \item Growth with tree rings and SOS and EOS with leaf phenology from citizen scientists 
   
+  \item Will look at 11 species of mature trees across nine years. %emwJun29 -- given the order of your intro, I think this may fit best toward the START of this paragraph ... 
   \end{enumerate}
 \end{enumerate}
 
