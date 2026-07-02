@@ -1,11 +1,61 @@
-\documentclass{article}
+\documentclass{article}\usepackage[]{graphicx}\usepackage[]{xcolor}
+% maxwidth is the original width if it is less than linewidth
+% otherwise use linewidth (to make sure the graphics do not exceed the margin)
+\makeatletter
+\def\maxwidth{ %
+  \ifdim\Gin@nat@width>\linewidth
+    \linewidth
+  \else
+    \Gin@nat@width
+  \fi
+}
+\makeatother
+
+\definecolor{fgcolor}{rgb}{0.345, 0.345, 0.345}
+\newcommand{\hlnum}[1]{\textcolor[rgb]{0.686,0.059,0.569}{#1}}%
+\newcommand{\hlsng}[1]{\textcolor[rgb]{0.192,0.494,0.8}{#1}}%
+\newcommand{\hlcom}[1]{\textcolor[rgb]{0.678,0.584,0.686}{\textit{#1}}}%
+\newcommand{\hlopt}[1]{\textcolor[rgb]{0,0,0}{#1}}%
+\newcommand{\hldef}[1]{\textcolor[rgb]{0.345,0.345,0.345}{#1}}%
+\newcommand{\hlkwa}[1]{\textcolor[rgb]{0.161,0.373,0.58}{\textbf{#1}}}%
+\newcommand{\hlkwb}[1]{\textcolor[rgb]{0.69,0.353,0.396}{#1}}%
+\newcommand{\hlkwc}[1]{\textcolor[rgb]{0.333,0.667,0.333}{#1}}%
+\newcommand{\hlkwd}[1]{\textcolor[rgb]{0.737,0.353,0.396}{\textbf{#1}}}%
+\let\hlipl\hlkwb
+
+\usepackage{framed}
+\makeatletter
+\newenvironment{kframe}{%
+ \def\at@end@of@kframe{}%
+ \ifinner\ifhmode%
+  \def\at@end@of@kframe{\end{minipage}}%
+  \begin{minipage}{\columnwidth}%
+ \fi\fi%
+ \def\FrameCommand##1{\hskip\@totalleftmargin \hskip-\fboxsep
+ \colorbox{shadecolor}{##1}\hskip-\fboxsep
+     % There is no \\@totalrightmargin, so:
+     \hskip-\linewidth \hskip-\@totalleftmargin \hskip\columnwidth}%
+ \MakeFramed {\advance\hsize-\width
+   \@totalleftmargin\z@ \linewidth\hsize
+   \@setminipage}}%
+ {\par\unskip\endMakeFramed%
+ \at@end@of@kframe}
+\makeatother
+
+\definecolor{shadecolor}{rgb}{.97, .97, .97}
+\definecolor{messagecolor}{rgb}{0, 0, 0}
+\definecolor{warningcolor}{rgb}{1, 0, 1}
+\definecolor{errorcolor}{rgb}{1, 0, 0}
+\newenvironment{knitrout}{}{} % an empty environment to be redefined in TeX
+
+\usepackage{alltt}
 \usepackage{hyperref}
 \usepackage[margin=0.8in]{geometry}
 \usepackage{booktabs}
 \usepackage{amsmath}
 \usepackage{gensymb}
 \usepackage{natbib}
-
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
 \begin{document}
 % \SweaveOpts{concordance=TRUE}
 
@@ -28,39 +78,16 @@
 \newcommand{\Tame}{\textit{T. americana}}   
 
 
-<<Setup, echo=FALSE, message=FALSE, warning=FALSE>>=
-library(xtable)
-source("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/rcode/TSgrowthModelsMain_plots.R")
-source("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/rcode/TSclimate_plots.R")
 
-countspp <- table(empts[!duplicated(empts$id),]$latbi)
-options(digits = 2)
-
-tstablespp <- c("Acer. rubrum" = "\\textit{A. rubrum}",
-                "Acer. saccharum" = "\\textit{A. saccharum}",
-                "Ae. flava" = "\\textit{A. flava}",
-                "Betula alleghaniensis" = "\\textit{B. alleghaniensis}",
-                "Betula nigra" = "\\textit{B. nigra}",
-                "Carya glabra" = "\\textit{C. glabra}",
-                "Carya ovata" = "\\textit{C. ovata}",
-                "Populus deltoides" = "\\textit{P. deltoides}",
-                "Quercus alba" = "\\textit{Q. alba}",
-                "Quercus rubra" = "\\textit{Q. rubra}",
-                "Tilia americana" = "\\textit{T. americana}")
-
-pgsGSLagg <- aggregate(pgsGSL ~ year, empts, mean)
-pgsGSLagg$pgsGSL <- round(pgsGSLagg$pgsGSL, 1)
-
-@
 
 % <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 \section*{Introduction}
 % <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
-Anthropogenic climate change affects many different biological processes. One of the most documented is shifts in phenology---study of recurring life history events. In plants, shifts in spring and autumn phenology have lengthen the window of opportunity during which they can grow. Trees more specifically should grow more with longer growing seasons which is particularly significant given the critical role that forests play in offsetting human-emitted greenhouse gas emissions. In temperate ecosystems, a large portion of that carbon is stored in mature, canopy trees which emphasizes their critical role in the potential of forest carbon sink. \\
+Antropogenic climate change affect many different biological processes. One of the most documented is shifts in phenology---study of recurring life history events. In plants, shifts in spring and autumn phenology have lengthen the window of opportunity during which they can grow. Trees more specifically should grow more with longer growing seasons which is particularly important given how important temperate forests are in offsetting human-emitted greenhouse gas emissions. In these ecosystems, a large portion of that carbon is stored in mature, canopy trees accentuating their critical role in forest carbon sink potential. \\
 
-However, the long standing assumption that longer growing seasons should increased growth has recently been challenged by studies that failed to find this relationship. Indeed, warmer springs, which contribute in large part to extending the growing season, have not increased tree growth rate nor annual increment *\citep{dow_2022_warm}. Increased tree growth with longer growing season is an important foundation of current carbon models---crucial tools to guide set greenhouse gas emission objectives and their related solutions. This highlights the need to understand why trees may not grow more with longer growing seasons. \\ 
+However, the long standing that longer growing seasons should increased growth has recently been challenged by studies that failed to find this relationship. Indeed, warmer springs which contribute in large part to extending the growing season have not increased tree growth rate nor annual increment *\citep{dow_2022_warm}. Increased tree growth with longer growing season is an important foundation of current carbon models---crucial tools to help set emission objectives and their related solutions. This highlights the need to understand why trees may not grow more with longer growing seasons. \\ 
 
-Wood anatomy and tree growth strategies may guide tree species responses to growing seasons. Wood anatomy in angiosperm trees has as impact on their growth onset in the spring where ring-porous species start growing several days or weeks earlier than diffuse-porous species. As a result, species with different wood anatomy experience considerably different temperature regime during the growing season. Thus, shifting season lengths should not affect these species uniformly. Furthermore, longer growing seasons may benefit slower growth species as appropriate conditions allow them to keep their steady growth for a longer period [*Cuny2012Life]. In contrast, fast growth species can complete their season growth increment in a short period, making extra days less crucial for them. Additionally, how trees store the carbon that they accumulate (whether it is a direct investment in growth or stored for long term storage) could mute short term responses. Thus, increased carbon storage during the current year that is stored instead of directly invested in growth, highlights the importance of considering multiple years. \\
+Wood anatomy and tree growth strategies may guide species growth responses to growing seasons. Wood anatomy in angiosperms tree has a known impact on their growth onset in the spring where ring-porous species start growing several days to weeks earlier than diffuse-porous species. As a result, species with different wood anatomy experience considerably different temperature regime during the growing season. Furthermore, longer growing seasons may benefit slower growth species as appropriate conditions allow them to keep their steady growth for a longer period. In contrast, fast growth species can complete their season growth increment in a short period, making extra days less crucial for them. Additionally, how trees store the carbon that they accumulate (whether it is a direct investment in growth or stored for long term storage) could mute short term responses. Thus, increased carbon storage during the current year that is stored instead of directly invested in growth, highlights the importance of considering multiple years. \\
 
 The previous year thermal conditions can affect the following year's growth. Deciduous trees are known to use stored carbon at the beginning of the growing season because they need to grow new leaves to start photosynthesis---unlike evergreen trees. Mature trees in particular can rely on carbon that was stored several previous years for their early season growth. This shows that while the environmental conditions during the current year can have a direct effect on growth, it is likely that this poorly understood carbon allocation strategy to storage may be blurred by a multi-year lag effect. \\
 
@@ -94,95 +121,81 @@ Our findings reveal a weak response across species corroborating previous findin
 \renewcommand{\thefigure}{S\arabic{figure}}
 
 
-<<Table bspp , results='asis', echo = FALSE>>=
-options(digits = 2)
-
-bspp_df2_ts_gdd$GDD <- sprintf("%.2f [%.2f, %.2f]", bspp_df2_ts_gdd$mean, bspp_df2_ts_gdd$p5, bspp_df2_ts_gdd$p95)
-
-bspp_df2_ts_gsl$GSL <- sprintf("%.2f [%.2f, %.2f]", bspp_df2_ts_gsl$mean, bspp_df2_ts_gsl$p5, bspp_df2_ts_gsl$p95)
-
-bspp_df2_ts_sos$SOS <- sprintf("%.2f [%.2f, %.2f]", bspp_df2_ts_sos$mean, bspp_df2_ts_sos$p5, bspp_df2_ts_sos$p95)
-
-bspp_df2_ts_eos$EOS <- sprintf("%.2f [%.2f, %.2f]", bspp_df2_ts_eos$mean, bspp_df2_ts_eos$p5, bspp_df2_ts_eos$p95)
-
-gdd <- bspp_df2_ts_gdd[, c("spp_name", "GDD")]
-gsl <- bspp_df2_ts_gsl[, c("spp_name", "GSL")]
-sos <- bspp_df2_ts_sos[, c("spp_name", "SOS")]
-eos <- bspp_df2_ts_eos[, c("spp_name", "EOS")]
-
-df_all <- Reduce(function(x, y) merge(x, y, by = "spp_name", all = TRUE),
-                 list(gdd, gsl, sos, eos))
-colnames(df_all)[1] <- "Species"
-# df_all$Species <- tstablespp[df_all$Species]
-
-# Print table
-tab <- xtable(df_all,
-              caption = "Species level slope parameters which represent ring width change (on the log scale), per scaled predictor (see data analyses section for more details). We report estimates as mean and 90\\% uncertainty intervals (in square brackets) across our four different predictors (GDD: growing degree days, GSL: growing season length, SOS: start of season and EOS: end of season).",
-              label = "tab:ts_slope_table"
-)
-
-print(tab,
-      include.rownames = FALSE,
-      sanitize.text.function = identity,
-      caption.placement = "top")
-@
+% latex table generated in R 4.5.1 by xtable 1.8-4 package
+% Thu Jul  2 15:11:13 2026
+\begin{table}[ht]
+\centering
+\caption{Species level slope parameters which represent ring width change (on the log scale), per scaled predictor (see data analyses section for more details). We report estimates as mean and 90\% uncertainty intervals (in square brackets) across our four different predictors (GDD: growing degree days, GSL: growing season length, SOS: start of season and EOS: end of season).} 
+\label{tab:ts_slope_table}
+\begin{tabular}{lllll}
+  \hline
+Species & GDD & GSL & SOS & EOS \\ 
+  \hline
+A. rubrum & 0.00 [-0.06, 0.06] & 0.05 [-0.05, 0.15] & -0.05 [-0.28, 0.18] & 0.04 [-0.07, 0.14] \\ 
+  A. saccharum & 0.03 [-0.01, 0.07] & 0.00 [-0.04, 0.05] & 0.08 [-0.02, 0.17] & 0.03 [-0.03, 0.08] \\ 
+  Ae. flava & 0.01 [-0.01, 0.02] & 0.02 [-0.01, 0.05] & -0.04 [-0.22, 0.13] & 0.02 [-0.01, 0.05] \\ 
+  B. alleghaniensis & -0.08 [-0.12, -0.03] & -0.05 [-0.12, 0.02] & -0.08 [-0.23, 0.07] & -0.09 [-0.16, -0.01] \\ 
+  B. nigra & 0.03 [-0.00, 0.05] & 0.03 [-0.02, 0.07] & 0.03 [-0.10, 0.16] & 0.03 [-0.02, 0.08] \\ 
+  C. glabra & 0.02 [-0.02, 0.06] & 0.03 [-0.03, 0.08] & 0.08 [-0.07, 0.23] & 0.04 [-0.02, 0.09] \\ 
+  C. ovata & -0.00 [-0.05, 0.04] & -0.01 [-0.07, 0.05] & 0.10 [-0.03, 0.24] & 0.01 [-0.06, 0.08] \\ 
+  P. deltoides & 0.00 [-0.02, 0.03] & 0.02 [-0.03, 0.06] & 0.07 [-0.09, 0.22] & 0.02 [-0.02, 0.06] \\ 
+  Q. alba & 0.02 [-0.06, 0.10] & 0.03 [-0.06, 0.13] & 0.00 [-0.18, 0.18] & 0.05 [-0.07, 0.16] \\ 
+  Q. rubra & 0.03 [-0.03, 0.09] & 0.03 [-0.08, 0.14] & 0.09 [-0.10, 0.28] & 0.05 [-0.06, 0.15] \\ 
+  T. americana & -0.01 [-0.03, 0.01] & -0.02 [-0.05, 0.01] & 0.15 [0.02, 0.27] & -0.01 [-0.04, 0.02] \\ 
+   \hline
+\end{tabular}
+\end{table}
 
 
-<<Table combined all parameters and predictors, results='asis', echo = FALSE>>=
-options(digits = 2)
 
-a_df2_GDD      <- read.csv("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/output/GM_GDDparam_a.csv")
-sigma_df2_GDD  <- read.csv("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/output/GM_GDDparam_sigma.csv")
-bspp_df2_GDD   <- read.csv("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/output/GM_GDDparam_bspp.csv")
-aspp_df2_GDD   <- read.csv("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/output/GM_GDDparam_aspp.csv")
-ayear_df2_GDD  <- read.csv("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/output/GM_GDDparam_ayear.csv")
+% latex table generated in R 4.5.1 by xtable 1.8-4 package
+% Thu Jul  2 15:11:13 2026
+\begin{table}[ht]
+\centering
+\caption{Summary output of each parameter from our four predictors, using ring width (on the log scale) as the reponse variable. We report estimates as mean and 90\% uncertainty intervals (in square brackets) across our four different predictors (GDD: growing degree days, GSL: growing season length, SOS: start of season and EOS: end of season). See data analyses section for more details.} 
+\label{tab:tab_all}
+\begin{tabular}{lllll}
+  \hline
+Parameter & GDD & GSL & SOS & EOS \\ 
+  \hline
+$\alpha$ & 0.61 [-2.08, 3.25] & 0.49 [-2.09, 3.03] & 0.24 [-2.39, 2.94] & 0.23 [-2.48, 2.98] \\ 
+  $\sigma_{\alpha_{tree}}$ & 0.55 [0.45, 0.67] & 0.55 [0.45, 0.68] & 0.54 [0.44, 0.66] & 0.55 [0.45, 0.67] \\ 
+  $\sigma_{y}$ & 0.31 [0.29, 0.34] & 0.32 [0.29, 0.34] & 0.32 [0.29, 0.34] & 0.32 [0.29, 0.34] \\ 
+  $\beta_{spp_{A. rubrum}}$ & 0.00 [-0.06, 0.06] & 0.05 [-0.05, 0.15] & -0.05 [-0.28, 0.18] & 0.04 [-0.07, 0.14] \\ 
+  $\beta_{spp_{A. saccharum}}$ & 0.03 [-0.01, 0.07] & 0.00 [-0.04, 0.05] & 0.08 [-0.02, 0.17] & 0.03 [-0.03, 0.08] \\ 
+  $\beta_{spp_{Ae. flava}}$ & 0.01 [-0.01, 0.02] & 0.02 [-0.01, 0.05] & -0.04 [-0.22, 0.13] & 0.02 [-0.01, 0.05] \\ 
+  $\beta_{spp_{B. alleghaniensis}}$ & -0.08 [-0.12, -0.03] & -0.05 [-0.12, 0.02] & -0.08 [-0.23, 0.07] & -0.09 [-0.16, -0.01] \\ 
+  $\beta_{spp_{B. nigra}}$ & 0.03 [-0.00, 0.05] & 0.03 [-0.02, 0.07] & 0.03 [-0.10, 0.16] & 0.03 [-0.02, 0.08] \\ 
+  $\beta_{spp_{C. glabra}}$ & 0.02 [-0.02, 0.06] & 0.03 [-0.03, 0.08] & 0.08 [-0.07, 0.23] & 0.04 [-0.02, 0.09] \\ 
+  $\beta_{spp_{C. ovata}}$ & -0.00 [-0.05, 0.04] & -0.01 [-0.07, 0.05] & 0.10 [-0.03, 0.24] & 0.01 [-0.06, 0.08] \\ 
+  $\beta_{spp_{P. deltoides}}$ & 0.00 [-0.02, 0.03] & 0.02 [-0.03, 0.06] & 0.07 [-0.09, 0.22] & 0.02 [-0.02, 0.06] \\ 
+  $\beta_{spp_{Q. alba}}$ & 0.02 [-0.06, 0.10] & 0.03 [-0.06, 0.13] & 0.00 [-0.18, 0.18] & 0.05 [-0.07, 0.16] \\ 
+  $\beta_{spp_{Q. rubra}}$ & 0.03 [-0.03, 0.09] & 0.03 [-0.08, 0.14] & 0.09 [-0.10, 0.28] & 0.05 [-0.06, 0.15] \\ 
+  $\beta_{spp_{T. americana}}$ & -0.01 [-0.03, 0.01] & -0.02 [-0.05, 0.01] & 0.15 [0.02, 0.27] & -0.01 [-0.04, 0.02] \\ 
+  $\alpha_{year_{2019}}$ & 0.09 [-0.46, 0.64] & 0.06 [-0.48, 0.63] & 0.07 [-0.47, 0.64] & 0.06 [-0.50, 0.62] \\ 
+  $\alpha_{year_{2020}}$ & -0.06 [-0.60, 0.49] & -0.07 [-0.61, 0.50] & -0.12 [-0.66, 0.45] & -0.07 [-0.63, 0.47] \\ 
+  $\alpha_{year_{2021}}$ & 0.00 [-0.55, 0.56] & -0.00 [-0.55, 0.57] & 0.01 [-0.54, 0.58] & -0.01 [-0.58, 0.54] \\ 
+  $\alpha_{year_{2022}}$ & -0.05 [-0.61, 0.50] & -0.07 [-0.63, 0.50] & -0.07 [-0.63, 0.49] & -0.08 [-0.65, 0.48] \\ 
+  $\alpha_{year_{2023}}$ & 0.20 [-0.36, 0.76] & 0.18 [-0.38, 0.75] & 0.20 [-0.35, 0.78] & 0.17 [-0.40, 0.72] \\ 
+  $\alpha_{year_{2024}}$ & 0.08 [-0.47, 0.64] & 0.07 [-0.47, 0.66] & 0.07 [-0.48, 0.64] & 0.08 [-0.49, 0.64] \\ 
+  $\alpha_{year_{2016}}$ & -0.21 [-0.77, 0.34] & -0.22 [-0.76, 0.35] & -0.25 [-0.80, 0.31] & -0.25 [-0.81, 0.29] \\ 
+  $\alpha_{year_{2017}}$ & -0.03 [-0.58, 0.52] & -0.06 [-0.59, 0.52] & 0.00 [-0.54, 0.56] & -0.07 [-0.63, 0.48] \\ 
+  $\alpha_{year_{2018}}$ & 0.04 [-0.52, 0.59] & 0.02 [-0.52, 0.59] & -0.00 [-0.55, 0.56] & 0.01 [-0.54, 0.56] \\ 
+  $\alpha_{spp_{A. rubrum}}$ & -0.05 [-3.40, 3.35] & -0.95 [-4.12, 2.17] & 1.23 [-3.23, 5.60] & -1.08 [-5.62, 3.44] \\ 
+  $\alpha_{spp_{A. saccharum}}$ & -0.90 [-3.86, 2.10] & 0.43 [-2.34, 3.17] & -0.57 [-3.59, 2.35] & -0.37 [-3.79, 3.02] \\ 
+  $\alpha_{spp_{Ae. flava}}$ & -0.49 [-3.20, 2.19] & -0.46 [-3.09, 2.14] & 0.93 [-2.69, 4.47] & -0.49 [-3.33, 2.38] \\ 
+  $\alpha_{spp_{B. alleghaniensis}}$ & 2.32 [-0.68, 5.34] & 0.61 [-2.29, 3.46] & 1.17 [-2.34, 4.58] & 3.25 [-0.47, 6.96] \\ 
+  $\alpha_{spp_{B. nigra}}$ & -0.68 [-3.54, 2.12] & -0.13 [-2.82, 2.58] & 0.17 [-3.18, 3.40] & -0.50 [-3.65, 2.67] \\ 
+  $\alpha_{spp_{C. glabra}}$ & -0.89 [-3.89, 2.06] & -0.64 [-3.44, 2.12] & -1.17 [-4.65, 2.33] & -1.16 [-4.46, 2.12] \\ 
+  $\alpha_{spp_{C. ovata}}$ & -0.32 [-3.35, 2.74] & -0.07 [-2.88, 2.73] & -1.96 [-5.42, 1.40] & -0.35 [-4.01, 3.29] \\ 
+  $\alpha_{spp_{P. deltoides}}$ & -0.38 [-3.14, 2.40] & -0.39 [-3.09, 2.26] & -1.04 [-4.60, 2.52] & -0.49 [-3.54, 2.50] \\ 
+  $\alpha_{spp_{Q. alba}}$ & -0.85 [-4.70, 3.03] & -0.56 [-3.66, 2.52] & 0.40 [-3.47, 4.32] & -1.44 [-6.32, 3.48] \\ 
+  $\alpha_{spp_{Q. rubra}}$ & -1.09 [-4.47, 2.23] & -0.43 [-3.80, 2.96] & -1.08 [-4.98, 2.91] & -1.44 [-6.04, 3.22] \\ 
+  $\alpha_{spp_{T. americana}}$ & 0.30 [-2.41, 3.02] & 0.59 [-1.98, 3.18] & -2.02 [-5.24, 1.14] & 0.92 [-1.93, 3.81] \\ 
+   \hline
+\end{tabular}
+\end{table}
 
-a_df2_GSL      <- read.csv("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/output/GM_GSLparam_a.csv")
-sigma_df2_GSL  <- read.csv("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/output/GM_GSLparam_sigma.csv")
-bspp_df2_GSL   <- read.csv("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/output/GM_GSLparam_bspp.csv")
-aspp_df2_GSL   <- read.csv("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/output/GM_GSLparam_aspp.csv")
-ayear_df2_GSL  <- read.csv("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/output/GM_GSLparam_ayear.csv")
-
-a_df2_SOS      <- read.csv("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/output/GM_SOSparam_a.csv")
-sigma_df2_SOS  <- read.csv("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/output/GM_SOSparam_sigma.csv")
-bspp_df2_SOS   <- read.csv("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/output/GM_SOSparam_bspp.csv")
-aspp_df2_SOS   <- read.csv("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/output/GM_SOSparam_aspp.csv")
-ayear_df2_SOS  <- read.csv("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/output/GM_SOSparam_ayear.csv")
-
-a_df2_EOS      <- read.csv("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/output/GM_EOSparam_a.csv")
-sigma_df2_EOS  <- read.csv("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/output/GM_EOSparam_sigma.csv")
-bspp_df2_EOS   <- read.csv("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/output/GM_EOSparam_bspp.csv")
-aspp_df2_EOS   <- read.csv("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/output/GM_EOSparam_aspp.csv")
-ayear_df2_EOS  <- read.csv("/Users/christophe_rouleau-desrochers/github/coringtreespotters/analyses/output/GM_EOSparam_ayear.csv")
-
-bspp_df2_GDD$spp_name  <- empts$latbi[match(bspp_df2_GDD$spp, empts$spp_num)]
-aspp_df2_GDD$spp_name  <- empts$latbi[match(aspp_df2_GDD$spp, empts$spp_num)]
-ayear_df2_GDD$year_name <- empts$year[match(ayear_df2_GDD$year, empts$year_num)]
-
-fmt <- function(df) sprintf("%.2f [%.2f, %.2f]", df$mean, df$p5, df$p95)
-
-param_labels <- c(
-  "$\\alpha$",
-  "$\\sigma_{\\alpha_{tree}}$", "$\\sigma_{y}$",
-  paste0("$\\beta_{spp_{",   bspp_df2_GDD$spp_name,  "}}$"),
-  paste0("$\\alpha_{year_{", ayear_df2_GDD$year_name, "}}$"),
-  paste0("$\\alpha_{spp_{",  aspp_df2_GDD$spp_name,  "}}$")
-)
-
-combined <- data.frame(
-  "Parameter" = param_labels,
-  "GDD" = c(fmt(a_df2_GDD), fmt(sigma_df2_GDD), fmt(bspp_df2_GDD), fmt(ayear_df2_GDD), fmt(aspp_df2_GDD)),
-  "GSL" = c(fmt(a_df2_GSL), fmt(sigma_df2_GSL), fmt(bspp_df2_GSL), fmt(ayear_df2_GSL), fmt(aspp_df2_GSL)),
-  "SOS" = c(fmt(a_df2_SOS), fmt(sigma_df2_SOS), fmt(bspp_df2_SOS), fmt(ayear_df2_SOS), fmt(aspp_df2_SOS)),
-  "EOS" = c(fmt(a_df2_EOS), fmt(sigma_df2_EOS), fmt(bspp_df2_EOS), fmt(ayear_df2_EOS), fmt(aspp_df2_EOS)),
-  check.names = FALSE
-)
-
-print(xtable(combined,
-             caption = "Summary output of each parameter from our four predictors, using ring width (on the log scale) as the reponse variable. We report estimates as mean and 90\\% uncertainty intervals (in square brackets) across our four different predictors (GDD: growing degree days, GSL: growing season length, SOS: start of season and EOS: end of season). See data analyses section for more details.",
-             label = "tab:tab_all"),
-      include.rownames = FALSE, sanitize.text.function = identity, caption.placement = "top")
-@
 
 % Coringtreespotters year mu plot
 \begin{figure}[!ht]
