@@ -7,9 +7,7 @@
 *.gz
 *.RData
 stanOutput
-
 *.html
-*.pdf
 figure/
 *_cache/
 *-concordance.tex

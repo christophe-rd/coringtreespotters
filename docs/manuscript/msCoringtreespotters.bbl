@@ -1,4 +1,4 @@
-\begin{thebibliography}{8}
+\begin{thebibliography}{9}
 \expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
 
 \bibitem[{{Arnold Arboretum}(2026)}]{arnoldarboretum_weather_2026}
@@ -24,6 +24,16 @@ Carroll, J., Weigle, T. \& Petzoldt, C. (2026).
 Cook, E.R. \& Kairiukstis, L.A. (eds.)  (1990).
 \newblock \emph{Methods of {Dendrochronology}}.
 \newblock Springer Netherlands, Dordrecht.
+
+\bibitem[{Denny \emph{et~al.}(2014)Denny, Gerst, Miller-Rushing, Tierney,
+  Crimmins, Enquist, Guertin, Rosemartin, Schwartz, Thomas \&
+  Weltzin}]{denny_standardized_2014}
+Denny, E.G., Gerst, K.L., Miller-Rushing, A.J., Tierney, G.L., Crimmins, T.M.,
+  Enquist, C.A.F., Guertin, P., Rosemartin, A.H., Schwartz, M.D., Thomas, K.A.
+  \& Weltzin, J.F. (2014).
+\newblock Standardized phenology monitoring methods to track plant and animal
+  activity for science and resource management applications.
+\newblock \emph{International Journal of Biometeorology}, 58, 591--601.
 
 \bibitem[{Fong \emph{et~al.}(2026)Fong, Curry, Zhang \&
   Wolkovich}]{fong_tim_2026}
