@@ -179,6 +179,7 @@ main_map <- ggplot() +
     ),
     
     legend.text = element_text(
+      face = "italic",
       size = 8
     ),
     
