@@ -164,7 +164,7 @@ main_map <- ggplot() +
   
   theme(
     panel.grid = element_blank(),
-    aspect.ratio = 2,
+    aspect.ratio = 1.6,
     panel.border = element_rect(
       colour = "black",
       fill = NA,
