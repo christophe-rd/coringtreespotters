@@ -20,7 +20,7 @@ if (length(grep("christophe_rouleau-desrochers", getwd())) > 0) {
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 source("rcode/TSgrowthModelsMain.R")
 
-makeplots <- F
+makeplots <- T
 runzscore <- F
 
 # Load parameter summaries generated in growthModelsMain.R ####
@@ -1008,7 +1008,7 @@ dev.off()
 custommar <- c(4, 4, 3, 1.2)
 
 pdf(file = "figures/growthModelsMain/TSmuALLbsppWlines.pdf",
-    width = 8.5, height = 9)
+    width = 9, height = 9.5)
 
 layout(matrix(c(
   1, 5, 9,
@@ -1023,7 +1023,7 @@ widths = c(1.1, 1.2, 0.6))
 par(mar = custommar)
 plot(bspp_df2_ts_gdd$mean, y_pos,
      xlim = c(-0.15, 0.15), ylim = c(0.5, n_spp + 0.5),
-     xlab = expression(Delta * "ring width (log(mm))/scaled GDD"), 
+     xlab = "ring width (log(mm)) change in mean GDD of 7 spring days", 
      ylab = "",
      yaxt = "n", pch = 16, cex = 2, col = tscolslatbi, frame.plot = TRUE, 
      panel.first = abline(v = 0, lty = 2, col = "black"))
@@ -1054,7 +1054,7 @@ rasterImage(
 par(mar = custommar)
 plot(bspp_df2_ts_gsl$mean, y_pos,
      xlim = c(-0.15, 0.15), ylim = c(0.5, n_spp + 0.5),
-     xlab = expression(Delta * "ring width (log(mm))/scaled GSL"), ylab = "",
+     xlab = "ring width (log(mm)) change per 7 days of GSL", ylab = "",
      yaxt = "n", pch = 16, cex = 2, col = tscolslatbi, frame.plot = TRUE, 
      panel.first = abline(v = 0, lty = 2, col = "black"))
 segments(bspp_df2_ts_gsl$p5,  y_pos, bspp_df2_ts_gsl$p95, y_pos,
@@ -1083,7 +1083,7 @@ rasterImage(
 par(mar = custommar)
 plot(bspp_df2_ts_sos$mean, y_pos,
      xlim = c(-0.4, 0.4), ylim = c(0.5, n_spp + 0.5),
-     xlab = expression(Delta * "ring width (log(mm))/scaled SOS"), ylab = "",
+     xlab = "ring width (log(mm)) change per 7 days of leafout", ylab = "",
      yaxt = "n", pch = 16, cex = 2, col = tscolslatbi, frame.plot = TRUE, 
      panel.first = abline(v = 0, lty = 2, col = "black"))
 segments(bspp_df2_ts_sos$p5,  y_pos, bspp_df2_ts_sos$p95, y_pos,
@@ -1112,7 +1112,7 @@ rasterImage(
 par(mar = custommar)
 plot(bspp_df2_ts_eos$mean, y_pos,
      xlim = c(-0.2, 0.2), ylim = c(0.5, n_spp + 0.5),
-     xlab = expression(Delta * "ring width (log(mm))/scaled EOS"), ylab = "",
+     xlab = "ring width (log(mm)) change per 7 days of budset", ylab = "",
      yaxt = "n", pch = 16, cex = 2, col = tscolslatbi, frame.plot = TRUE, 
      panel.first = abline(v = 0, lty = 2, col = "black"))
 segments(bspp_df2_ts_eos$p5,  y_pos, bspp_df2_ts_eos$p95, y_pos,
