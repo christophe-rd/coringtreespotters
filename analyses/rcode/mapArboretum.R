@@ -193,7 +193,7 @@ ggsave(
   filename = "figures/empiricalData/tree_species_map.pdf",
   plot = main_map,
   width = 5,
-  height = 6,
+  height = 5,
   units = "in"
 )
 
