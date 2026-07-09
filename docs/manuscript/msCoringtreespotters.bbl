@@ -1,4 +1,4 @@
-\begin{thebibliography}{24}
+\begin{thebibliography}{29}
 \expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
 
 \bibitem[{{Arnold Arboretum}(2026)}]{arnoldarboretum_weather_2026}
@@ -49,6 +49,14 @@ Cleland, E., Chuine, I., Menzel, A., Mooney, H. \& Schwartz, M. (2007).
 Cook, E.R. \& Kairiukstis, L.A. (eds.)  (1990).
 \newblock \emph{Methods of {Dendrochronology}}.
 \newblock Springer Netherlands, Dordrecht.
+
+\bibitem[{Cuny \emph{et~al.}(2012)Cuny, Rathgeber, Lebourgeois, Fortin \&
+  Fournier}]{cuny_life_2012}
+Cuny, H.E., Rathgeber, C.B.K., Lebourgeois, F., Fortin, M. \& Fournier, M.
+  (2012).
+\newblock Life strategies in intra-annual dynamics of wood formation: example
+  of three conifer species in a temperate forest in north-east {France}.
+\newblock \emph{Tree Physiology}, 32, 612--625.
 
 \bibitem[{Denny \emph{et~al.}(2014)Denny, Gerst, Miller-Rushing, Tierney,
   Crimmins, Enquist, Guertin, Rosemartin, Schwartz, Thomas \&
@@ -145,6 +153,16 @@ Harris, N.L., Gibbs, D.A., Baccini, A., Birdsey, R.A., De~Bruin, S., Farina,
 \newblock Global maps of twenty-first century forest carbon fluxes.
 \newblock \emph{Nature Climate Change}, 11, 234--240.
 
+\bibitem[{Hessl \emph{et~al.}(2026)Hessl, Richardson, Filwett, Andreu‐Hayles,
+  Walker, Oelkers, Robison, Leshyk \& Carbone}]{hesslCarbonUptakeStorage2026}
+Hessl, A.E., Richardson, A.D., Filwett, R., Andreu‐Hayles, L., Walker, M.,
+  Oelkers, R., Robison, A.S., Leshyk, V.O. \& Carbone, M.S. (2026).
+\newblock Carbon uptake, storage, and allocation patterns contribute to
+  blurring of annual {\textless}span
+  style="font-variant:small-caps;"{\textgreater}$^{\textrm{14}}$ {C}
+  {\textless}/span{\textgreater} signals in tree rings.
+\newblock \emph{New Phytologist}, p. nph.70868.
+
 \bibitem[{Keenan \emph{et~al.}(2014)Keenan, Gray, Friedl, Toomey, Bohrer,
   Hollinger, Munger, O’Keefe, Schmid, Wing, Yang \&
   Richardson}]{keenan_net_2014}
@@ -178,6 +196,12 @@ Menzel, A., Sparks, T.H., Estrella, N., Koch, E., Aasa, A., Ahas, R.,
   pattern.
 \newblock \emph{Global Change Biology}, 12, 1969--1976.
 
+\bibitem[{Monson \emph{et~al.}(2018)Monson, Szejner, Belmecheri, Morino \&
+  Wright}]{monson_finding_2018}
+Monson, R.K., Szejner, P., Belmecheri, S., Morino, K.A. \& Wright, W.E. (2018).
+\newblock Finding the seasons in tree ring stable isotope ratios.
+\newblock \emph{American Journal of Botany}, 105, 819--821.
+
 \bibitem[{{National Centers for Environmental Information
   (NCEI)}(2026)}]{nationalcentersforenvironmentalinformationncei_north_2026}
 {National Centers for Environmental Information (NCEI)} (2026).
@@ -201,6 +225,14 @@ Peters, G.P., Andrew, R.M., Canadell, J.G., Friedlingstein, P., Jackson, R.B.,
 \newblock Carbon dioxide emissions continue to grow amidst slowly emerging
   climate policies.
 \newblock \emph{Nature Climate Change}, 10, 3--6.
+
+\bibitem[{Savage \emph{et~al.}(2022)Savage, Kiecker, McMann, Park, Rothendler
+  \& Mosher}]{savageLeafOutTime2022}
+Savage, J.A., Kiecker, T., McMann, N., Park, D., Rothendler, M. \& Mosher, K.
+  (2022).
+\newblock Leaf out time correlates with wood anatomy across large geographic
+  scales and within local communities.
+\newblock \emph{New Phytologist}, 235, 953--964.
 
 \bibitem[{Schneider \emph{et~al.}(2012)Schneider, Rasband \&
   Eliceiri}]{schneider_nih_2012}
@@ -234,5 +266,12 @@ Wang, W., Qin, L., Zhang, T., Yang, F., Cabon, A., Wang, Z., Zhou, P., Zhang,
   amount of xylem growth along a hydrothermal gradient in the southern {Altai}
   {Mountains}.
 \newblock \emph{Journal of Ecology}, 113, 1793--1806.
+
+\bibitem[{Wolkovich \emph{et~al.}(2025)Wolkovich, Ettinger, Chin, Chamberlain,
+  Baumgarten, Pradhan, Manzanedo \& Hille Ris~Lambers}]{wolkovich_why_2025}
+Wolkovich, E.M., Ettinger, A.K., Chin, A.R., Chamberlain, C.J., Baumgarten, F.,
+  Pradhan, K., Manzanedo, R.D. \& Hille Ris~Lambers, J. (2025).
+\newblock Why longer seasons with climate change may not increase tree growth.
+\newblock \emph{Nature Climate Change}, 15, 1283--1292.
 
 \end{thebibliography}
