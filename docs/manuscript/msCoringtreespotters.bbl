@@ -1,10 +1,17 @@
-\begin{thebibliography}{29}
+\begin{thebibliography}{36}
 \expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
 
 \bibitem[{{Arnold Arboretum}(2026)}]{arnoldarboretum_weather_2026}
 {Arnold Arboretum} (2026).
 \newblock Weather {Data} at the {Arnold} {Arboretum}.
 \newblock Accessed: 2025-09-24.
+
+\bibitem[{Barbaroux \& Breda(2002)}]{barbaroux_contrasting_2002}
+Barbaroux, C. \& Breda, N. (2002).
+\newblock Contrasting distribution and seasonal dynamics of carbohydrate
+  reserves in stem wood of adult ring-porous sessile oak and diffuse-porous
+  beech trees.
+\newblock \emph{Tree Physiology}, 22, 1201--1210.
 
 \bibitem[{Burns \emph{et~al.}(1990)Burns, Honkala \& {[Technical
   coordinators]}}]{burns_silvics_1990}
@@ -58,6 +65,14 @@ Cuny, H.E., Rathgeber, C.B.K., Lebourgeois, F., Fortin, M. \& Fournier, M.
   of three conifer species in a temperate forest in north-east {France}.
 \newblock \emph{Tree Physiology}, 32, 612--625.
 
+\bibitem[{Delpierre \emph{et~al.}(2016)Delpierre, Vitasse, Chuine, Guillemot,
+  Bazot, Rutishauser \& Rathgeber}]{delpierre_temperate_2016}
+Delpierre, N., Vitasse, Y., Chuine, I., Guillemot, J., Bazot, S., Rutishauser,
+  T. \& Rathgeber, C.B.K. (2016).
+\newblock Temperate and boreal forest tree phenology: from organ-scale
+  processes to terrestrial ecosystem models.
+\newblock \emph{Annals of Forest Science}, 73, 5--25.
+
 \bibitem[{Denny \emph{et~al.}(2014)Denny, Gerst, Miller-Rushing, Tierney,
   Crimmins, Enquist, Guertin, Rosemartin, Schwartz, Thomas \&
   Weltzin}]{denny_standardized_2014}
@@ -67,6 +82,12 @@ Denny, E.G., Gerst, K.L., Miller-Rushing, A.J., Tierney, G.L., Crimmins, T.M.,
 \newblock Standardized phenology monitoring methods to track plant and animal
   activity for science and resource management applications.
 \newblock \emph{International Journal of Biometeorology}, 58, 591--601.
+
+\bibitem[{Doak \& Morris(2010)}]{doak_demographic_2010}
+Doak, D.F. \& Morris, W.F. (2010).
+\newblock Demographic compensation and tipping points in climate-induced range
+  shifts.
+\newblock \emph{Nature}, 467, 959--962.
 
 \bibitem[{Dow \emph{et~al.}(2022)Dow, Kim, D’Orangeville, Gonzalez-Akre,
   Helcoski, Herrmann, Harley, Maxwell, McGregor, McShea, McMahon, Pederson,
@@ -84,6 +105,14 @@ Duputié, A., Rutschmann, A., Ronce, O. \& Chuine, I. (2015).
 \newblock Phenological plasticity will not help all species adapt to climate
   change.
 \newblock \emph{Global Change Biology}, 21, 3062--3073.
+
+\bibitem[{D’Orangeville \emph{et~al.}(2022)D’Orangeville, Itter, Kneeshaw,
+  Munger, Richardson, Dyer, Orwig, Pan \& Pederson}]{dorangeville_peak_2022}
+D’Orangeville, L., Itter, M., Kneeshaw, D., Munger, J.W., Richardson, A.D.,
+  Dyer, J.M., Orwig, D.A., Pan, Y. \& Pederson, N. (2022).
+\newblock Peak radial growth of diffuse-porous species occurs during periods of
+  lower water availability than for ring-porous and coniferous trees.
+\newblock \emph{Tree Physiology}, 42, 304--316.
 
 \bibitem[{Fong \emph{et~al.}(2026)Fong, Curry, Zhang \&
   Wolkovich}]{fong_tim_2026}
@@ -182,6 +211,38 @@ Loughnan, D., Jones, F.A.M., Legault, G., Buonaiuto, D., Chamberlain, C.,
 \newblock Budburst timing within a functional trait framework.
 \newblock \emph{Journal of Ecology}, 113, 3787--3798.
 
+\bibitem[{Lutz \emph{et~al.}(2018)Lutz, Furniss, Johnson, Davies, Allen,
+  Alonso, Anderson‐Teixeira, Andrade, Baltzer, Becker, Blomdahl, Bourg,
+  Bunyavejchewin, Burslem, Cansler, Cao, Cao, Cárdenas, Chang, Chao, Chao,
+  Chiang, Chu, Chuyong, Clay, Condit, Cordell, Dattaraja, Duque, Ewango,
+  Fischer, Fletcher, Freund, Giardina, Germain, Gilbert, Hao, Hart, Hau, He,
+  Hector, Howe, Hsieh, Hu, Hubbell, Inman‐Narahari, Itoh, Janík, Kassim,
+  Kenfack, Korte, Král, Larson, Li, Lin, Liu, Lum, Ma, Makana, Malhi, McMahon,
+  McShea, Memiaghe, Mi, Morecroft, Musili, Myers, Novotny, De~Oliveira, Ong,
+  Orwig, Ostertag, Parker, Patankar, Phillips, Reynolds, Sack, Song, Su,
+  Sukumar, Sun, Suresh, Swanson, Tan, Thomas, Thompson, Uriarte, Valencia,
+  Vicentini, Vrška, Wang, Weiblen, Wolf, Wu, Xu, Yamakura, Yap \&
+  Zimmerman}]{lutz_global_2018}
+Lutz, J.A., Furniss, T.J., Johnson, D.J., Davies, S.J., Allen, D., Alonso, A.,
+  Anderson‐Teixeira, K.J., Andrade, A., Baltzer, J., Becker, K.M.L.,
+  Blomdahl, E.M., Bourg, N.A., Bunyavejchewin, S., Burslem, D.F.R.P., Cansler,
+  C.A., Cao, K., Cao, M., Cárdenas, D., Chang, L., Chao, K., Chao, W., Chiang,
+  J., Chu, C., Chuyong, G.B., Clay, K., Condit, R., Cordell, S., Dattaraja,
+  H.S., Duque, A., Ewango, C.E.N., Fischer, G.A., Fletcher, C., Freund, J.A.,
+  Giardina, C., Germain, S.J., Gilbert, G.S., Hao, Z., Hart, T., Hau, B.C.H.,
+  He, F., Hector, A., Howe, R.W., Hsieh, C., Hu, Y., Hubbell, S.P.,
+  Inman‐Narahari, F.M., Itoh, A., Janík, D., Kassim, A.R., Kenfack, D.,
+  Korte, L., Král, K., Larson, A.J., Li, Y., Lin, Y., Liu, S., Lum, S., Ma,
+  K., Makana, J., Malhi, Y., McMahon, S.M., McShea, W.J., Memiaghe, H.R., Mi,
+  X., Morecroft, M., Musili, P.M., Myers, J.A., Novotny, V., De~Oliveira, A.,
+  Ong, P., Orwig, D.A., Ostertag, R., Parker, G.G., Patankar, R., Phillips,
+  R.P., Reynolds, G., Sack, L., Song, G.M., Su, S., Sukumar, R., Sun, I.,
+  Suresh, H.S., Swanson, M.E., Tan, S., Thomas, D.W., Thompson, J., Uriarte,
+  M., Valencia, R., Vicentini, A., Vrška, T., Wang, X., Weiblen, G.D., Wolf,
+  A., Wu, S., Xu, H., Yamakura, T., Yap, S. \& Zimmerman, J.K. (2018).
+\newblock Global importance of large‐diameter trees.
+\newblock \emph{Global Ecology and Biogeography}, 27, 849--864.
+
 \bibitem[{Menzel \emph{et~al.}(2006)Menzel, Sparks, Estrella, Koch, Aasa, Ahas,
   Alm‐Kübler, Bissolli, Braslavská, Briede, Chmielewski, Crepinsek, Curnel,
   Defila, Donnelly, Filella, Jatczak, Mestre, Peñuelas, Pirinen, Scheifinger,
@@ -201,6 +262,14 @@ Menzel, A., Sparks, T.H., Estrella, N., Koch, E., Aasa, A., Ahas, R.,
 Monson, R.K., Szejner, P., Belmecheri, S., Morino, K.A. \& Wright, W.E. (2018).
 \newblock Finding the seasons in tree ring stable isotope ratios.
 \newblock \emph{American Journal of Botany}, 105, 819--821.
+
+\bibitem[{Muhr \emph{et~al.}(2016)Muhr, Messier, Delagrange, Trumbore, Xu \&
+  Hartmann}]{muhr_how_2016}
+Muhr, J., Messier, C., Delagrange, S., Trumbore, S., Xu, X. \& Hartmann, H.
+  (2016).
+\newblock How fresh is maple syrup? {Sugar} maple trees mobilize carbon stored
+  several years previously during early springtime sap‐ascent.
+\newblock \emph{New Phytologist}, 209, 1410--1416.
 
 \bibitem[{{National Centers for Environmental Information
   (NCEI)}(2026)}]{nationalcentersforenvironmentalinformationncei_north_2026}
@@ -273,5 +342,12 @@ Wolkovich, E.M., Ettinger, A.K., Chin, A.R., Chamberlain, C.J., Baumgarten, F.,
   Pradhan, K., Manzanedo, R.D. \& Hille Ris~Lambers, J. (2025).
 \newblock Why longer seasons with climate change may not increase tree growth.
 \newblock \emph{Nature Climate Change}, 15, 1283--1292.
+
+\bibitem[{Čufar \emph{et~al.}(2008)Čufar, Prislan, De~Luis \&
+  Gričar}]{cufar_treering_2008}
+Čufar, K., Prislan, P., De~Luis, M. \& Gričar, J. (2008).
+\newblock Tree-ring variation, wood formation and phenology of beech ({Fagus}
+  sylvatica) from a representative site in {Slovenia}, {SE} {Central} {Europe}.
+\newblock \emph{Trees}, 22, 749--758.
 
 \end{thebibliography}
