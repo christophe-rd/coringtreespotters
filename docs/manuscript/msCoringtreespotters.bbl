@@ -1,5 +1,13 @@
-\begin{thebibliography}{36}
+\begin{thebibliography}{37}
 \expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
+
+\bibitem[{Aitken \emph{et~al.}(2008)Aitken, Yeaman, Holliday, Wang \&
+  Curtis‐McLane}]{aitken_adaptation_2008}
+Aitken, S.N., Yeaman, S., Holliday, J.A., Wang, T. \& Curtis‐McLane, S.
+  (2008).
+\newblock Adaptation, migration or extirpation: climate change outcomes for
+  tree populations.
+\newblock \emph{Evolutionary Applications}, 1, 95--111.
 
 \bibitem[{{Arnold Arboretum}(2026)}]{arnoldarboretum_weather_2026}
 {Arnold Arboretum} (2026).

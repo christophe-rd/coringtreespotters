@@ -12,10 +12,17 @@
 \begin{document}
 % \SweaveOpts{concordance=TRUE}
 
-\title{Coringtreespotters ms}
-\author{Christophe Rouleau-Desrochers}
-\date{\today}
-\maketitle
+\begin{center}
+{\sc} {\Large Weak response of warmer growing seasons on mature tree growth} \\
+\vspace{5ex}
+{\sc} Christophe Rouleau-Desrochers$^1$, Victor Van der Meersch$^1$, D.M. Buonaiuto$^{2,3,5}$, C.J. Chamberlain$^{2,3,4}$, Deirdre Loughnan$^1$, Neil Pederson, \& E.M. Wolkovich$^{1,2,3}$
+\end{center}
+$^1$Forest \& Conservation Sciences, Faculty of Forestry \& Environmental Stewardship, University of British Columbia, Vancouver, British Columbia, Canada\\
+$^2$Arnold Arboretum of Harvard University, Boston, Massachusetts, USA\\
+$^3$Department of Organismic and Evolutionary Biology, Harvard University, Cambridge, Massachusetts, USA\\
+$^4$The Nature Conservancy, USA\\
+$^5$Department of Plant Science and Landscape Architecture, University of Maryland, College Park, Maryland, USA
+
 
 % Set CoringTreespotters species shortcut
 \newcommand{\Arub}{\textit{A. rubrum}}
@@ -122,7 +129,7 @@ ln(ringwidth)_i &\sim Normal(\mu, \sigma_y) \\
 \label{eq:mainMdl}
 \end{equation}
 
-With this model, we estimated a species-specific effect of each season predictor on growth ($\beta_{species}$), but we also controlled for variation due to species ($\alpha_{species}$), individual tree ($\alpha_{treeid}$) and year ($\alpha_{year}$). We first ran the models using natural units and then scaled the predictors through $z$-scoring so we could directly compare their effect sizes \citep{gelman_data_2006}. We report estimates as means and 90\% uncertainty intervals (UI). We also fit the models for SOS and EOS using the full vs restricted datasets. Finally, because the wood growth onset is synchronized with different leaf phenophase for species with different wood anatomy (ring-porous being more closely synchronized with budburst and diffuse-porous, with leafout), we ran the models using budburst instead of leafout as the SOS. This allowed us to test whether our model responses diverged across diffuse vs ring porous species (Table \ref{tab:tsCount}). % emw5Jul --  I don't get this last sentence! You'll need to explain it more for me and your readers. 
+With this model, we estimated a species-specific effect of each season predictor on growth ($\beta_{species}$), but we also controlled for variation due to species ($\alpha_{species}$), individual tree ($\alpha_{treeid}$) and year ($\alpha_{year}$). We first ran the models using natural units and then scaled the predictors through $z$-scoring so we could directly compare their effect sizes \citep{gelman_data_2006}. We report estimates as means and 90\% uncertainty intervals (UI). We also fit the models for SOS and EOS using the full vs restricted datasets. Finally, because the wood growth onset is synchronized with a different leaf phenophase for species with different wood anatomy (ring-porous being more closely synchronized with budburst and diffuse-porous, with leafout), we ran the models using budburst instead of leafout as the SOS. This allowed us to test whether our model responses diverged across diffuse vs ring porous species (Table \ref{tab:tsCount}). 
 
 We used an additional model to account for the previous year thermal conditions. For this, we used the GDD accumulated between leafout and leaf coloring from the previous year (e.g. for growth year of 2020, we used the GDD of 2019 as the previous year GDD), alongside the GDD accumulated during the current year. For interpretability, we also report ring width change (log(mm)) as the number of GDDs (for both years) accumulated in an average week (seven days) of May (day of year 121 to 150 from 2016 to 2024; \Sexpr{tsgddscale} GDD). Thus, we estimated the previous and current year thermal season effect on the current year's growth as:
 
@@ -186,7 +193,7 @@ The calendar season (GSL) ranged from
 \Sexpr{empts$clCal[which.max(empts$coloredLeaves)]} ({\Tame} in
 \Sexpr{empts$year[which.max(empts$coloredLeaves)]}). Annual ring widths across years varied from 
 \Sexpr{min(empts$lengthMM)} mm ({\Asac} in \Sexpr{empts$year[which.min(empts$lengthMM)]}) to 
-\Sexpr{max(empts$lengthMM)} mm ({\Tame} in \Sexpr{empts$year[which.max(empts$lengthMM)]}) (Figure \ref{fig:tsboxplot}). 
+\Sexpr{max(empts$lengthMM)} mm ({\Tame} in \Sexpr{empts$year[which.max(empts$lengthMM)]}; Figure \ref{fig:tsboxplot}). 
 
 % Paragraph
 Across our eleven species and season predictors, we did not find any clear response of the growing season length on growth. 
@@ -195,7 +202,7 @@ Longer thermal season did not increase growth for any species and decreased grow
 ($\beta =$ \Sexpr{bspp_df2_ts_gdd$mean[bspp_df2_ts_gdd$spp_name %in% "B. alleghaniensis"]}, UI:
 \Sexpr{bspp_df2_ts_gdd$p5[bspp_df2_ts_gdd$spp_name %in% "B. alleghaniensis"]},
 \Sexpr{bspp_df2_ts_gdd$p95[bspp_df2_ts_gdd$spp_name %in% "B. alleghaniensis"]} RW/GDD; Figure \ref{fig:tsmuplotbspp}a and e; Table \ref{tab:ts_slope_table}). 
-Further, a longer calendar season did not change growth for any species (Figure \ref{fig:tsmuplotbspp}b and f; Table \ref{tab:ts_slope_table}). Thermal and calendar seasons were similarly predictive ($z$-scored results, see Figure \ref{fig:bsppZscored}.
+Further, a longer calendar season did not change growth for any species (Figure \ref{fig:tsmuplotbspp}b and f; Table \ref{tab:ts_slope_table}). On a scaled axis \citep[through $z$-scoring,][]{gelman_data_2006}, the thermal and calendar seasons were similarly predictive (see Figure \ref{fig:bsppZscored}.
 
 % Paragraph
 Previous year climate also had limited effects on growth. For the one species that showed decreased growth with warmer thermal season, this effect persisted for the current year, but previous year GDD actually increased growth for {\Ball}
@@ -248,7 +255,7 @@ Finally, a later SOS delayed EOS only for {\Pdel} ($\beta$:
 \section*{Discussion}
 In this study, we used 49 trees of 11 species to understand if mature trees grew more with longer growing seasons (GS). To do this, we used annual growth with tree rings and leaf phenology for the SOS and EOS. Our findings reveal that warmer and longer GS did not increase growth for any species and decreased growth for one. We also found that the previous year thermal conditions shifted growth trends for two species. Finally, most species did not respond to the start and end of the GS. 
 
-While our species share an array of growth strategies (see Table \ref{tab:tsCount}), we did not find a consistent growth trend across them. Only {\Ball} responded to the thermal season and its decrease in growth suggests that this species may be harmed by warmer seasons. Consequently, {\Ball} also grew less with a later EOS which is a period characterized by fast GDD accumulation. The fact that {\Ball} appears to be negatively impacted by warmer seasons suggest that this species could face local extirpation at its southernmost range because growth would not keep up with warmer and longer seasons \citep{gougherty_maladaptation_2021,doak_demographic_2010}. In addition, the fast-growing {\Tame} \citep[Table \ref{tab:tsCount};][]{burns_silvics_1990} grew less with an earlier SOS---when the days are short and cool. This is contrast with our expectation of species with this life-history strategy which should provide them an edge by starting to grow earlier in the season \citep{loughnan_budburst_2025}. Ultimately, these findings suggest a weak signal of life-history strategies in growth responses to the GS length and thermal conditions. Though, we found that these trends shifted slightly when considering also the previous year thermal conditions. 
+While our species share an array of growth strategies (see Table \ref{tab:tsCount}), we did not find a consistent growth trend across them. Only {\Ball} responded to the thermal season and its decrease in growth suggests that this species may be harmed by warmer seasons. Consequently, {\Ball} also grew less with a later EOS which is a period characterized by fast GDD accumulation. The fact that {\Ball} appears to be negatively impacted by warmer seasons suggest that this species could face local extirpation at its southernmost range because growth would not keep up with warmer and longer seasons \citep{doak_demographic_2010,aitken_adaptation_2008}. In addition, the fast-growing {\Tame} \citep[Table \ref{tab:tsCount};][]{burns_silvics_1990} grew less with an earlier SOS---when the days are short and cool. This is contrast with our expectation of species with this life-history strategy which should provide them an edge by starting to grow earlier in the season \citep{loughnan_budburst_2025}. Ultimately, these findings suggest a weak signal of life-history strategies in growth responses to the GS length and thermal conditions. Though, we found that these trends shifted slightly when considering also the previous year thermal conditions. 
 
 The growth response of two \textit{Betula} species shifted when we included the previous year thermal season as a driver. These two congeneric species ({\Ball} and {\Bnig}) had diametrically opposed response trends, however. {\Ball} growth decreased with the current year thermal conditions, but increased with a warmer previous year, possibly revealing a carbon allocation strategy that prioritize carbon storage above short-term growth. This is in contrast with the expectation from diffuse-porous species that tend to allocate less carbon to storage and more to growth \citep{barbaroux_contrasting_2002,muhr_how_2016}. In opposition, {\Bnig} increase in growth during the current year---only when the previous year conditions were included---confirms the expectation from diffuse-porous species of a short-term investment in growth with less allocation to storage. These opposite responses of two closely related species that have slightly different life-history strategies \citep[Table \ref{tab:tsCount};][]{burns_silvics_1990} highlight the importance of considering how fast trees grow in growth and GS length models. 
 
@@ -308,7 +315,7 @@ spptable <- data.frame(
     "Slow",
     "Moderate",
     "Fast",
-    "Slow",
+    "Moderate",
     "Slow",
     "Moderate",
     "Moderate"
@@ -484,7 +491,7 @@ combined <- data.frame(
 )
 
 print(xtable(combined,
-             caption = "Summary output of each parameter from our four predictors, using ring width (log(mm)) as the reponse variable (See equation \\ref{eq:mainMdl}). We report estimates as mean and 90\\% uncertainty intervals (in square brackets) across our four different predictors (GDD: growing degree days, GSL: growing season length, SOS: start of season and EOS: end of season). See `Data analyses' section in Methods for more details.",
+             caption = "Summary output of each parameter from our four predictors, using ring width (log(mm)) as the response variable (See equation \\ref{eq:mainMdl}). We report estimates as mean and 90\\% uncertainty intervals (in square brackets) across our four different predictors (GDD: growing degree days, GSL: growing season length, SOS: start of season and EOS: end of season). See `Data analyses' section in Methods for more details.",
              label = "tab:tab_all"),
       include.rownames = FALSE, sanitize.text.function = identity, caption.placement = "top")
 @
@@ -525,7 +532,7 @@ combined <- data.frame(
 )
 
 print(xtable(combined,
-             caption = "Summary output of each parameter from the previous year model (Equation \\ref{eq:prvsYrMdl}) using ring width (log(mm)) as the reponse variable. We report estimates as mean and 90\\% uncertainty intervals (in square brackets). see `Data analyses' section in Methods for more details",
+             caption = "Summary output of each parameter from the previous year model (Equation \\ref{eq:prvsYrMdl}) using ring width (log(mm)) as the response variable. We report estimates as mean and 90\\% uncertainty intervals (in square brackets). see `Data analyses' section in Methods for more details",
              label = "tab:tab_PrvsYr"),
       include.rownames = FALSE, sanitize.text.function = identity, caption.placement = "top")
 @
