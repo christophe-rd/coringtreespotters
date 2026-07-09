@@ -1,4 +1,4 @@
-\begin{thebibliography}{22}
+\begin{thebibliography}{24}
 \expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
 
 \bibitem[{{Arnold Arboretum}(2026)}]{arnoldarboretum_weather_2026}
@@ -155,6 +155,15 @@ Keenan, T.F., Gray, J., Friedl, M.A., Toomey, M., Bohrer, G., Hollinger, D.Y.,
   temperate forest phenology.
 \newblock \emph{Nature Climate Change}, 4, 598--604.
 
+\bibitem[{Loughnan \emph{et~al.}(2025)Loughnan, Jones, Legault, Buonaiuto,
+  Chamberlain, Ettinger, Garner, Morales‐Castilla, Sodhi \&
+  Wolkovich}]{loughnan_budburst_2025}
+Loughnan, D., Jones, F.A.M., Legault, G., Buonaiuto, D., Chamberlain, C.,
+  Ettinger, A., Garner, M., Morales‐Castilla, I., Sodhi, D. \& Wolkovich,
+  E.M. (2025).
+\newblock Budburst timing within a functional trait framework.
+\newblock \emph{Journal of Ecology}, 113, 3787--3798.
+
 \bibitem[{Menzel \emph{et~al.}(2006)Menzel, Sparks, Estrella, Koch, Aasa, Ahas,
   Alm‐Kübler, Bissolli, Braslavská, Briede, Chmielewski, Crepinsek, Curnel,
   Defila, Donnelly, Filella, Jatczak, Mestre, Peñuelas, Pirinen, Scheifinger,
@@ -184,6 +193,14 @@ Parmesan, C., Ryrholm, N., Stefanescu, C., Hill, J.K., Thomas, C.D., Descimon,
 \newblock Poleward shifts in geographical ranges of butterfly species
   associated with regional warming.
 \newblock \emph{Nature}, 399, 579--583.
+
+\bibitem[{Peters \emph{et~al.}(2020)Peters, Andrew, Canadell, Friedlingstein,
+  Jackson, Korsbakken, Le~Quéré \& Peregon}]{peters_carbon_2020}
+Peters, G.P., Andrew, R.M., Canadell, J.G., Friedlingstein, P., Jackson, R.B.,
+  Korsbakken, J.I., Le~Quéré, C. \& Peregon, A. (2020).
+\newblock Carbon dioxide emissions continue to grow amidst slowly emerging
+  climate policies.
+\newblock \emph{Nature Climate Change}, 10, 3--6.
 
 \bibitem[{Schneider \emph{et~al.}(2012)Schneider, Rasband \&
   Eliceiri}]{schneider_nih_2012}

@@ -80,8 +80,6 @@
 \newcommand{\Qrub}{\textit{Q. rubra}}
 \newcommand{\Tame}{\textit{T. americana}}   
 
-\newcommand{\RW}{$\Delta$ RW/}
-
 
 
 
@@ -228,17 +226,17 @@ Further, a longer calendar season did not change growth for any species (Figure 
 
 % Paragraph
 % emw5Jul -- Could you open with a broader topic sentence? And try to make the next part easier to understand (which is hard!) ... maybe:  Previous year climate also had limited effects on growth. For the one species that showed blah blah in a model with only current year conditions, this effect disappeared and we found a positive effect of ... 
-Previous year climate also had limited effects on growth. For the one species that showed decreased growth with warmer thermal season, this effect remained for the current year, but previous year GDD actually increased growth for {\Ball}
+Previous year climate also had limited effects on growth. For the one species that showed decreased growth with warmer thermal season, this effect persisted for the current year, but previous year GDD actually increased growth for {\Ball}
 ($\beta =$ 0.15, UI:
 0.02,
-0.28 RW/GDD). {\Ball}'s congeneric {\Bnig}, also grew less with previous year GDD ($\beta =$ 
+0.28 RW/GDD; Figure \ref{fig:tsPrvsYr}b; Table \ref{tab:tab_PrvsYr}). {\Ball}'s congeneric, {\Bnig}, in contrast grew less with previous year GDD ($\beta =$ 
 -0.08, UI:
 -0.17,
--0.00 RW/GDD; Figure \ref{fig:tsPrvsYr}b; Table \ref{tab:tab_PrvsYr}) but in contrast, current year GDD increased growth for that species ($\beta =$ 
+-0.00 RW/GDD; Figure \ref{fig:tsPrvsYr}b; Table \ref{tab:tab_PrvsYr}) and current year GDD increased growth for that species ($\beta =$ 
 0.12, UI:
 0.03,
 0.21 RW/GDD; Figure \ref{fig:tsPrvsYr}a; Table \ref{tab:tab_PrvsYr}).
-Interestingly, {\Bnig} did not solely respond to current year's conditions (Figure \ref{fig:tsmuplotbspp}a and e; Table \ref{tab:ts_slope_table}), but grew more with warmer thermal season when the previous conditions were considered. 
+Interestingly, {\Bnig} did not solely respond to current year's conditions (Figure \ref{fig:tsmuplotbspp}a and e; Table \ref{tab:ts_slope_table}), but grew more with warmer thermal season only when the previous conditions were considered. 
 
 % Paragraph
 An earlier start of season did not increase growth for any species and decreased growth for {\Tame} (
@@ -255,12 +253,12 @@ $\beta =$ 0.15, UI:
 Finally, a later SOS delayed EOS only for {\Pdel} ($\beta$: 
 1.04, UI:
 0.39,
-1.70 $\Delta$ EOS/SOS; Figure \ref{fig:SOSonEOS}. We did not find any clear difference on baseline growth across years (Figure \ref{fig:tsmuplotayear}; Table \ref{tab:tab_all}) and between species (Figure \ref{fig:tsxyGDDyr}; \ref{fig:tsxyGSLyr}). Growth was similar across individual trees (Figure \ref{fig:tsmuplotatreeid}).
+1.70 EOS/SOS; Figure \ref{fig:SOSonEOS}). We did not find any clear difference on baseline growth across years (Figure \ref{fig:tsmuplotayear}; Table \ref{tab:tab_all}) and between species (Figure \ref{fig:tsxyGDDyr}; \ref{fig:tsxyGSLyr}). Growth was similar across individual trees (Figure \ref{fig:tsmuplotatreeid}).
 
 % Figure mu across all species and climate predictors
 \begin{figure}[!ht]
 \includegraphics[width=0.8\textwidth]{../../analyses/figures/growthModelsMain/TSmuALLbsppWlines.pdf}
-\caption{Estimates of ring width change (log(mm)) as a function of four different phenological predictors: growing degree days of the growing season (mean daily temperature above 5\degree C); growing season length; start of season; end of season across 11 species: (Red maple (\textit{Acer rubrum}), Sugar maple (\textit{Acer saccharum}), Yellow buckeye (\textit{Aesculus flava}), Yellow birch (\textit{Betula alleghaniensis}), River birch (\textit{Betula nigra}), Pignut hickory (\textit{Carya glabra}), Shagbark hickory (\textit{Carya ovata}), Eastern cottonwood (\textit{Populus deltoides}), White oak (\textit{Quercus alba}), Northern red oak (\textit{Quercus rubra}) and American basswood (\textit{Tilia americana})); species colors are the same across the panels). Panels (a) to (d) represent the model slope estimates for each species, for each predictor, which we represent through \RW scaled predictor (see `Data analyses' section in Methods for more details on predictor scaling). The dots represent the mean of each species and the lines, the 50\% and 90\% uncertainty intervals (UI; see Table \ref{tab:ts_slope_table} for parameter estimates). Panels (e) to (h) represent the simulated response curves of ring width as a function of each predictor, with the lines depicting the mean response at each simulated predictor value, and the shaded area, the interquantile ranges (50\% UI). These models do not include an effect of the previous year GDD (see Figure \ref{fig:tsPrvsYr} for these estimates).} % emw5Jul -- what does simulated mean? Apologies if I missed this in wildcrokie also but be careful with this word! Even if it is what you did you make the line, it is not usually reported this way... I would just say these panels SHOW the response curves as a function of each predictor etc. 
+\caption{Estimates of ring width change (log(mm)) as a function of four different phenological predictors: growing degree days of the growing season (mean daily temperature above 5\degree C); growing season length; start of season; end of season across 11 species: (Red maple (\textit{Acer rubrum}), Sugar maple (\textit{Acer saccharum}), Yellow buckeye (\textit{Aesculus flava}), Yellow birch (\textit{Betula alleghaniensis}), River birch (\textit{Betula nigra}), Pignut hickory (\textit{Carya glabra}), Shagbark hickory (\textit{Carya ovata}), Eastern cottonwood (\textit{Populus deltoides}), White oak (\textit{Quercus alba}), Northern red oak (\textit{Quercus rubra}) and American basswood (\textit{Tilia americana})); species colors are the same across the panels). Panels on the left (a to d) represent the mean model slope estimates for each species (dots) with 50\% and 90\% uncertainty intervals (thicker and thinner lines, respectively), for each predictor, which we represent through ring width change in mm on the log scale per adjusted predictor (see `Data analyses' section in Methods for more details on predictor adjustment). See Table \ref{tab:ts_slope_table} for parameter estimates. Panels on the right (e to h) show the ring width response curves as a function of each predictor, with the lines depicting the mean response at each predictor value, and the shaded area, the 50\% uncertainty intervals. These models do not include an effect of the previous year GDD (see Figure \ref{fig:tsPrvsYr} for these estimates).}
 \label{fig:tsmuplotbspp}
 \end{figure}
 
@@ -277,9 +275,9 @@ Finally, a later SOS delayed EOS only for {\Pdel} ($\beta$:
 \section*{Discussion}
 In this study, we used 49 trees of 11 species to understand if mature trees grew more with longer growing seasons (GS). To do this, we used annual growth with tree rings and leaf phenology for the SOS and EOS. Our findings reveal that warmer and longer GS did not increase growth for any species and decreased growth for one. We also found that the previous year thermal conditions shifted growth trends for two species. Finally, most species did not respond to the start and end of the GS. 
 
-While our species share an array of growth strategies, we did not find a consistent growth trend across them. The thermal and calendar season had no effect on any species, except for one. {\Ball} growth decrease with warmer thermal seasons suggests that this species growth may be inhibited by warmer seasons. Indeed, this negative response to the thermal season is consequential with its growth decrease with a later end of season---a period where GDDs are accumulated at a high rate. Thus, {\Ball} appears to benefit from an earlier EOS that leads to fewer GDD accumulation. In addition, {\Tame} grew less with an earlier SOS. Despite this species being fast-growing [*Burns1990], it appears to be negatively impacted by an earlier start of season---when days are short and cooler. Ultimately, these findings suggest little difference among fast and slow-growth species in their relationship between growth and the GS length and thermal conditions; this shifted slightly when considering also the previous year conditions. 
+While our species share an array of growth strategies, we did not find a consistent growth trend across them. The thermal and calendar season had no effect on any species, except for one. {\Ball} growth decrease with warmer thermal seasons suggests that this species growth may be inhibited by warmer seasons. Indeed, this negative response to the thermal season is consequential with its growth decrease with a later end of season---a period where GDDs are accumulated at a high rate. Thus, {\Ball} appears to benefit from an earlier EOS that leads to fewer GDD accumulation. In addition, the fast-growing {\Tame} \citep[Table \ref{tab:tsCount};][]{burns_silvics_1990} grew less with an earlier SOS and despite this strategy that should give these species an edge early in the season, it appears to be negatively impacted by an earlier start of season---when days are short and cooler \citep{loughnan_budburst_2025}. Ultimately, these findings suggest little difference among fast and slow-growth species in their relationship between growth and the GS length and thermal conditions; this shifted slightly when considering also the previous year conditions. 
 
-Previous year thermal conditions changed growth only for two \textit{Betula} species. We found diametrically opposed trend between {\Ball} and {\Bnig}. {\Ball} growth decreased with the current year thermal conditions, but grew more with a warmer previous year, potentially revealing a carbon allocation strategy that prioritize storage before growth. This is expected of slower growth species [*REF] even though {\Ball} is considered a moderately fast-growth species [*REF table]. In opposition, {\Bnig} growth is faster and its increase during the current year---only when the previous year conditions were included---highlights the importance of considering not only the current year conditions when studying mature tree growth, whatever their growth strategies may be.
+Previous year thermal conditions changed growth only for two \textit{Betula} species. We found diametrically opposed trend between {\Ball} and {\Bnig}. {\Ball} growth decreased with the current year thermal conditions, but increased with a warmer previous year, potentially revealing a carbon allocation strategy that prioritize short-term carbon storage above growth. This is usually expected of slower growth species [*REF] even though {\Ball} is considered a moderately fast-growth species \citep[Table \ref{tab:tsCount};][]{burns_silvics_1990}. In opposition, {\Bnig} growth is faster and its increase during the current year---only when the previous year conditions were included---highlights the importance of considering not only the current year conditions when studying mature tree growth, whatever their growth strategies may be.
 
 Our findings reveal a weak response of the GS length and conditions on growth across species, corroborating previous findings on mature trees. Most of our studied species did not grow more with a warmer thermal or longer calendar season. However, we note the importance of considering the previous year conditions in future growth and GS length studies because the vast array of carbon allocation strategies may blur tree responses to the current year GS length and conditions. GS are expected to warm and lengthen with, but it is still dubious if tree growth will track this trend. Whether tree growth stalls or decrease, both responses will affect the direction of temperate forest to act as a net carbon sink, offsetting human greenhouse gas emissions. % need to fix this sentence.
 
@@ -315,7 +313,7 @@ Our findings reveal a weak response of the GS length and conditions on growth ac
 \end{figure}
 
 % latex table generated in R 4.5.1 by xtable 1.8-4 package
-% Wed Jul  8 14:10:53 2026
+% Wed Jul  8 17:04:15 2026
 \begin{table}[ht]
 \centering
 \caption{Treespotters species grouped by tree type, growth speed, and wood anatomy. We collected the growth speed information for each species from \cite{burns_silvics_1990}We sampled a total of 49 individual trees} 
@@ -348,7 +346,7 @@ Common Name (Latin binomial) & Growth speed & Wood Anatomy & $n$ \\
 \section*{Supplemental results}
 
 % latex table generated in R 4.5.1 by xtable 1.8-4 package
-% Wed Jul  8 14:10:53 2026
+% Wed Jul  8 17:04:15 2026
 \begin{table}[ht]
 \centering
 \caption{Species level slope parameters which represent ring width change (log(mm)), per scaled predictor (see `Data analyses' section in Methods for more details on predictor scaling). We report estimates as mean and 90\% uncertainty intervals (in square brackets) across our four different predictors (GDD: growing degree days, GSL: growing season length, SOS: start of season and EOS: end of season). Table \ref{tab:tab_all} reports all the models parameters.} 
@@ -375,7 +373,7 @@ Species & GDD & GSL & SOS & EOS \\
 
 
 % latex table generated in R 4.5.1 by xtable 1.8-4 package
-% Wed Jul  8 14:10:53 2026
+% Wed Jul  8 17:04:15 2026
 \begin{table}[ht]
 \centering
 \caption{Summary output of each parameter from our four predictors, using ring width (log(mm)) as the reponse variable (See equation \ref{eq:mainMdl}). We report estimates as mean and 90\% uncertainty intervals (in square brackets) across our four different predictors (GDD: growing degree days, GSL: growing season length, SOS: start of season and EOS: end of season). See `Data analyses' section in Methods for more details.} 
@@ -424,7 +422,7 @@ $\alpha$ & 0.61 [-2.08, 3.25] & 0.49 [-2.09, 3.03] & 0.24 [-2.39, 2.94] & 0.23 [
 
 
 % latex table generated in R 4.5.1 by xtable 1.8-4 package
-% Wed Jul  8 14:10:53 2026
+% Wed Jul  8 17:04:15 2026
 \begin{table}[ht]
 \centering
 \caption{Summary output of each parameter from the previous year model (Equation \ref{eq:prvsYrMdl}) using ring width (log(mm)) as the reponse variable. We report estimates as mean and 90\% uncertainty intervals (in square brackets). see `Data analyses' section in Methods for more details} 
@@ -484,7 +482,7 @@ $\alpha$ & 0.20 [-1.10, 1.48] \\
 
 
 % latex table generated in R 4.5.1 by xtable 1.8-4 package
-% Wed Jul  8 14:10:53 2026
+% Wed Jul  8 17:04:15 2026
 \begin{table}[ht]
 \centering
 \caption{Summary output of each parameter from the model on the effect of SOS (days) on EOS (days; Equation \ref{eq:SOSonEOSMdl}). We report estimates as mean and 90\% uncertainty intervals (in square brackets). see `Data analyses' section in Methods for more details} 
