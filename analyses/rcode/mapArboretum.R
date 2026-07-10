@@ -105,14 +105,18 @@ spp_colors <- color_palette
 # --------------------------------------------------
 # Main map
 # --------------------------------------------------
-
+names(tscolslatbi) <- c(
+  "Acer rubrum", "Acer saccharum", "Aesculus flava", "Betula alleghaniensis",
+  "Betula nigra", "Carya glabra", "Carya ovata", "Populus deltoides",
+  "Quercus alba", "Quercus rubra", "Tilia americana"
+)
 main_map <- ggplot() +
   
   layer_spatial(osm) +
   
   geom_sf(
     data = dnodup_sf,
-    aes(fill = latbi),
+    aes(fill = paste(dnodup_sf$genus, dnodup_sf$species)),
     shape = 21,
     size = 3,
     colour = "white",
@@ -185,7 +189,7 @@ main_map <- ggplot() +
     
     legend.background = element_rect(
       fill = scales::alpha("white", 0.9),
-      colour = "grey70"
+      colour = NA
     )
   )
 
