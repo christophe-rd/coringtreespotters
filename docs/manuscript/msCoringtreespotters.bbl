@@ -1,4 +1,4 @@
-\begin{thebibliography}{37}
+\begin{thebibliography}{41}
 \expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
 
 \bibitem[{Aitken \emph{et~al.}(2008)Aitken, Yeaman, Holliday, Wang \&
@@ -27,6 +27,15 @@ Burns, R.M., Honkala, B.H. \& {[Technical coordinators]} (1990).
 \newblock \emph{Silvics of {North} {America}: 2. {Hardwoods}}.
 \newblock United States Department of Agriculture (USDA), Forest Service,
   Agriculture Handbook 654.
+
+\bibitem[{Cabon \emph{et~al.}(2020)Cabon, Fernández‐de‐Uña,
+  Gea‐Izquierdo, Meinzer, Woodruff, Martínez‐Vilalta \&
+  De~Cáceres}]{cabon_water_2020}
+Cabon, A., Fernández‐de‐Uña, L., Gea‐Izquierdo, G., Meinzer, F.C.,
+  Woodruff, D.R., Martínez‐Vilalta, J. \& De~Cáceres, M. (2020).
+\newblock Water potential control of turgor‐driven tracheid enlargement in
+  {Scots} pine at its xeric distribution edge.
+\newblock \emph{New Phytologist}, 225, 209--221.
 
 \bibitem[{Cabon \emph{et~al.}(2022)Cabon, Kannenberg, Arain, Babst, Baldocchi,
   Belmecheri, Delpierre, Guerrieri, Maxwell, McKenzie, Meinzer, Moore, Pappas,
@@ -129,56 +138,20 @@ Fong, A., Curry, C., Zhang, Y. \& Wolkovich, E. (2026).
   images of tree cores and cookies.
 \newblock \emph{Unpublished}.
 
-\bibitem[{Friedlingstein \emph{et~al.}(2026)Friedlingstein, O'Sullivan, Jones,
-  Andrew, Bakker, Hauck, Landschützer, Le~Quéré, Li, Luijkx, Peters, Peters,
-  Pongratz, Schwingshackl, Sitch, Canadell, Ciais, Aas, Alin, Anthoni, Barbero,
-  Bates, Bellouin, Benoit-Cattin, Berghoff, Bernardello, Bopp, Brasika,
-  Chamberlain, Chandra, Chevallier, Chini, Collier, Colligan, Cronin,
-  Djeutchouang, Dou, Enright, Enyo, Erb, Evans, Feely, Feng, Ford, Foster,
-  Fransner, Gasser, Gehlen, Gkritzalis, Goncalves De~Souza, Grassi, Gregor,
-  Gruber, Guenet, Harris, Heinke, Hurtt, Iida, Ilyina, Ito, Jacobson, Jain,
-  Jarníková, Jersild, Jiang, Jones, Kato, Keeling, Klein~Goldewijk, Knauer,
-  Kong, Korsbakken, Koven, Kunimitsu, Lan, Liu, Liu, Liu, Lo~Monaco, Ma,
-  Marland, McGuire, McKinley, Melton, Monacci, Monier, Morgan, Munro, Müller,
-  Nakaoka, Nayagam, Niwa, Nutzel, Olsen, Omar, Pan, Pandey, Pierrot, Qin,
-  Regnier, Rehder, Resplandy, Roobaert, Rosan, Rödenbeck, Schwinger, Skjelvan,
-  Smallman, Spada, Sreeush, Sun, Sutton, Sweeney, Swingedouw, Séférian,
-  Takao, Tatebe, Tian, Tian, Tilbrook, Tsujino, Tubiello, Van~Ooijen, Van
-  Der~Werf, Van De~Velde, Walker, Wanninkhof, Yang, Yuan, Yue \&
-  Zeng}]{friedlingstein_global_2026}
-Friedlingstein, P., O'Sullivan, M., Jones, M.W., Andrew, R.M., Bakker, D.C.E.,
-  Hauck, J., Landschützer, P., Le~Quéré, C., Li, H., Luijkx, I.T., Peters,
-  G.P., Peters, W., Pongratz, J., Schwingshackl, C., Sitch, S., Canadell, J.G.,
-  Ciais, P., Aas, K., Alin, S.R., Anthoni, P., Barbero, L., Bates, N.R.,
-  Bellouin, N., Benoit-Cattin, A., Berghoff, C.F., Bernardello, R., Bopp, L.,
-  Brasika, I.B.M., Chamberlain, M.A., Chandra, N., Chevallier, F., Chini, L.P.,
-  Collier, N.O., Colligan, T.H., Cronin, M., Djeutchouang, L.M., Dou, X.,
-  Enright, M.P., Enyo, K., Erb, M., Evans, W., Feely, R.A., Feng, L., Ford,
-  D.J., Foster, A., Fransner, F., Gasser, T., Gehlen, M., Gkritzalis, T.,
-  Goncalves De~Souza, J., Grassi, G., Gregor, L., Gruber, N., Guenet, B.,
-  Harris, I., Heinke, J., Hurtt, G.C., Iida, Y., Ilyina, T., Ito, A., Jacobson,
-  A.R., Jain, A.K., Jarníková, T., Jersild, A., Jiang, F., Jones, S.D., Kato,
-  E., Keeling, R.F., Klein~Goldewijk, K., Knauer, J., Kong, Y., Korsbakken,
-  J.I., Koven, C., Kunimitsu, T., Lan, X., Liu, J., Liu, Z., Liu, Z.,
-  Lo~Monaco, C., Ma, L., Marland, G., McGuire, P.C., McKinley, G.A., Melton,
-  J.R., Monacci, N., Monier, E., Morgan, E.J., Munro, D.R., Müller, J.D.,
-  Nakaoka, S.I., Nayagam, L.R., Niwa, Y., Nutzel, T., Olsen, A., Omar, A.M.,
-  Pan, N., Pandey, S., Pierrot, D., Qin, Z., Regnier, P., Rehder, G.,
-  Resplandy, L., Roobaert, A., Rosan, T.M., Rödenbeck, C., Schwinger, J.,
-  Skjelvan, I., Smallman, T.L., Spada, V., Sreeush, M.G., Sun, Q., Sutton,
-  A.J., Sweeney, C., Swingedouw, D., Séférian, R., Takao, S., Tatebe, H.,
-  Tian, H., Tian, X., Tilbrook, B., Tsujino, H., Tubiello, F., Van~Ooijen, E.,
-  Van Der~Werf, G.R., Van De~Velde, S.J., Walker, A.P., Wanninkhof, R., Yang,
-  X., Yuan, W., Yue, X. \& Zeng, J. (2026).
-\newblock Global {Carbon} {Budget} 2025.
-\newblock \emph{Earth System Science Data}, 18, 3211--3288.
-
 \bibitem[{Gelman \& Hill(2006)}]{gelman_data_2006}
 Gelman, A. \& Hill, J. (2006).
 \newblock \emph{Data {Analysis} {Using} {Regression} and
   {Multilevel}/{Hierarchical} {Models}}.
 \newblock 1st edn.
 \newblock Cambridge University Press.
+
+\bibitem[{Gibbs \emph{et~al.}(2025)Gibbs, Rose, Grassi, Melo, Rossi, Heinrich
+  \& Harris}]{gibbs_revised_2025}
+Gibbs, D.A., Rose, M., Grassi, G., Melo, J., Rossi, S., Heinrich, V. \& Harris,
+  N.L. (2025).
+\newblock Revised and updated geospatial monitoring of 21st century forest
+  carbon fluxes.
+\newblock \emph{Earth System Science Data}, 17, 1217--1243.
 
 \bibitem[{Harris \emph{et~al.}(2021)Harris, Gibbs, Baccini, Birdsey, De~Bruin,
   Farina, Fatoyinbo, Hansen, Herold, Houghton, Potapov, Suarez, Roman-Cuesta,
@@ -195,9 +168,7 @@ Harris, N.L., Gibbs, D.A., Baccini, A., Birdsey, R.A., De~Bruin, S., Farina,
 Hessl, A.E., Richardson, A.D., Filwett, R., Andreu‐Hayles, L., Walker, M.,
   Oelkers, R., Robison, A.S., Leshyk, V.O. \& Carbone, M.S. (2026).
 \newblock Carbon uptake, storage, and allocation patterns contribute to
-  blurring of annual {\textless}span
-  style="font-variant:small-caps;"{\textgreater}$^{\textrm{14}}$ {C}
-  {\textless}/span{\textgreater} signals in tree rings.
+  blurring of annual {14C} signals in tree rings.
 \newblock \emph{New Phytologist}, p. nph.70868.
 
 \bibitem[{Keenan \emph{et~al.}(2014)Keenan, Gray, Friedl, Toomey, Bohrer,
@@ -209,6 +180,13 @@ Keenan, T.F., Gray, J., Friedl, M.A., Toomey, M., Bohrer, G., Hollinger, D.Y.,
 \newblock Net carbon uptake has increased through warming-induced changes in
   temperate forest phenology.
 \newblock \emph{Nature Climate Change}, 4, 598--604.
+
+\bibitem[{Kitin \& Funada(2016)}]{kitin_earlywood_2016}
+Kitin, P. \& Funada, R. (2016).
+\newblock {EARLYWOOD} {VESSELS} {IN} {RING}-{POROUS} {TREES} {BECOME}
+  {FUNCTIONAL} {FOR} {WATER} {TRANSPORT} {AFTER} {BUD} {BURST} {AND} {BEFORE}
+  {THE} {MATURATION} {OF} {THE} {CURRENT}-{YEAR} {LEAVES}.
+\newblock \emph{IAWA Journal}, 37, 315--331.
 
 \bibitem[{Loughnan \emph{et~al.}(2025)Loughnan, Jones, Legault, Buonaiuto,
   Chamberlain, Ettinger, Garner, Morales‐Castilla, Sodhi \&
@@ -250,6 +228,20 @@ Lutz, J.A., Furniss, T.J., Johnson, D.J., Davies, S.J., Allen, D., Alonso, A.,
   A., Wu, S., Xu, H., Yamakura, T., Yap, S. \& Zimmerman, J.K. (2018).
 \newblock Global importance of large‐diameter trees.
 \newblock \emph{Global Ecology and Biogeography}, 27, 849--864.
+
+\bibitem[{Lv \emph{et~al.}(2025)Lv, Meng, Huang, Li, Wang \&
+  Li}]{lv_xylem_2025}
+Lv, S., Meng, Y., Huang, N., Li, L., Wang, J. \& Li, Y. (2025).
+\newblock Xylem anatomy differentiation explains coordinated variation of
+  economic and hydraulic traits in urban tree species.
+\newblock \emph{BMC Plant Biology}, 25, 1549.
+
+\bibitem[{Mensah \& Petersson(2024)}]{mensah_carbon_2024}
+Mensah, A.A. \& Petersson, H. (2024).
+\newblock Carbon concentration of living tree biomass of \textit{{Pinus}
+  sylvestris} , \textit{{Picea} abies} , \textit{{Betula} pendula} and
+  \textit{{Betula} pubescens} in {Sweden}.
+\newblock \emph{Scandinavian Journal of Forest Research}, 39, 145--155.
 
 \bibitem[{Menzel \emph{et~al.}(2006)Menzel, Sparks, Estrella, Koch, Aasa, Ahas,
   Alm‐Kübler, Bissolli, Braslavská, Briede, Chmielewski, Crepinsek, Curnel,
@@ -295,14 +287,6 @@ Parmesan, C., Ryrholm, N., Stefanescu, C., Hill, J.K., Thomas, C.D., Descimon,
   associated with regional warming.
 \newblock \emph{Nature}, 399, 579--583.
 
-\bibitem[{Peters \emph{et~al.}(2020)Peters, Andrew, Canadell, Friedlingstein,
-  Jackson, Korsbakken, Le~Quéré \& Peregon}]{peters_carbon_2020}
-Peters, G.P., Andrew, R.M., Canadell, J.G., Friedlingstein, P., Jackson, R.B.,
-  Korsbakken, J.I., Le~Quéré, C. \& Peregon, A. (2020).
-\newblock Carbon dioxide emissions continue to grow amidst slowly emerging
-  climate policies.
-\newblock \emph{Nature Climate Change}, 10, 3--6.
-
 \bibitem[{Savage \emph{et~al.}(2022)Savage, Kiecker, McMann, Park, Rothendler
   \& Mosher}]{savageLeafOutTime2022}
 Savage, J.A., Kiecker, T., McMann, N., Park, D., Rothendler, M. \& Mosher, K.
@@ -334,6 +318,13 @@ Stridbeck, P., Björklund, J., Fuentes, M., Gunnarson, B.E., Jönsson, A.M.,
 \newblock Partly decoupled tree-ring width and leaf phenology response to 20th
   century temperature change in {Sweden}.
 \newblock \emph{Dendrochronologia}, 75, 125993.
+
+\bibitem[{Taneda \& Sperry(2008)}]{taneda_casestudy_2008}
+Taneda, H. \& Sperry, J.S. (2008).
+\newblock A case-study of water transport in co-occurring ring- versus
+  diffuse-porous trees: contrasts in water-status, conducting capacity,
+  cavitation and vessel refilling.
+\newblock \emph{Tree Physiology}, 28, 1641--1651.
 
 \bibitem[{Wolkovich \emph{et~al.}(2025)Wolkovich, Ettinger, Chin, Chamberlain,
   Baumgarten, Pradhan, Manzanedo \& Hille Ris~Lambers}]{wolkovich_why_2025}
