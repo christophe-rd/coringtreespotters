@@ -1,4 +1,4 @@
-\begin{thebibliography}{41}
+\begin{thebibliography}{43}
 \expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
 
 \bibitem[{Aitken \emph{et~al.}(2008)Aitken, Yeaman, Holliday, Wang \&
@@ -183,9 +183,9 @@ Keenan, T.F., Gray, J., Friedl, M.A., Toomey, M., Bohrer, G., Hollinger, D.Y.,
 
 \bibitem[{Kitin \& Funada(2016)}]{kitin_earlywood_2016}
 Kitin, P. \& Funada, R. (2016).
-\newblock {EARLYWOOD} {VESSELS} {IN} {RING}-{POROUS} {TREES} {BECOME}
-  {FUNCTIONAL} {FOR} {WATER} {TRANSPORT} {AFTER} {BUD} {BURST} {AND} {BEFORE}
-  {THE} {MATURATION} {OF} {THE} {CURRENT}-{YEAR} {LEAVES}.
+\newblock Earlywood vessels in ring-porous trees become functional for water
+  transport after bud burst and before the maturation of the current-year
+  leaves.
 \newblock \emph{IAWA Journal}, 37, 315--331.
 
 \bibitem[{Loughnan \emph{et~al.}(2025)Loughnan, Jones, Legault, Buonaiuto,
@@ -256,6 +256,14 @@ Menzel, A., Sparks, T.H., Estrella, N., Koch, E., Aasa, A., Ahas, R.,
 \newblock European phenological response to climate change matches the warming
   pattern.
 \newblock \emph{Global Change Biology}, 12, 1969--1976.
+
+\bibitem[{Michelot \emph{et~al.}(2012)Michelot, Simard, Rathgeber, Dufrene \&
+  Damesin}]{michelot_comparing_2012}
+Michelot, A., Simard, S., Rathgeber, C., Dufrene, E. \& Damesin, C. (2012).
+\newblock Comparing the intra-annual wood formation of three {European} species
+  ({Fagus} sylvatica, {Quercus} petraea and {Pinus} sylvestris) as related to
+  leaf phenology and non-structural carbohydrate dynamics.
+\newblock \emph{Tree Physiology}, 32, 1033--1045.
 
 \bibitem[{Monson \emph{et~al.}(2018)Monson, Szejner, Belmecheri, Morino \&
   Wright}]{monson_finding_2018}
@@ -332,6 +340,13 @@ Wolkovich, E.M., Ettinger, A.K., Chin, A.R., Chamberlain, C.J., Baumgarten, F.,
   Pradhan, K., Manzanedo, R.D. \& Hille Ris~Lambers, J. (2025).
 \newblock Why longer seasons with climate change may not increase tree growth.
 \newblock \emph{Nature Climate Change}, 15, 1283--1292.
+
+\bibitem[{Zweifel \emph{et~al.}(2006)Zweifel, Zimmermann, Zeugin \&
+  Newbery}]{zweifel_intraannual_2006}
+Zweifel, R., Zimmermann, L., Zeugin, F. \& Newbery, D.M. (2006).
+\newblock Intra-annual radial growth and water relations of trees: implications
+  towards a growth mechanism.
+\newblock \emph{Journal of Experimental Botany}, 57, 1445--1459.
 
 \bibitem[{Čufar \emph{et~al.}(2015)Čufar, De~Luis, Prislan, Gričar,
   Črepinšek, Merela \& Kajfež-Bogataj}]{cufar_variations_2015}
