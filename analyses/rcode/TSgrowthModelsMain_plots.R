@@ -20,7 +20,7 @@ if (length(grep("christophe_rouleau-desrochers", getwd())) > 0) {
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 source("rcode/TSgrowthModelsMain.R")
 
-makeplots <- F
+makeplots <- T
 runzscore <- F
 
 # Load parameter summaries generated in growthModelsMain.R ####
@@ -1008,7 +1008,7 @@ dev.off()
 custommar <- c(4, 4, 3, 1.2)
 
 pdf(file = "figures/growthModelsMain/TSmuALLbsppWlines.pdf",
-    width = 9, height = 9.5)
+    width = 9.9, height = 9.5)
 
 layout(matrix(c(
   1, 5, 9,
@@ -1016,7 +1016,7 @@ layout(matrix(c(
   3, 7, 9,
   4, 8, 9
 ), nrow = 4, byrow = TRUE),
-widths = c(1.1, 1.2, 0.6))
+widths = c(1.1, 1.2, 0.8))
 
 
 # Row 1, Col 1, Slot 5 : GDD
@@ -1032,7 +1032,7 @@ segments(bspp_df2_ts_gdd$p5,  y_pos, bspp_df2_ts_gdd$p95, y_pos,
 segments(bspp_df2_ts_gdd$p25, y_pos, bspp_df2_ts_gdd$p75, y_pos,
          col = tscolslatbi, lwd = 3)
 mtext("(a) Growing degree days", 
-      side = 3, adj = 0.6, line = 1, font = 2, cex = 1)
+      side = 3, adj = 0.4, line = 1, font = 2, cex = 1)
 
 usr <- par("usr")
 xrange <- diff(usr[1:2])
@@ -1062,7 +1062,7 @@ segments(bspp_df2_ts_gsl$p5,  y_pos, bspp_df2_ts_gsl$p95, y_pos,
 segments(bspp_df2_ts_gsl$p25, y_pos, bspp_df2_ts_gsl$p75, y_pos,
          col = tscolslatbi, lwd = 3)
 mtext("(b) Growing season length", 
-      side = 3, adj = 1, line = 1, font = 2, cex = 1)
+      side = 3, adj = 0.5, line = 1, font = 2, cex = 1)
 usr <- par("usr")
 xrange <- diff(usr[1:2])
 yrange <- diff(usr[3:4])
@@ -1258,14 +1258,35 @@ for (i in seq_along(sppvecnum)) {
 # Slot 9: species legend
 par(mar = c(1, 1, 1, 1))
 plot.new()
+
+# add growth and anatomy
+spp_traits <- c(
+  "T. americana"      = "F, D",
+  "P. deltoides"      = "F, D",
+  "Q. rubra"          = "M, R",
+  "Q. alba"           = "S, R",
+  "C. glabra"         = "S, R",
+  "C. ovata"          = "M, R",
+  "B. nigra"          = "F, D",
+  "B. alleghaniensis" = "M, D",
+  "A. saccharum"      = "S, D",
+  "A. rubrum"         = "M, D",
+  "Ae. flava"         = "M, D"
+)
+
+spp_names <- unique(bspp_df2_ts_gdd$spp_name)
+
+legend_labels <- sapply(spp_names, function(x) {
+  parse(text = paste0("italic('", x, "') ~ '(", spp_traits[x], ")'"))
+})
+
 legend("center",
-       legend = sapply(unique(bspp_df2_ts_gdd$spp_name), 
-                       function(x) parse(text = paste0("italic('", x, "')"))),
+       legend = legend_labels,
        col    = tscolslatbi,
        pch    = 16, pt.cex = 1.5, bty = "n", cex = 1.5,
        title  = "Species", title.font = 2)
-
 dev.off()
+
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 ##### aspp #####
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
