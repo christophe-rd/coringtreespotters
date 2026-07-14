@@ -169,6 +169,7 @@ main_map <- ggplot() +
   theme(
     panel.grid = element_blank(),
     aspect.ratio = 1.6,
+    plot.margin = margin(t = 3, r = 2, b = 0.5, l = 2),
     panel.border = element_rect(
       colour = "black",
       fill = NA,
@@ -197,7 +198,7 @@ ggsave(
   filename = "figures/empiricalData/tree_species_map.pdf",
   plot = main_map,
   width = 5,
-  height = 5,
+  height = 4,
   units = "in"
 )
 
