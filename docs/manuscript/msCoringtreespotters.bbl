@@ -1,4 +1,4 @@
-\begin{thebibliography}{45}
+\begin{thebibliography}{48}
 \expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
 
 \bibitem[{Aitken \emph{et~al.}(2008)Aitken, Yeaman, Holliday, Wang \&
@@ -20,6 +20,13 @@ Barbaroux, C. \& Breda, N. (2002).
   reserves in stem wood of adult ring-porous sessile oak and diffuse-porous
   beech trees.
 \newblock \emph{Tree Physiology}, 22, 1201--1210.
+
+\bibitem[{Baumgarten \emph{et~al.}(2026)Baumgarten, Aitken, Vitasse, Guy \&
+  Wolkovich}]{baumgarten_indeterminacy_2026}
+Baumgarten, F., Aitken, S., Vitasse, Y., Guy, R.D. \& Wolkovich, E. (2026).
+\newblock ({In})determinacy in {Woody} {Plants}: {Limits} and {Opportunities}
+  for {Timing} {Growth} in a {Changing} {Climate}.
+\newblock \emph{Ecology Letters}, 29, e70435.
 
 \bibitem[{Burns \emph{et~al.}(1990)Burns, Honkala \& {[Technical
   coordinators]}}]{burns_silvics_1990}
@@ -62,6 +69,12 @@ Charlet De~Sauvage, J., Vitasse, Y., Meier, M., Delzon, S. \& Bigler, C.
 \newblock Temperature rather than individual growing period length determines
   radial growth of sessile oak in the {Pyrenees}.
 \newblock \emph{Agricultural and Forest Meteorology}, 317, 108885.
+
+\bibitem[{Chuine \& Régnière(2017)}]{chuine_processbased_2017}
+Chuine, I. \& Régnière, J. (2017).
+\newblock Process-{Based} {Models} of {Phenology} for {Plants} and {Animals}.
+\newblock \emph{Annual Review of Ecology, Evolution, and Systematics}, 48,
+  159--182.
 
 \bibitem[{Cleland \emph{et~al.}(2007)Cleland, Chuine, Menzel, Mooney \&
   Schwartz}]{cleland_shifting_2007}
@@ -340,6 +353,11 @@ Taneda, H. \& Sperry, J.S. (2008).
   diffuse-porous trees: contrasts in water-status, conducting capacity,
   cavitation and vessel refilling.
 \newblock \emph{Tree Physiology}, 28, 1641--1651.
+
+\bibitem[{Wang \& Engel(1998)}]{wang_simulation_1998}
+Wang, E. \& Engel, T. (1998).
+\newblock Simulation of phenological development of wheat crops.
+\newblock \emph{Agricultural Systems}, 58, 1--24.
 
 \bibitem[{Wang \emph{et~al.}(1992)Wang, Ives \& Lechowicz}]{wang_relation_1992}
 Wang, J., Ives, N.E. \& Lechowicz, M.J. (1992).

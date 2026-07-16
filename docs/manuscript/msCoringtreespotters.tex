@@ -58,6 +58,8 @@
 \usepackage{parskip}
 
 \setlength{\parindent}{0pt}
+
+\setcounter{secnumdepth}{0}
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
 \begin{document}
 % \SweaveOpts{concordance=TRUE}
@@ -93,37 +95,54 @@ $^5$Department of Plant Science and Landscape Architecture, University of Maryla
 % <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 % INTRODUCTION
 % <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
-\section*{Introduction}
-Anthropogenic climate change affects many different biological processes with one of the most documented being shifts in phenology---the study of recurring life history events \citep{cleland_shifting_2007,menzel_european_2006,parmesan_poleward_1999}. Earlier springs and later autumns have lengthened the window of opportunity during which plants can grow \citep{duputie_phenological_2015}. 
-For trees, longer growing seasons means they should grow more, which is especially significant given the critical role that forests play in offsetting human-emitted greenhouse gases \citep{keenan_net_2014, stridbeck_partly_2022,harrisGlobalMapsTwentyfirst2021}. In temperate forests, the 1\% largest trees store half of the living biomass, which is largely composed of carbon sequestrated from the atmosphere \citep{lutz_global_2018,mensah_carbon_2024}. Given that temperate forests account for 40\% of the global carbon sink \citep{gibbs_revised_2025}, this makes adult trees disproportionately important in the carbon dynamics of these ecosystems. The future of that carbon sink, however, largely relies on whether these trees will keep growing with longer growing seasons.
+\section{Introduction}
+Anthropogenic climate change affects many different biological processes with one of the most documented being shifts in phenology---the timing of recurring life history events \citep{cleland_shifting_2007,menzel_european_2006,parmesan_poleward_1999}. Earlier springs and later autumns have lengthened the window of opportunity during which plants can grow \citep{duputie_phenological_2015}. 
 
-The long standing assumption that longer growing seasons should increased growth has recently been challenged by studies that failed to find this relationship \citep{dow_warm_2022,silvestro_longer_2023,cufar_variations_2015,charletdesauvage_temperature_2022,cabon_crossbiome_2022}. Recent research suggests that warmer springs, which predominantly drive extended growing seasons, have not increased the maximum tree growth rate or annual radial growth in temperate mixed forest communities \citep{dow_warm_2022}. Similarly, \cite{cufar_variations_2015} showed no shift in annual radial growth in relation with the growing season length for \textit{Fagus Sylvatica}. However, neither of these studies could clearly establish why they observed this decoupling, leaving open the question of why trees may not grow more with longer growing seasons.  
+For trees, longer growing seasons means they should grow more. This is especially significant given the critical role that forests play in offsetting human-emitted greenhouse gases \citep{keenan_net_2014, stridbeck_partly_2022,harrisGlobalMapsTwentyfirst2021}. In temperate forests, the largest 1\% of trees store half of the living biomass, which is largely composed of carbon sequestrated from the atmosphere \citep{lutz_global_2018,mensah_carbon_2024}. Given that temperate forests account for 40\% of the global carbon sink \citep{gibbs_revised_2025}, this makes mature trees disproportionately important in global carbon dynamics. The future of this major carbon sink, however, largely relies on whether these trees will keep growing with longer growing seasons.
 
-Tree growth strategies may shape how different species respond to extended growing seasons. Longer growing seasons may benefit slower growing species because appropriate conditions would allow them to keep their low growth rate active for a longer period \citep{cuny_life_2012}. In contrast, faster growing species may complete their annual growth more quickly, making extra growing days less important \citep{cuny_life_2012}. However, there is a possibility that since faster-growing species are generally flexible and responsive, they could opportunistically take advantage of changing conditions than more conservative species.  
+The long standing assumption that longer growing seasons should increase tree growth has recently been challenged by a suite of studies that failed to find this relationship \citep{dow_warm_2022,silvestro_longer_2023,cufar_variations_2015,charletdesauvage_temperature_2022,cabon_crossbiome_2022}. Recent research suggests that warmer springs, which predominantly drive extended growing seasons, have not increased the maximum tree growth rate or annual radial growth in temperate mixed forest communities \citep{dow_warm_2022}. Similarly, \cite{cufar_variations_2015} showed no shift in annual radial growth in relation with the growing season length for \textit{Fagus Sylvatica}. However, neither of these studies could clearly establish why they observed this decoupling, leaving open the question of why trees may not grow more with longer growing seasons.  
 
-Wood anatomy in angiosperm trees may additionally impact when they grow, with implications for their responses to longer seasons. Ring-porous species have larger xylem vessels and generally start growing several days or weeks before leafout and before growth onset of diffuse-porous species. This is because of their water transportation pathway that needs to be restored before the emergence of new leaves \citep{hesslCarbonUptakeStorage2026,savageLeafOutTime2022,dorangeville_peak_2022}. In contrast, diffuse-porous species start growing later, but also leafout earlier than ring-porous species because they do not need to restore their water transportation pathway. This makes makes leafout a good proxy for growth onset \citep{cufar_treering_2008}. Also, wood anatomy may inform larger growth strategies, with ring-porous species able to source water deeper into the ground than diffuse-porous species, but with the trade-off of being more vulnerable to drought and late spring frosts \citep{taneda_casestudy_2008,kitin_earlywood_2016}.
+Tree growth strategies may shape how different species respond to extended growing seasons. Longer growing seasons may benefit slower growing species because appropriate conditions would allow them to keep their low growth rate active for a longer period \citep{cuny_life_2012}. In contrast, faster growing species may complete their annual growth more quickly, making extra growing days less important \citep{cuny_life_2012}. However, there is a possibility that since faster-growing species are generally flexible and responsive, they could opportunistically take advantage of changing conditions than more conservative species \citep{baumgarten_indeterminacy_2026}.
+
+Wood anatomy in angiosperm trees may additionally impact when they grow, with implications for their responses to longer seasons. 
+%emwJul15 -- When you say they start growing ... do you mean wood growth? Some people think leafout is a type of growth so we need to tweak, please check if my edits are accurate. 
+% --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+% crdJul16 -- should we set for xylogenesis or primary growth vs secondary growth better?
+Ring-porous species have large xylem vessels that allow them to source water deep into the ground, but also make them more prone to vessel damage from drought or spring frost \citep{taneda_casestudy_2008,kitin_earlywood_2016}. This damage means that they generally start radial growth several days or weeks before they leafout, as they need to restore their hydraulic system before new leaves can develop and unfurl \citep{barbaroux_contrasting_2002,hesslCarbonUptakeStorage2026,savageLeafOutTime2022,dorangeville_peak_2022}. In contrast, diffuse-porous species have smaller xylem vessels, and thus source comparatively shallower water but with a lower risk of vessel damage \citep{yin_ring_2023}. Because of this they may leafout earlier than ring-porous species (because they do not need to restore their water transportation pathway), but generally start and stop growing after ring-porous species \citep{michelot_comparing_2012,dorangeville_peak_2022,yin_ring_2023}. These differences in growth phenology makes species with different wood anatomy mean they grow at different periods, thus under different environmental conditions.
+
+% crdJul16 -- changed it, but maybe remove?:
+% Leafout and wood growth onset are often synchronyzed in diffuse-porous species, making this leaf phenophase a good proxy for growth start \citep{cufar_treering_2008}. %emwJul15 -- for which set of species??
+% --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+
 %emwJul12 -- do diffuse-porous species grow *with* leaves? 
 % crdJul13 -- some people say yes some people don't, but I've seen more papers saying they are kind syncrhonized (growth onset and leafout)
 % Maybe add a sentence just about them here if you can... 
 % Also this sentence contradicts what you say below: "diffuse-porous species have smaller vessels that are less likely to embolize and thus tend to leafout earlier in the season than ring-porous species." ... so I am struggling a bit to help here, but I think you can fix it! I would open with whichever species is usually FIRST and try to sneak in the vessel structure here (larger, smaller) if you can. 
 % crdJul13 -- I get the confusion, I tried to fix it above with an extra sentence on diffuse-porous
-Thus species with different wood anatomy experience considerably different temperature regime during the growing season; this results in an asymmetric effect of the season length between these species. As ring-porous species start growing earlier---when it's cooler---and complete their growth earlier in the season \citep{michelot_comparing_2012,dorangeville_peak_2022}, we predict that diffuse-porous species will grow more with longer and warmer seasons as much of their growth will occur at higher temperature with a corresponding higher growth rate. However, there is diverging evidence of a direct correlation between wood porousness and life-history strategies; \cite{lv_xylem_2025} recently proposed that diffuse-porous species are slower-growing and longer-living than ring-porous species, in contrast to previous work that proposed the opposite \citep{taneda_casestudy_2008}. Whether the growth rate of a species is directly related to its wood anatomy or not, species with these traits still exhibit distinct strategies on their own with allocation to storage or growth, being one of them.
+%emwJul15 -- I think you should try to explain the last sentence better (or move to next paragraph?) and wrap up the paragraph here, then start a separate paragraph below focused on temperature effects (happy to discuss how to fix this tomorrow). 
+% --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+The differing timing of growth for species with different wood anatomy means they experience considerably different temperature regime during the growing season, which may result in an asymmetric effect of season length. As ring-porous species start growing earlier---under cooler conditions---and complete their growth earlier in the season \citep{michelot_comparing_2012,dorangeville_peak_2022}, they may experience a cooler overall growing season than diffuse-porous species. Given the importance of temperature to growth rates \citep{chuine_processbased_2017,wang_simulation_1998}, we may thus expect that diffuse-porous species will grow more with longer and warmer seasons as much of their growth will occur at higher temperature with a corresponding higher growth rate. %emwJul15 -- this previous transition did not work (from a temperature argument to a life history traits one) so I tried to fix it but not sure it works or is accurate -- check and add cites. 
+Diffuse-porous species may also grow more with longer seasons because they sometimes have faster life-history strategies that allow them to rapidly take advantage of longer seasons compared to ring-porous species. 
+% --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+% crdJul16 -- everything I find is the opposite DP>RP
+There is diverging evidence, however, of a direct correlation between wood porousness and life-history strategies; \cite{lv_xylem_2025} recently proposed that diffuse-porous species are slower-growing and longer-living than ring-porous species, in contrast to previous work that proposed the opposite \citep{taneda_casestudy_2008}. Whether the growth rate of a species is directly related to its wood anatomy or not, species with these traits %emwJul15 -- which traits? wood anatomy? slow growth or ..??? If you mean growth rate, then rewrite as: Whether the growth rate of a species is directly related to its wood anatomy or not, species growth rates often relate to larger growth strategies, including how they allocate to storage versus growth. 
+still exhibit distinct strategies, with allocation to storage or growth, being one of them. %emwJul15 -- Hmm, just noticing that below we never say what the connection is ... either add this connection or just come up with a better transition (like 'Beyond wood anatomy, other stuff may matter like ...). 
 
 How trees store the carbon they accumulate---whether it is through a immediate investment in growth or for long-term storage---could mute short term responses to longer growing seasons \citep{hesslCarbonUptakeStorage2026}. Investing in longer-term storage could mean the previous year's thermal conditions may affect growth in the following year. Deciduous trees in particular often rely on stored carbon at the beginning of the growing season to grow new leaves before starting photosynthesis \citep{zweifel_intraannual_2006,monson_finding_2018,wolkovich_why_2025}. Mature trees may even rely on carbon that was stored for several years for their early season growth \citep{hesslCarbonUptakeStorage2026}. Thus, while environmental conditions during the current year should directly influence growth, carbon allocation strategies may blur annual growth responses. 
 
-Here we examine variation in how the thermal and calendar growing season affects growth across 11 species in an urban arboretum. Leveraging data from a citizen science monitoring program, we estimate the growing season from leafout to leaf coloring across nine years. Our data include 49 mature deciduous angiosperm trees with varying wood anatomies and growth rates. Thus, we ask how current and previous year growing seasons affect annual radial growth across a suite of species.
+Here we examine variation in how the growing season affects growth across 11 species in an urban arboretum. We consider both the calendar growing season (in days) and, given the importance of temperature to growth rates, the thermal season (summed daily temperatures across the calendar season). Leveraging data from a citizen science monitoring program, we estimate these two measures of growing season length from leafout to leaf coloring across nine years. Our data include 49 mature deciduous angiosperm trees with varying wood anatomies and growth rates. Thus, we ask how current and previous year growing seasons affect annual radial growth across a suite of species.
 
 % <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 % METHODS
 % <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 % \clearpage
-\section*{Methods} 
+\section{Methods} 
 
 %-------------------------------------------------------------------------------
 % Citizen science
 %-------------------------------------------------------------------------------
-\subsection*{Citizen science program}
-The Tree Spotters is a citizen science program started in 2015 that aims to train citizen scientists for accurate and rigorous phenological monitoring at the Arnold Arboretum of Harvard University (42.30 \degree N, -71.12 \degree W; Figure \ref{fig:mapProv}). From 2015 to 2024, hundreds of citizen scientists monitored 77 individual trees and shrubs of 14 species. They regularly followed individuals from budburst in the spring to leaf coloring in the fall using the National Phenology Network (NPN) phenophases \citep{denny_standardized_2014}: leaves (483), colored leaves (498), fruits (516), ripe fruits (390), falling leaves(471), recent fruit or seed drop (504), increasing leaf size (467), breaking leaf buds (371), flowers or flower buds (500), open flowers (501), pollen release (502). Not all phenophases were recorded for every tree, for every year, and some trees are missing several years of data. 
+\subsection{Citizen science program}
+The Tree Spotters is a citizen science program started in 2015 that aims to train citizen scientists for accurate and rigorous phenological monitoring at the Arnold Arboretum of Harvard University (42.30 \degree N, -71.12 \degree W; Figure \ref{fig:mapProv}). From 2015 to 2024, hundreds of citizen scientists monitored 77 individual trees and shrubs of 14 species. They regularly followed individuals from budburst in the spring to leaf coloring in the fall using the National Phenology Network (NPN) phenophases \citep{denny_standardized_2014}: leaves (483), colored leaves (498), fruits (516), ripe fruits (390), falling leaves (471), recent fruit or seed drop (504), increasing leaf size (467), breaking leaf buds (371), flowers or flower buds (500), open flowers (501), pollen release (502). Not all phenophases were recorded for every tree, for every year, and some trees are missing several years of data. 
 
 Here we use leafout to colored leaves (or leaf coloring) to define the growing season length. Taken together, our dataset comprises 321 leafout and 284 colored leaves observations (which we refer to as the `full datasets'), but we did not have both observations for all trees in all years, so our total of matched full growing seasons duration (which we refer to as the `restricted dataset') is 278 observations. We visually checked for SOS, EOS and GSL outliers and verified that there was no observation bias potentially caused by a particular observer or in a particular year.
 
@@ -137,18 +156,18 @@ Here we use leafout to colored leaves (or leaf coloring) to define the growing s
 %-------------------------------------------------------------------------------
 % Phenological monitoring and sample collection
 %-------------------------------------------------------------------------------
-\subsection*{Phenological monitoring and sample collection}
-From 20 to 22 April 2025, we collected tree ring samples only for the tree species that were previously monitored for phenology---excluding \textit{Fagus grandifolia} because of beach bark disease concerns---for a total of 49 individuals (Table \ref{tab:tsCount}).  Thus, we sampled four or five individuals for 11 species: Red maple (\textit{Acer rubrum}), Sugar maple (\textit{Acer saccharum}), Yellow buckeye (\textit{Aesculus flava}), Yellow birch (\textit{Betula alleghaniensis}), River birch (\textit{Betula nigra}), Pignut hickory (\textit{Carya glabra}), Shagbark hickory (\textit{Carya ovata}), Eastern cottonwood (\textit{Populus deltoides}), White oak (\textit{Quercus alba}), Northern red oak (\textit{Quercus rubra}) and American basswood (\textit{Tilia americana}). For this, we collected two 5-mm diameter cores, 15-cm length at 1.3 meters above ground, perpendicular to the slope and at 180 degrees from each other, using an increment borer (Mora Borer, Haglöfs Sweden, Bromma, Stockholm, Sweden). We cleaned the increment borer with alcohol (70\% ethanol) and the inside with a brush before collecting each core. We stored the cores in modified plastic straws to promote aeration and  left them to dry at ambient temperature for three months.
+\subsection{Phenological monitoring and sample collection}
+From 20 to 22 April 2025, we collected tree ring samples only for the tree species that were previously monitored for phenology---excluding \textit{Fagus grandifolia} because of beach bark disease concerns---for a total of 49 individuals (Table \ref{tab:tsCount}).  Thus, we sampled four or five individuals for 11 species: Red maple (\textit{Acer rubrum}), Sugar maple (\textit{Acer saccharum}), Yellow buckeye (\textit{Aesculus flava}), Yellow birch (\textit{Betula alleghaniensis}), River birch (\textit{Betula nigra}), Pignut hickory (\textit{Carya glabra}), Shagbark hickory (\textit{Carya ovata}), Eastern cottonwood (\textit{Populus deltoides}), White oak (\textit{Quercus alba}), Northern red oak (\textit{Quercus rubra}) and American basswood (\textit{Tilia americana}). For this, we collected two 5-mm diameter cores, 15-cm length at 1.3 m above ground, perpendicular to the slope and at 180 degrees from each other, using an increment borer (Mora Borer, Haglöfs Sweden, Bromma, Stockholm, Sweden). We cleaned the increment borer with alcohol (70\% ethanol) and the inside with a brush before collecting each core. We stored the cores in modified plastic straws to promote aeration and  left them to dry at ambient temperature for three months.
 
 %-------------------------------------------------------------------------------
 % Sample processing, imaging and measuring
 %-------------------------------------------------------------------------------
-\subsection*{Sample processing, imaging and measuring}
+\subsection{Sample processing, imaging and measuring}
 We used wooden mounts to stabilize the cores that we then sanded using progressively finer sandpaper grit (from 150 to 1000) by increments of roughly 150. We then used a high-resolution scanner to scan the cores at a resolution of 6250 dpi \citep{fong_tim_2026}, and used those images to measure the ring widths using ImageJ \citep{schneider_nih_2012}. 
 
 We visually cross-dated the ring width chronologies by assigning a calendar year to each ring and comparing annual variation of trends across the different individuals of the same species \citep{cook_methods_1990}. Our short chronologies and low species replication prevented us from performing statistical cross-dating. We also did not detrend our chronologies because the ring widths during our study period (nine years) showed no consistent allometric trend (Figure \ref{fig:allom}). We included year in our models to control for effects of different years.
 
-\subsection*{Data analyses}
+\subsection{Data analyses}
 We used Bayesian hierarchical models to understand how growth shifted with four different season metrics: GDD, GSL, SOS and EOS. We used growing degree days (GDD; mean daily temperature above 5\degree C) between leafout and leaf coloring to calculate the thermal season and the number of days between leafout and leaf coloring for the calendar season (growing season length; GSL). Then, we used leafout for the start of season (SOS) and leaf coloring for the end of season (EOS). To better illustrate ring width responses to our season metrics, we report ring width change (log(mm)) in response to the number of GDDs accumulated in an average week (seven days) of May (day of year 121 to 150 from 2016 to 2024; 58.32 GDD) for the thermal season. Similarly, we report ring width change per week of season length, leafout and leaf coloring for GSL, SOS and EOS, respectively. We report effects when the 90\% UI do not overlap with zero across all models.
 
 We combined daily climate data from two sources located next to the Arboretum for the duration of our study (2016-2024). From 2016-2019, we used the Weld Hill research station climate station \citep{arnoldarboretum_weather_2026} and the ``Boston (Weld Hill)" station for the remaining years \citep[2020-2024;][]{carroll_network_2026}. We determined drought occurrence at the arboretum using the North American Drought Monitor Maps and used the proposed drought index to qualify their intensity \citep{nationalcentersforenvironmentalinformationncei_north_2026}. 
@@ -164,7 +183,7 @@ ln(ringwidth)_i &\sim Normal(\mu, \sigma_y) \\
 \label{eq:mainMdl}
 \end{equation}
 
-With this model, we estimated a species-specific effect of each season predictor on growth ($\beta_{species}$), but we also controlled for variation due to species ($\alpha_{species}$), individual tree ($\alpha_{treeid}$) and year ($\alpha_{year}$). We  ran the models using both natural units and scaled predictors, through $z$-scoring, so we could directly compare their effect sizes \citep{gelman_data_2006}. We report estimates as means and 90\% uncertainty intervals (UI). We also fit the models for SOS and EOS using the full vs restricted datasets. Finally, because the wood growth onset is synchronized with a different leaf phenophase for species with different wood anatomy (ring-porous being more closely synchronized with budburst and diffuse-porous, with leafout), we ran the models using budburst instead of leafout as the SOS. This allowed us to test whether our model responses diverged across diffuse vs ring porous species (Table \ref{tab:tsCount}). 
+With this model, we estimated a species-specific effect of each season predictor on growth ($\beta_{species}$), but we also controlled for additional variation due to species ($\alpha_{species}$), individual tree ($\alpha_{treeid}$) and year ($\alpha_{year}$). We  ran the models using both natural units and scaled predictors, using $z$-scoring, which allows us to directly compare effect sizes of different predictors \citep{gelman_data_2006}. We report estimates as means and 90\% uncertainty intervals (UI). We also fit the models for SOS and EOS using the full vs restricted datasets. Finally, because the wood growth onset is synchronized with a different leaf phenophase for species with different wood anatomy (ring-porous being more closely synchronized with budburst and diffuse-porous, with leafout), we ran the models using budburst instead of leafout as the SOS. This allowed us to test whether our model responses diverged across diffuse vs ring porous species (Table \ref{tab:tsCount}). 
 
 We used an additional model to account for the previous year thermal conditions. For this, we used the GDD accumulated between leafout and leaf coloring from the previous year (e.g. for growth year of 2020, we used the GDD of 2019 as the previous year GDD), alongside the GDD accumulated during the current year. For interpretability, we also report ring width change (log(mm)) as the number of GDDs (for both years) accumulated in an average week (seven days) of May (day of year 121 to 150 from 2016 to 2024; 58.32 GDD). Thus, we estimated the previous and current year thermal season effect on the current year's growth as:
 
@@ -196,11 +215,12 @@ Finally, we used a third Bayesian hierarchical model to determine whether the SO
 % RESULTS
 % <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 % \clearpage
-\section*{Results}
+\section{Results}
 
 % Paragraph
 %emwJul12 -- if possible, here after you mention the drought or somewhere else (year effects?) you could come back to the drought and say if those years were super low growth or not ... so you could just use some plot showing years or the year effect in the model to get at it ... I just think we should come back to the drought in the results since we mention it. 
 %crdJul13 -- ok, I wrote something at lines 246-249 on this, but I am afraid to report results that overlap with 0 for this, but not consistently for the other model parameters. What do you think?  Should we just report an average across all species? I didn't talk about 2020 or 2022 as the difference is so weak, that I don't think it's worth reporthing OR should we just say there is no difference across years, even when there were droughts?
+% --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 Our dataset comprised 11 deciduous tree species with leaf phenology data spanning nine years (2016 to 2024) for a total of 
 321 leafout and 
 284 leaf coloring
@@ -234,7 +254,7 @@ The calendar season (GSL) ranged from
 11.75 mm ({\Tame} in 2019; Figure \ref{fig:tsboxplot}). 
 
 % Paragraph
-Across our eleven species and season predictors, we did not find any clear response of the growing season length on growth. 
+Across our eleven species and season predictors, we did not find any clear response of growing season length on growth. 
 We report estimates as means and 90\% uncertainty intervals (UI) that correspond to ring width change in mm on the log scale---henceforth `RW/day' or `RW/GDD' with days and GDD being adjusted to represent more interpretable units (see `Data analyses' section in Methods for more details on predictor adjustment).
 Longer thermal season did not increase growth for any species and decreased growth for {\Ball}
 ($\beta =$ -0.08, UI:
@@ -243,17 +263,17 @@ Longer thermal season did not increase growth for any species and decreased grow
 Further, a longer calendar season did not change growth for any species (Figure \ref{fig:tsmuplotbspp}b and f; Table \ref{tab:ts_slope_table}). On a scaled axis \citep[through $z$-scoring,][]{gelman_data_2006}, the thermal and calendar seasons were similarly predictive (see Figure \ref{fig:bsppZscored}).
 
 % Paragraph
-Previous year climate also had limited effects on growth. For the one species that showed decreased growth with warmer thermal seasons, this effect persisted for the current year, but previous year GDD actually increased growth for {\Ball}
+Previous year climate also had limited effects on growth. For the one species---{\Ball}---that showed decreased growth with warmer thermal seasons, this effect persisted for the current year, but previous year GDD actually increased growth 
 ($\beta =$ 0.15, UI:
 0.02,
 0.28 RW/GDD; Figure \ref{fig:tsPrvsYr}b; Table \ref{tab:tab_PrvsYr}). The congeneric of {\Ball}, {\Bnig}, in contrast grew less with previous year GDD ($\beta =$ 
 -0.08, UI:
 -0.17,
--0.00 RW/GDD; Figure \ref{fig:tsPrvsYr}b; Table \ref{tab:tab_PrvsYr}) and current year GDD increased growth for that species ($\beta =$ 
+-0.00 RW/GDD; Figure \ref{fig:tsPrvsYr}b; Table \ref{tab:tab_PrvsYr}) and current year GDD increased growth ($\beta =$ 
 0.12, UI:
 0.03,
 0.21 RW/GDD; Figure \ref{fig:tsPrvsYr}a; Table \ref{tab:tab_PrvsYr}).
-Interestingly, {\Bnig} did not solely respond to current year's conditions (Figure \ref{fig:tsmuplotbspp}a and e; Table \ref{tab:ts_slope_table}), but grew more with warmer thermal season only when the previous conditions were considered. 
+Interestingly, {\Bnig} did not solely respond to current year's conditions (Figure \ref{fig:tsmuplotbspp}a and e; Table \ref{tab:ts_slope_table}), but grew more with warmer thermal seasons only when the previous conditions were considered. 
 
 % Paragraph
 An earlier start of season did not increase growth for any species and decreased growth for {\Tame} (
@@ -262,7 +282,7 @@ $\beta =$ 0.15, UI:
 0.27 RW/day; Figure \ref{fig:tsmuplotbspp}c and g; Table \ref{tab:ts_slope_table}), which did not respond to the thermal or the calendar season. Additionally, a later end of season did not increase growth for any species and decreased growth for {\Ball}
 ($\beta =$ -0.09, UI:
 -0.16,
--0.01 RW/day; Figure \ref{fig:tsmuplotbspp}d and h; Table \ref{tab:ts_slope_table}), which also decreased growth with warmer thermal season. Estimates were unchanged when using the full or restricted datasets (SOS: $n =$
+-0.01 RW/day; Figure \ref{fig:tsmuplotbspp}d and h; Table \ref{tab:ts_slope_table}), which also decreased growth with warmer thermal seasons. Estimates were unchanged when using the full or restricted datasets (SOS: $n =$
 321 and EOS: $n =$
 284 vs $n =$
 278; Figure \ref{fig:tsSOSEOScomparison}b), or when using budburst instead of leafout as the start of the growing season (Figure \ref{fig:buburstVSleafoutTS}c). 
@@ -285,32 +305,32 @@ Finally, a later SOS delayed EOS only for {\Pdel} ($\beta$:
 % Figure mu previous year and current year
 \begin{figure}[!ht]
 \includegraphics[width=0.6\textwidth]{../../analyses/figures/growthPreviousYearModel/bsppCurrentVSpreviousYR.pdf}
-\caption{Model slope estimates representing ring width change (log(mm)) as a function of the current year growing degree days (GDD; a) and the previous year GDD (b). GDD represent the accumulated growing degree days (mean daily temperature above 5\degree C)) between leafout and leaf colouring and the models estimates shows ring width change (log(mm)) per scaled GDD (see `Data analyses' section in Methods). The dots represent the mean of each species and the lines, the 50\% and 90\% uncertainty intervals (UI).}
+\caption{Model slope estimates representing ring width change (log(mm)) as a function of the current year growing degree days (GDD; a) and the previous year GDD (b) from a model considering both effects. GDD represent the accumulated growing degree days (mean daily temperature above 5\degree C)) between leafout and leaf colouring and the models estimates shows ring width change (log(mm)) per scaled GDD (see `Data analyses' section in Methods). The dots represent the mean of each species and the lines, the 50\% and 90\% uncertainty intervals (UI).}
 \label{fig:tsPrvsYr}
 \end{figure}
 
 % latex table generated in R 4.5.1 by xtable 1.8-4 package
-% Wed Jul 15 13:09:25 2026
+% Thu Jul 16 12:55:44 2026
 \begin{table}[ht]
 \centering
-\caption{Treespotters species grouped by tree type, growth speed, and wood anatomy. We collected the growth speed information for each species from \cite{burns_silvics_1990}We sampled a total of 49 individual trees} 
+\caption{Species studied here grouped by growth speed and wood anatomy. We collected the growth speed information for each species from \cite{burns_silvics_1990}. We sampled a total of 49 individual trees} 
 \label{tab:tsCount}
 \begin{tabular}{p{7cm}p{5cm}p{3cm}r}
   \hline
 Common Name (Latin binomial) & Growth speed & Wood Anatomy & $n$ \\
 \hline
  \hline
- American basswood (\textit{Tilia americana}) & Fast & Diffuse-porous &   5 \\ 
-  Eastern cottonwood (\textit{Populus deltoides}) & Fast & Diffuse-porous &   4 \\ 
-  Northern red oak (\textit{Quercus rubra}) & Moderate & Ring-porous &   4 \\ 
-  White oak (\textit{Quercus alba}) & Slow & Ring-porous &   5 \\ 
-  Pignut hickory (\textit{Carya glabra}) & Slow & Ring-porous &   4 \\ 
-  Shagbark hickory (\textit{Carya ovata}) & Moderate & Ring-porous &   5 \\ 
-  River birch (\textit{Betula nigra}) & Fast & Diffuse-porous &   4 \\ 
-  Yellow birch (\textit{Betula alleghaniensis}) & Moderate & Diffuse-porous &   4 \\ 
-  Sugar maple (\textit{Acer saccharum}) & Slow & Diffuse-porous &   5 \\ 
-  Red maple (\textit{Acer rubrum}) & Moderate & Diffuse-porous &   4 \\ 
-  Yellow buckeye (\textit{Aesculus flava}) & Moderate & Diffuse-porous &   5 \\ 
+ \textit{Acer rubrum} (Red maple) & Moderate & Diffuse-porous &   4 \\ 
+  \textit{Acer saccharum} (Sugar maple) & Slow & Diffuse-porous &   5 \\ 
+  \textit{Aesculus flava} (Yellow buckeye) & Moderate & Diffuse-porous &   5 \\ 
+  \textit{Betula alleghaniensis} (Yellow birch) & Moderate & Diffuse-porous &   4 \\ 
+  \textit{Betula nigra} (River birch) & Fast & Diffuse-porous &   4 \\ 
+  \textit{Carya glabra} (Pignut hickory) & Slow & Ring-porous &   4 \\ 
+  \textit{Carya ovata} (Shagbark hickory) & Moderate & Ring-porous &   5 \\ 
+  \textit{Populus deltoides} (Eastern cottonwood) & Fast & Diffuse-porous &   4 \\ 
+  \textit{Quercus alba} (White oak) & Slow & Ring-porous &   5 \\ 
+  \textit{Quercus rubra} (Northern red oak) & Moderate & Ring-porous &   4 \\ 
+  \textit{Tilia americana} (American basswood) & Fast & Diffuse-porous &   5 \\ 
    \hline
 \end{tabular}
 \end{table}
@@ -320,26 +340,28 @@ Common Name (Latin binomial) & Growth speed & Wood Anatomy & $n$ \\
 % DISCUSSION
 % <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 \clearpage
-\section*{Discussion}
-In this study, we used 49 trees of 11 species to understand if mature trees grew more with longer growing seasons. To do this, we used annual growth with tree rings and leaf phenology for the SOS and EOS. Our findings reveal that warmer and longer growing seasons did not increase growth for any species and decreased growth for one. We also found that the previous year thermal conditions shifted growth trends for two species. 
+\section{Discussion}
+In this study, we used 49 trees of 11 species to understand if mature trees grew more with longer growing seasons. To do this, we used annual growth measured from tree rings and leaf phenology to estimate the SOS and EOS. Our findings reveal that warmer and longer growing seasons did not increase growth for any species and decreased growth for one. We also found that the previous year thermal conditions shifted growth trends for two species. 
 
-Our findings support recent results that trees do not grow more with longer growing seasons. Some studies that have failed to find a connection between growth and growing season length did not consider species differences \citep[e.g.,][]{cabon_water_2020}, but others have looked specifically across species. The most comparable study \citep[with eight species in common to dataset;][]{dow_warm_2022} was conducted geographically close to ours and found similar results: despite warmer and earlier springs, trees did not grow more. Our results complement these findings as we used leaf phenology and have EOS and SOS, while the previous study only had SOS for growth phenology and not leaf phenology. In addition, \cite{cufar_variations_2015} had substantially more years (five decades) and found analogous results to ours, but only for one European species, \textit{Fagus Sylvatica}. Taken together, these results support the idea that longer growing seasons may not increase temperate tree growth, a least for mature trees. 
+Our findings support recent results that trees do not grow more with longer growing seasons. Some studies that have failed to find a connection between growth and growing season length did not consider species differences \citep[e.g.,][]{cabon_water_2020}, but others have looked specifically across species. The most comparable study \citep[with eight species in common to our dataset;][]{dow_warm_2022} was conducted geographically close to ours and found similar results: despite warmer and earlier springs, trees did not grow more. Our results complement these findings as we used leaf phenology and have EOS and SOS, while the previous study only had SOS for growth phenology and not leaf phenology. In addition, \cite{cufar_variations_2015} had substantially more years (five decades) and found analogous results to ours, but only for one European species, \textit{Fagus Sylvatica}. Taken together, these results support the idea that longer growing seasons may not increase temperate tree growth, a least for mature trees. 
 
-We previously showed (see Chapter 1) that our juvenile trees grew more with longer and warmer growing seasons, contrasting the response from the mature trees studied here. Interestingly, these diverging responses corroborate the assumption that younger trees are usually more responsive to changing conditions compared to mature trees \citep{wolkovich_why_2025}. While these species were all relatively fast-growing, our mature trees did not show strong life-history strategies in their growth response to longer seasons, with even the fastest growing (i.e. {\Bnig}, {\Pdel} and {\Tame}) barely showing a response to warmer seasons.
+We previously showed (see Chapter 1) that our studied juvenile trees grew more with longer and warmer growing seasons, contrasting with the response we found here in the mature trees. Interestingly, these diverging responses corroborate the assumption that younger trees are usually more responsive to changing conditions compared to mature trees \citep{wolkovich_why_2025}. This common garden study looked at a few number of species with rather homegenous life-history strategies, but our study on mature trees in the arboretum looks at more distant speceis spanning a wider range of life-history strategies. %emwJul15 -- you need a transition sentence here; it should be easy because you can link from younger and more response to differences in responsiveness across life history strategies? Or maybe you touch on the few species you have in your common garden and how you have more here with more diverse strategies? Either way, find a better way to link these sentences with a new sentence for your reader. 
+While our fast-growing juvenile trees all grew more with warmer seasons, our mature trees did not show strong a strong signal of life-history strategies in their growth response to growing season conditions, with even the fastest growing species (i.e. {\Bnig}, {\Pdel} and {\Tame}) barely showing a response to warmer seasons.
 
-\subsection*{Life-history influence on growth trends}
-While our species share an array of growth strategies (see Table \ref{tab:tsCount}), we did not find a consistent growth trend across them. Only {\Ball}, which has a moderately fast-growth, responded to the thermal season and its decrease in growth suggests it may be negatively impacted by warmer seasons. {\Ball} also grew less with a later EOS, which is a period characterized by fast GDD accumulation. The fact that {\Ball} appears to be negatively impacted by warmer seasons suggests that this species could face declines at its southernmost range because growth would not keep up with warmer and longer seasons \citep{doak_demographic_2010,aitken_adaptation_2008}. In contrast to {\Ball}, its congeneric species, {\Bnig}, increased in growth with warmer seasons (though only when the previous year conditions were included). {\Bnig} is faster growing than {\Ball}, which may explain its response, though we did not find any consistent response across fast growing species. Indeed, the fast-growing {\Tame} \citep[Table \ref{tab:tsCount};][]{burns_silvics_1990} grew less with an earlier SOS---when the days are short and cool. This is contrast with our expectation of species with this life-history strategy which should provide them an edge by starting to grow earlier in the season \citep{loughnan_budburst_2025}. The other eight species had different life-history strategies (fast: {\Pdel}; moderate: {\Arub}, {\Afla}, {\Cova}, {\Qrub}; slow: {\Asac}, {\Cgla}, {\Qalb}; Table \ref{tab:tsCount}), and despite this diversity in growth speed, neither changed their growth with different season drivers. Ultimately, these findings suggest a weak signal of life-history strategies in growth responses to the growing season length and thermal conditions.
-%emwJul12 -- reminder to label species by strategy and/or move Table S1 to main text.
-% crdJul13 -- How I currently did it is not enough? I referenced the table, but did not change the species strategies labels.
+\subsection{Life-history influence on growth trends}
+While our species share an array of growth strategies (see Table \ref{tab:tsCount}), we did not find a consistent growth trend across them. Only {\Ball}, which has a moderately fast-growth, responded to the thermal season and its decrease in growth suggests it may be negatively impacted by warmer seasons. {\Ball} also grew less with a later EOS, which is a period characterized by fast GDD accumulation. The fact that {\Ball} appears to be negatively impacted by warmer seasons suggests that this species could face declines at its southernmost range where its growth may not keep up with warmer and longer seasons \citep{doak_demographic_2010,aitken_adaptation_2008}. In contrast to {\Ball}, its congeneric species, {\Bnig}, increased in growth with warmer seasons (though only when the previous year conditions were included). {\Bnig} is faster growing than {\Ball}, which may explain its response, though we did not find any consistent response across the other fast growing species. Indeed, the fast-growing {\Tame} \citep[Table \ref{tab:tsCount};][]{burns_silvics_1990} grew less with an earlier SOS---when the days are short and cool. This is contrast with our expectation of species with this rapid life-history strategy which should provide them an edge by starting to grow earlier in the season \citep{loughnan_budburst_2025}. The other eight species had different life-history strategies (fast: {\Pdel}; moderate: {\Arub}, {\Afla}, {\Cova}, {\Qrub}; slow: {\Asac}, {\Cgla}, {\Qalb}; Table \ref{tab:tsCount}), and despite this diversity in growth speed, none changed their growth with longer seasons. Ultimately, these findings suggest a weak signal of life-history strategies in growth responses to longer and warmer growing seasons.
 
-%emwJul12 -- You should definitely add a paragraph here on diffuse vs ring responses. 
-% crdJul15 -- I tried something here, but kind Im afraid I got lost into the weeds.
-We also found no clear trends with ring porosity. {\Ball} and {\Bnig}, which showed the contrasting responses described above were both diffuse-porous and the five other diffuse-porous species ({\Afla}, {\Arub}, {\Asac}, {\Pdel} and {\Tame}) did not increase growth with longer or warmer seasons. We had only four ring-porous species ({\Cgla}, {\Cova}, {\Qalb} and {\Qrub}), but they did not stand out at all. While this is a small sample, it supports recent work \citep[e.g.,][]{grover_growth_2023} suggesting ring porosity may not be as useful a predictor for growth as previously suggested \citep{wang_relation_1992}. While wood porosity impose inherent physiological differences across species, this dichotomous classification may over-simplify the reality of the complex  dynamic of tree growth. In fact, a gradient of life history strategies may exist within each wood porosity type where both fast and slow growth species can share the same wood porosity, though this is poorly documented. This emphasizes the need to better classify growth traits and related carbon allocation with wood porosity. 
+We also found no clear trends with ring porosity. {\Ball} and {\Bnig}, which showed the contrasting responses described above were both diffuse-porous and the five other diffuse-porous species ({\Afla}, {\Arub}, {\Asac}, {\Pdel} and {\Tame}) did not increase growth with longer or warmer seasons. We had only four ring-porous species ({\Cgla}, {\Cova}, {\Qalb} and {\Qrub}), which responded similarly the diffuse-porous species. While this is a small sample, it supports recent work \citep[e.g.,][]{grover_growth_2023} suggesting ring porosity may not be as useful a predictor for growth as previously suggested \citep{wang_relation_1992}. While wood porosity imposes inherent physiological differences across species, this dichotomous classification may over-simplify the reality of the complex  dynamic of tree growth. In fact, a gradient of life history strategies may exist within each wood porosity type where both fast and slow growing species can share the same wood porosity, though this is poorly documented. %emwJul15 -- any citation here possible?
+ This emphasizes the need to better classify growth traits and related carbon allocation with wood porosity. 
 
-\subsection*{Growth response blurred by carbon allocation to storage}
-Shift in results when including previous year thermal season suggests including carbon allocation strategy in how we understand life-history strategies may be important to understanding how longer growing seasons affect growth. The growth response of two \textit{Betula} species shifted when we included the previous year thermal season as a driver. These two congeneric species ({\Ball} and {\Bnig}) had diametrically opposed responses, however. {\Ball} growth decreased with the current year thermal conditions, but increased with a warmer previous year, possibly revealing a carbon allocation strategy that prioritizes carbon storage above short-term growth. This is in contrast with the expectation from diffuse-porous species that tend to allocate less carbon to storage and more to growth \citep{barbaroux_contrasting_2002,muhr_how_2016}. In contrast, {\Bnig} increased in growth during the current year---only when the previous year conditions were included---supporting the expectation that diffuse-porous species prioritize rapid investment in growth with less allocation to storage. These opposite responses of two closely related species, highlight the importance of considering more than the current year in tree growth and growing season length models.
+\subsection{Growth response blurred by carbon allocation to storage}
+Shift in our findings when including previous year thermal season suggests including carbon allocation strategy may be important to understanding how longer growing seasons affect growth. The growth response of two \textit{Betula} species shifted when we included the previous year thermal season as a driver. These two congeneric and diffuse-porous species ({\Ball} and {\Bnig}) had diametrically opposed responses, however. {\Ball} growth decreased with the current year thermal conditions, but increased with a warmer previous year, possibly revealing a carbon allocation strategy that prioritizes carbon storage above short-term growth. This is in contrast with the expectation that diffuse-porous species will tend to allocate less carbon to storage and more to growth \citep{barbaroux_contrasting_2002,muhr_how_2016}. In contrast, {\Bnig} increased in growth during the current year---only when the previous year conditions were included---supporting the expectation that diffuse-porous species prioritize rapid investment in growth with less allocation to storage. These opposite responses of two closely related species, highlight the importance of considering more than the current year in tree growth and growing season length models.
 
-Also, considering not solely the current year conditions when studying mature tree growth could help elucidate tree growth dynamics, as even fast-growth species may have their responses blurred by carbon allocation to something else than growth. Our findings reveal a weak response of the growing season length and conditions on growth across species, corroborating previous findings on mature trees \citep{cufar_treering_2008,delpierre_temperate_2016,silvestro_longer_2023}. Most of our studied species did not grow more with a warmer thermal or longer calendar season. However, out results emphasize the importance of considering the previous year conditions in future growth and growing season length studies because of the vast array of carbon allocation strategies that may blur short-term tree growth responses. Growing seasons are expected to become warmer and longer with future climate change, but it is still unclear how mature trees will track this trend. Whether tree growth stalls or decrease, both responses will influence the contribution of temperate forest to act as a global net carbon sink. 
+%emwJul15 -- I am not sure this paragraph completely fits together ... what do you mean by 'carbon allocation to something other than growth' in the topic sentence? And the second and third sentence seem to contradict each other... let's discuss and try to fix tomorrow perhaps? 
+% --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+Also, considering conditions beyond the current year when studying mature tree growth could help elucidate tree growth dynamics, as even fast-growth species may have their responses blurred by carbon allocation to something other than growth. 
+%emwJul15 -- I think your phrasing below is confusing, it sounds like you suddenly are saying you found a response, then you say the opposite ... Maybe you mean Our findings reveal little response of longer and warmer growing season conditions ....
+Our findings reveal a weak response of the growing season length and conditions on growth across species, corroborating previous findings on mature trees \citep{cufar_treering_2008,delpierre_temperate_2016,silvestro_longer_2023}. Most of our studied species did not grow more with a warmer thermal or longer calendar season. However, our results emphasize the importance of considering the previous year conditions in future growth and growing season length studies because of the vast array of carbon allocation strategies that may blur short-term tree growth responses. Growing seasons are expected to become warmer and longer with future climate change, but it is still unclear how mature trees will track this trend. Whether tree growth stalls or decrease, both responses will influence the contribution of temperate forest to act as a global net carbon sink. 
 
 
 %<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
@@ -353,17 +375,12 @@ Also, considering not solely the current year conditions when studying mature tr
 % <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 \clearpage
 
-\section*{Supplemental}
+\section{Supplemental material}
 
 \setcounter{table}{0}
 \renewcommand{\thetable}{S\arabic{table}}
 \setcounter{figure}{0}
 \renewcommand{\thefigure}{S\arabic{figure}}
-
-%-------------------------------------------------------------------------------
-% Supplemental Methods
-%-------------------------------------------------------------------------------
-\subsection*{Supplemental Methods}
 
 % Rw per year for allometry
 \begin{figure}[!ht]
@@ -372,15 +389,12 @@ Also, considering not solely the current year conditions when studying mature tr
 \label{fig:allom}
 \end{figure}
 
-
 %-------------------------------------------------------------------------------
 % Supplemental Results
 %-------------------------------------------------------------------------------
-\clearpage
-\section*{Supplemental results}
 
 % latex table generated in R 4.5.1 by xtable 1.8-4 package
-% Wed Jul 15 13:09:25 2026
+% Thu Jul 16 12:55:44 2026
 \begin{table}[ht]
 \centering
 \caption{Species level slope parameters which represent ring width change (log(mm)), per scaled predictor (see `Data analyses' section in Methods for more details on predictor scaling). We report estimates as mean and 90\% uncertainty intervals (in square brackets) across our four different predictors (GDD: growing degree days, GSL: growing season length, SOS: start of season and EOS: end of season). Table \ref{tab:tab_all} reports all the models parameters.} 
@@ -407,7 +421,7 @@ Species & GDD & GSL & SOS & EOS \\
 
 
 % latex table generated in R 4.5.1 by xtable 1.8-4 package
-% Wed Jul 15 13:09:25 2026
+% Thu Jul 16 12:55:44 2026
 \begin{table}[ht]
 \centering
 \caption{Summary output of each parameter from our four predictors, using ring width (log(mm)) as the response variable (See equation \ref{eq:mainMdl}). We report estimates as mean and 90\% uncertainty intervals (in square brackets) across our four different predictors (GDD: growing degree days, GSL: growing season length, SOS: start of season and EOS: end of season). See `Data analyses' section in Methods for more details.} 
@@ -456,7 +470,7 @@ $\alpha$ & 0.61 [-2.08, 3.25] & 0.49 [-2.09, 3.03] & 0.24 [-2.39, 2.94] & 0.23 [
 
 
 % latex table generated in R 4.5.1 by xtable 1.8-4 package
-% Wed Jul 15 13:09:25 2026
+% Thu Jul 16 12:55:44 2026
 \begin{table}[ht]
 \centering
 \caption{Summary output of each parameter from the previous year model (Equation \ref{eq:prvsYrMdl}) using ring width (log(mm)) as the response variable. We report estimates as mean and 90\% uncertainty intervals (in square brackets). see `Data analyses' section in Methods for more details} 
@@ -516,7 +530,7 @@ $\alpha$ & 0.20 [-1.10, 1.48] \\
 
 
 % latex table generated in R 4.5.1 by xtable 1.8-4 package
-% Wed Jul 15 13:09:25 2026
+% Thu Jul 16 12:55:44 2026
 \begin{table}[ht]
 \centering
 \caption{Summary output of each parameter from the model on the effect of SOS (days) on EOS (days; Equation \ref{eq:SOSonEOSMdl}). We report estimates as mean and 90\% uncertainty intervals (in square brackets). see `Data analyses' section in Methods for more details} 
