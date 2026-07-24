@@ -242,6 +242,7 @@ colnames(ayear_df)  <- 1:ncol(ayear_df)
 # posterior summaries
 sigma_df2  <- extract_params(df_fitgdd, "sigma", "mean", "sigma")
 bspp_df2   <- extract_params(df_fitgdd, "bspp", "fit_bspp", "spp", "bspp\\[(\\d+)\\]")
+bspp_df2   <- subset(bspp_df2, !grepl("z|sigma", spp))
 treeid_df2 <- extract_params(df_fitgdd, "atreeid", "fit_atreeid", "id", "atreeid\\[(\\d+)\\]")
 treeid_df2 <- subset(treeid_df2, !grepl("z|sigma", id))
 aspp_df2   <- extract_params(df_fitgdd, "aspp", "fit_aspp", "spp", "aspp\\[(\\d+)\\]")
@@ -259,7 +260,9 @@ write.csv(aspp_df2,   "output/GM_GDDparam_aspp.csv",   row.names = FALSE)
 write.csv(ayear_df2,  "output/GM_GDDparam_ayear.csv",  row.names = FALSE)
 write.csv(a_df2,      "output/GM_GDDparam_a.csv",      row.names = FALSE)
 
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 ##### Plot posterior vs priors for gdd fit #####
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 pdf(file = "figures/growthModelsMain/diagnostics/gddModelPriorVSPosterior.pdf", width = 8, height = 10)
 par(mfrow = c(3, 2))
 
@@ -300,7 +303,9 @@ legend("topright", legend = c("Prior", "Posterior"), col = pal, lwd = 2)
 
 dev.off()
 
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 ##### Diagnostics #####
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 samples <- util$extract_expectand_vals(fitgdd)
 diagnostics <- util$extract_hmc_diagnostics(fitgdd) 
 util$check_all_hmc_diagnostics(diagnostics)
@@ -321,6 +326,117 @@ pdf("figures/growthModelsMain/diagnostics/divergentTransitions_bspp.pdf",
 util$plot_div_pairs(bspp, "sigma_bspp", samples, diagnostics, 
                     transforms = list("sigma_bspp" = 1))
 dev.off()
+
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+##### Compare partial pooling vs no pooling #####
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+fitgdd_noPP <- readRDS("output/stanOutput/fitGrowthGDD_noPP")
+df_fitgdd_noPP <- as.data.frame(fitgdd_noPP)
+
+# posterior summaries
+# sigma_df2_noPP  <- extract_params(fitgdd_noPP, "sigma", "mean", "sigma")
+bspp_df2_noPP   <- extract_params(df_fitgdd_noPP, "bspp", "fit_bspp", "spp", "bspp\\[(\\d+)\\]")
+treeid_df2_noPP <- extract_params(df_fitgdd_noPP, "atreeid", "fit_atreeid", "id", "atreeid\\[(\\d+)\\]")
+treeid_df2_noPP <- subset(treeid_df2_noPP, !grepl("z|sigma", id))
+aspp_df2_noPP   <- extract_params(df_fitgdd_noPP, "aspp", "fit_aspp", "spp", "aspp\\[(\\d+)\\]")
+ayear_df2_noPP  <- extract_params(df_fitgdd_noPP, "ayear", "fit_ayear", "year", "ayear\\[(\\d+)\\]")
+ayear_df2_noPP  <- subset(ayear_df2_noPP, !grepl("mean", year))
+a_df2_noPP      <- extract_params(df_fitgdd_noPP, "a", "fit_a",
+                             "grandmean", "a\\[(\\d+)\\]")
+a_df2           <- subset(a_df2, grandmean == "a")
+
+
+# Plots!
+pdf("figures/growthModelsMain/noPPvsPP.pdf", width = 6, height = 6)
+par(mfrow = c(2,2), mar = c(4, 4, 4, 4))
+
+aspp_df2_noPP$spp_name <- empts$latbi[match(aspp_df2_noPP$spp, empts$spp_num)]
+
+# aspp --- --- --- --- --- ---
+plot(aspp_df2_noPP$mean, aspp_df2$mean,
+     xlab = "No partial pooling", ylab = "Partial pooling",
+     type = "n", frame = FALSE,
+     ylim = range(c(aspp_df2$p25, aspp_df2$p75)),
+     xlim = range(c(aspp_df2_noPP$p25, aspp_df2_noPP$p75)))
+arrows(x0 = aspp_df2_noPP$mean, y0 = aspp_df2$p25,
+       x1 = aspp_df2_noPP$mean, y1 = aspp_df2$p75,
+       angle = 90, code = 3, length = 0, lwd = 1.5, col = "darkgray")
+arrows(x0 = aspp_df2_noPP$p25, y0 = aspp_df2$mean,
+       x1 = aspp_df2_noPP$p75, y1 = aspp_df2$mean,
+       angle = 90, code = 3, length = 0, lwd = 1.5, col = "darkgray")
+points(aspp_df2_noPP$mean, aspp_df2$mean,
+       pch = 16, col = tscolslatbi[aspp_df2_noPP$spp_name], cex = 1.2)
+abline(0, 1, lty = 2, col = "black", lwd = 2)
+mtext(expression(alpha[species]),
+      side = 3, line = 0.5, adj = 0.5, font = 2, cex = 1.2)
+
+# ayear --- --- --- --- --- ---
+plot(ayear_df2_noPP$mean, ayear_df2$mean,
+     xlab = "No partial pooling", ylab = "Partial pooling",
+     type = "n", frame = FALSE,
+     ylim = range(c(ayear_df2$p25, ayear_df2$p75)),
+     xlim = range(c(ayear_df2_noPP$p25, ayear_df2_noPP$p75)))
+arrows(x0 = ayear_df2_noPP$mean, y0 = ayear_df2$p25,
+       x1 = ayear_df2_noPP$mean, y1 = ayear_df2$p75,
+       angle = 90, code = 3, length = 0, lwd = 1.5, col = "darkgray")
+arrows(x0 = ayear_df2_noPP$p25, y0 = ayear_df2$mean,
+       x1 = ayear_df2_noPP$p75, y1 = ayear_df2$mean,
+       angle = 90, code = 3, length = 0, lwd = 1.5, col = "darkgray")
+points(ayear_df2_noPP$mean, ayear_df2$mean,
+       pch = 16, col = "black", cex = 1.2)
+abline(0, 1, lty = 2, col = "black", lwd = 2)
+mtext(expression(alpha[year]),
+      side = 3, line = 0.5, adj = 0.5, font = 2, cex = 1.2)
+
+# bspp --- --- --- --- --- ---
+plot(bspp_df2_noPP$mean, bspp_df2$mean,
+     xlab = "No partial pooling", ylab = "Partial pooling",
+     type = "n", frame = FALSE,
+     ylim = range(c(bspp_df2$p25, bspp_df2$p75)),
+     xlim = range(c(bspp_df2_noPP$p25, bspp_df2_noPP$p75)))
+arrows(x0 = bspp_df2_noPP$mean, y0 = bspp_df2$p25,
+       x1 = bspp_df2_noPP$mean, y1 = bspp_df2$p75,
+       angle = 90, code = 3, length = 0, lwd = 1.5, col = "darkgray")
+arrows(x0 = bspp_df2_noPP$p25, y0 = bspp_df2$mean,
+       x1 = bspp_df2_noPP$p75, y1 = bspp_df2$mean,
+       angle = 90, code = 3, length = 0, lwd = 1.5, col = "darkgray")
+points(bspp_df2_noPP$mean, bspp_df2$mean,
+       pch = 16, col = tscolslatbi[aspp_df2_noPP$spp_name], cex = 1.2)
+abline(0, 1, lty = 2, col = "black", lwd = 2)
+mtext(expression(beta[species]),
+      side = 3, line = 0.5, adj = 0.5, font = 2, cex = 1.2)
+
+# atreeid --- --- --- --- --- ---
+plot(treeid_df2_noPP$mean, treeid_df2$mean,
+     xlab = "No partial pooling", ylab = "Partial pooling",
+     type = "n", frame = FALSE,
+     ylim = range(c(treeid_df2$p25, treeid_df2$p75)),
+     xlim = range(c(treeid_df2_noPP$p25, treeid_df2_noPP$p75)))
+arrows(x0 = treeid_df2_noPP$mean, y0 = treeid_df2$p25,
+       x1 = treeid_df2_noPP$mean, y1 = treeid_df2$p75,
+       angle = 90, code = 3, length = 0, lwd = 1.5, col = "darkgray")
+arrows(x0 = treeid_df2_noPP$p25, y0 = treeid_df2$mean,
+       x1 = treeid_df2_noPP$p75, y1 = treeid_df2$mean,
+       angle = 90, code = 3, length = 0, lwd = 1.5, col = "darkgray")
+points(treeid_df2_noPP$mean, treeid_df2$mean,
+       pch = 16, col = "black", cex = 1.2)
+abline(0, 1, lty = 2, col = "black", lwd = 2)
+mtext(expression(alpha[treeid]),
+      side = 3, line = 0.5, adj = 0.5, font = 2, cex = 1.2)
+dev.off()
+
+n_spp <- 11
+y_pos <- rev(1:n_spp)
+plot(bspp_df2$mean, y_pos,
+     xlim = c(-0.15, 0.15), ylim = c(0.5, n_spp + 0.5),
+     xlab = "bspp estimates", 
+     ylab = "",
+     yaxt = "n", pch = 16, cex = 2, col = tscolslatbi, frame.plot = TRUE, 
+     panel.first = abline(v = 0, lty = 2, col = "black"))
+segments(bspp_df2$p5,  y_pos, bspp_df2$p95, y_pos,
+         col = tscolslatbi, lwd = 1.5)
+segments(bspp_df2$p25, y_pos, bspp_df2$p75, y_pos,
+         col = tscolslatbi, lwd = 3)
 
  # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 # Plot GSL fit ####
