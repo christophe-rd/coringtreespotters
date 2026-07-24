@@ -31,8 +31,8 @@ source('mcmc_visualization_tools.R', local=util)
 # my function to extract parameters
 source('/Users/christophe_rouleau-desrochers/github/wildchrokie/analyses/rcode/tools.R')
 
-wrmUp <- 2000
-itrns <- 4000
+wrmUp <- 1500
+itrns <- 2500
 
 runmodels <- F
 runzscoredmodels <- F
@@ -228,7 +228,7 @@ df_fitgdd <- as.data.frame(fitgdd)
 
 # full posterior arrays for multi-line extraction
 columns <- colnames(df_fitgdd)[!grepl("prior", colnames(df_fitgdd))]
-bspp_df <- df_fitgdd[, columns[grepl("bsp", columns)]]
+bspp_df <- df_fitgdd[, columns[grepl("bsp", columns) & !grepl("z|sigma", columns)]]
 treeid_df <- df_fitgdd[, grepl("atreeid", columns) & !grepl("z|sigma", columns)]
 aspp_df <- df_fitgdd[, columns[grepl("aspp", columns)]]
 ayear_df <- df_fitgdd[, columns[grepl("ayear", columns) & !grepl("mean", columns)]]
@@ -268,6 +268,11 @@ plot(density(df_fitgdd[, "a_prior"]), col = pal[1], lwd = 2, main = "priorVSpost
 lines(density(df_fitgdd[, "a"]), col = pal[2], lwd = 2)
 legend("topright", legend = c("Prior", "Posterior"), col = pal, lwd = 2)
 
+# sigma_bspp
+plot(density(df_fitgdd[, "sigma_bspp_prior"]), col = pal[1], lwd = 2, main = "priorVSposterior_sigma_bspp", xlab = "sigma_bspp", ylim = c(0, 2))
+lines(density(df_fitgdd[, "sigma_bspp"]), col = pal[2], lwd = 2)
+legend("topright", legend = c("Prior", "Posterior"), col = pal, lwd = 2)
+
 # sigma_atreeid
 plot(density(df_fitgdd[, "sigma_atreeid_prior"]), col = pal[1], lwd = 2, main = "priorVSposterior_sigma_atreeid", xlab = "sigma_atreeid", ylim = c(0, 2))
 lines(density(df_fitgdd[, "sigma_atreeid"]), col = pal[2], lwd = 2)
@@ -284,7 +289,7 @@ for (col in colnames(aspp_df)) { lines(density(aspp_df[, col]), col = pal[2], lw
 legend("topright", legend = c("Prior", "Posterior"), col = pal, lwd = 2)
 
 # bsp
-plot(density(df_fitgdd[, "bsp_prior"]), col = pal[1], lwd = 2, main = "priorVSposterior_bsp", xlab = "bsp", ylim = c(0, 1.8))
+plot(density(df_fitgdd[, "bspp_prior"]), col = pal[1], lwd = 2, main = "priorVSposterior_bsp", xlab = "bspp", ylim = c(0, 1.8))
 for (col in colnames(bspp_df)) { lines(density(bspp_df[, col]), col = pal[2], lwd = 1) }
 legend("topright", legend = c("Prior", "Posterior"), col = pal, lwd = 2)
 
@@ -295,8 +300,29 @@ legend("topright", legend = c("Prior", "Posterior"), col = pal, lwd = 2)
 
 dev.off()
 
+##### Diagnostics #####
+samples <- util$extract_expectand_vals(fitgdd)
+diagnostics <- util$extract_hmc_diagnostics(fitgdd) 
+util$check_all_hmc_diagnostics(diagnostics)
 
-# <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+# atreeid
+atreeid <- names(samples)[grepl("zatreeid", names(samples))]
+atreeid <- atreeid[!grepl("sigma", atreeid)]
+pdf("figures/growthModelsMain/diagnostics/divergentTransitions.pdf",
+    width = 6, height = 6)
+util$plot_div_pairs(atreeid, "sigma_atreeid", samples, diagnostics, transforms = list("sigma_atreeid" = 1))
+dev.off()
+
+# bspp
+bspp <- names(samples)[grepl("zbspp", names(samples))]
+bspp <- bspp[!grepl("sigma", bspp)]
+pdf("figures/growthModelsMain/diagnostics/divergentTransitions_bspp.pdf",
+    width = 6, height = 6)
+util$plot_div_pairs(bspp, "sigma_bspp", samples, diagnostics, 
+                    transforms = list("sigma_bspp" = 1))
+dev.off()
+
+ # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 # Plot GSL fit ####
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 ##### Recover parameters #####
@@ -360,7 +386,7 @@ for (col in colnames(aspp_df)) { lines(density(aspp_df[, col]), col = pal[2], lw
 legend("topright", legend = c("Prior", "Posterior"), col = pal, lwd = 2)
 
 # bsp
-plot(density(df_fitgsl[, "bsp_prior"]), col = pal[1], lwd = 2, main = "priorVSposterior_bsp", xlab = "bsp", ylim = c(0, 1.8))
+plot(density(df_fitgsl[, "bspp_prior"]), col = pal[1], lwd = 2, main = "priorVSposterior_bsp", xlab = "bsp", ylim = c(0, 1.8))
 for (col in colnames(bspp_df)) { lines(density(bspp_df[, col]), col = pal[2], lwd = 1) }
 legend("topright", legend = c("Prior", "Posterior"), col = pal, lwd = 2)
 
@@ -436,7 +462,7 @@ for (col in colnames(aspp_df)) { lines(density(aspp_df[, col]), col = pal[2], lw
 legend("topright", legend = c("Prior", "Posterior"), col = pal, lwd = 2)
 
 # bsp
-plot(density(df_fitsos[, "bsp_prior"]), col = pal[1], lwd = 2, main = "priorVSposterior_bsp", xlab = "bsp", ylim = c(0, 1.8))
+plot(density(df_fitsos[, "bspp_prior"]), col = pal[1], lwd = 2, main = "priorVSposterior_bsp", xlab = "bsp", ylim = c(0, 1.8))
 for (col in colnames(bspp_df)) { lines(density(bspp_df[, col]), col = pal[2], lwd = 1) }
 legend("topright", legend = c("Prior", "Posterior"), col = pal, lwd = 2)
 
@@ -511,7 +537,7 @@ for (col in colnames(aspp_df)) { lines(density(aspp_df[, col]), col = pal[2], lw
 legend("topright", legend = c("Prior", "Posterior"), col = pal, lwd = 2)
 
 # bsp
-plot(density(df_fiteos[, "bsp_prior"]), col = pal[1], lwd = 2, main = "priorVSposterior_bsp", xlab = "bsp", ylim = c(0, 1.8))
+plot(density(df_fiteos[, "bspp_prior"]), col = pal[1], lwd = 2, main = "priorVSposterior_bsp", xlab = "bsp", ylim = c(0, 1.8))
 for (col in colnames(bspp_df)) { lines(density(bspp_df[, col]), col = pal[2], lwd = 1) }
 legend("topright", legend = c("Prior", "Posterior"), col = pal, lwd = 2)
 
@@ -1061,7 +1087,7 @@ for (col in colnames(ayear_df)) {
 legend("topright", legend = c("Prior", "Posterior"), col = pal, lwd = 2)
 
 # bsp
-plot(density(df_fitgdd[, "bsp_prior"]), 
+plot(density(df_fitgdd[, "bspp_prior"]), 
      col = pal[1], lwd = 2, 
      main = "priorVSposterior_bsp", 
      xlab = "bsp", ylim = c(0, 5))
@@ -1165,7 +1191,7 @@ for (col in colnames(ayear_df)) {
 legend("topright", legend = c("Prior", "Posterior"), col = pal, lwd = 2)
 
 # bsp
-plot(density(df_fitgsl[, "bsp_prior"]), 
+plot(density(df_fitgsl[, "bspp_prior"]), 
      col = pal[1], lwd = 2, 
      main = "priorVSposterior_bsp", 
      xlab = "bsp", ylim = c(0, 5))
@@ -1270,7 +1296,7 @@ for (col in colnames(ayear_df)) {
 legend("topright", legend = c("Prior", "Posterior"), col = pal, lwd = 2)
 
 # bsp
-plot(density(df_fitsos[, "bsp_prior"]), 
+plot(density(df_fitsos[, "bspp_prior"]), 
      col = pal[1], lwd = 2, 
      main = "priorVSposterior_bsp", 
      xlab = "bsp", ylim = c(0, 5))
@@ -1375,7 +1401,7 @@ for (col in colnames(ayear_df)) {
 legend("topright", legend = c("Prior", "Posterior"), col = pal, lwd = 2)
 
 # bsp
-plot(density(df_fiteos[, "bsp_prior"]), 
+plot(density(df_fiteos[, "bspp_prior"]), 
      col = pal[1], lwd = 2, 
      main = "priorVSposterior_bsp", 
      xlab = "bsp", ylim = c(0, 5))
@@ -1679,7 +1705,7 @@ for (col in colnames(ayear_df)) {
 legend("topright", legend = c("Prior", "Posterior"), col = pal, lwd = 2)
 
 # bsp
-plot(density(df_fit[, "bsp_prior"]), 
+plot(density(df_fit[, "bspp_prior"]), 
      col = pal[1], lwd = 2, 
      main = "priorVSposterior_bsp", 
      xlab = "bsp", ylim = c(0, 1.8))
@@ -2294,7 +2320,7 @@ for (col in colnames(aspp_df)) { lines(density(aspp_df[, col]), col = pal[2], lw
 legend("topright", legend = c("Prior", "Posterior"), col = pal, lwd = 2)
 
 # bsp
-plot(density(df_fitco[, "bsp_prior"]), col = pal[1], lwd = 2, main = "priorVSposterior_bsp", xlab = "bsp", ylim = c(0, 1.8))
+plot(density(df_fitco[, "bspp_prior"]), col = pal[1], lwd = 2, main = "priorVSposterior_bsp", xlab = "bsp", ylim = c(0, 1.8))
 for (col in colnames(bspp_df)) { lines(density(bspp_df[, col]), col = pal[2], lwd = 1) }
 legend("topright", legend = c("Prior", "Posterior"), col = pal, lwd = 2)
 
