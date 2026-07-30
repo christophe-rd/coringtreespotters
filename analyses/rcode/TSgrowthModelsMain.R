@@ -31,8 +31,8 @@ source('mcmc_visualization_tools.R', local=util)
 # my function to extract parameters
 source('/Users/christophe_rouleau-desrochers/github/wildchrokie/analyses/rcode/tools.R')
 
-wrmUp <- 1500
-itrns <- 2500
+wrmUp <- 2000
+itrns <- 4000
 
 runmodels <- F
 runzscoredmodels <- F
@@ -246,6 +246,7 @@ bspp_df2   <- subset(bspp_df2, !grepl("z|sigma", spp))
 treeid_df2 <- extract_params(df_fitgdd, "atreeid", "fit_atreeid", "id", "atreeid\\[(\\d+)\\]")
 treeid_df2 <- subset(treeid_df2, !grepl("z|sigma", id))
 aspp_df2   <- extract_params(df_fitgdd, "aspp", "fit_aspp", "spp", "aspp\\[(\\d+)\\]")
+aspp_df2   <- subset(aspp_df2, !grepl("sigma", spp))
 ayear_df2  <- extract_params(df_fitgdd, "ayear", "fit_ayear", "year", "ayear\\[(\\d+)\\]")
 ayear_df2  <- subset(ayear_df2, !grepl("mean", year))
 a_df2      <- extract_params(df_fitgdd, "a", "fit_a",
@@ -428,7 +429,7 @@ dev.off()
 n_spp <- 11
 y_pos <- rev(1:n_spp)
 plot(bspp_df2$mean, y_pos,
-     xlim = c(-0.15, 0.15), ylim = c(0.5, n_spp + 0.5),
+     xlim = c(-0.05, 0.05), ylim = c(0.5, n_spp + 0.5),
      xlab = "bspp estimates", 
      ylab = "",
      yaxt = "n", pch = 16, cex = 2, col = tscolslatbi, frame.plot = TRUE, 

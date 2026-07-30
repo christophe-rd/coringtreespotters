@@ -22,8 +22,9 @@ parameters{
 real a;        // mean intercept across everything
 real<lower=0> sigma_atreeid;
 real<lower=0> sigma_bspp;
+real<lower=0> sigma_aspp;
 real<lower=0> sigma_y;     // measurement error, noise etc.      
-vector[Nspp] zbspp;
+vector[Nspp] bspp;
 vector[Ntreeid] zatreeid; // variation of intercept across tree ids, non-centered
 vector[Nspp] aspp;
 vector[Nyear] ayear;
@@ -31,8 +32,8 @@ vector[Nyear] ayear;
 }
 
 transformed parameters{
-vector[Nspp] bspp;
-bspp = 0 + sigma_bspp * zbspp;
+// vector[Nspp] bspp;
+// bspp = 0 + sigma_bspp * zbspp;
 
 vector[Ntreeid] atreeid;
 atreeid = 0 + sigma_atreeid*zatreeid; // non-centered parameterization on atreeid
@@ -50,13 +51,14 @@ for (i in 1:N){ // don't change this for reparameterization
 
 model{    
   a ~ normal(1, 3);
-  aspp ~ normal(0, 3);
+  aspp ~ normal(0, sigma_aspp);
   ayear ~ normal(0, 1);
   
-  zbspp ~ normal(0, 1);
+  bspp ~ normal(0, sigma_bspp);
   zatreeid ~ normal(0, 1);
   sigma_atreeid ~ normal(0, 1);
   sigma_bspp ~ normal(0, 2);
+  sigma_aspp ~ normal(0, 2);
   
   sigma_y ~ normal(0, 1);
   
