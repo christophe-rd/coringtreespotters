@@ -186,7 +186,7 @@ deos <- list(
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 if(runmodels){
 # Fit model GDD
-gddmodel <- stan_model("stan/TSmodelGrowthGDD.stan")
+gddmodel <- stan_model("stan/TSmodelGrowthGDD_noPP.stan")
 fitgdd <- sampling(gddmodel, data = dgdd,
                    warmup = wrmUp, iter = itrns, chains=4)
 saveRDS(fitgdd, "output/stanOutput/fitGrowthGDD")
