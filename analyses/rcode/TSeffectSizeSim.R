@@ -84,11 +84,13 @@ temp$gdddiff <- temp$meanTempC - 5
 
 temp <- temp[order(temp$year, temp$doy), ]
 
-temp$bin7 <- ave(temp$doy, temp$year, FUN = function(x) ceiling((x - min(x) + 1) / 7))
+temp$bin7 <- ave(temp$doy, temp$year, 
+                 FUN = function(x) ceiling((x - min(x) + 1) / 7))
 gdd_7day <- aggregate(gdddiff ~ year + bin7, data = temp, sum)
 tsgddscale <- mean(gdd_7day$gdddiff)
 
-gddseq <- seq(min(empts$pgsGDD5), max(empts$pgsGDD5), length.out = lineplotseqlength)
+gddseq <- seq(min(empts$pgsGDD5), max(empts$pgsGDD5), 
+              length.out = lineplotseqlength)
 
 # data list for gdd
 
@@ -176,6 +178,7 @@ deos <- list(
   eosscale = eosscale,
   Neosseq = length(eosseq)
 )
+
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 if(runmodels){
 # Fit model GDD
@@ -183,14 +186,15 @@ gddmodel <- stan_model("stan/TSmodelGrowthGDD_noPP.stan")
 fitgdd <- sampling(gddmodel, data = dgdd,
                    warmup = wrmUp, iter = itrns, chains=4)
 saveRDS(fitgdd, "output/stanOutput/fitGrowthGDD")
+}
 
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 # Plot GDD fit ####
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
-fitgdd <- readRDS("output/stanOutput/fitGrowthGDD")
-fitgsl <- readRDS("output/stanOutput/fitGrowthGSL")
-fitsos <- readRDS("output/stanOutput/fitGrowthSOS")
-fiteos <- readRDS("output/stanOutput/fitGrowthEOS")
+fitgdd <- readRDS("output/stanOutput/fitGrowthGDD_noPP")
+fitgsl <- readRDS("output/stanOutput/fitGrowthGSL_noPP")
+fitsos <- readRDS("output/stanOutput/fitGrowthSOS_noPP")
+fiteos <- readRDS("output/stanOutput/fitGrowthEOS_noPP")
 
 # Setup color palette across all plots
 pal <- wes_palette("AsteroidCity1")[3:4]
@@ -318,3 +322,48 @@ a_df2_eos      <- extract_params(df_fiteos, "a", "fit_a",
                                  "grandmean", "a\\[(\\d+)\\]")
 a_df2_eos      <- subset(a_df2_eos, grandmean == "a")
 
+# Simulate data ----
+
+# get some parameter values
+# b <- rnorm(10, 0, 0.1)
+a <- 0
+b <- 0.1
+sigma <- 1
+
+# get a sequence of sample sizes. 1000 is a strech but whatever
+n_vec <- seq(20, 1000, by = 20)
+nsim <- 1000
+
+# matrix so i can store slope estimates
+est <- matrix(NA, nrow = nsim, ncol = length(n_vec))
+
+for (j in seq_along(n_vec)) { # j = 2
+  for (i in 1:nsim) { # i =1
+    x <- rnorm(n_vec[j], 0, 1)
+    y <- a + b * x + rnorm(n_vec[j], 0, sigma)
+    # thanks to claude for this one
+    est[i, j] <- coef(lm(y ~ x))["x"]
+  }
+}
+
+# get summary estimates for each sample size
+mea <- apply(est, 2, mean)
+q05 <- apply(est, 2, quantile, 0.05)
+q25 <- apply(est, 2, quantile, 0.25)
+q75 <- apply(est, 2, quantile, 0.75)
+q95 <- apply(est, 2, quantile, 0.95)
+
+# plot
+png("figures/simData/simEffectSize/muPlot.png", width = 9, height = 6, units = "in", 
+     res = 300)
+plot(NA, xlim = range(n_vec), ylim = range(q05, q95),
+     xlab = "Sample size", ylab = "Estimated slope")
+abline(h = 0, lty = 2)
+abline(h = b, lty = 3, col = "black", lwd = 2)
+segments(n_vec, q05, n_vec, q95, col = "black", lwd = 1)
+segments(n_vec, q25, n_vec, q75, col = "black", lwd = 2.5)
+points(n_vec, mea, pch = 16, col = "black")
+dev.off()
+
+# smallest sample size where the 90% interval excludes zero
+n_vec[which(q05 > 0)[1]]
