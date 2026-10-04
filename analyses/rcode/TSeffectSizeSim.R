@@ -334,6 +334,8 @@ sigma <- 1
 n_vec <- seq(20, 1000, by = 20)
 nsim <- 1000
 
+sds <- apply(bspp_df, 2, FUN = sd)
+mean(sds)
 # matrix so i can store slope estimates
 est <- matrix(NA, nrow = nsim, ncol = length(n_vec))
 
@@ -365,5 +367,3 @@ segments(n_vec, q25, n_vec, q75, col = "black", lwd = 2.5)
 points(n_vec, mea, pch = 16, col = "black")
 dev.off()
 
-# smallest sample size where the 90% interval excludes zero
-n_vec[which(q05 > 0)[1]]
