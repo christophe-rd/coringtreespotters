@@ -31,8 +31,6 @@ source('mcmc_visualization_tools.R', local=util)
 # my function to extract parameters
 source('/Users/christophe_rouleau-desrochers/github/wildchrokie/analyses/rcode/tools.R')
 
-wrmUp <- 2000
-itrns <- 4000
 
 runmodels <- F
 
@@ -322,48 +320,98 @@ a_df2_eos      <- extract_params(df_fiteos, "a", "fit_a",
                                  "grandmean", "a\\[(\\d+)\\]")
 a_df2_eos      <- subset(a_df2_eos, grandmean == "a")
 
+# <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 # Simulate data ----
+# <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+library(rstan)
+options(mc.cores = parallel::detectCores())
+set.seed(123)
+# compile the 1-species model once
+mod <- stan_model("stan/simOneSpp.stan")
 
-# get some parameter values
-# b <- rnorm(10, 0, 0.1)
+
+## Get some GDD from the empirical data ----------------------------------------
+tame <- subset(empts, latbi == "T. americana")
+mu <- mean(empts$pgsGDD5, na.rm = TRUE)
+sd <- sd(empts$pgsGDD5, na.rm = TRUE)
+
+# compare gdd sim vs empirical
+hist(rnorm(1000, mean = mu, sd = sd) / tsgddscale)
+hist(tame$pgsGDD5 / tsgddscale)
+
+# convert to scaled gdds to simplify downstream code
+mu <- mu / tsgddscale
+sd <- sd / tsgddscale
+
+# parameter values for 1 species
 a <- 0
-b <- 0.1
-sigma <- 1
+b <- 0.01
+sigma_y <- 1
+sigma_atreeid <- 0.5
+sigma_year <- 0.5
 
-# get a sequence of sample sizes. 1000 is a strech but whatever
-n_vec <- seq(20, 1000, by = 20)
-nsim <- 1000
+# fixed number of years (rings) per tree
+nyear <- 10
 
-sds <- apply(bspp_df, 2, FUN = sd)
-mean(sds)
-# matrix so i can store slope estimates
-est <- matrix(NA, nrow = nsim, ncol = length(n_vec))
+# year effects, shared by all trees and kept the same across sample sizes
+ayear <- rnorm(nyear, 0, sigma_year)
 
-for (j in seq_along(n_vec)) { # j = 2
-  for (i in 1:nsim) { # i =1
-    x <- rnorm(n_vec[j], 0, 1)
-    y <- a + b * x + rnorm(n_vec[j], 0, sigma)
-    # thanks to claude for this one
-    est[i, j] <- coef(lm(y ~ x))["x"]
-  }
+# sequence of number of trees
+ntree_vec <- seq(10, 510, by = 10)
+
+# vectors to store posterior summaries of b for each number of trees
+mea <- rep(NA, length(ntree_vec))
+q05 <- rep(NA, length(ntree_vec))
+q25 <- rep(NA, length(ntree_vec))
+q75 <- rep(NA, length(ntree_vec))
+q95 <- rep(NA, length(ntree_vec))
+
+# set warmup and iterations
+wrmUp <- 1000
+itrns <- 2000
+
+# one simulated dataset and one fit per number of trees
+for (j in seq_along(ntree_vec)) { # j = 1
+  ntree <- ntree_vec[j]
+  N <- ntree * nyear
+  treeid <- rep(1:ntree, each = nyear)
+  year <- rep(1:nyear, times = ntree)
+  
+  # gdd according to tame mu and sd for now
+  gdd <- rnorm(N, mu, sd)
+  atreeid <- rnorm(ntree, 0, sigma_atreeid)
+  y <- a + atreeid[treeid] + ayear[year] + 
+    b * gdd + rnorm(N, 0, sigma_y)
+  
+  mdl.data <- list(N = N,
+                   Ntreeid = ntree,
+                   treeid = treeid,
+                   Nyear = nyear,
+                   year = year,
+                   gdd = gdd,
+                   y = y)
+  
+  # sample, and only keep the b parameter
+  fit <- sampling(mod, data = mdl.data, chains = 4, 
+                  warmup = wrmUp, iter = itrns, pars = "b")
+  bpost <- rstan::extract(fit, pars = "b")$b
+  
+  mea[j] <- mean(bpost)
+  q05[j] <- quantile(bpost, 0.05)
+  q25[j] <- quantile(bpost, 0.25)
+  q75[j] <- quantile(bpost, 0.75)
+  q95[j] <- quantile(bpost, 0.95)
 }
 
-# get summary estimates for each sample size
-mea <- apply(est, 2, mean)
-q05 <- apply(est, 2, quantile, 0.05)
-q25 <- apply(est, 2, quantile, 0.25)
-q75 <- apply(est, 2, quantile, 0.75)
-q95 <- apply(est, 2, quantile, 0.95)
-
-# plot
-png("figures/simData/simEffectSize/muPlot.png", width = 9, height = 6, units = "in", 
-     res = 300)
-plot(NA, xlim = range(n_vec), ylim = range(q05, q95),
-     xlab = "Sample size", ylab = "Estimated slope")
+# plot posterior mean with 50% and 90% credible intervals
+plot(NA, xlim = range(ntree_vec), ylim = range(q05, q95),
+     xlab = "Number of trees", ylab = "Estimated slope")
 abline(h = 0, lty = 2)
-abline(h = b, lty = 3, col = "black", lwd = 2)
-segments(n_vec, q05, n_vec, q95, col = "black", lwd = 1)
-segments(n_vec, q25, n_vec, q75, col = "black", lwd = 2.5)
-points(n_vec, mea, pch = 16, col = "black")
-dev.off()
+abline(h = b, lty = 3, col = "darkred", lwd = 2)
+segments(ntree_vec, q05, ntree_vec, q95, col = "black", lwd = 1)
+segments(ntree_vec, q25, ntree_vec, q75, col = "black", lwd = 2.5)
+points(ntree_vec, mea, pch = 16, col = "black")
+
+# smallest number of trees where the 90% interval excludes zero
+ntree_vec[which(q05 > 0)[1]]
 
