@@ -345,8 +345,8 @@ sd <- sd / tsgddscale
 
 # parameter values for 1 species
 a <- 0
-b <- 0.01
-sigma_y <- 1
+b <- 0.05
+sigma_y <- 0.7
 sigma_atreeid <- 0.5
 sigma_year <- 0.5
 
@@ -357,7 +357,7 @@ nyear <- 10
 ayear <- rnorm(nyear, 0, sigma_year)
 
 # sequence of number of trees
-ntree_vec <- seq(10, 510, by = 10)
+ntree_vec <- seq(10, 510, by = 25)
 
 # vectors to store posterior summaries of b for each number of trees
 mea <- rep(NA, length(ntree_vec))
