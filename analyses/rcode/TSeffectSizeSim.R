@@ -403,7 +403,7 @@ for (j in seq_along(ntree_vec)) { # j = 1
   q95[j] <- quantile(bpost, 0.95)
 }
 
-# plot posterior mean with 50% and 90% credible intervals
+# plot posterior mean with 50% and 90%  UI
 plot(NA, xlim = range(ntree_vec), ylim = range(q05, q95),
      xlab = "Number of trees", ylab = "Estimated slope")
 abline(h = 0, lty = 2)
