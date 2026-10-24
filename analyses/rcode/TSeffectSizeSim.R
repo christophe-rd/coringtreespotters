@@ -323,10 +323,8 @@ a_df2_eos      <- subset(a_df2_eos, grandmean == "a")
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 # Simulate data ----
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
-library(rstan)
-options(mc.cores = parallel::detectCores())
 set.seed(123)
-# compile the 1-species model once
+# compile the 1-species model once, it is fit separately to each species
 mod <- stan_model("stan/simOneSpp.stan")
 
 
@@ -336,16 +334,19 @@ mu <- mean(empts$pgsGDD5, na.rm = TRUE)
 sd <- sd(empts$pgsGDD5, na.rm = TRUE)
 
 # compare gdd sim vs empirical
-hist(rnorm(1000, mean = mu, sd = sd) / tsgddscale)
-hist(tame$pgsGDD5 / tsgddscale)
+# hist(rnorm(1000, mean = mu, sd = sd) / tsgddscale)
+# hist(tame$pgsGDD5 / tsgddscale)
 
 # convert to scaled gdds to simplify downstream code
 mu <- mu / tsgddscale
 sd <- sd / tsgddscale
 
-# parameter values for 1 species
+# number of species
+nspp <- 3
+
+# parameter values, with one slope per species
 a <- 0
-b <- 0.05
+b <- rnorm(nspp, 0.1, 0.2)
 sigma_y <- 0.7
 sigma_atreeid <- 0.5
 sigma_year <- 0.5
@@ -353,65 +354,74 @@ sigma_year <- 0.5
 # fixed number of years (rings) per tree
 nyear <- 10
 
-# year effects, shared by all trees and kept the same across sample sizes
+# year effects, shared by all trees and species and kept the same across sample sizes
 ayear <- rnorm(nyear, 0, sigma_year)
 
-# sequence of number of trees
+# sequence of number of trees per species
 ntree_vec <- seq(10, 510, by = 25)
 
-# vectors to store posterior summaries of b for each number of trees
-mea <- rep(NA, length(ntree_vec))
-q05 <- rep(NA, length(ntree_vec))
-q25 <- rep(NA, length(ntree_vec))
-q75 <- rep(NA, length(ntree_vec))
-q95 <- rep(NA, length(ntree_vec))
+# matrices to store posterior summaries of b: rows = number of trees, columns = species
+mea <- matrix(NA, nrow = length(ntree_vec), ncol = nspp)
+q05 <- matrix(NA, nrow = length(ntree_vec), ncol = nspp)
+q25 <- matrix(NA, nrow = length(ntree_vec), ncol = nspp)
+q75 <- matrix(NA, nrow = length(ntree_vec), ncol = nspp)
+q95 <- matrix(NA, nrow = length(ntree_vec), ncol = nspp)
 
 # set warmup and iterations
 wrmUp <- 1000
 itrns <- 2000
 
-# one simulated dataset and one fit per number of trees
+# one simulated dataset and one fit per number of trees and species
 for (j in seq_along(ntree_vec)) { # j = 1
   ntree <- ntree_vec[j]
   N <- ntree * nyear
   treeid <- rep(1:ntree, each = nyear)
   year <- rep(1:nyear, times = ntree)
   
-  # gdd according to tame mu and sd for now
-  gdd <- rnorm(N, mu, sd)
-  atreeid <- rnorm(ntree, 0, sigma_atreeid)
-  y <- a + atreeid[treeid] + ayear[year] + 
-    b * gdd + rnorm(N, 0, sigma_y)
-  
-  mdl.data <- list(N = N,
-                   Ntreeid = ntree,
-                   treeid = treeid,
-                   Nyear = nyear,
-                   year = year,
-                   gdd = gdd,
-                   y = y)
-  
-  # sample, and only keep the b parameter
-  fit <- sampling(mod, data = mdl.data, chains = 4, 
-                  warmup = wrmUp, iter = itrns, pars = "b")
-  bpost <- rstan::extract(fit, pars = "b")$b
-  
-  mea[j] <- mean(bpost)
-  q05[j] <- quantile(bpost, 0.05)
-  q25[j] <- quantile(bpost, 0.25)
-  q75[j] <- quantile(bpost, 0.75)
-  q95[j] <- quantile(bpost, 0.95)
+  for (s in 1:nspp) { # s = 1
+    # gdd according to tame mu and sd for now
+    gdd <- rnorm(N, mu, sd)
+    atreeid <- rnorm(ntree, 0, sigma_atreeid)
+    y <- a + atreeid[treeid] + ayear[year] + 
+      b[s] * gdd + rnorm(N, 0, sigma_y)
+    
+    mdl.data <- list(N = N,
+                     Ntreeid = ntree,
+                     treeid = treeid,
+                     Nyear = nyear,
+                     year = year,
+                     gdd = gdd,
+                     y = y)
+    
+    # sample, and only keep the b parameter
+    fit <- sampling(mod, data = mdl.data, chains = 4, 
+                    warmup = wrmUp, iter = itrns, pars = "b")
+    bpost <- rstan::extract(fit, pars = "b")$b
+    
+    mea[j, s] <- mean(bpost)
+    q05[j, s] <- quantile(bpost, 0.05)
+    q25[j, s] <- quantile(bpost, 0.25)
+    q75[j, s] <- quantile(bpost, 0.75)
+    q95[j, s] <- quantile(bpost, 0.95)
+  }
 }
 
-# plot posterior mean with 50% and 90%  UI
-plot(NA, xlim = range(ntree_vec), ylim = range(q05, q95),
-     xlab = "Number of trees", ylab = "Estimated slope")
-abline(h = 0, lty = 2)
-abline(h = b, lty = 3, col = "darkred", lwd = 2)
-segments(ntree_vec, q05, ntree_vec, q95, col = "black", lwd = 1)
-segments(ntree_vec, q25, ntree_vec, q75, col = "black", lwd = 2.5)
-points(ntree_vec, mea, pch = 16, col = "black")
+# plot posterior mean with 50% and 90% UI, one panel per species
+par(mfrow = c(1, nspp))
+for (s in 1:nspp) { # s = 1
+  plot(NA, xlim = range(ntree_vec), ylim = range(q05[, s], q95[, s], 0, b[s]),
+       xlab = "Number of trees", ylab = "Estimated slope",
+       main = paste0("Species ", s, " (b = ", round(b[s], 2), ")"))
+  abline(h = 0, lty = 2)
+  abline(h = b[s], lty = 3, col = "darkred", lwd = 2)
+  segments(ntree_vec, q05[, s], ntree_vec, q95[, s], col = "black", lwd = 1)
+  segments(ntree_vec, q25[, s], ntree_vec, q75[, s], col = "black", lwd = 2.5)
+  points(ntree_vec, mea[, s], pch = 16, col = "black")
+}
 
-# smallest number of trees where the 90% interval excludes zero
-ntree_vec[which(q05 > 0)[1]]
-
+# smallest number of trees where the 90% interval excludes zero, per species
+ntree_min <- rep(NA, nspp)
+for (s in 1:nspp) {
+  ntree_min[s] <- ntree_vec[which(q05[, s] > 0 | q95[, s] < 0)[1]]
+}
+ntree_min
