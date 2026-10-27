@@ -1,5 +1,5 @@
 // One-species version of the ring width model, for simulation
-// Partial pooling on tree id intercepts (non-centered) and year intercepts
+// Partial pooling on tree id intercepts (centered) and year intercepts
 
 data{
 int<lower=0> N;     // number of total observations
@@ -7,7 +7,7 @@ int<lower=0> Ntreeid;  // number of tree ids (grouping factor)
 array[N] int treeid;   // tree id identity, coded as int
 int<lower=0> Nyear;
 array[N] int year; 
-vector[N] gdd;     // gdd (predictor for slope)
+vector[N] gdd;     // gdd (predictor for slope), centered
 array[N] real y;         // ring width (response)
 }
 
@@ -16,7 +16,7 @@ real a;        // mean intercept across everything
 real b;        // gdd slope
 real<lower=0> sigma_atreeid;
 real<lower=0> sigma_y;     // measurement error, noise etc.      
-vector[Ntreeid] zatreeid; // variation of intercept across tree ids, non-centered
+vector[Ntreeid] zatreeid; // variation of intercept across tree ids, centered
 vector[Nyear] ayear;
 }
 
@@ -35,9 +35,9 @@ for (i in 1:N){
 }
 
 model{    
-  a ~ normal(1, 3);
-  ayear ~ normal(0, 1);
-  b ~ normal(0, 1);
+  a ~ normal(0.5, 1);
+  ayear ~ normal(0, 0.5);
+  b ~ normal(0, 0.1);
   zatreeid ~ normal(0, 1);
   sigma_atreeid ~ normal(0, 1);
   sigma_y ~ normal(0, 1);
