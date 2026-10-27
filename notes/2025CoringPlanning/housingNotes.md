@@ -8,7 +8,6 @@ no kitchen. Microwave and bathroom. Christophe signed the agreement and will sta
 
 #### To open the gate to the Greenhouse area:
 • Locate the key pad on the left hand side of the entrance
-• Press 8566
 • The gate will open automatically
 • Drive through
 • Gate will close automatically behind you
@@ -21,7 +20,7 @@ key for the master bedroom.
 3. There is a protective flap covering the keypad buttons. Please flip the flap and use the code provided
 below to unlock the box and get the keys. Please keep your finger on the metal slide button on the top
 while you remove the keys.
-4. The code to the apartment lockbox is 5638.
+4. The code to the apartment lockbox ….
 
 Once you have retrieved the keys, please re-lock the box. If you have taken your finger off the metal
 slide button at the top, you will have to re-enter the code in order to close the box properly.
