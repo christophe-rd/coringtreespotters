@@ -200,19 +200,6 @@ pal <- wes_palette("AsteroidCity1")[3:4]
 ##### Recover parameters #####
 df_fitgdd <- as.data.frame(fitgdd)
 
-# full posterior arrays for multi-line extraction
-columns <- colnames(df_fitgdd)[!grepl("prior", colnames(df_fitgdd))]
-bspp_df <- df_fitgdd[, columns[grepl("bsp", columns) & !grepl("z|sigma", columns)]]
-treeid_df <- df_fitgdd[, grepl("atreeid", columns) & !grepl("z|sigma", columns)]
-aspp_df <- df_fitgdd[, columns[grepl("aspp", columns)]]
-ayear_df <- df_fitgdd[, columns[grepl("ayear", columns) & !grepl("mean", columns)]]
-
-# change colnames to indexes for loop tracing
-colnames(bspp_df)  <- 1:ncol(bspp_df)
-colnames(treeid_df) <- 1:ncol(treeid_df)
-colnames(aspp_df)   <- 1:ncol(aspp_df)
-colnames(ayear_df)  <- 1:ncol(ayear_df)
-
 # posterior summaries
 sigma_df2  <- extract_params(df_fitgdd, "sigma", "mean", "sigma")
 bspp_df2   <- extract_params(df_fitgdd, "bspp", "fit_bspp", "spp", "bspp\\[(\\d+)\\]")
@@ -227,98 +214,7 @@ a_df2      <- extract_params(df_fitgdd, "a", "fit_a",
                              "grandmean", "a\\[(\\d+)\\]")
 a_df2      <- subset(a_df2, grandmean == "a")
 
-# <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
-# Plot GSL fit ####
-# <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
-##### Recover parameters #####
-df_fitgsl <- as.data.frame(fitgsl)
-
-# full posterior arrays for multi-line extraction
-columns <- colnames(df_fitgsl)[!grepl("prior", colnames(df_fitgsl))]
-bspp_df <- df_fitgsl[, columns[grepl("bsp", columns)]]
-treeid_df <- df_fitgsl[, grepl("atreeid", columns) & !grepl("z|sigma", columns)]
-aspp_df <- df_fitgsl[, columns[grepl("aspp", columns)]]
-ayear_df <- df_fitgsl[, columns[grepl("ayear", columns) & !grepl("mean", columns)]]
-
-# change colnames to indexes for loop tracing
-colnames(bspp_df)  <- 1:ncol(bspp_df)
-colnames(treeid_df) <- 1:ncol(treeid_df)
-colnames(aspp_df)   <- 1:ncol(aspp_df)
-colnames(ayear_df)  <- 1:ncol(ayear_df)
-
-# posterior summaries
-sigma_df2_gsl  <- extract_params(df_fitgsl, "sigma", "mean", "sigma")
-bspp_df2_gsl   <- extract_params(df_fitgsl, "bspp", "fit_bspp", "spp", "bspp\\[(\\d+)\\]")
-treeid_df2_gsl <- extract_params(df_fitgsl, "atreeid", "fit_atreeid", "id", "atreeid\\[(\\d+)\\]")
-treeid_df2_gsl <- subset(treeid_df2_gsl, !grepl("z|sigma", id))
-aspp_df2_gsl   <- extract_params(df_fitgsl, "aspp", "fit_aspp", "spp", "aspp\\[(\\d+)\\]")
-ayear_df2_gsl  <- extract_params(df_fitgsl, "ayear", "fit_ayear", "year", "ayear\\[(\\d+)\\]")
-ayear_df2_gsl  <- subset(ayear_df2_gsl, !grepl("mean", year))
-a_df2_gsl      <- extract_params(df_fitgsl, "a", "fit_a",
-                                 "grandmean", "a\\[(\\d+)\\]")
-a_df2_gsl      <- subset(a_df2_gsl, grandmean == "a")
-
-# <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
-# Plot SOS fit ####
-# <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
-##### Recover parameters #####
-df_fitsos <- as.data.frame(fitsos)
-
-# full posterior arrays for multi-line extraction
-columns <- colnames(df_fitsos)[!grepl("prior", colnames(df_fitsos))]
-bspp_df <- df_fitsos[, columns[grepl("bsp", columns)]]
-treeid_df <- df_fitsos[, grepl("atreeid", columns) & !grepl("z|sigma", columns)]
-aspp_df <- df_fitsos[, columns[grepl("aspp", columns)]]
-ayear_df <- df_fitsos[, columns[grepl("ayear", columns) & !grepl("mean", columns)]]
-
-# change colnames to indexes for loop tracing
-colnames(bspp_df)  <- 1:ncol(bspp_df)
-colnames(treeid_df) <- 1:ncol(treeid_df)
-colnames(aspp_df)   <- 1:ncol(aspp_df)
-colnames(ayear_df)  <- 1:ncol(ayear_df)
-
-# posterior summaries
-sigma_df2_sos  <- extract_params(df_fitsos, "sigma", "mean", "sigma")
-bspp_df2_sos   <- extract_params(df_fitsos, "bspp", "fit_bspp", "spp", "bspp\\[(\\d+)\\]")
-treeid_df2_sos <- extract_params(df_fitsos, "atreeid", "fit_atreeid", "id", "atreeid\\[(\\d+)\\]")
-treeid_df2_sos <- subset(treeid_df2_sos, !grepl("z|sigma", id))
-aspp_df2_sos   <- extract_params(df_fitsos, "aspp", "fit_aspp", "spp", "aspp\\[(\\d+)\\]")
-ayear_df2_sos  <- extract_params(df_fitsos, "ayear", "fit_ayear", "year", "ayear\\[(\\d+)\\]")
-ayear_df2_sos  <- subset(ayear_df2_sos, !grepl("mean", year))
-a_df2_sos      <- extract_params(df_fitsos, "a", "fit_a",
-                                 "grandmean", "a\\[(\\d+)\\]")
-a_df2_sos      <- subset(a_df2_sos, grandmean == "a")
-
-# <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
-# Plot EOS fit ####
-# <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
-##### Recover parameters #####
-df_fiteos <- as.data.frame(fiteos)
-
-# full posterior arrays for multi-line extraction
-columns <- colnames(df_fiteos)[!grepl("prior", colnames(df_fiteos))]
-bspp_df <- df_fiteos[, columns[grepl("bsp", columns)]]
-treeid_df <- df_fiteos[, grepl("atreeid", columns) & !grepl("z|sigma", columns)]
-aspp_df <- df_fiteos[, columns[grepl("aspp", columns)]]
-ayear_df <- df_fiteos[, columns[grepl("ayear", columns) & !grepl("mean", columns)]]
-
-# change colnames to indexes for loop tracing
-colnames(bspp_df)  <- 1:ncol(bspp_df)
-colnames(treeid_df) <- 1:ncol(treeid_df)
-colnames(aspp_df)   <- 1:ncol(aspp_df)
-colnames(ayear_df)  <- 1:ncol(ayear_df)
-
-# posterior summaries
-sigma_df2_eos  <- extract_params(df_fiteos, "sigma", "mean", "sigma")
-bspp_df2_eos   <- extract_params(df_fiteos, "bspp", "fit_bspp", "spp", "bspp\\[(\\d+)\\]")
-treeid_df2_eos <- extract_params(df_fiteos, "atreeid", "fit_atreeid", "id", "atreeid\\[(\\d+)\\]")
-treeid_df2_eos <- subset(treeid_df2_eos, !grepl("z|sigma", id))
-aspp_df2_eos   <- extract_params(df_fiteos, "aspp", "fit_aspp", "spp", "aspp\\[(\\d+)\\]")
-ayear_df2_eos  <- extract_params(df_fiteos, "ayear", "fit_ayear", "year", "ayear\\[(\\d+)\\]")
-ayear_df2_eos  <- subset(ayear_df2_eos, !grepl("mean", year))
-a_df2_eos      <- extract_params(df_fiteos, "a", "fit_a",
-                                 "grandmean", "a\\[(\\d+)\\]")
-a_df2_eos      <- subset(a_df2_eos, grandmean == "a")
+bspp_df2$spp_name <- empts$latbi[match(bspp_df2$spp, empts$spp_num)]
 
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 # Simulate data ----
@@ -329,9 +225,26 @@ mod <- stan_model("stan/simOneSpp.stan")
 
 
 ## Get some GDD from the empirical data ----------------------------------------
+acsa <- subset(empts, latbi == "A. saccharum")
+
+qual <- subset(empts, latbi == "Q. alba")
 tame <- subset(empts, latbi == "T. americana")
-mu <- mean(empts$pgsGDD5, na.rm = TRUE)
-sd <- sd(empts$pgsGDD5, na.rm = TRUE)
+
+mu <- c(mean(acsa$pgsGDD5, na.rm = TRUE),
+        mean(qual$pgsGDD5, na.rm = TRUE),
+        mean(tame$pgsGDD5, na.rm = TRUE))
+
+names(mu) <- c("A. saccharum",
+               "Q. alba",
+               "T. americana")
+
+sd <- c(sd(acsa$pgsGDD5, na.rm = TRUE),
+        sd(qual$pgsGDD5, na.rm = TRUE),
+        sd(tame$pgsGDD5, na.rm = TRUE))
+
+names(sd) <- c("A. saccharum",
+               "Q. alba",
+               "T. americana")
 
 # compare gdd sim vs empirical
 # hist(rnorm(1000, mean = mu, sd = sd) / tsgddscale)
@@ -342,12 +255,14 @@ mu <- mu / tsgddscale
 sd <- sd / tsgddscale
 
 # number of species
-nspp <- 3
+nspp <- length(mu)
 
 # parameter values, with one slope per species
-a <- 0
-b <- rnorm(nspp, 0.1, 0.2)
-sigma_y <- 0.7
+a <- 0.5
+b <- bspp_df2$mean[match(names(mu), bspp_df2$spp_name)]
+names(b) <- names(mu)
+
+sigma_y <- 0.4
 sigma_atreeid <- 0.5
 sigma_year <- 0.5
 
@@ -358,7 +273,7 @@ nyear <- 10
 ayear <- rnorm(nyear, 0, sigma_year)
 
 # sequence of number of trees per species
-ntree_vec <- seq(10, 510, by = 25)
+ntree_vec <- seq(4, 100, by = 5)
 
 # matrices to store posterior summaries of b: rows = number of trees, columns = species
 mea <- matrix(NA, nrow = length(ntree_vec), ncol = nspp)
@@ -380,7 +295,7 @@ for (j in seq_along(ntree_vec)) { # j = 1
   
   for (s in 1:nspp) { # s = 1
     # gdd according to tame mu and sd for now
-    gdd <- rnorm(N, mu, sd)
+    gdd <- rnorm(N, mu[s], sd[s])
     atreeid <- rnorm(ntree, 0, sigma_atreeid)
     y <- a + atreeid[treeid] + ayear[year] + 
       b[s] * gdd + rnorm(N, 0, sigma_y)
@@ -390,7 +305,7 @@ for (j in seq_along(ntree_vec)) { # j = 1
                      treeid = treeid,
                      Nyear = nyear,
                      year = year,
-                     gdd = gdd,
+                     gdd = gdd - mean(gdd),
                      y = y)
     
     # sample, and only keep the b parameter
@@ -409,14 +324,14 @@ for (j in seq_along(ntree_vec)) { # j = 1
 # plot posterior mean with 50% and 90% UI, one panel per species
 par(mfrow = c(1, nspp))
 for (s in 1:nspp) { # s = 1
-  plot(NA, xlim = range(ntree_vec), ylim = range(q05[, s], q95[, s], 0, b[s]),
+  plot(NA, xlim = range(ntree_vec), ylim = c(-0.05, 0.1),
        xlab = "Number of trees", ylab = "Estimated slope",
-       main = paste0("Species ", s, " (b = ", round(b[s], 2), ")"))
-  abline(h = 0, lty = 2)
-  abline(h = b[s], lty = 3, col = "darkred", lwd = 2)
-  segments(ntree_vec, q05[, s], ntree_vec, q95[, s], col = "black", lwd = 1)
-  segments(ntree_vec, q25[, s], ntree_vec, q75[, s], col = "black", lwd = 2.5)
-  points(ntree_vec, mea[, s], pch = 16, col = "black")
+       main = paste0(names(mu[s]), " (b = ", round(b[s], 2), ")"))
+  abline(h = 0, lty = 1)
+  abline(h = b[s], lty = 3, col = tscolslatbi[names(mu)[s]], lwd = 2)
+  segments(ntree_vec, q05[, s], ntree_vec, q95[, s], col = tscolslatbi[names(mu)[s]], lwd = 1)
+  segments(ntree_vec, q25[, s], ntree_vec, q75[, s], col = tscolslatbi[names(mu)[s]], lwd = 2.5)
+  points(ntree_vec, mea[, s], pch = 16, col = tscolslatbi[names(mu)[s]])
 }
 
 # smallest number of trees where the 90% interval excludes zero, per species
