@@ -223,7 +223,7 @@ fiteos <- readRDS("output/stanOutput/fitGrowthEOS")
 # Setup color palette across all plots
 pal <- wes_palette("AsteroidCity1")[3:4]
 
-##### Recover parameters #####
+## Recover parameters #####
 df_fitgdd <- as.data.frame(fitgdd)
 
 # full posterior arrays for multi-line extraction
@@ -262,7 +262,7 @@ write.csv(ayear_df2,  "output/GM_GDDparam_ayear.csv",  row.names = FALSE)
 write.csv(a_df2,      "output/GM_GDDparam_a.csv",      row.names = FALSE)
 
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
-##### Plot posterior vs priors for gdd fit #####
+## Plot posterior vs priors for gdd fit #####
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 pdf(file = "figures/growthModelsMain/diagnostics/gddModelPriorVSPosterior.pdf", width = 8, height = 10)
 par(mfrow = c(3, 2))
@@ -305,7 +305,7 @@ legend("topright", legend = c("Prior", "Posterior"), col = pal, lwd = 2)
 dev.off()
 
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
-##### Diagnostics #####
+## Diagnostics #####
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 samples <- util$extract_expectand_vals(fitgdd)
 diagnostics <- util$extract_hmc_diagnostics(fitgdd) 
@@ -329,7 +329,7 @@ util$plot_div_pairs(bspp, "sigma_bspp", samples, diagnostics,
 dev.off()
 
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
-##### Compare partial pooling vs no pooling #####
+## Compare partial pooling vs no pooling #####
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 fitgdd_noPP <- readRDS("output/stanOutput/fitGrowthGDD_noPP")
 df_fitgdd_noPP <- as.data.frame(fitgdd_noPP)
@@ -442,7 +442,7 @@ segments(bspp_df2$p25, y_pos, bspp_df2$p75, y_pos,
  # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 # Plot GSL fit ####
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
-##### Recover parameters #####
+## Recover parameters #####
 df_fitgsl <- as.data.frame(fitgsl)
 
 # full posterior arrays for multi-line extraction
@@ -478,7 +478,7 @@ write.csv(aspp_df2_gsl,   "output/GM_GSLparam_aspp.csv",   row.names = FALSE)
 write.csv(ayear_df2_gsl,  "output/GM_GSLparam_ayear.csv",  row.names = FALSE)
 write.csv(a_df2_gsl,      "output/GM_GSLparam_a.csv",      row.names = FALSE)
 
-##### Plot posterior vs priors for GSL fit #####
+## Plot posterior vs priors for GSL fit #####
 pdf(file = "figures/growthModelsMain/diagnostics/gslModelPriorVSPosterior.pdf", width = 8, height = 10)
 par(mfrow = c(3, 2))
 
@@ -518,7 +518,7 @@ dev.off()
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 # Plot SOS fit ####
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
-##### Recover parameters #####
+## Recover parameters #####
 df_fitsos <- as.data.frame(fitsos)
 
 # full posterior arrays for multi-line extraction
@@ -554,7 +554,7 @@ write.csv(aspp_df2_sos,   "output/GM_SOSparam_aspp.csv",   row.names = FALSE)
 write.csv(ayear_df2_sos,  "output/GM_SOSparam_ayear.csv",  row.names = FALSE)
 write.csv(a_df2_sos,      "output/GM_SOSparam_a.csv",      row.names = FALSE)
 
-##### Plot posterior vs priors for sos fit #####
+## Plot posterior vs priors for sos fit #####
 pdf(file = "figures/growthModelsMain/diagnostics/sosModelPriorVSPosterior.pdf", width = 8, height = 10)
 par(mfrow = c(3, 2))
 
@@ -593,7 +593,7 @@ dev.off()
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 # Plot EOS fit ####
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
-##### Recover parameters #####
+## Recover parameters #####
 df_fiteos <- as.data.frame(fiteos)
 
 # full posterior arrays for multi-line extraction
@@ -629,7 +629,7 @@ write.csv(aspp_df2_eos,   "output/GM_EOSparam_aspp.csv",   row.names = FALSE)
 write.csv(ayear_df2_eos,  "output/GM_EOSparam_ayear.csv",  row.names = FALSE)
 write.csv(a_df2_eos,      "output/GM_EOSparam_a.csv",      row.names = FALSE)
 
-##### Plot posterior vs priors for eos fit #####
+## Plot posterior vs priors for eos fit #####
 pdf(file = "figures/growthModelsMain/diagnostics/eosModelPriorVSPosterior.pdf", width = 8, height = 10)
 par(mfrow = c(3, 2))
 
@@ -840,7 +840,7 @@ fiteosfull <- sampling(eosmodel, data = deos,
 saveRDS(fiteosfull, "output/stanOutput/fitGrowthEOSFull")
 
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
-##### Recover and plot parameters SOS restricted vs full #####
+## Recover and plot parameters SOS restricted vs full #####
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 fitsosfull <- readRDS("output/stanOutput/fitGrowthSOSFull")
 fiteosfull <- readRDS("output/stanOutput/fitGrowthEOSFull")
@@ -866,7 +866,7 @@ restreosleafout <- aggregate(leafout ~ treeid_num, spp1rest, FUN = length)
 sum(fulleosleafout$leafout)- sum(restreosleafout$leafout)
 
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
-##### Recover and plot parameters EOS restricted vs full #####
+## Recover and plot parameters EOS restricted vs full #####
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 # EOS restricted
 df_fiteos <- as.data.frame(fiteosfull)
@@ -1149,7 +1149,7 @@ write.csv(aspp_df2,   "output/GM_GDDparam_Z_aspp.csv",   row.names = FALSE)
 write.csv(ayear_df2,  "output/GM_GDDparam_Z_ayear.csv",  row.names = FALSE)
 write.csv(a_df2,      "output/GM_GDDparam_Z_a.csv",      row.names = FALSE)
 
-##### Plot posterior vs priors for gdd fit #####
+## Plot posterior vs priors for gdd fit #####
 pdf(file = "figures/growthModelsMain/diagnostics/ZgddModelPriorVSPosterior.pdf", width = 8, height = 10)
 
 pal <- wes_palette("AsteroidCity1")[3:4]
@@ -1253,7 +1253,7 @@ write.csv(aspp_df2,   "output/GM_GSLparam_Z_aspp.csv",   row.names = FALSE)
 write.csv(ayear_df2,  "output/GM_GSLparam_Z_ayear.csv",  row.names = FALSE)
 write.csv(a_df2_gsl,  "output/GM_GSLparam_Z_a.csv",      row.names = FALSE)
 
-##### Plot posterior vs priors for GSL fit #####
+## Plot posterior vs priors for GSL fit #####
 pdf(file = "figures/growthModelsMain/diagnostics/ZgslModelPriorVSPosterior.pdf", width = 8, height = 10)
 
 pal <- wes_palette("AsteroidCity1")[3:4]
@@ -1358,7 +1358,7 @@ write.csv(aspp_df2_sos,   "output/GM_SOS_param_Z_aspp.csv",   row.names = FALSE)
 write.csv(ayear_df2_sos,  "output/GM_SOS_param_Z_ayear.csv",  row.names = FALSE)
 write.csv(a_df2_sos,      "output/GM_SOS_param_Z_a.csv",      row.names = FALSE)
 
-##### Plot posterior vs priors for sos fit #####
+## Plot posterior vs priors for sos fit #####
 pdf(file = "figures/growthModelsMain/diagnostics/ZsosModelPriorVSPosterior.pdf", width = 8, height = 10)
 
 pal <- wes_palette("AsteroidCity1")[3:4]
@@ -1463,7 +1463,7 @@ write.csv(aspp_df2_eos,   "output/GM_EOS_param_Z_aspp.csv",   row.names = FALSE)
 write.csv(ayear_df2_eos,  "output/GM_EOS_param_Z_ayear.csv",  row.names = FALSE)
 write.csv(a_df2_eos,      "output/GM_EOS_param_Z_a.csv",      row.names = FALSE)
 
-##### Plot posterior vs priors for eos fit #####
+## Plot posterior vs priors for eos fit #####
 pdf(file = "figures/growthModelsMain/diagnostics/ZeosModelPriorVSPosterior.pdf", width = 8, height = 10)
 
 pal <- wes_palette("AsteroidCity1")[3:4]
@@ -1535,7 +1535,7 @@ dev.off()
 # Compare model with and without ayear ####
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
-##### Fit model GDD WITHOUT ayear #####
+## Fit model GDD WITHOUT ayear #####
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 if(runmodelnoayear){
 gddmodel <- stan_model("stan/TSmodelGrowthGDD_noayear.stan")
@@ -1681,7 +1681,7 @@ samples <- util$extract_expectand_vals(fit)
 
 if(FALSE){
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
-##### Retrodictive checks #####
+## Retrodictive checks #####
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
 fit <- readRDS("output/stanOutput/fitGrowthPreviousYear")
 jpeg(
@@ -1721,7 +1721,7 @@ for (y in unique(data$year)) { # s = 1
 }
 }
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
-##### Plot posterior vs priors for gdd fit #####
+## Plot posterior vs priors for gdd fit #####
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
 fit <- readRDS("output/stanOutput/fitGrowthPreviousYear")
 
@@ -1729,7 +1729,7 @@ fit <- readRDS("output/stanOutput/fitGrowthPreviousYear")
 pal <- wes_palette("AsteroidCity1")[3:4]
 
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
-##### Recover parameters #####
+## Recover parameters #####
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
 df_fit <- as.data.frame(fit)
 
@@ -1954,7 +1954,7 @@ saveRDS(fitsos, "output/stanOutput/fitGrowthSOS_budburst")
 }
 
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
-##### Recover models with budburst #####
+## Recover models with budburst #####
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
 fitgdd <- readRDS("output/stanOutput/fitGrowthGDD_budburst")
 fitgsl <- readRDS("output/stanOutput/fitGrowthGSL_budburst")
@@ -2014,7 +2014,7 @@ aspp_df2_bb_sos$spp_name <- emptscomp$latbi[match(aspp_df2_bb_sos$spp, emptscomp
 ayear_df2_bb_sos$year_name <- emptscomp$year[match(ayear_df2_bb_sos$year, emptscomp$year_num)]
 
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
-##### Recover models with Leafout #####
+## Recover models with Leafout #####
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
 sigma_df2  <- read.csv("output/GM_GDDparam_Z_sigma.csv")
 bspp_df2   <- read.csv("output/GM_GDDparam_Z_bspp.csv")
@@ -2052,7 +2052,7 @@ aspp_df2_sos$spp_name <- emptscomp$latbi[match(aspp_df2_sos$spp, emptscomp$spp_n
 ayear_df2_sos$year_name <- emptscomp$year[match(ayear_df2_sos$year, emptscomp$year_num)]
 
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
-##### Figure for model comparison #####
+## Figure for model comparison #####
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
 # define colors
 wood_colors <- c("Diffuse-porous" = "#4e9af1",   # blue
@@ -2297,40 +2297,32 @@ if (fit2xpriors){
 genericmodel <- stan_model("stan/TSmodelGrowthGDD_largerPriors.stan")
 
 # Fit model GDD
-gddz <- (empts$pgsGDD5 - mean(empts$pgsGDD5)) / sd(empts$pgsGDD5)
-dgddz <- dgdd[1:10]
-dgddz$covariate <- gddz
+dgdd$covariate <- dgdd$gdd
 
-fitgdd <- sampling(genericmodel, data = dgddz,
+fitgdd <- sampling(genericmodel, data = dgdd,
                    warmup = wrmUp, iter = itrns, chains=4)
-saveRDS(fitgdd, "output/stanOutput/fitGrowthGDDZscored_largerPriors")
+saveRDS(fitgdd, "output/stanOutput/fitGrowthGDD_largerPriors")
 
 # Fit model GSL
-gslz <- (empts$pgsGSL - mean(empts$pgsGSL)) / sd(empts$pgsGSL)
-dgslz <- dgdd[1:10]
-dgslz$covariate <- gslz
+dgsl$covariate <- dgsl$gsl
 
-fitgsl <- sampling(genericmodel, data = dgslz,
+fitgsl <- sampling(genericmodel, data = dgsl,
                    warmup = wrmUp, iter = itrns, chains = 4)
-saveRDS(fitgsl, "output/stanOutput/fitGrowthGSLZscored_largerPriors")
+saveRDS(fitgsl, "output/stanOutput/fitGrowthGSL_largerPriors")
 
 # Fit model SOS
-sosz <- (empts$leafout - mean(empts$leafout)) / sd(empts$leafout)
-dsosz <- dgdd[1:10]
-dsosz$covariate <- sosz
+dsos$covariate <- dsos$sos
 
-fitsos <- sampling(genericmodel, data = dsosz,
+fitsos <- sampling(genericmodel, data = dsos,
                    warmup = wrmUp, iter = itrns, chains=4)
-saveRDS(fitsos, "output/stanOutput/fitGrowthSOSZscored_largerPriors")
+saveRDS(fitsos, "output/stanOutput/fitGrowthSOS_largerPriors")
 
 # Fit model EOS
-eosz <- (empts$coloredLeaves - mean(empts$coloredLeaves)) / sd(empts$coloredLeaves)
-deosz <- dgdd[1:10]
-deosz$covariate <- eosz
+deos$covariate <- deos$eos
 
-fiteos <- sampling(genericmodel, data = deosz,
+fiteos <- sampling(genericmodel, data = deos,
                    warmup = wrmUp, iter = itrns, chains=4)
-saveRDS(fiteos, "output/stanOutput/fitGrowthEOSZscored_largerPriors")
+saveRDS(fiteos, "output/stanOutput/fitGrowthEOS_largerPriors")
 }
 
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
@@ -2375,7 +2367,7 @@ fitco <- readRDS("output/stanOutput/fitSOSonEOS")
 # Setup color palette across all plots
 pal <- wes_palette("AsteroidCity1")[3:4]
 
-##### Recover parameters #####
+## Recover parameters #####
 df_fitco <- as.data.frame(fitco)
 
 # full posterior arrays for multi-line extraction
@@ -2411,7 +2403,7 @@ write.csv(aspp_df2,   "output/SOSonEOS_param_aspp.csv",   row.names = FALSE)
 write.csv(ayear_df2,  "output/SOSonEOS_param_ayear.csv",  row.names = FALSE)
 write.csv(a_df2,      "output/SOSonEOS_param_a.csv",      row.names = FALSE)
 
-##### Plot posterior vs priors for gdd fit #####
+## Plot posterior vs priors for gdd fit #####
 pdf(file = "figures/SOSonEOS/SOSonEOSPriorVSPosterior.pdf", width = 8, height = 10)
 par(mfrow = c(3, 2))
 
